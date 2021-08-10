@@ -1,0 +1,96 @@
+extends tsx
+
+# General
+snippet CL "console.log" A
+console.log($1);
+endsnippet
+
+snippet CE "console.error" A
+console.error($1);
+endsnippet
+
+snippet IMP "Import module" A
+import { $2 } from "$1"
+endsnippet
+
+snippet DIMP "Default import" A
+import $2 from "$1"
+endsnippet
+
+snippet THEN "Then chain" A
+.then(($1) => { $2 })
+endsnippet
+
+snippet CTT "Catch chain" A
+.catch(($1) => { $2 })
+endsnippet
+
+snippet ARR "Arrow function" A
+($1) => {$2}
+endsnippet
+
+snippet CARR "Constant arrow function" A
+const $1 = ($2) => {$3}
+endsnippet
+
+# Testing
+snippet ITESTS "Import Tests" A
+import React from "react";
+import { render, fireEvent } from "@testing-library/react";
+$3
+endsnippet 
+
+snippet TEST "Test block" A
+describe("$1", () => {
+  it("should $2", () => {
+  });
+});
+endsnippet
+
+# React
+snippet SHOOK "useState hook" A
+const [$1, set${1/\w+/\u$0/g}] = useState($2)
+endsnippet
+
+snippet IMR "Import React" A
+import React from "react";
+endsnippet
+
+snippet EHOOK "useEffect" A
+useEffect(() => {
+  $1
+})${0:;}
+endsnippet
+
+snippet FCE "function component export (with prop interface)" A
+export interface $1Props {
+	$3
+}
+
+const ${1:`!v expand('%:t:r')`} = (${2:props}: $1Props): React.ReactElement => {
+	return <>${4:null}</>
+}
+
+export default $1;
+
+endsnippet
+
+snippet CCE "class component export" A
+import React from "react";
+
+export interface $1Props {
+	$2
+}
+
+class ${1:`!v expand('%:t:r')`} extends React.Component<${1:`!v expand('%:t:r')`}Props> {
+	render(){
+		return (
+			<>
+			$3
+			</>
+		)
+	}
+}
+
+export default ${1:`!v expand('%:t:r')`};
+endsnippet

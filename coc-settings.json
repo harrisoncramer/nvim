@@ -1,0 +1,56 @@
+{
+  "diagnostic.showUnused": false,
+  "diagnostic.messageDelay": 0,
+  "diagnostic.errorSign": "✘",
+  "diagnostic.warningSign": "⚑",
+  "diagnostic.infoSign": "",
+  /*"suggest.noselect": true, // Select first element in autocomplete list*/
+  // Turn off styling, use plugins instead
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "tsserver.log": "verbose",
+  "tsserver.trace.server": "verbose",
+  // Turn off "turn CommonJS into ESLint warnings"
+  "javascript.suggestionActions.enabled": false,
+  // Set linting for postgresql databases
+  "sql.database": "postgresql",
+  // Show ununsed variables
+  "typescript.showUnused": true,
+  "languageserver": {
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": ["terraform", "tf"],
+      "initializationOptions": {},
+      "settings": {}
+      /* "command": "terraform-lsp", */
+      /* "filetypes": ["terraform", "tf"], */
+      /* "initializationOptions": {} */
+    }
+  },
+  "python.jediEnabled": false,
+  "emmet.includeLanguages": {
+    "markdown": "html",
+    "jsx": "javascriptreact",
+    "tsx": "typescript"
+  },
+  "emmet.excludeLanguages": [],
+  "explorer.width": 40,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.icon.source": "vim-devicons",
+  "explorer.previewAction.onHover": false,
+  "explorer.keyMappings": {
+    "<cr>": ["expandable?", ["expanded?", "collapse", "expand"], "open"]
+  },
+  "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "eslint.probe": [
+    "javascript",
+    "json",
+    "typescript",
+    "typescriptreact",
+    "javascriptreact"
+  ],
+  "prettier.disableSuccessMessage": true,
+  "prettier.singleQuote": true
+}
