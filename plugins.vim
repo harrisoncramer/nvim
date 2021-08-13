@@ -34,10 +34,10 @@ Plug 'mattn/emmet-vim' " Enables emmet (coc-emmet provides autocomplete)
 Plug 'AndrewRadev/tagalong.vim' " Automatically changes closing tags
 Plug 'alvan/vim-closetag' " Auto-closing of HTML tags
 " REACT/JS
-Plug 'maxmellon/vim-jsx-pretty'  " Syntax highlighting for JSX
 Plug 'pangloss/vim-javascript' " Javascript
-Plug 'peitalin/vim-jsx-typescript' " JSX Typescript syntax highlighting
 Plug 'leafgarland/typescript-vim' " TypeScript syntax highlighting
+Plug 'maxmellon/vim-jsx-pretty'  " Syntax highlighting for JSX
+Plug 'peitalin/vim-jsx-typescript' " JSX Typescript syntax highlighting
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' } " styled components library plugin
 " OTHER
 Plug 'hashivim/vim-terraform' " Adds auto-formatting + highlighting for terraform

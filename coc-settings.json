@@ -11,22 +11,30 @@
   "scss.validate": false,
   "tsserver.log": "verbose",
   "tsserver.trace.server": "verbose",
-  // Turn off "turn CommonJS into ESLint warnings"
+  // Turn off suggestions for javascript files
   "javascript.suggestionActions.enabled": false,
   // Set linting for postgresql databases
   "sql.database": "postgresql",
   // Show ununsed variables
   "typescript.showUnused": true,
   "languageserver": {
-    "terraform": {
-      "command": "terraform-ls",
-      "args": ["serve"],
-      "filetypes": ["terraform", "tf"],
-      "initializationOptions": {},
-      "settings": {}
-      /* "command": "terraform-lsp", */
-      /* "filetypes": ["terraform", "tf"], */
-      /* "initializationOptions": {} */
+    /* "terraform": { */
+    /*   "command": "terraform-ls", */
+    /*   "args": ["serve"], */
+    /*   "filetypes": ["terraform", "tf"], */
+    /*   "initializationOptions": {}, */
+    /*   "settings": {} */
+    /* }, */
+    "graphql": {
+      "command": "graphql-lsp",
+      "args": ["server", "-m", "stream"],
+      "filetypes": [
+        "typescript",
+        "typescriptreact",
+        "graphql",
+        "javascript",
+        "javascriptreact"
+      ]
     }
   },
   "python.jediEnabled": false,
@@ -35,6 +43,8 @@
     "jsx": "javascriptreact",
     "tsx": "typescript"
   },
+  /* "tsserver.formatOnType": true, */
+  /* "coc.preferences.formatOnType": true, */
   "emmet.excludeLanguages": [],
   "explorer.width": 40,
   "explorer.icon.enableNerdfont": true,
@@ -44,6 +54,7 @@
     "<cr>": ["expandable?", ["expanded?", "collapse", "expand"], "open"]
   },
   "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "eslint.autoFixOnSave": true,
   "eslint.probe": [
     "javascript",
     "json",

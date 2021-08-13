@@ -24,3 +24,6 @@ augroup autoquickfix
     autocmd QuickFixCmdPost    l* lwindow
 augroup END
 
+" Rescan larger files for correct highlighting
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear

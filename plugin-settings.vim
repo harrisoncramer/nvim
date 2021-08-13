@@ -62,9 +62,7 @@ function! ToggleGDiff()
 endfunction
 command! ToggleGDiff :silent :call ToggleGDiff()
 nnoremap <silent> <leader>gd :ToggleGDiff<CR>
-nnoremap <leader>gc :Gcommit<cr>
 nnoremap <silent> <leader>gp :Git push<cr>
-nnoremap <leader>gh :0Glog<cr>
 nnoremap <leader>gb :Gbrowse<cr>
 " Open git in browser
 nnoremap <leader>go :G open<cr>
@@ -72,6 +70,8 @@ nnoremap <leader>go :G open<cr>
 nnoremap <silent> <leader>gm :Gvdiffsplit!<cr>
 nnoremap <silent> <leader>gf :diffget //2<cr>
 nnoremap <silent> <leader>gh :diffget //3<cr>
+" This is not a fugitive command (it's FZF) but it's git related
+nnoremap <silent> <leader>gc :Commit<cr>
 
 " CircleCI (CLI)
 nnoremap <silent> <leader>co :! circleci --skip-update-check open<cr>
@@ -132,6 +132,8 @@ nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 " Scroll through references within the same file
 map <silent> gr <Plug>(coc-references)
+
+nnoremap <leader>do <Plug>(coc-codeaction)
 
 " Explorer
 nnoremap <silent> :: :CocCommand explorer<CR>
