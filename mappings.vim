@@ -33,8 +33,9 @@ nnoremap <silent> <C-p> :bprev<CR>
 " Toggle to previous buffer
 nnoremap <silent> <C-t> <C-^>
 
-"Source .vimrc file
+"Source/edit .vimrc file
 nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>ev :e $MYVIMRC<cr>
 " Allow copying to global clipboard with <leader>cp (see https://vi.stackexchange.com/questions/84/how-can-i-copy-text-to-the-system-clipboard-from-vim)
 noremap <silent> <Leader>y "*y
 " Quick save

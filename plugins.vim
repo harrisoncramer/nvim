@@ -50,4 +50,5 @@ Plug 'tpope/vim-commentary' " gcc to comment (or 3gcc)
 Plug 'jiangmiao/auto-pairs' " Auto pairing of brackets/parentheses
 Plug 'neoclide/jsonc.vim' " JSON highlighting
 Plug 'metakirby5/codi.vim' " Adds scratchpad when enabled to show console.logs
+Plug 'vimwiki/vimwiki' " Notetaking app
 call plug#end()

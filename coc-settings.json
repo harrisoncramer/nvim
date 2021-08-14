@@ -25,17 +25,17 @@
     /*   "initializationOptions": {}, */
     /*   "settings": {} */
     /* }, */
-    "graphql": {
-      "command": "graphql-lsp",
-      "args": ["server", "-m", "stream"],
-      "filetypes": [
-        "typescript",
-        "typescriptreact",
-        "graphql",
-        "javascript",
-        "javascriptreact"
-      ]
-    }
+    /* "graphql": { */
+    /*   "command": "graphql-lsp", */
+    /*   "args": ["server", "-m", "stream"], */
+    /*   "filetypes": [ */
+    /*     "typescript", */
+    /*     "typescriptreact", */
+    /*     "graphql", */
+    /*     "javascript", */
+    /*     "javascriptreact" */
+    /*   ] */
+    /* } */
   },
   "python.jediEnabled": false,
   "emmet.includeLanguages": {
