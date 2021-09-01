@@ -5,10 +5,13 @@
 " Populate the quickfix with results
 nnoremap <c-q> :FindAndPopulateQuickfix<cr>
 
-" Access FZF quickly
+" Search by text
 nnoremap <c-f> :Find<cr>
-" Access FZF quickly (filenames only). See https://github.com/junegunn/fzf.vim for more commands
-nnoremap <c-j> :Files<cr>
+
+" Search by file name (directory of vim)
+nnoremap <c-j> :Files <cr>
+" Search by file name (directory of buffer)
+nnoremap <c-m> :Files %:p:h<cr>
 
 " Access Buffer list
 nnoremap <c-b> :Buffer<cr>
@@ -31,7 +34,7 @@ command! -nargs=+ VG
 " --delimiter : --nth 4... Ensures that we only search content, not filename
 
 " This is the equivalent of calling :FZF vimgrep rg ....
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow -g "!{yarn.lock,package-lock.json,public,node_modules,.git,yarn-error.log,yarn.lock,dist,build}" --color "always" '.shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow -g "!{yarn.lock,package-lock.json,public,node_modules,.git,yarn-error.log,yarn.lock,dist,build,.cache}" --color "always" '.shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
 
 " Vim Fugitive (GIT)
 function! ToggleGStatus()
@@ -77,7 +80,7 @@ nnoremap <silent> <leader>gc :Commit<cr>
 nnoremap <silent> <leader>co :! circleci --skip-update-check open<cr>
 
 " Vim Snippets
-let g:UltiSnipsSnippetDirectories=["UltiSnips", "/Users/harrisoncramer/.config/nvim/my_snippets"]
+" let g:UltiSnipsSnippetDirectories=["UltiSnips", "/Users/harrisoncramer/.config/nvim/my_snippets"]
 let g:UltiSnipsExpandTrigger = "<C-o>" " Expands the snippet that aren't automatically expanded
 let g:UltiSnipsJumpForwardTrigger='<c-j>'
 let g:UltiSnipsJumpBackwardTrigger='<c-l>'
@@ -164,3 +167,7 @@ command! -nargs=+ GoDocs
 
 " Vim closetag
 let g:closetag_filenames = "*.html,*.jsx,*.js,*.tsx"
+
+
+" Vim Wiki (turn off mappings)
+let g:vimwiki_map_prefix = '<Leader><F13>'

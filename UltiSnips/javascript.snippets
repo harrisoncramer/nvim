@@ -85,5 +85,22 @@ class ${1:`!v expand('%:t:r')`} extends React.Component<${1:`!v expand('%:t:r')`
 	}
 }
 
+
 export default ${1:`!v expand('%:t:r')`};
+endsnippet
+
+snippet EXPRESS "basic express server" A
+const express = require('express');
+const path = require('path');
+const app = express();
+
+const PORT = 3000;
+
+app.get('/', (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, 'client', 'index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(\`App listening on port ${PORT}\`);
+});
 endsnippet

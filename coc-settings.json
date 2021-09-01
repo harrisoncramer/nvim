@@ -18,24 +18,16 @@
   // Show ununsed variables
   "typescript.showUnused": true,
   "languageserver": {
-    /* "terraform": { */
-    /*   "command": "terraform-ls", */
-    /*   "args": ["serve"], */
-    /*   "filetypes": ["terraform", "tf"], */
-    /*   "initializationOptions": {}, */
-    /*   "settings": {} */
-    /* }, */
-    /* "graphql": { */
-    /*   "command": "graphql-lsp", */
-    /*   "args": ["server", "-m", "stream"], */
-    /*   "filetypes": [ */
-    /*     "typescript", */
-    /*     "typescriptreact", */
-    /*     "graphql", */
-    /*     "javascript", */
-    /*     "javascriptreact" */
-    /*   ] */
-    /* } */
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": ["terraform", "tf"],
+      "initializationOptions": {},
+      "settings": {}
+      /* "command": "terraform-lsp", */
+      /* "filetypes": ["terraform", "tf"], */
+      /* "initializationOptions": {} */
+    }
   },
   "python.jediEnabled": false,
   "emmet.includeLanguages": {
@@ -43,8 +35,7 @@
     "jsx": "javascriptreact",
     "tsx": "typescript"
   },
-  /* "tsserver.formatOnType": true, */
-  /* "coc.preferences.formatOnType": true, */
+  "coc.preferences.formatOnType": true,
   "emmet.excludeLanguages": [],
   "explorer.width": 40,
   "explorer.icon.enableNerdfont": true,

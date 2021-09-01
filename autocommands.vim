@@ -27,3 +27,7 @@ augroup END
 " Rescan larger files for correct highlighting
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+
+
+" Allow line wrapping for .wiki files
+autocmd FileType vimwiki set wrap
