@@ -46,13 +46,8 @@
   },
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   "eslint.autoFixOnSave": true,
-  "eslint.probe": [
-    "javascript",
-    "json",
-    "typescript",
-    "typescriptreact",
-    "javascriptreact"
-  ],
+  "eslint.probe": ["javascript", "json", "typescript", "typescriptreact", "javascriptreact"],
   "prettier.disableSuccessMessage": true,
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 100
 }

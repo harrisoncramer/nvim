@@ -139,7 +139,7 @@ map <silent> gr <Plug>(coc-references)
 nnoremap <leader>do <Plug>(coc-codeaction)
 
 " Explorer
-nnoremap <silent> :: :CocCommand explorer<CR>
+nnoremap <silent> :: :CocCommand explorer --position right<CR>
 autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
 
 " BufOnly
