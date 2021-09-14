@@ -104,3 +104,18 @@ app.listen(PORT, () => {
   console.log(\`App listening on port ${PORT}\`);
 });
 endsnippet
+
+snippet APOLLO "Create basic apollo-server"
+const { ApolloServer } = require('apollo-server');
+const resolvers = require('./resolvers');
+const typeDefs = require('./typeDefs');
+
+const server = new ApolloServer({ typeDefs, resolvers });
+
+const PORT = process.env.PORT;
+
+server.listen(PORT).then(() => {
+	console.log(\`🚀 Apollo listening on port ${process.env.PORT}\`);
+});
+
+endsnippet
