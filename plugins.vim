@@ -26,6 +26,7 @@ Plug 'tpope/vim-rhubarb' " Allows :Gbrowse which opens up file in Github
 Plug 'itchyny/lightline.vim' " Adds status line at bottom of the file
 Plug 'itchyny/vim-gitbranch' " Shows branch name in lightline
 Plug 'morhetz/gruvbox' " Color theme
+Plug 'sainnhe/sonokai' " Color theme for vimwiki
 Plug 'ryanoasis/vim-devicons' " Icons for coc-explorer
 Plug 'lambdalisue/glyph-palette.vim' " Colors for icons
 " HTML

@@ -171,3 +171,4 @@ let g:closetag_filenames = "*.html,*.jsx,*.js,*.tsx"
 
 " Vim Wiki (turn off mappings)
 let g:vimwiki_map_prefix = '<Leader><F13>'
+
