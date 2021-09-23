@@ -22,6 +22,7 @@ Plug 'szw/vim-maximizer' " Maximizes splits (remapped to <leader>sf)
 " GIT
 Plug 'tpope/vim-fugitive' " Git wrapper (:G followed by git commands)
 Plug 'tpope/vim-rhubarb' " Allows :Gbrowse which opens up file in Github
+Plug 'airblade/vim-gitgutter' " Shows Git status in lefthand side
 " STYLE
 Plug 'itchyny/lightline.vim' " Adds status line at bottom of the file
 Plug 'itchyny/vim-gitbranch' " Shows branch name in lightline

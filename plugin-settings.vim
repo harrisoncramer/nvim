@@ -16,6 +16,8 @@ nnoremap <c-m> :Files %:p:h<cr>
 " Access Buffer list
 nnoremap <c-b> :Buffer<cr>
 
+nnoremap SUPER :PRg<cr>
+
 " Remap grep to use silent search and populate quickfix list
 command! -nargs=+ VG
 \   execute 'silent vimgrep <args>'
@@ -34,7 +36,7 @@ command! -nargs=+ VG
 " --delimiter : --nth 4... Ensures that we only search content, not filename
 
 " This is the equivalent of calling :FZF vimgrep rg ....
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow -g "!{yarn.lock,package-lock.json,public,node_modules,.git,yarn-error.log,yarn.lock,dist,build,.cache}" --color "always" '.shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow -g "!{yarn.lock,package-lock.json,public,node_modules,.git,yarn-error.log,yarn.lock,dist,build,.cache}" --color "always" '.shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..', 'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]}), <bang>0)
 
 " Vim Fugitive (GIT)
 function! ToggleGStatus()
