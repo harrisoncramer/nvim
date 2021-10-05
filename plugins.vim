@@ -3,6 +3,9 @@
 """""""""""""""""" 
 call plug#begin('~/.vim/plugged')
 " CORE FUNCTIONALITY "
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'caenrique/nvim-toggle-terminal'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion w/ language server
 Plug 'tpope/vim-dispatch' " Allows functions to run asyncrhonously from within VIM (:Dispatch)
 Plug 'tpope/vim-repeat' " Allows plugins to repeat 
@@ -41,6 +44,8 @@ Plug 'leafgarland/typescript-vim' " TypeScript syntax highlighting
 Plug 'maxmellon/vim-jsx-pretty'  " Syntax highlighting for JSX
 Plug 'peitalin/vim-jsx-typescript' " JSX Typescript syntax highlighting
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' } " styled components library plugin
+" VUE
+Plug 'posva/vim-vue'
 " OTHER
 Plug 'hashivim/vim-terraform' " Adds auto-formatting + highlighting for terraform
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " Golang development

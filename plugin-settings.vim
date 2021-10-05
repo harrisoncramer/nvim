@@ -16,8 +16,6 @@ nnoremap <c-m> :Files %:p:h<cr>
 " Access Buffer list
 nnoremap <c-b> :Buffer<cr>
 
-nnoremap SUPER :PRg<cr>
-
 " Remap grep to use silent search and populate quickfix list
 command! -nargs=+ VG
 \   execute 'silent vimgrep <args>'
@@ -174,3 +172,13 @@ let g:closetag_filenames = "*.html,*.jsx,*.js,*.tsx"
 " Vim Wiki (turn off mappings)
 let g:vimwiki_map_prefix = '<Leader><F13>'
 
+
+" Git Gutter use GitGutter on save
+autocmd BufWritePost * GitGutter
+
+" Vim Toggle Terminal
+nnoremap <silent> <C-z> :ToggleTerminal<Enter>
+tnoremap <silent> <C-z> <C-\><C-n>:ToggleTerminal<Enter>
+
+" Vim VUE
+let g:vue_pre_processors = []

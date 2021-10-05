@@ -28,7 +28,7 @@ nnoremap :rmswap :! rm -rf /Users/harrisoncramer/.local/share/nvim/swap<cr>
 nnoremap <silent> <leader>- :bd<CR>
 nnoremap <silent> <leader>h :w\|bd<CR>
 nnoremap <silent> <leader>bo :w <bar> %bd <bar> e# <bar> bd# <CR><CR>
-nnoremap <silent> <C-n> :bnext<CR>
+nnoremap <silent> <C-u> :bnext<CR> 
 nnoremap <silent> <C-p> :bprev<CR>
 " Toggle to previous buffer
 nnoremap <silent> <C-t> <C-^>
