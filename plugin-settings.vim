@@ -182,3 +182,20 @@ tnoremap <silent> <C-z> <C-\><C-n>:ToggleTerminal<Enter>
 
 " Vim VUE
 let g:vue_pre_processors = []
+
+" Treesitter
+lua <<EOF
+require('nvim-treesitter.configs').setup({
+  ignore_install = { "haskell" },
+  ensure_installed = "all",
+  highlight = {
+    enable = true,
+  },
+  incremental_selection = {
+    enable = true,
+  },
+  indent = {
+    enable = true
+  }
+})
+EOF

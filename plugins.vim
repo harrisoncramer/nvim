@@ -6,6 +6,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'caenrique/nvim-toggle-terminal'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/playground' " Treesitter playground
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion w/ language server
 Plug 'tpope/vim-dispatch' " Allows functions to run asyncrhonously from within VIM (:Dispatch)
 Plug 'tpope/vim-repeat' " Allows plugins to repeat 
@@ -59,3 +60,4 @@ Plug 'neoclide/jsonc.vim' " JSON highlighting
 Plug 'metakirby5/codi.vim' " Adds scratchpad when enabled to show console.logs
 Plug 'vimwiki/vimwiki' " Notetaking app
 call plug#end()
+
