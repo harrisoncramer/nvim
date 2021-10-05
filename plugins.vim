@@ -30,7 +30,8 @@ Plug 'airblade/vim-gitgutter' " Shows Git status in lefthand side
 " STYLE
 Plug 'itchyny/lightline.vim' " Adds status line at bottom of the file
 Plug 'itchyny/vim-gitbranch' " Shows branch name in lightline
-Plug 'morhetz/gruvbox' " Color theme
+Plug 'sainnhe/gruvbox-material' " Gruvbox w/ treesitter support
+" Plug 'morhetz/gruvbox' " Color theme
 Plug 'sainnhe/sonokai' " Color theme for vimwiki
 Plug 'ryanoasis/vim-devicons' " Icons for coc-explorer
 Plug 'lambdalisue/glyph-palette.vim' " Colors for icons

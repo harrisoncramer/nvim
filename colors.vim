@@ -1,11 +1,19 @@
 """"""""""""""""""
 " COLOR THEME
 """""""""""""""""" 
-" Set color theme (loaded from plugin)
-let g:gruvbox_italic=1
-colorscheme gruvbox
-set background=dark    " Setting dark mode
-let g:gruvbox_contrast_dark = 'medium'
+if has('termguicolors')
+  set termguicolors
+endif
+
+let g:gruvbox_material_enable_italic = 1
+let g:gruvbox_material_ui_contrast = 'low'
+let g:gruvbox_material_background = 'medium'
+let g:gruvbox_material_enable_bold = 1
+let g:gruvbox_material_better_performance = 1
+
+
+colorscheme gruvbox-material
+
 
 """"""""""""""""""
 " DIFF MODE COLORS
