@@ -1,10 +1,5 @@
---
--- SETTINGS 
--- 
-
 -- set.leader to comma/space key
 vim.g.mapleader = " "
--- nnoremap <SPACE> <Nop>
 --Mouse support active. Alt click
 vim.opt.mouse = 'a'
 -- set.relative line numbers for jumping
@@ -25,7 +20,6 @@ vim.opt.signcolumn = 'yes'
 -- Search settings 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
--- hi IncSearch ctermfg=51 ctermbg=0 gui=bold guifg=#0096FF guibg=#0096FF
 -- Allow folding
 vim.opt.foldmethod = 'syntax'
 vim.opt.foldlevelstart = 99
@@ -46,7 +40,6 @@ vim.opt.backup = false
 -- Allow undo-ing even after save file
 vim.opt.undodir = vim.fn.stdpath('config') .. '/.undo'
 vim.opt.undofile = true
-
 -- Carry over current indentation to next line
 vim.opt.autoindent = true
 -- set indent intelligently
@@ -57,7 +50,6 @@ vim.opt.hidden = true
 -- Control searching. Ignore case during search, except if it includes a capital letter
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-
 vim.opt.backspace = 'indent,eol,start'
 -- set tab to wildcharm (for completion of suggestions)
 -- set wildcharm = <tab>

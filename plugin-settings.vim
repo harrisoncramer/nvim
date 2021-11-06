@@ -41,7 +41,7 @@ function! ToggleGStatus()
     if buflisted(bufname('.git/index'))
         bd .git/index
     else
-        Gstatus
+        Git
     endif
 endfunction
 command! ToggleGStatus :silent :call ToggleGStatus()
@@ -139,8 +139,10 @@ map <silent> gr <Plug>(coc-references)
 nnoremap <leader>do <Plug>(coc-codeaction)
 
 " Explorer
-nnoremap <silent> :: :CocCommand explorer --position right<CR>
+nnoremap <silent> :: :CocCommand explorer --position left<CR>
 autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+" Jump all the way to the right (into explorer)
+nmap <leader>; :10wincmd h<CR>
 
 " BufOnly
 nnoremap :BO :BufOnly<CR>

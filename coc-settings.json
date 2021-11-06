@@ -4,7 +4,6 @@
   "diagnostic.errorSign": "✘",
   "diagnostic.warningSign": "⚑",
   "diagnostic.infoSign": "",
-  /*"suggest.noselect": true, // Select first element in autocomplete list*/
   // Turn off styling, use plugins instead
   "css.validate": false,
   "less.validate": false,
@@ -41,9 +40,8 @@
   "explorer.icon.enableNerdfont": true,
   "explorer.icon.source": "vim-devicons",
   "explorer.previewAction.onHover": false,
-  "explorer.keyMappings": {
-    "<cr>": ["expandable?", ["expanded?", "collapse", "expand"], "open"]
-  },
+  // Don't warn about being able to find tsconfig.json file
+  "vetur.ignoreProjectWarning": true,
   "coc.preferences.formatOnSaveFiletypes": ["*"],
   "eslint.autoFixOnSave": true,
   "eslint.probe": ["javascript", "json", "typescript", "typescriptreact", "javascriptreact"],
