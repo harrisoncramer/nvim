@@ -20,6 +20,7 @@ noremap('<C-w><down>', '<C-w>-')
 
 -- Buffer management
 nnoremap('<leader>-', ':bd<CR>', "silent")
+nnoremap('<leader>h', ':x<CR>', "silent")
 nnoremap('<C-u>', ':bnext<CR>', "silent")
 nnoremap('<C-p>', ':bprev<CR>', "silent")
 nnoremap('<C-t>', '<C-^>', "silent")
