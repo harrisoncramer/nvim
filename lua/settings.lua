@@ -51,5 +51,3 @@ vim.opt.hidden = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.backspace = 'indent,eol,start'
--- set tab to wildcharm (for completion of suggestions)
--- set wildcharm = <tab>

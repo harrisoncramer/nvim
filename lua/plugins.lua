@@ -57,5 +57,3 @@ Plug 'vimwiki/vimwiki' -- Notetaking app
 -- Vim
 Plug('b0o/mapx.nvim', { branch = 'main' })
 vim.call('plug#end')
-
-
