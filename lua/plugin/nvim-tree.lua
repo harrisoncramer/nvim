@@ -1,4 +1,4 @@
-nnoremap('::', ':NvimTreeToggle<CR>')
+nnoremap('::', ':NvimTreeToggle<CR>', 'silent')
 
 vim.g['nvim_tree_root_folder_modifier'] = 1
 vim.g['nvim_tree_highlight_opened_files'] = 1
@@ -7,7 +7,7 @@ vim.g['nvim_tree_indent_markers'] = 0
 vim.g['nvim_tree_quit_on_open'] = 1
 vim.g['nvim_tree_gitignore'] = 0
 vim.g['nvim_tree_root_folder_modifier'] = ':~'
-vim.g['nvim_tree_add_trailing'] = 1
+vim.g['nvim_tree_add_trailing'] = 0
 vim.g['nvim_tree_group_empty'] = 1
 vim.g['nvim_tree_disable_window_picker'] = 1
 vim.g['nvim_tree_icon_padding'] = ' '
@@ -17,8 +17,6 @@ vim.g['nvim_tree_create_in_closed_folder'] = 1
 vim.g['nvim_tree_refresh_wait'] = 500
 
 vim.cmd[[
-  
-
 let g:nvim_tree_window_picker_exclude = {
     \   'buftype': [
     \     'terminal'
@@ -56,6 +54,7 @@ let g:nvim_tree_icons = {
   highlight NvimTreeGitMerge guifg=green
   highlight NvimTreeGitRenamed guifg=yellow
   highlight NvimTreeGitNew guifg=yellow
+
 ]]
 
 require'nvim-tree'.setup {
