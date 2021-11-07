@@ -1,4 +1,4 @@
-vim.cmd[[ let g:coc_global_extensions = [ 'coc-tsserver', 'coc-prettier', 'coc-json', 'coc-vetur', 'coc-styled-components', 'coc-explorer', 'coc-eslint', 'coc-python', 'coc-emmet', 'coc-sql', 'coc-go', 'coc-css'] ]]
+vim.cmd[[ let g:coc_global_extensions = [ 'coc-tsserver', 'coc-prettier', 'coc-json', 'coc-vetur', 'coc-styled-components', 'coc-eslint', 'coc-python', 'coc-emmet', 'coc-sql', 'coc-go', 'coc-css'] ]]
 
 -- Rename
 nmap('R', '<Plug>(coc-rename)', "silent")
@@ -37,10 +37,6 @@ end
 -- Definitions
 map('gd', '<Plug>(coc-definition)', 'silent')
 nmap('gt', '<Plug>(coc-type-definition)', 'silent')
-
--- Explorer
-nnoremap('::', ':CocCommand explorer --position left<CR>', 'silent')
-vim.cmd[[ autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif ]]
 
 -- Prettier
 vim.cmd[[ command! -nargs=0 Prettier :CocCommand prettier.formatFile ]]

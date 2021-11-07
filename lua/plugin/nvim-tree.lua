@@ -1,3 +1,5 @@
+nnoremap('::', ':NvimTreeToggle<CR>')
+
 vim.g['nvim_tree_root_folder_modifier'] = 1
 vim.g['nvim_tree_highlight_opened_files'] = 1
 vim.g['nvim_tree_git_hl'] = 1
@@ -15,6 +17,7 @@ vim.g['nvim_tree_create_in_closed_folder'] = 1
 vim.g['nvim_tree_refresh_wait'] = 500
 
 vim.cmd[[
+  
 
 let g:nvim_tree_window_picker_exclude = {
     \   'buftype': [
@@ -44,15 +47,15 @@ let g:nvim_tree_icons = {
     \   }
     \ }
 
-nnoremap <C-n> :NvimTreeToggle<CR>
-nnoremap <leader>r :NvimTreeRefresh<CR>
-nnoremap <leader>n :NvimTreeFindFile<CR>
-" NvimTreeOpen, NvimTreeClose, NvimTreeFocus, NvimTreeFindFileToggle, and NvimTreeResize are also available if you need them
+  set termguicolors " this variable must be enabled for colors to be applied properly
 
-set termguicolors " this variable must be enabled for colors to be applied properly
-
-" a list of groups can be found at `:help nvim_tree_highlight`
-highlight NvimTreeFolderIcon guibg=blue
+  " a list of groups can be found at `:help nvim_tree_highlight`
+  highlight NvimTreeFolderIcon guifg=blue
+  highlight NvimTreeGitDirty guifg=orange
+  highlight NvimTreeGitStaged guifg=yellow
+  highlight NvimTreeGitMerge guifg=green
+  highlight NvimTreeGitRenamed guifg=yellow
+  highlight NvimTreeGitNew guifg=yellow
 ]]
 
 require'nvim-tree'.setup {
