@@ -29,7 +29,7 @@ vim.api.nvim_exec("nnoremap <expr> k (v:count > 1 ? \"m'\" . v:count : '') . 'k'
 vim.api.nvim_exec("nnoremap <expr> j (v:count > 1 ? \"m'\" . v:count : '') . 'j'", false)
 
 -- Source/edit .vimrc file
-nnoremap('<leader>sv', ':source $MYVIMRC<cr>')
+-- nnoremap('<leader>sv', ':luafile ~/.config/nvim/init.lua<cr>')
 nnoremap('<leader>vv', ':e $MYVIMRC<cr>')
 
 -- Miscellaneous

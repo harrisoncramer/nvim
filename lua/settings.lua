@@ -1,5 +1,7 @@
 -- set.leader to comma/space key
 vim.g.mapleader = " "
+-- update time for plugins (speed when they act)
+vim.opt.updatetime = 300
 --Mouse support active. Alt click
 vim.opt.mouse = 'a'
 -- set.relative line numbers for jumping

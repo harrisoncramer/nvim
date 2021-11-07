@@ -8,6 +8,7 @@
   "css.validate": false,
   "less.validate": false,
   "scss.validate": false,
+  // For debugging TSServer issues
   "tsserver.log": "verbose",
   "tsserver.trace.server": "verbose",
   // Turn off suggestions for javascript files

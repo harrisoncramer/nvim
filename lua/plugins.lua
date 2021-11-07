@@ -3,6 +3,8 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 Plug 'caenrique/nvim-toggle-terminal'
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdate']})  -- We recommend updating the parsers on update
 Plug('neoclide/coc.nvim', { branch = 'release'}) -- Autocompletion w/ language server
+Plug 'kyazdani42/nvim-web-devicons' -- for file icons
+Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tpope/vim-dispatch' -- Allows functions to run asyncrhonously from within VIM (:Dispatch)
 Plug 'tpope/vim-repeat' -- Allows plugins to repeat 
 Plug 'tpope/vim-surround' -- Use cs''[encloser] (that's a double-qutation mark) to modify encloser, ysiw[encloser] to add encloser
@@ -27,7 +29,7 @@ Plug 'itchyny/vim-gitbranch' -- Shows branch name in lightline
 Plug 'sainnhe/gruvbox-material' -- Gruvbox w/ treesitter support
 -- Plug 'morhetz/gruvbox' -- Color theme
 Plug 'sainnhe/sonokai' -- Color theme for vimwiki
-Plug 'ryanoasis/vim-devicons' -- Icons for coc-explorer
+-- Plug 'ryanoasis/vim-devicons' -- Icons for coc-explorer
 Plug 'lambdalisue/glyph-palette.vim' -- Colors for icons
 -- HTML
 Plug 'adelarsq/vim-matchit' -- Allows HTML tag jumping with %
