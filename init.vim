@@ -1,3 +1,4 @@
+" Main Imports
 lua require("settings")
 lua require("plugins")
 lua require("colors")
@@ -5,8 +6,10 @@ lua require("mappings")
 lua require("functions")
 lua require("autocommands")
 
-lua require("pluginSettings/fzf")
-lua require("pluginSettings/fugitive")
-lua require("pluginSettings/ultisnips")
-lua require("pluginSettings/coc")
-source $HOME/.config/nvim/plugin-settings.vim " Should come last...
+" Plugin-specific settings
+lua require("p/fzf")
+lua require("p/fugitive")
+lua require("p/ultisnips")
+lua require("p/coc")
+lua require("p/treesitter")
+lua require("p/miscellaneous")
