@@ -1,10 +1,15 @@
 nnoremap(';;', ':NvimTreeToggle<CR>', 'silent')
 
+-- Respect current directory of buffer
+vim.cmd[[
+ au BufEnter * if &ft != 'help' | silent! cd %:p:h | endif
+]]
+
 vim.g['nvim_tree_root_folder_modifier'] = 1
 vim.g['nvim_tree_highlight_opened_files'] = 1
 vim.g['nvim_tree_git_hl'] = 1
 vim.g['nvim_tree_indent_markers'] = 0
-vim.g['nvim_tree_quit_on_open'] = 1
+vim.g['nvim_tree_quit_on_open'] = 0
 vim.g['nvim_tree_gitignore'] = 0
 vim.g['nvim_tree_root_folder_modifier'] = ':~'
 vim.g['nvim_tree_add_trailing'] = 0
@@ -49,11 +54,11 @@ let g:nvim_tree_icons = {
 
   " a list of groups can be found at `:help nvim_tree_highlight`
   highlight NvimTreeFolderIcon guifg=blue
-  highlight NvimTreeGitDirty guifg=orange
-  highlight NvimTreeGitStaged guifg=yellow
-  highlight NvimTreeGitMerge guifg=green
-  highlight NvimTreeGitRenamed guifg=yellow
-  highlight NvimTreeGitNew guifg=yellow
+  highlight NvimTreeGitDirty guifg=#ff5f5f
+  highlight NvimTreeGitStaged guifg=#c9bf00
+  highlight NvimTreeGitMerge guifg=#00875f
+  highlight NvimTreeGitRenamed guifg=#c9bf00
+  highlight NvimTreeGitNew guifg=light#00875f
 
 ]]
 
@@ -93,7 +98,7 @@ require'nvim-tree'.setup {
     custom = {}
   },
   view = {
-    width = 30,
+    width = 40,
     height = 30,
     hide_root_folder = false,
     side = 'left',
