@@ -1,4 +1,4 @@
-nnoremap('::', ':NvimTreeToggle<CR>', 'silent')
+nnoremap(';;', ':NvimTreeToggle<CR>', 'silent')
 
 vim.g['nvim_tree_root_folder_modifier'] = 1
 vim.g['nvim_tree_highlight_opened_files'] = 1
