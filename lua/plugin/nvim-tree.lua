@@ -1,8 +1,8 @@
 nnoremap(';;', ':NvimTreeToggle<CR>', 'silent')
 
--- Respect current directory of buffer
+-- Switch nvim to current directory, but only if we are editing a lue file (we are configuring vim!)
 vim.cmd[[
- au BufEnter * if &ft != 'help' | silent! cd %:p:h | endif
+ au BufEnter * if &ft == 'lua' | silent! cd %:p:h | endif
 ]]
 
 vim.g['nvim_tree_root_folder_modifier'] = 1
