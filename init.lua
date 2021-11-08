@@ -5,13 +5,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 require('packer').startup(function()
-  use { 'goolord/alpha-nvim',
-    branch = 'main',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-    config = function ()
-        require'alpha'.setup(require'alpha.themes.startify'.opts)
-    end
-  }
+  use { 'goolord/alpha-nvim', branch = 'main', requires = { 'kyazdani42/nvim-web-devicons' } }
   use 'ryanoasis/vim-devicons' -- Devicons for CoC
   use { 'Pocco81/AutoSave.nvim' } -- Auto saves files
   use { 'nvim-telescope/telescope.nvim', requires = { {'nvim-lua/plenary.nvim'} } }
@@ -32,7 +26,6 @@ require('packer').startup(function()
   use 'tpope/vim-fugitive' -- Git wrapper (:G followed by git commands)
   use 'airblade/vim-gitgutter' -- Shows Git status in lefthand side
   use 'itchyny/lightline.vim' -- Adds status line at bottom of the file
-  use 'goolord/alpha-nvim' -- Adds startup screen
   use 'itchyny/vim-gitbranch' -- Shows branch name in lightline
   use 'sainnhe/gruvbox-material' -- Gruvbox w/ treesitter support
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -69,3 +62,4 @@ require("_toggle-terminal")
 require("_auto-save")
 require("_telescope")
 require("_treesitter")
+require("_alpha")
