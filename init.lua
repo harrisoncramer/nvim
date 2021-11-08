@@ -13,7 +13,7 @@ require('packer').startup(function()
     end
   }
   use 'ryanoasis/vim-devicons' -- Devicons for CoC
-  use 'Pocco81/AutoSave.nvim' -- Auto saves files
+  use {'Pocco81/AutoSave.nvim'} -- Auto saves files
   use 'tpope/vim-dispatch' -- Allows functions to run asyncrhonously from within VIM (:Dispatch)
   use 'tpope/vim-repeat' -- Allows plugins to repeat 
   use 'tpope/vim-surround' -- Use cs''[encloser] (that's a double-qutation mark) to modify encloser, ysiw[encloser] to add encloser
@@ -83,3 +83,4 @@ require("ultisnips")
 require("coc")
 require("miscellaneous")
 require("toggle-terminal")
+require("auto-save")
