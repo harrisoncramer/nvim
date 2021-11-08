@@ -100,16 +100,6 @@ _G.packer_plugins = {
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/emmet-vim",
     url = "https://github.com/mattn/emmet-vim"
   },
-  fzf = {
-    loaded = true,
-    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/fzf",
-    url = "/usr/local/opt/fzf"
-  },
-  ["fzf.vim"] = {
-    loaded = true,
-    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/fzf.vim",
-    url = "https://github.com/junegunn/fzf.vim"
-  },
   ["glyph-palette.vim"] = {
     loaded = true,
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/glyph-palette.vim",
@@ -141,6 +131,11 @@ _G.packer_plugins = {
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
+  ["plenary.nvim"] = {
+    loaded = true,
+    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/plenary.nvim",
+    url = "https://github.com/nvim-lua/plenary.nvim"
+  },
   sonokai = {
     loaded = true,
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/sonokai",
@@ -150,6 +145,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/tagalong.vim",
     url = "https://github.com/AndrewRadev/tagalong.vim"
+  },
+  ["telescope.nvim"] = {
+    loaded = true,
+    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+    url = "https://github.com/nvim-telescope/telescope.nvim"
   },
   ["toggleterm.nvim"] = {
     loaded = true,
