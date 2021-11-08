@@ -1,6 +1,6 @@
 local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.config/nvim/plugged')
-Plug 'caenrique/nvim-toggle-terminal'
+Plug 'akinsho/toggleterm.nvim'
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdate']})  -- We recommend updating the parsers on update
 Plug('neoclide/coc.nvim', { branch = 'release'}) -- Autocompletion w/ language server
 Plug 'kyazdani42/nvim-web-devicons' -- for file icons

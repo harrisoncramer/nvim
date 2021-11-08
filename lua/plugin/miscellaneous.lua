@@ -19,10 +19,6 @@ vim.g['vimwiki_map_prefix'] = '<Leader><F13>'
 -- Git Gutter use GitGutter on save
 vim.cmd[[ autocmd BufWritePost * GitGutter ]]
 
--- Vim Toggle Terminal
-nnoremap('<C-z>', ':ToggleTerminal<CR>', 'silent')
-tnoremap('<C-z>', '<C-\\><C-n>:ToggleTerminal<Enter>', 'silent')
-
 -- Startify
 vim.cmd[[
     let g:startify_custom_header = 'startify#center(startify#fortune#cowsay())'
