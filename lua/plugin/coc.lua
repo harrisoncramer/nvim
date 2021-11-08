@@ -1,5 +1,8 @@
 vim.cmd[[ let g:coc_global_extensions = [ 'coc-tsserver', 'coc-prettier', 'coc-json', 'coc-vetur', 'coc-styled-components', 'coc-eslint', 'coc-python', 'coc-emmet', 'coc-sql', 'coc-go', 'coc-css'] ]]
 
+-- Explorer
+nnoremap(';;', ':CocCommand explorer<CR>', 'silent')
+
 -- Rename
 nmap('R', '<Plug>(coc-rename)', "silent")
 

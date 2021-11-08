@@ -4,13 +4,13 @@ Plug 'caenrique/nvim-toggle-terminal'
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdate']})  -- We recommend updating the parsers on update
 Plug('neoclide/coc.nvim', { branch = 'release'}) -- Autocompletion w/ language server
 Plug 'kyazdani42/nvim-web-devicons' -- for file icons
-Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tpope/vim-dispatch' -- Allows functions to run asyncrhonously from within VIM (:Dispatch)
 Plug 'tpope/vim-repeat' -- Allows plugins to repeat 
 Plug 'tpope/vim-surround' -- Use cs''[encloser] (that's a double-qutation mark) to modify encloser, ysiw[encloser] to add encloser
 Plug 'tpope/vim-unimpaired' -- Key mappings
 Plug 'tpope/vim-eunuch' -- Rename files
 Plug 'romainl/vim-cool' -- Turns off hlsearch after search is done
+Plug 'ryanoasis/vim-devicons' -- Icons for coc-explorer
 Plug 'tpope/vim-rhubarb' -- Allows :Gbrowse which opens up file in Github
 Plug 'vim-scripts/BufOnly.vim' -- Close all buffers but the current one
 Plug 'markonm/traces.vim' -- highlights patterns and ranges for Ex commands in Command-line mode.
