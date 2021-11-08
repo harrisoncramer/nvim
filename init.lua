@@ -5,8 +5,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 require('packer').startup(function()
-  use {
-    'goolord/alpha-nvim',
+  use { 'goolord/alpha-nvim',
     branch = 'main',
     requires = { 'kyazdani42/nvim-web-devicons' },
     config = function ()
@@ -37,6 +36,20 @@ require('packer').startup(function()
   use 'goolord/alpha-nvim' -- Adds startup screen
   use 'itchyny/vim-gitbranch' -- Shows branch name in lightline
   use 'sainnhe/gruvbox-material' -- Gruvbox w/ treesitter support
+  use { 'nvim-treesitter/nvim-treesitter', 
+    run = ':TSUpdate',
+    config = function()
+      require'nvim-treesitter.configs'.setup {
+        highlight = {
+          enable = true,
+          custom_captures = {
+           -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+           ["foo.bar"] = "Identifier",
+          },
+        },
+      }
+    end,
+  }
   use 'sainnhe/sonokai' -- Color theme for vimwiki
   use 'lambdalisue/glyph-palette.vim' -- Colors for icons
   use 'adelarsq/vim-matchit' -- Allows HTML tag jumping with %
