@@ -1,6 +1,3 @@
--- Only required if you have packer configured as `opt`
--- vim.cmd [[packadd packer.nvim]]
-
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -67,9 +64,9 @@ require("functions")
 require("autocommands")
 
 -- Plugin-specific settings
-require("plugin-settings/fzf")
-require("plugin-settings/fugitive")
-require("plugin-settings/ultisnips")
-require("plugin-settings/coc")
-require("plugin-settings/miscellaneous")
-require("plugin-settings/toggle-terminal")
+require("fzf")
+require("fugitive")
+require("ultisnips")
+require("coc")
+require("miscellaneous")
+require("toggle-terminal")
