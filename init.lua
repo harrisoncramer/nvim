@@ -36,6 +36,10 @@ require('packer').startup(function()
   use 'tpope/vim-fugitive' -- Git wrapper (:G followed by git commands)
   use 'jiangmiao/auto-pairs' -- Auto pairing of brackets/parentheses
   use 'ThePrimeagen/harpoon' -- Harpooning specific files for quick reference
+  use {
+    'prettier/vim-prettier',
+    run = 'npm install',
+  }
   -- VIEW -- 
   use 'kyazdani42/nvim-web-devicons' -- Icons
   use 'kyazdani42/nvim-tree.lua' -- Tree

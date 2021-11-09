@@ -4,6 +4,9 @@ vim.cmd [[
   au BufNewFile,BufRead *.mjs setlocal filetype=javascript
   autocmd BufRead,BufNewFile *.json set filetype=jsonc
 
+  " Auto run prettier on save
+  :autocmd BufWritePost * :PrettierAsync
+
   au BufRead,BufNewFile *.nginx set ft=nginx
   au BufRead,BufNewFile */etc/nginx/* set ft=nginx
   au BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
