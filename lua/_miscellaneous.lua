@@ -18,24 +18,3 @@ vim.g['vimwiki_map_prefix'] = '<Leader><F13>'
 
 -- Git Gutter use GitGutter on save
 vim.cmd[[ autocmd BufWritePost * GitGutter ]]
-
--- Startify
-vim.cmd[[
-    let g:startify_custom_header = 'startify#center(startify#fortune#cowsay())'
-    let g:startify_bookmarks = [{ 'v': '~/.config/nvim/init.lua'}, {'z': '~/.oh-my-zsh/custom/.zshrc' }]
-  
-]]
-
-vim.cmd[[
-  let g:startify_custom_header = [
-            \ '                                ',
-            \ '            __                  ',
-            \ '    __  __ /\_\    ___ ___      ',
-            \ '   /\ \/\ \\/\ \ /'' __` __`\   ',
-            \ '   \ \ \_/ |\ \ \/\ \/\ \/\ \   ',
-            \ '    \ \___/  \ \_\ \_\ \_\ \_\  ',
-            \ '     \/__/    \/_/\/_/\/_/\/_/  ',
-  \ ]
-]]
-
-

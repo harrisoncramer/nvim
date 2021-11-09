@@ -9,6 +9,8 @@ vim.opt.relativenumber = true
 -- Number of current line
 vim.opt.number = true
 -- Turn on clipboard across panes for tmux
+vim.opt.regexpengine = 1
+-- Let treesitter handle styling
 -- vim.opt.clipboard += 'unnamedplus'
 -- set substitute/replace command to automatically use global flag
 vim.opt.gdefault = true
@@ -22,9 +24,6 @@ vim.opt.signcolumn = 'yes'
 -- Search settings 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
--- Allow folding
-vim.opt.foldmethod = 'syntax'
-vim.opt.foldlevelstart = 99
 -- Create splits vertically by default
 vim.opt.diffopt = 'vertical'
 -- set tab spacing to be 2 characters wide

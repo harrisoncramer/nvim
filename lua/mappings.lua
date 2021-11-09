@@ -21,7 +21,7 @@ noremap('<C-w><down>', '<C-w>-')
 -- Buffer management
 nnoremap('<leader>-', ':bd<CR>', "silent")
 nnoremap('<leader>h', ':x<CR>', "silent")
-nnoremap('<C-u>', ':bnext<CR>', "silent")
+nnoremap('<C-n>', ':bnext<CR>', "silent")
 nnoremap('<C-p>', ':bprev<CR>', "silent")
 nnoremap('<C-t>', '<C-^>', "silent")
 
@@ -36,7 +36,7 @@ nnoremap('<leader>vv', ':e $MYVIMRC<cr>')
 -- Miscellaneous
 nnoremap('<C-a>', '<esc>ggVG<CR>') -- Select all
 nnoremap('*', ':keepjumps normal! mi*`i<CR>`') -- " Use * to add w/out jumping
-nnoremap('<silent> <Leader>y', '"*y') -- Copy to clipboard
+nnoremap('<Leader>y', '"*y', 'silent') -- Copy to clipboard
 nnoremap('H', ':w<CR>') -- Quick save
 nnoremap('C-l', 'zL') -- Scroll to right
 nnoremap('C-h', 'zH') -- Scroll to left

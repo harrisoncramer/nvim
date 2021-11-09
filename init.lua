@@ -5,10 +5,12 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 require('packer').startup(function()
+  use 'wbthomason/packer.nvim' -- Let packer manage itself
   use { 'goolord/alpha-nvim', branch = 'main', requires = { 'kyazdani42/nvim-web-devicons' } }
   use 'ryanoasis/vim-devicons' -- Devicons for CoC
   use { 'Pocco81/AutoSave.nvim' } -- Auto saves files
   use { 'nvim-telescope/telescope.nvim', requires = { {'nvim-lua/plenary.nvim'} } }
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'tpope/vim-dispatch' -- Allows functions to run asyncrhonously from within VIM (:Dispatch)
   use 'tpope/vim-repeat' -- Allows plugins to repeat 
   use 'tpope/vim-surround' -- Use cs''[encloser] (that's a double-qutation mark) to modify encloser, ysiw[encloser] to add encloser
@@ -42,7 +44,8 @@ require('packer').startup(function()
   use 'tpope/vim-commentary' -- gcc to comment (or 3gcc)
   use 'jiangmiao/auto-pairs' -- Auto pairing of brackets/parentheses
   use 'vimwiki/vimwiki' -- Notetaking app
-  use 'akinsho/toggleterm.nvim'
+  use 'akinsho/toggleterm.nvim' -- Toggling the terminal 
+  use 'ThePrimeagen/harpoon' -- Harpooning specific files for quick reference
   use { 'b0o/mapx.nvim', branch = 'main' }
 end)
 
@@ -63,3 +66,4 @@ require("_auto-save")
 require("_telescope")
 require("_treesitter")
 require("_alpha")
+require("_harpoon")
