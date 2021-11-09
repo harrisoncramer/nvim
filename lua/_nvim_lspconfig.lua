@@ -65,7 +65,7 @@ for type, icon in pairs(signs) do
 end
 
 
--- Loop over all servers and configure
+-- Loop over all servers and configure (they must be installed gloablly, e.g. with npm i -g volar)
 local servers = { 'pyright', 'tsserver' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
@@ -76,3 +76,12 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
+
+nvim_lsp['vuels'].setup {
+  on_attach = on_attach,
+  settings = {
+    vetur = {
+      ignoreProjectWarning = true
+    }
+  }
+}

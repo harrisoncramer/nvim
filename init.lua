@@ -7,13 +7,14 @@ end
 require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Let packer manage itself
   -- LANGUAGE SERVER --
-  use 'neovim/nvim-lspconfig' 
-  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-nvim-lsp' -- Completion
+  use 'neovim/nvim-lspconfig' -- Configuring LSPs
+  use 'williamboman/nvim-lsp-installer' -- For installing language servers
+  use 'quangnguyen30192/cmp-nvim-ultisnips'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
-  use 'quangnguyen30192/cmp-nvim-ultisnips'
   -- CORE --
   use { 'Pocco81/AutoSave.nvim' } -- Auto saves files
   use { 'nvim-telescope/telescope.nvim', requires = { {'nvim-lua/plenary.nvim'} } }
