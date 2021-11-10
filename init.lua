@@ -40,6 +40,9 @@ require('packer').startup(function()
     'prettier/vim-prettier',
     run = 'npm install',
   }
+  -- TYPESCRIPT -- 
+  use 'jose-elias-alvarez/null-ls.nvim'
+  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   -- VIEW -- 
   use 'kyazdani42/nvim-web-devicons' -- Icons
   use 'kyazdani42/nvim-tree.lua' -- Tree

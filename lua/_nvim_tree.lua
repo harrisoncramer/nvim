@@ -1,25 +1,23 @@
-nnoremap(';;', ':NvimTreeToggle<CR>', 'silent')
+nnoremap('<leader>;', ':NvimTreeToggle<CR>', 'silent')
 
 -- Switch nvim to current directory, but only if we are editing a lue file (we are configuring vim!)
-vim.cmd[[
- au BufEnter * if &ft == 'lua' | silent! cd %:p:h | endif
-]]
+vim.cmd[[ au BufEnter * if &ft == 'lua' | silent! cd %:p:h | endif ]]
 
-vim.g['nvim_tree_root_folder_modifier'] = 1
-vim.g['nvim_tree_highlight_opened_files'] = 1
-vim.g['nvim_tree_git_hl'] = 1
-vim.g['nvim_tree_indent_markers'] = 0
-vim.g['nvim_tree_quit_on_open'] = 0
-vim.g['nvim_tree_gitignore'] = 0
-vim.g['nvim_tree_root_folder_modifier'] = ':~'
-vim.g['nvim_tree_add_trailing'] = 0
-vim.g['nvim_tree_group_empty'] = 1
-vim.g['nvim_tree_disable_window_picker'] = 1
-vim.g['nvim_tree_icon_padding'] = ' '
-vim.g['nvim_tree_symlink_arrow'] = ' >> '
-vim.g['nvim_tree_respect_buf_cwd'] = 1
-vim.g['nvim_tree_create_in_closed_folder'] = 1
-vim.g['nvim_tree_refresh_wait'] = 500
+vim.g.nvim_tree_root_folder_modifier = 1
+vim.g.nvim_tree_highlight_opened_files = 1
+vim.g.nvim_tree_git_hl = 1
+vim.g.nvim_tree_indent_markers = 0
+vim.g.nvim_tree_quit_on_open = 0
+vim.g.nvim_tree_gitignore = 0
+vim.g.nvim_tree_root_folder_modifier = ":~"
+vim.g.nvim_tree_add_trailing = 0
+vim.g.nvim_tree_group_empty = 1
+vim.g.nvim_tree_disable_window_picker = 1
+vim.g.nvim_tree_icon_padding = " "
+vim.g.nvim_tree_symlink_arrow = ">>" 
+vim.g.nvim_tree_respect_buf_cwd = 1
+vim.g.nvim_tree_create_in_closed_folder = 1
+vim.g.nvim_tree_refresh_wait = 500
 
 vim.cmd[[
 let g:nvim_tree_window_picker_exclude = {
