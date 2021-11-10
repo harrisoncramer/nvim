@@ -19,6 +19,8 @@ vim.g.nvim_tree_respect_buf_cwd = 1
 vim.g.nvim_tree_create_in_closed_folder = 1
 vim.g.nvim_tree_refresh_wait = 500
 
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+
 vim.cmd[[
 let g:nvim_tree_window_picker_exclude = {
     \   'buftype': [
@@ -60,6 +62,11 @@ let g:nvim_tree_icons = {
 
 ]]
 
+-- Dummy function used for cancelling default mappings
+function cancel ()
+  return nil
+end
+
 require'nvim-tree'.setup {
   disable_netrw       = true,
   hijack_netrw        = true,
@@ -87,10 +94,6 @@ require'nvim-tree'.setup {
     update_cwd  = false,
     ignore_list = {}
   },
-  system_open = {
-    cmd  = nil,
-    args = {}
-  },
   filters = {
     dotfiles = false,
     custom = {}
@@ -101,9 +104,40 @@ require'nvim-tree'.setup {
     hide_root_folder = false,
     side = 'left',
     auto_resize = false,
+    custom_only = true,
     mappings = {
-      custom_only = false,
-      list = {}
+      list = {
+        { key = "<Enter>",                      cb = tree_cb("cd") },
+        { key = {"<Enter>", "o" },              cb = tree_cb("edit") },
+        { key = "<C-v>",                        cb = tree_cb("vsplit") },
+        { key = "<C-x>",                        cb = tree_cb("split") },
+        { key = "<Tab>",                        cb = tree_cb("preview") },
+        { key = "R",                            cb = tree_cb("refresh") },
+        { key = "a",                            cb = tree_cb("create") },
+        { key = "d",                            cb = tree_cb("remove") },
+        { key = "r",                            cb = tree_cb("rename") },
+        { key = "x",                            cb = tree_cb("cut") },
+        { key = "c",                            cb = tree_cb("copy") },
+        { key = "p",                            cb = tree_cb("paste") },
+        { key = "y",                            cb = tree_cb("copy_name") },
+        { key = "Y",                            cb = tree_cb("copy_path") },
+        { key = "gy",                           cb = tree_cb("copy_absolute_path") },
+        { key = "-",                            cb = tree_cb("dir_up") },
+        { key = "s",                            cb = cancel() },
+        { key = "q",                            cb = tree_cb("close") },
+        { key = "g?",                           cb = tree_cb("toggle_help") },
+        
+      }
     }
   }
 }
+        -- "i" = tree_cb("split"),
+        -- "<Tab>" = tree_cb("preview"),
+        -- "R" = tree_cb("refresh"),
+        -- "a" = tree_cb("create"),
+        -- "d" = tree_cb("remove"),
+        -- "r" = tree_cb("rename"),
+        -- "x" = tree_cb("cut"),
+        -- "y" = tree_cb("copy"),
+        -- "p" = tree_cb("paste"),
+        -- "q" = tree_cb("close"),

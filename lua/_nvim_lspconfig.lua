@@ -7,7 +7,7 @@ local util = require 'lspconfig/util'
 cmp.setup({
   snippet = {
     expand = function(args)
-      vim.fn["UltiSnips#Anon"](args.body) 
+      vim.fn["UltiSnips#Anon"](args.body)
     end,
   },
   mapping = {
@@ -40,15 +40,6 @@ local on_attach = function(client, bufnr)
   nnoremap('R', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   nnoremap('<leader>[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   nnoremap('<leader>]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  -- nnoremap('<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  -- nnoremap('<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  -- nnoremap('<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  -- nnoremap('<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  -- nnoremap('<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  -- nnoremap('gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  -- nnoremap('<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  -- nnoremap('<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  -- nnoremap('<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
 -- Hide inline diagnostics
@@ -67,7 +58,7 @@ for type, icon in pairs(signs) do
 end
 
 
--- Loop over all servers and configure (they must be installed gloablly, e.g. with npm i -g volar)
+-- Loop over all servers and configure those that don't require any other complex additional functionality
 local servers = { 'pyright', 'tsserver' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
@@ -79,6 +70,7 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-- VUEJS --
 nvim_lsp.vuels.setup {
   on_attach = function(client)
       --[[
@@ -119,4 +111,46 @@ nvim_lsp.vuels.setup {
       }
   },
   root_dir = util.root_pattern("header.php", "package.json", "style.css", 'webpack.config.js')
+}
+
+
+-- LUA --
+-- Install language server in ~/.config/nvim via: https://github.com/sumneko/lua-language-server/wiki/Build-and-Run
+USER = vim.fn.expand('$USER')
+
+local sumneko_root_path = ""
+local sumneko_binary = ""
+
+if vim.fn.has("mac") == 1 then
+    sumneko_root_path = "/Users/" .. USER .. "/.config/nvim/lua-language-server"
+    sumneko_binary = "/Users/" .. USER .. "/.config/nvim/lua-language-server/bin/macOS/lua-language-server"
+elseif vim.fn.has("unix") == 1 then
+    sumneko_root_path = "/home/" .. USER .. "/.config/nvim/lua-language-server"
+    sumneko_binary = "/home/" .. USER .. "/.config/nvim/lua-language-server/bin/Linux/lua-language-server"
+else
+    print("Unsupported system for sumneko")
+end
+
+require'lspconfig'.sumneko_lua.setup {
+    cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = {
+        Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+                -- Setup your lua path
+                path = vim.split(package.path, ';')
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {'vim', 'nnoremap'}
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = {[vim.fn.expand('$VIMRUNTIME/lua')] = true, [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true}
+            }
+        }
+    }
 }

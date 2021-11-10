@@ -3,3 +3,4 @@
 .undo
 .vim
 plugged/
+lua-language-server
