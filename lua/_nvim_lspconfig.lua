@@ -93,7 +93,7 @@ nvim_lsp.vuels.setup {
           },
           format = {
               defaultFormatter = {
-                  html = "none",
+                  html = "prettier",
                   js = "prettier",
                   ts = "prettier",
               }
@@ -145,7 +145,7 @@ require'lspconfig'.sumneko_lua.setup {
             },
             diagnostics = {
                 -- Get the language server to recognize the `vim` global
-                globals = {'vim', 'nnoremap'}
+                globals = {'vim', 'nnoremap', 'use'}
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files

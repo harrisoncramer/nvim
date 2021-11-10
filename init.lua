@@ -20,12 +20,12 @@ require('packer').startup(function()
   use { 'nvim-telescope/telescope.nvim', requires = { {'nvim-lua/plenary.nvim'} } }
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'tpope/vim-dispatch' -- Allows functions to run asyncrhonously from within VIM (:Dispatch)
-  use 'tpope/vim-repeat' -- Allows plugins to repeat 
+  use 'tpope/vim-repeat' -- Allows plugins to repeat
   use 'tpope/vim-surround' -- Use cs''[encloser] (that's a double-qutation mark) to modify encloser, ysiw[encloser] to add encloser
   use 'tpope/vim-unimpaired' -- Key mappings
   use 'tpope/vim-eunuch' -- Rename files
   use 'tpope/vim-commentary' -- gcc to comment (or 3gcc)
-  use 'akinsho/toggleterm.nvim' -- Toggling the terminal 
+  use 'akinsho/toggleterm.nvim' -- Toggling the terminal
   use 'romainl/vim-cool' -- Turns off hlsearch after search is done
   use 'tpope/vim-rhubarb' -- Allows :Gbrowse which opens up file in Github
   use 'vim-scripts/BufOnly.vim' -- Close all buffers but the current one
@@ -40,10 +40,7 @@ require('packer').startup(function()
     'prettier/vim-prettier',
     run = 'npm install',
   }
-  -- TYPESCRIPT -- 
-  use 'jose-elias-alvarez/null-ls.nvim'
-  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-  -- VIEW -- 
+  -- VIEW --
   use 'kyazdani42/nvim-web-devicons' -- Icons
   use 'kyazdani42/nvim-tree.lua' -- Tree
   use { 'goolord/alpha-nvim', branch = 'main', requires = { 'kyazdani42/nvim-web-devicons' } }
