@@ -6,7 +6,7 @@ vim.cmd [[
 
   " Auto format on save with built-in LSP
   
-  :autocmd BufWritePost * :lua vim.lsp.buf.formatting_sync(nil, 1000)
+  :autocmd BufWritePost * :lua vim.lsp.buf.formatting()
 
   au BufRead,BufNewFile *.nginx set ft=nginx
   au BufRead,BufNewFile */etc/nginx/* set ft=nginx

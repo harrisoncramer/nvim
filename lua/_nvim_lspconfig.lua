@@ -77,20 +77,13 @@ lsp_installer.on_server_ready(function(server)
          on_attach(client)
      end
      opts.capabilities = capabilities
-     opts.root_dir = util.root_pattern("header.php", "package.json", "style.css", 'webpack.config.js')
+     opts.root_dir = util.root_pattern("package.json", 'vue.config.js')
      opts.settings = {
          vetur = {
              ignoreProjectWarning = true,
              completion = {
                  autoImport = true,
                  useScaffoldSnippets = true,
-             },
-             format = {
-                 defaultFormatter = {
-                     html = "prettier",
-                     js = "prettier",
-                     ts = "prettier",
-                 }
              },
              validation = {
                  template = true,
@@ -99,9 +92,9 @@ lsp_installer.on_server_ready(function(server)
                  templateProps = true,
                  interpolation = true
              },
-             experimental = {
-                 templateInterpolationService = true
-             }
+             -- experimental = {
+             --     templateInterpolationService = true
+             -- }
          }
      }
    end
