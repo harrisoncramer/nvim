@@ -19,8 +19,7 @@ vim.g.vimwiki_map_prefix = '<Leader><F13>'
 -- Git Gutter use GitGutter on save (disable by default at startup)
 vim.cmd[[ autocmd VimEnter * :GitGutterDisable ]]
 vim.cmd[[ autocmd BufWritePost * GitGutter ]]
-nnoremap('<leader>gg', ':GitGutterToggle<CR>', 'silent')
+nnoremap('<leader>gg', ':GitGutterToggle<CR>')
 
 -- Emmet
 vim.g.user_emmet_leader_key = '<C-e>'
-

@@ -11,16 +11,8 @@ nnoremap('sl', '<C-w>l')
 nnoremap('sq', '<C-w>q')
 nnoremap('sp', '<C-w><C-p>')
 
--- Resize splits
-nnoremap('<C-w><left>', '<C-w><')
-nnoremap('<C-w><right>', '<C-w>>')
-nnoremap('<C-w><up>', '<C-w>')
-noremap('<C-w><down>', '<C-w>-')
-
-
 -- Buffer management
 nnoremap('<leader>-', ':bd<CR>', "silent")
-nnoremap('<leader>h', ':x<CR>', "silent")
 nnoremap('<C-n>', ':bnext<CR>', "silent")
 nnoremap('<C-p>', ':bprev<CR>', "silent")
 nnoremap('<C-t>', '<C-^>', "silent")

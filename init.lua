@@ -25,6 +25,7 @@ require('packer').startup(function()
   use 'tpope/vim-unimpaired' -- Key mappings
   use 'tpope/vim-eunuch' -- Rename files
   use 'tpope/vim-commentary' -- gcc to comment (or 3gcc)
+  use 'suy/vim-context-commentstring'
   use 'akinsho/toggleterm.nvim' -- Toggling the terminal
   use 'romainl/vim-cool' -- Turns off hlsearch after search is done
   use 'tpope/vim-rhubarb' -- Allows :Gbrowse which opens up file in Github

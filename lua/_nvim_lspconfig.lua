@@ -1,7 +1,6 @@
 local cmp = require'cmp'
-local nvim_lsp = require'lspconfig'
-local util = require 'lspconfig/util'
-
+local util = require'lspconfig/util'
+local lsp_installer = require("nvim-lsp-installer")
 
 -- Setup completion engine
 cmp.setup({
@@ -57,85 +56,57 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-
--- Loop over all servers and configure those that don't require any other complex additional functionality
-local servers = { 'pyright', 'tsserver' }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    }
-  }
-end
-
--- VUEJS --
-nvim_lsp.vuels.setup {
-  on_attach = function(client)
-      --[[
-          Internal Vetur formatting is not supported out of the box
-
-          This line below is required if you:
-              - want to format using Nvim's native `vim.lsp.buf.formatting**()`
-              - want to use Vetur's formatting config instead, e.g, settings.vetur.format {...}
-      --]]
-      client.resolved_capabilities.document_formatting = true
-      on_attach(client)
-  end,
+-- Baseline opts for all Language Servers
+local opts = {
   capabilities = capabilities,
-  settings = {
-      vetur = {
-          ignoreProjectWarning = true,
-          completion = {
-              autoImport = true,
-              useScaffoldSnippets = true,
-          },
-          format = {
-              defaultFormatter = {
-                  html = "prettier",
-                  js = "prettier",
-                  ts = "prettier",
-              }
-          },
-          validation = {
-              template = true,
-              script = true,
-              style = true,
-              templateProps = true,
-              interpolation = true
-          },
-          experimental = {
-              templateInterpolationService = true
-          }
-      }
-  },
-  root_dir = util.root_pattern("header.php", "package.json", "style.css", 'webpack.config.js')
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  }
 }
 
+-- Loop over installed servers and set them up. Register a handler that will be called for all installed servers.
+lsp_installer.on_server_ready(function(server)
+    if server.name == "tsserver" then
+      opts.root_dir = util.root_pattern("package.json", "webpack.config.js")
+    end
 
--- LUA --
--- Install language server in ~/.config/nvim via: https://github.com/sumneko/lua-language-server/wiki/Build-and-Run
-USER = vim.fn.expand('$USER')
-
-local sumneko_root_path = ""
-local sumneko_binary = ""
-
-if vim.fn.has("mac") == 1 then
-    sumneko_root_path = "/Users/" .. USER .. "/.config/nvim/lua-language-server"
-    sumneko_binary = "/Users/" .. USER .. "/.config/nvim/lua-language-server/bin/macOS/lua-language-server"
-elseif vim.fn.has("unix") == 1 then
-    sumneko_root_path = "/home/" .. USER .. "/.config/nvim/lua-language-server"
-    sumneko_binary = "/home/" .. USER .. "/.config/nvim/lua-language-server/bin/Linux/lua-language-server"
-else
-    print("Unsupported system for sumneko")
-end
-
-require'lspconfig'.sumneko_lua.setup {
-    cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
-    capabilities = capabilities,
-    on_attach = on_attach,
-    settings = {
+    if server.name == "vuels" then
+     opts.on_attach = function(client)
+         client.resolved_capabilities.document_formatting = true
+         on_attach(client)
+     end
+     opts.capabilities = capabilities
+     opts.root_dir = util.root_pattern("header.php", "package.json", "style.css", 'webpack.config.js')
+     opts.settings = {
+         vetur = {
+             ignoreProjectWarning = true,
+             completion = {
+                 autoImport = true,
+                 useScaffoldSnippets = true,
+             },
+             format = {
+                 defaultFormatter = {
+                     html = "prettier",
+                     js = "prettier",
+                     ts = "prettier",
+                 }
+             },
+             validation = {
+                 template = true,
+                 script = true,
+                 style = true,
+                 templateProps = true,
+                 interpolation = true
+             },
+             experimental = {
+                 templateInterpolationService = true
+             }
+         }
+     }
+   end
+   if server.name == "sumneko_lua" then
+    opts.settings = {
         Lua = {
             runtime = {
                 -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
@@ -153,4 +124,8 @@ require'lspconfig'.sumneko_lua.setup {
             }
         }
     }
-}
+  end
+  -- This setup() function is exactly the same as lspconfig's setup function.
+  -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+  server:setup(opts)
+end)
