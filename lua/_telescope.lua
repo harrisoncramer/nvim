@@ -1,6 +1,6 @@
 local actions = require('telescope.actions')
-require('telescope').setup{ 
-  defaults = { 
+require('telescope').setup{
+  defaults = {
     file_ignore_patterns = { "node_modules"},
     mappings = {
       i = {
@@ -8,7 +8,7 @@ require('telescope').setup{
         ["<esc>"] = actions.close
       }
     }
-  } 
+  }
 }
 
 -- nnoremap('<c-g>', "<cmd>lua require('telescope.builtin').git_files()<cr>")

@@ -14,7 +14,7 @@ vim.g.nvim_tree_add_trailing = 0
 vim.g.nvim_tree_group_empty = 1
 vim.g.nvim_tree_disable_window_picker = 1
 vim.g.nvim_tree_icon_padding = " "
-vim.g.nvim_tree_symlink_arrow = ">>" 
+vim.g.nvim_tree_symlink_arrow = ">>"
 vim.g.nvim_tree_respect_buf_cwd = 1
 vim.g.nvim_tree_create_in_closed_folder = 1
 vim.g.nvim_tree_refresh_wait = 500
@@ -63,7 +63,7 @@ let g:nvim_tree_icons = {
 ]]
 
 -- Dummy function used for cancelling default mappings
-function cancel ()
+local function cancel ()
   return nil
 end
 
@@ -126,7 +126,6 @@ require'nvim-tree'.setup {
         { key = "s",                            cb = cancel() },
         { key = "q",                            cb = tree_cb("close") },
         { key = "g?",                           cb = tree_cb("toggle_help") },
-        
       }
     }
   }

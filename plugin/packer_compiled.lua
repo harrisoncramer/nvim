@@ -69,11 +69,6 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  ["AutoSave.nvim"] = {
-    loaded = true,
-    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/AutoSave.nvim",
-    url = "https://github.com/Pocco81/AutoSave.nvim"
-  },
   ["BufOnly.vim"] = {
     loaded = true,
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/BufOnly.vim",
@@ -124,10 +119,10 @@ _G.packer_plugins = {
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/glyph-palette.vim",
     url = "https://github.com/lambdalisue/glyph-palette.vim"
   },
-  ["gruvbox-material"] = {
+  ["gruvbox.nvim"] = {
     loaded = true,
-    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/gruvbox-material",
-    url = "https://github.com/sainnhe/gruvbox-material"
+    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/gruvbox.nvim",
+    url = "https://github.com/ellisonleao/gruvbox.nvim"
   },
   harpoon = {
     loaded = true,
@@ -138,6 +133,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/lightline.vim",
     url = "https://github.com/itchyny/lightline.vim"
+  },
+  ["lush.nvim"] = {
+    loaded = true,
+    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/lush.nvim",
+    url = "https://github.com/rktjmp/lush.nvim"
   },
   ["mapx.nvim"] = {
     loaded = true,

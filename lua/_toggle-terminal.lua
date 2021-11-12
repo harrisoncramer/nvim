@@ -8,7 +8,6 @@ require("toggleterm").setup{
 }
 
 function _G.set_terminal_keymaps()
-  local opts = {noremap = true}
   tnoremap('<esc>', '<C-\\><C-n>')
 end
 

@@ -11,3 +11,8 @@ vim.cmd[[
   endfunction
   nnoremap <silent> <leader>q :call PrintQList()<cr>
 ]]
+
+-- This function can be called from within neovim like this --> :lua SayHello()
+function SayHello()
+  print("Hello there!")
+end

@@ -16,7 +16,6 @@ require('packer').startup(function()
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
   -- CORE --
-  use { 'Pocco81/AutoSave.nvim' } -- Auto saves files
   use { 'nvim-telescope/telescope.nvim', requires = { {'nvim-lua/plenary.nvim'} } }
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'tpope/vim-dispatch' -- Allows functions to run asyncrhonously from within VIM (:Dispatch)
@@ -41,14 +40,14 @@ require('packer').startup(function()
     'prettier/vim-prettier',
     run = 'npm install',
   }
-  -- VIEW --
+  -- -- VIEW --
   use 'kyazdani42/nvim-web-devicons' -- Icons
   use 'kyazdani42/nvim-tree.lua' -- Tree
   use { 'goolord/alpha-nvim', branch = 'main', requires = { 'kyazdani42/nvim-web-devicons' } }
   use 'airblade/vim-gitgutter' -- Shows Git status in lefthand side
   use 'itchyny/lightline.vim' -- Adds status line at bottom of the file
   use 'itchyny/vim-gitbranch' -- Shows branch name in lightline
-  use 'sainnhe/gruvbox-material' -- Gruvbox w/ treesitter support
+  use { 'ellisonleao/gruvbox.nvim', requires = { 'rktjmp/lush.nvim' }}
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'sainnhe/sonokai' -- Color theme for vimwiki
   use 'lambdalisue/glyph-palette.vim' -- Colors for icons
@@ -77,7 +76,6 @@ require("_fugitive")
 require("_ultisnips")
 require("_miscellaneous")
 require("_toggle-terminal")
-require("_auto-save")
 require("_telescope")
 require("_treesitter")
 require("_alpha")

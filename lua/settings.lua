@@ -1,5 +1,6 @@
 -- set.leader to comma/space key
 vim.g.mapleader = " "
+vim.g.wildignore = '**/node_modules/**'
 -- update time for plugins (speed when they act)
 vim.opt.updatetime = 300
 --Mouse support active. Alt click
@@ -19,9 +20,9 @@ vim.opt.wrap = false
 -- Start scrolling when you're 15 away from bottom (and side)
 vim.opt.scrolloff = 15
 vim.opt.sidescrolloff = 35
--- Keep column for linting always on 
+-- Keep column for linting always on
 vim.opt.signcolumn = 'yes'
--- Search settings 
+-- Search settings
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 -- Create splits vertically by default

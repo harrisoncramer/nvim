@@ -85,6 +85,13 @@ lsp_installer.on_server_ready(function(server)
                  autoImport = true,
                  useScaffoldSnippets = true,
              },
+             format = {
+                 defaultFormatter = {
+                     html = "prettier",
+                     js = "prettier",
+                     ts = "prettier",
+                 }
+             },
              validation = {
                  template = true,
                  script = true,
@@ -109,7 +116,7 @@ lsp_installer.on_server_ready(function(server)
             },
             diagnostics = {
                 -- Get the language server to recognize the `vim` global
-                globals = {'vim', 'nnoremap', 'use'}
+                globals = {'vim', 'nnoremap',  'inoremap', 'tnoremap', 'use'}
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
