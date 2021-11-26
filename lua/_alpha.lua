@@ -36,7 +36,7 @@ dashboard.section.buttons.val = {
     dashboard.button( "f", "  > Find file", ":Telescope find_files<CR>"),
     dashboard.button( "r", "  > Recent"   , ":Telescope oldfiles<CR>"),
     dashboard.button( "v", "  > Neovim" , ":e $MYVIMRC | :cd %:p:h<CR>"),
-    dashboard.button( "z", "  > Zsh" , ":e ~/.oh-my-zsh/custom/.zshrc | :cd %:p:h<CR>"),
+    dashboard.button( "z", "  > Zsh" , ":e ~/.zshrc | :cd %:p:h<CR>"),
     dashboard.button( "q", "  > Quit NVIM", ":qa<CR>"),
 }
 

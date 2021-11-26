@@ -25,11 +25,16 @@ vim.api.nvim_exec("nnoremap <expr> j (v:count > 1 ? \"m'\" . v:count : '') . 'j'
 -- nnoremap('<leader>sv', ':luafile ~/.config/nvim/init.lua<cr>')
 nnoremap('<leader>vv', ':e $MYVIMRC<cr>')
 
+function saveAndFormat()
+    vim.lsp.buf.formatting_sync()
+    vim.api.nvim_command('w')
+end
 -- Miscellaneous
 nnoremap('<C-a>', '<esc>ggVG<CR>') -- Select all
 nnoremap('*', ':keepjumps normal! mi*`i<CR>`') -- " Use * to add w/out jumping
 nnoremap('<Leader>y', '"*y', 'silent') -- Copy to clipboard
-nnoremap('H', ':w<CR>') -- Quick save
+nnoremap('<Leader>p', '"*p', 'silent') -- Paste from system clipboard
+nnoremap('H', ':lua saveAndFormat()<CR>') -- Quick save
 nnoremap('C-l', 'zL') -- Scroll to right
 nnoremap('C-h', 'zH') -- Scroll to left
 nnoremap('Y', 'y$') -- Copy until end of line

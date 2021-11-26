@@ -49,14 +49,14 @@ require('packer').startup(function()
   use 'itchyny/vim-gitbranch' -- Shows branch name in lightline
   use { 'ellisonleao/gruvbox.nvim', requires = { 'rktjmp/lush.nvim' }}
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use 'sainnhe/sonokai' -- Color theme for vimwiki
+  use 'nvim-treesitter/playground' -- Playground
+  -- use 'sainnhe/sonokai' -- Color theme for vimwiki
   use 'lambdalisue/glyph-palette.vim' -- Colors for icons
   -- LANGUAGES --
   use 'adelarsq/vim-matchit' -- Allows HTML tag jumping with %
   use 'mattn/emmet-vim' -- Enables emmet (coc-emmet provides autocomplete)
   use 'AndrewRadev/tagalong.vim' -- Automatically changes closing tags
   use 'alvan/vim-closetag' -- Auto-closing of HTML tags
-  use 'posva/vim-vue'
   use 'hashivim/vim-terraform' -- Adds auto-formatting + highlighting for terraform
   use 'ap/vim-css-color' --Colors for CSS
   use 'jparise/vim-graphql' -- Install linting for graphQl
@@ -77,8 +77,8 @@ require("_ultisnips")
 require("_miscellaneous")
 require("_toggle-terminal")
 require("_telescope")
-require("_treesitter")
 require("_alpha")
 require("_harpoon")
 require("_nvim_tree")
 require("_nvim_lspconfig")
+require("_treesitter")

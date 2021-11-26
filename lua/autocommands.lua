@@ -1,13 +1,9 @@
 vim.cmd [[
+
   " Convert .ts files to typescript (as well as other types)
   au BufNewFile,BufRead *.cjs setlocal filetype=javascript
   au BufNewFile,BufRead *.mjs setlocal filetype=javascript
   autocmd BufRead,BufNewFile *.json set filetype=jsonc
-
-  " Auto format on save with built-in LSP
-  
-  :autocmd BufWritePost * :lua vim.lsp.buf.formatting()
-
   au BufRead,BufNewFile *.nginx set ft=nginx
   au BufRead,BufNewFile */etc/nginx/* set ft=nginx
   au BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
@@ -31,4 +27,10 @@ vim.cmd [[
 
   " Allow line wrapping for .wiki files
   autocmd FileType vimwiki set wrap
+  " Set shift width to be just two for certain kinds of files
+  autocmd BufNewFile,BufRead *.html,*.js,*.json,*.tf,*.tfvars,*.vue,*.css, setlocal shiftwidth=2
+
+  " Remove trailing spaces
+  autocmd BufWritePre * :%s/\s\+$//e
+
 ]]

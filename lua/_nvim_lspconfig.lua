@@ -99,9 +99,6 @@ lsp_installer.on_server_ready(function(server)
                  templateProps = true,
                  interpolation = true
              },
-             -- experimental = {
-             --     templateInterpolationService = true
-             -- }
          }
      }
    end
