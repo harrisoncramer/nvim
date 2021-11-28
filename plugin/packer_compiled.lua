@@ -319,6 +319,11 @@ _G.packer_plugins = {
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/vim-unimpaired",
     url = "https://github.com/tpope/vim-unimpaired"
   },
+  ["vim-vue"] = {
+    loaded = true,
+    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/vim-vue",
+    url = "https://github.com/posva/vim-vue"
+  },
   vimwiki = {
     loaded = true,
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/vimwiki",

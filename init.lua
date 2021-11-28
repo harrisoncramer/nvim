@@ -54,6 +54,7 @@ require('packer').startup(function()
   -- use 'sainnhe/sonokai' -- Color theme for vimwiki
   use 'lambdalisue/glyph-palette.vim' -- Colors for icons
   -- LANGUAGES --
+  use 'posva/vim-vue'
   use 'adelarsq/vim-matchit' -- Allows HTML tag jumping with %
   use 'mattn/emmet-vim' -- Enables emmet (coc-emmet provides autocomplete)
   use 'AndrewRadev/tagalong.vim' -- Automatically changes closing tags
