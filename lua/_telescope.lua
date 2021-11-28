@@ -1,19 +1,19 @@
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
-    file_ignore_patterns = { "node_modules"},
+    hidden = true,
+    file_ignore_patterns = { "node_modules", "package%-lock.json" },
     mappings = {
       i = {
-        ['<leader><leader>q'] = actions.smart_send_to_qflist,
         ["<esc>"] = actions.close
       }
     }
   }
 }
 
--- nnoremap('<c-g>', "<cmd>lua require('telescope.builtin').git_files()<cr>")
-nnoremap('<c-j>', "<cmd>lua require('telescope.builtin').find_files()<cr>")
-nnoremap('<c-f>', "<cmd>lua require('telescope.builtin').live_grep()<cr>")
-nnoremap('<c-g>', "<cmd>lua require('telescope.builtin').file_browser()<cr>")
-nnoremap('<c-b>', "<cmd>lua require('telescope.builtin').buffers()<cr>")
--- nnoremap('<c-h>', "<cmd>lua require('telescope.builtin').help_tags()<cr>")
+nnoremap('<c-j>', "<cmd>lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!node_modules/**'}}<cr>")
+nnoremap('<c-f>', "<cmd>lua require('telescope.builtin').live_grep({ hidden = true })<cr>")
+nnoremap('<c-g>', "<cmd>lua require('telescope.builtin').file_browser({ hidden = true })<cr>")
+nnoremap('<c-b>', "<cmd>lua require('telescope.builtin').buffers({ hidden = true })<cr>")
+
+require('telescope')

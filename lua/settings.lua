@@ -27,13 +27,8 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 -- Create splits vertically by default
 vim.opt.diffopt = 'vertical'
--- set tab spacing to be 2 characters wide
--- vim.opt.tabstop = 4
-vim.opt.tabstop = 2
 -- On pressing tab, insert 2 spaces
 vim.opt.expandtab = true
--- When indenting with '>', use 2 spaces width
-vim.opt.shiftwidth = 4
 -- set no swap files
 vim.opt.swapfile = false
 vim.opt.backup = false
@@ -41,14 +36,16 @@ vim.opt.backup = false
 -- Allow undo-ing even after save file
 vim.opt.undodir = vim.fn.stdpath('config') .. '/.undo'
 vim.opt.undofile = true
--- Carry over current indentation to next line
-vim.opt.autoindent = true
--- set indent intelligently
-vim.opt.smartindent = true
-vim.opt.cindent = true
 -- Hide 'No write since last change' error on switching buffers Keeps buffer open in the background.
 vim.opt.hidden = true
 -- Control searching. Ignore case during search, except if it includes a capital letter
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.backspace = 'indent,eol,start'
+
+-- Indenting
+vim.opt.shiftwidth = 2
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.cindent = true
+vim.opt.tabstop = 2

@@ -27,9 +27,6 @@ vim.cmd [[
 
   " Allow line wrapping for .wiki files
   autocmd FileType vimwiki set wrap
-  " Set shift width to be just two for certain kinds of files
-  autocmd BufNewFile,BufRead *.html,*.js,*.json,*.tf,*.tfvars,*.vue,*.css, setlocal shiftwidth=2
-
   " Remove trailing spaces
   autocmd BufWritePre * :%s/\s\+$//e
 
