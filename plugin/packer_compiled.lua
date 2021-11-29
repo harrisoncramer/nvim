@@ -284,6 +284,13 @@ _G.packer_plugins = {
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/vim-graphql",
     url = "https://github.com/jparise/vim-graphql"
   },
+  ["vim-iced"] = {
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/home/harrycramer/.local/share/nvim/site/pack/packer/opt/vim-iced",
+    url = "https://github.com/liquidz/vim-iced"
+  },
   ["vim-matchit"] = {
     loaded = true,
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/vim-matchit",
@@ -303,6 +310,13 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/vim-rhubarb",
     url = "https://github.com/tpope/vim-rhubarb"
+  },
+  ["vim-sexp"] = {
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/harrycramer/.local/share/nvim/site/pack/packer/opt/vim-sexp",
+    url = "https://github.com/guns/vim-sexp"
   },
   ["vim-surround"] = {
     loaded = true,
@@ -332,6 +346,13 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Filetype lazy-loads
+time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType clojure ++once lua require("packer.load")({'vim-iced', 'vim-sexp'}, { ft = "clojure" }, _G.packer_plugins)]]
+time([[Defining lazy-load filetype autocommands]], false)
+vim.cmd("augroup END")
 if should_profile then save_profiles() end
 
 end)

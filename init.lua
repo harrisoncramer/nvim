@@ -16,6 +16,8 @@ require('packer').startup(function()
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
+  use {'guns/vim-sexp',  ft = 'clojure'}
+  use {'liquidz/vim-iced', ft = 'clojure'}
   -- CORE --
   use { 'nvim-telescope/telescope.nvim', requires = { {'nvim-lua/plenary.nvim'} } }
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
@@ -84,3 +86,4 @@ require("_harpoon")
 require("_nvim_tree")
 require("_nvim_lspconfig")
 require("_treesitter")
+require("_vim_iced")

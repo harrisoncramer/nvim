@@ -15,5 +15,3 @@ nnoremap('<c-j>', "<cmd>lua require('telescope.builtin').find_files{ find_comman
 nnoremap('<c-f>', "<cmd>lua require('telescope.builtin').live_grep({ hidden = true })<cr>")
 nnoremap('<c-g>', "<cmd>lua require('telescope.builtin').file_browser({ hidden = true })<cr>")
 nnoremap('<c-b>', "<cmd>lua require('telescope.builtin').buffers({ hidden = true })<cr>")
-
-require('telescope')

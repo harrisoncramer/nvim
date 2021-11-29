@@ -27,8 +27,6 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 -- Create splits vertically by default
 vim.opt.diffopt = 'vertical'
--- On pressing tab, insert 2 spaces
-vim.opt.expandtab = true
 -- set no swap files
 vim.opt.swapfile = false
 vim.opt.backup = false
@@ -49,3 +47,4 @@ vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.cindent = true
 vim.opt.tabstop = 2
+vim.opt.expandtab = true
