@@ -129,10 +129,10 @@ _G.packer_plugins = {
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/harpoon",
     url = "https://github.com/ThePrimeagen/harpoon"
   },
-  ["lightline.vim"] = {
+  ["lualine.nvim"] = {
     loaded = true,
-    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/lightline.vim",
-    url = "https://github.com/itchyny/lightline.vim"
+    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
   },
   ["lush.nvim"] = {
     loaded = true,
@@ -274,11 +274,6 @@ _G.packer_plugins = {
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/vim-gitbranch",
     url = "https://github.com/itchyny/vim-gitbranch"
   },
-  ["vim-gitgutter"] = {
-    loaded = true,
-    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/vim-gitgutter",
-    url = "https://github.com/airblade/vim-gitgutter"
-  },
   ["vim-graphql"] = {
     loaded = true,
     path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/start/vim-graphql",
@@ -288,7 +283,7 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = true,
     only_cond = false,
-    path = "/home/harrycramer/.local/share/nvim/site/pack/packer/opt/vim-iced",
+    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/opt/vim-iced",
     url = "https://github.com/liquidz/vim-iced"
   },
   ["vim-matchit"] = {
@@ -315,7 +310,7 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     only_cond = false,
-    path = "/home/harrycramer/.local/share/nvim/site/pack/packer/opt/vim-sexp",
+    path = "/Users/harrisoncramer/.local/share/nvim/site/pack/packer/opt/vim-sexp",
     url = "https://github.com/guns/vim-sexp"
   },
   ["vim-surround"] = {

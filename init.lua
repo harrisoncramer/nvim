@@ -47,8 +47,10 @@ require('packer').startup(function()
   use 'kyazdani42/nvim-web-devicons' -- Icons
   use 'kyazdani42/nvim-tree.lua' -- Tree
   use { 'goolord/alpha-nvim', branch = 'main', requires = { 'kyazdani42/nvim-web-devicons' } }
-  use 'airblade/vim-gitgutter' -- Shows Git status in lefthand side
-  use 'itchyny/lightline.vim' -- Adds status line at bottom of the file
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = {'kyazdani42/nvim-web-devicons', opt = true}
+  }
   use 'itchyny/vim-gitbranch' -- Shows branch name in lightline
   use { 'ellisonleao/gruvbox.nvim', requires = { 'rktjmp/lush.nvim' }}
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -87,3 +89,4 @@ require("_nvim_tree")
 require("_nvim_lspconfig")
 require("_treesitter")
 require("_vim_iced")
+require("_lualine")
