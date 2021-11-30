@@ -5,7 +5,7 @@ I use <a href="https://neovim.io/">Neovim</a> as my primary editor. This reposit
 # Quickstart
 
 1. `git clone https://github.com/harrisoncramer/neovim-settings.git ~/.config/nvim`
-2. :PackerSync
+2. `:PackerSync`
 
 # Dependencies
 
