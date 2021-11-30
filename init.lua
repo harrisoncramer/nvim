@@ -42,14 +42,16 @@ require('packer').startup(function()
     'prettier/vim-prettier',
     run = 'npm install',
   }
-  -- -- VIEW --
+  -- VIEW --
+  use 'itchyny/lightline.vim'
+  use 'shinchu/lightline-gruvbox.vim'
+  use {
+  'nvim-lualine/lualine.nvim',
+  requires = {'kyazdani42/nvim-web-devicons', opt = true}
+  }
   use 'kyazdani42/nvim-web-devicons' -- Icons
   use 'kyazdani42/nvim-tree.lua' -- Tree
   use { 'goolord/alpha-nvim', branch = 'main', requires = { 'kyazdani42/nvim-web-devicons' } }
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = {'kyazdani42/nvim-web-devicons', opt = true}
-  }
   use 'itchyny/vim-gitbranch' -- Shows branch name in lightline
   use { 'ellisonleao/gruvbox.nvim', requires = { 'rktjmp/lush.nvim' }}
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -88,4 +90,4 @@ require("_nvim_tree")
 require("_nvim_lspconfig")
 require("_treesitter")
 require("_vim_iced")
-require("_lualine")
+require("_lightline")
