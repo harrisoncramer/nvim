@@ -69,13 +69,17 @@ lsp_installer.on_server_ready(function(server)
     if server.name == "tsserver" then
       opts.root_dir = util.root_pattern("package.json", "webpack.config.js")
     end
-
+    if server.name == "clojure_lsp" then
+      opts.root_dir = util.root_pattern("project.clj")
+      opts.on_attach = function(client)
+          on_attach(client)
+      end
+    end
     if server.name == "vuels" then
      opts.on_attach = function(client)
          client.resolved_capabilities.document_formatting = true
          on_attach(client)
      end
-     opts.capabilities = capabilities
      opts.root_dir = util.root_pattern("package.json", 'vue.config.js')
      opts.settings = {
          vetur = {
