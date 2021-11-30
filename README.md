@@ -15,7 +15,7 @@ Some of these packages require other external dependencies that must be installe
 2. <a href="https://github.com/junegunn/fzf">fzf</a>
 3. <a href="https://github.com/neovim/pynvim">pynvim</a>
 4. Tree Sitter and Neovim
-5. Node (I'd recommend using <a href="https://github.com/Schniz/fnm">fnm</a>
+5. Node (I'd recommend using <a href="https://github.com/Schniz/fnm">fnm</a>)
 
 # Screenshot
 
