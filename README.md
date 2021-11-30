@@ -5,7 +5,7 @@ I use <a href="https://neovim.io/">Neovim</a> as my primary editor. This reposit
 # Quickstart
 
 1. `git clone https://github.com/harrisoncramer/neovim-settings.git ~/.config/nvim`
-2. :PackerSync
+2. `:PackerSync`
 
 # Dependencies
 
@@ -15,7 +15,7 @@ Some of these packages require other external dependencies that must be installe
 2. <a href="https://github.com/junegunn/fzf">fzf</a>
 3. <a href="https://github.com/neovim/pynvim">pynvim</a>
 4. Tree Sitter and Neovim
-5. Node (I'd recommend using <a href="https://github.com/Schniz/fnm">fnm</a>
+5. Node (I'd recommend using <a href="https://github.com/Schniz/fnm">fnm</a>)
 
 # Screenshot
 
