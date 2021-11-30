@@ -50,15 +50,13 @@ let g:nvim_tree_icons = {
     \   }
     \ }
 
-  set termguicolors " this variable must be enabled for colors to be applied properly
-
   " a list of groups can be found at `:help nvim_tree_highlight`
-  highlight NvimTreeFolderIcon guifg=blue
-  highlight NvimTreeGitDirty guifg=#ff5f5f
-  highlight NvimTreeGitStaged guifg=#c9bf00
-  highlight NvimTreeGitMerge guifg=#00875f
-  highlight NvimTreeGitRenamed guifg=#c9bf00
-  highlight NvimTreeGitNew guifg=light#00875f
+  " highlight NvimTreeFolderIcon guifg=blue
+  " highlight NvimTreeGitDirty guifg=#ff5f5f
+  " highlight NvimTreeGitStaged guifg=#c9bf00
+  " highlight NvimTreeGitMerge guifg=#00875f
+  " highlight NvimTreeGitRenamed guifg=#c9bf00
+  " highlight NvimTreeGitNew guifg=light#00875f
 
 ]]
 
@@ -130,13 +128,3 @@ require'nvim-tree'.setup {
     }
   }
 }
-        -- "i" = tree_cb("split"),
-        -- "<Tab>" = tree_cb("preview"),
-        -- "R" = tree_cb("refresh"),
-        -- "a" = tree_cb("create"),
-        -- "d" = tree_cb("remove"),
-        -- "r" = tree_cb("rename"),
-        -- "x" = tree_cb("cut"),
-        -- "y" = tree_cb("copy"),
-        -- "p" = tree_cb("paste"),
-        -- "q" = tree_cb("close"),
