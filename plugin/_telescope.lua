@@ -6,7 +6,9 @@ require('telescope').setup{
     file_ignore_patterns = { "node_modules", "package%-lock.json" },
     mappings = {
       i = {
-        ["<esc>"] = actions.close
+        ["<esc>"] = actions.close,
+        ["<C-j>"] = require('telescope.actions').cycle_history_next,
+        ["<C-k>"] = require('telescope.actions').cycle_history_prev,
       }
     }
   }
