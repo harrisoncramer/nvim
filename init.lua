@@ -45,6 +45,7 @@ require('packer').startup(function()
   -- -- VIEW --
   use 'kyazdani42/nvim-web-devicons' -- Icons
   use 'kyazdani42/nvim-tree.lua' -- Tree
+  use 'p00f/nvim-ts-rainbow' -- Rainbow parens
   use { 'goolord/alpha-nvim', branch = 'main', requires = { 'kyazdani42/nvim-web-devicons' } }
   use {
     'nvim-lualine/lualine.nvim',
