@@ -32,7 +32,7 @@ end
 -- Miscellaneous
 nnoremap('<C-a>', '<esc>ggVG<CR>') -- Select all
 nnoremap('*', ':keepjumps normal! mi*`i<CR>`') -- " Use * to add w/out jumping
-nnoremap('<Leader>y', '"*y', 'silent') -- Copy to clipboard
+vnoremap('<Leader>y', '"*y', 'silent') -- Copy to clipboard
 nnoremap('<Leader>p', '"*p', 'silent') -- Paste from system clipboard
 nnoremap('H', ':lua saveAndFormat()<CR>') -- Quick save
 nnoremap('C-l', 'zL') -- Scroll to right
