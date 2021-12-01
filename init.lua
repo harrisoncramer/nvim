@@ -4,7 +4,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
-require('packer').init({ max_jobs=5 })
 require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Let packer manage itself
   -- LANGUAGE SERVER --
@@ -43,12 +42,9 @@ require('packer').startup(function()
     run = 'npm install',
   }
   -- VIEW --
-  use 'itchyny/lightline.vim'
-  use 'shinchu/lightline-gruvbox.vim'
-  use {
-  'nvim-lualine/lualine.nvim',
-  requires = {'kyazdani42/nvim-web-devicons', opt = true}
-  }
+  use 'itchyny/lightline.vim' -- Lighline
+  use 'p00f/nvim-ts-rainbow' -- Rainbow brackets for Clojure
+  use 'shinchu/lightline-gruvbox.vim' -- Lightline color scheme
   use 'kyazdani42/nvim-web-devicons' -- Icons
   use 'kyazdani42/nvim-tree.lua' -- Tree
   use { 'goolord/alpha-nvim', branch = 'main', requires = { 'kyazdani42/nvim-web-devicons' } }
@@ -56,7 +52,6 @@ require('packer').startup(function()
   use { 'ellisonleao/gruvbox.nvim', requires = { 'rktjmp/lush.nvim' }}
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/playground' -- Playground
-  -- use 'sainnhe/sonokai' -- Color theme for vimwiki
   use 'lambdalisue/glyph-palette.vim' -- Colors for icons
   -- LANGUAGES --
   use 'posva/vim-vue'
