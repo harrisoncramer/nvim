@@ -11,6 +11,9 @@ nnoremap('sl', '<C-w>l')
 nnoremap('sq', '<C-w>q')
 nnoremap('sp', '<C-w><C-p>')
 
+-- Go to definition in a vertical split.
+nnoremap('gvd', ':vsplit<CR> :lua vim.lsp.buf.definition()<CR>')
+
 -- Buffer management
 nnoremap('<leader>-', ':bd<CR>', "silent")
 nnoremap('<C-n>', ':bnext<CR>', "silent")
@@ -31,8 +34,8 @@ function saveAndFormat()
 end
 -- Miscellaneous
 nnoremap('<C-a>', '<esc>ggVG<CR>') -- Select all
-nnoremap('*', ':keepjumps normal! mi*`i<CR>`') -- " Use * to add w/out jumping
-vnoremap('<Leader>y', '"*y', 'silent') -- Copy to clipboard
+nnoremap('*', ':keepjumps normal! mi*`i<CR>') -- " Use * to add w/out jumping
+vnoremap('<Leader>y', '"+y', 'silent') -- Copy to clipboard
 nnoremap('<Leader>p', '"*p', 'silent') -- Paste from system clipboard
 nnoremap('H', ':lua saveAndFormat()<CR>') -- Quick save
 nnoremap('C-l', 'zL') -- Scroll to right

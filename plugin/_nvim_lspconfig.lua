@@ -116,7 +116,7 @@ lsp_installer.on_server_ready(function(server)
             },
             diagnostics = {
                 -- Get the language server to recognize the `vim` global
-                globals = {'vim', 'nnoremap',  'inoremap', 'tnoremap', 'use'}
+                globals = {'vim', 'nnoremap',  'vnoremap', 'inoremap', 'tnoremap', 'use'}
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
