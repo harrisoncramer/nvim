@@ -14,13 +14,15 @@ require('telescope').setup{
   }
 }
 
+-- Core mappings use CTRL
 nnoremap('<c-j>', "<cmd>lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!node_modules/**'}}<cr>")
 nnoremap('<c-f>', "<cmd>lua require('telescope.builtin').live_grep({ hidden = true })<cr>")
 nnoremap('<c-g>', "<cmd>lua require('telescope.builtin').file_browser({ hidden = true })<cr>")
 nnoremap('<c-b>', "<cmd>lua require('telescope.builtin').buffers({ hidden = true })<cr>")
 
--- Telescope mappings start with s
--- Find current word under cursor in project
+-- Other telescope mappings start with T
+nnoremap('<leader>th', "<cmd>lua require('telescope.builtin').oldfiles({ hidden = true })<cr>")
+
 vim.cmd[[
-  nnoremap <expr> <leader>sf ':Telescope live_grep<cr>' . expand('<cword>')
+  nnoremap <expr> <leader>tf ':Telescope live_grep<cr>' . expand('<cword>')
 ]]
