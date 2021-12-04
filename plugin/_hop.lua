@@ -1,2 +1,2 @@
--- The vaunted leader-leader hop to character navigation!
-nnoremap('<leader><leader>', ':HopChar2<CR>', 'silent')
+-- The vaunted leader-f hop to character navigation!
+nnoremap('<leader>f', ':HopChar2<CR>', 'silent')

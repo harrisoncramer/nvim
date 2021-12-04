@@ -32,8 +32,12 @@ require('packer').startup(function()
   use 'tpope/vim-surround' -- Use cs''[encloser] (that's a double-qutation mark) to modify encloser, ysiw[encloser] to add encloser
   use 'tpope/vim-unimpaired' -- Key mappings
   use 'tpope/vim-eunuch' -- Rename files
-  use 'tpope/vim-commentary' -- gcc to comment (or 3gcc)
-  use 'suy/vim-context-commentstring'
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+  }
   use 'akinsho/toggleterm.nvim' -- Toggling the terminal
   use 'romainl/vim-cool' -- Turns off hlsearch after search is done
   use 'tpope/vim-rhubarb' -- Allows :Gbrowse which opens up file in Github
