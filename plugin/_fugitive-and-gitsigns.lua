@@ -1,13 +1,18 @@
+-- Main fugitive commands.
 nnoremap('<leader>gs', ':ToggleGStatus<CR>', 'silent')
 nnoremap('<leader>gl', ':ToggleGLog<CR>', 'silent')
-nnoremap('<leader>gd', ':ToggleGDiff<CR>', 'silent')
 nnoremap('<leader>gp', ':Git push<cr>', 'silent')
-nnoremap('<leader>gb', ':Gbrowse<cr>')
 nnoremap('<leader>go', ':G open<cr>')
-nnoremap('<leader>gm', ':Gvdiffsplit!<cr>', 'silent')
+
+-- Diffing.
+nnoremap('<leader>gd', ':ToggleGDiff<CR>', 'silent')
 nnoremap('<leader>gf', ':diffget //2<cr>', 'silent')
 nnoremap('<leader>gh', ':diffget //3<cr>', 'silent')
-nnoremap('<leader>gc', ':Commit<cr>', 'silent')
+
+-- Gitsigns w/ hunks and blames.
+nnoremap('<leader>ga', ':Gitsigns stage_hunk<CR>', 'silent')
+nnoremap('<leader>gb', ':Gitsigns blame_line<CR>', 'silent')
+
 
 function _G.ToggleGStatus()
   vim.cmd[[
