@@ -53,14 +53,26 @@ require('packer').startup(function()
     run = 'npm install',
   }
   -- VIEW --
-  use 'itchyny/lightline.vim' -- Lighline
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = {'kyazdani42/nvim-web-devicons', opt = true}
+  }
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
+    config = function()
+      require('gitsigns').setup()
+    end
+  }
   use 'p00f/nvim-ts-rainbow' -- Rainbow brackets for Clojure
   use 'shinchu/lightline-gruvbox.vim' -- Lightline color scheme
   use 'kyazdani42/nvim-web-devicons' -- Icons
   use 'kyazdani42/nvim-tree.lua' -- Tree
   use { 'goolord/alpha-nvim', branch = 'main', requires = { 'kyazdani42/nvim-web-devicons' } }
   use 'itchyny/vim-gitbranch' -- Shows branch name in lightline
-  use { 'ellisonleao/gruvbox.nvim', requires = { 'rktjmp/lush.nvim' }}
+  use { 'harrisoncramer/gruvbox.nvim', requires = { 'rktjmp/lush.nvim' }}
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/playground' -- Playground
   use 'lambdalisue/glyph-palette.vim' -- Colors for icons
@@ -83,3 +95,5 @@ require("colors")
 require("mappings")
 require("functions")
 require("autocommands")
+
+vim.g.gruvbox_sign_column = 'white'
