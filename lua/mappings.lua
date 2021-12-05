@@ -20,6 +20,9 @@ nnoremap('<C-n>', ':bnext<CR>', "silent")
 nnoremap('<C-p>', ':bprev<CR>', "silent")
 nnoremap('<C-t>', '<C-^>', "silent")
 
+-- LSP
+nnoremap('<leader>F', ':lua vim.lsp.buf.formatting()<CR>')
+
 -- " Allows numbered jumps to be saved to the jumplist, for use w/ C-o and C-i
 vim.api.nvim_exec("nnoremap <expr> k (v:count > 1 ? \"m'\" . v:count : '') . 'k'", false)
 vim.api.nvim_exec("nnoremap <expr> j (v:count > 1 ? \"m'\" . v:count : '') . 'j'", false)
@@ -39,3 +42,4 @@ nnoremap('C-h', 'zH') -- Scroll to left
 nnoremap('Y', 'y$') -- Copy until end of line
 inoremap('<C-l>', '<Right>') -- Move right in insert
 vim.cmd[[ vnoremap <expr>y "my\"" . v:register . "y`y" ]] -- Jump to end of visual copy
+
