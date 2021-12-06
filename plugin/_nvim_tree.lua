@@ -4,7 +4,7 @@ nnoremap('<leader>;', ':NvimTreeToggle<CR>', 'silent')
 vim.cmd[[ au BufEnter * if &ft == 'lua' | silent! cd %:p:h | endif ]]
 
 vim.g.nvim_tree_root_folder_modifier = 1
-vim.g.nvim_tree_highlight_opened_files = 1
+vim.g.nvim_tree_highlight_opened_files = 0
 vim.g.nvim_tree_git_hl = 1
 vim.g.nvim_tree_indent_markers = 0
 vim.g.nvim_tree_quit_on_open = 0
@@ -51,12 +51,12 @@ let g:nvim_tree_icons = {
     \ }
 
   " a list of groups can be found at `:help nvim_tree_highlight`
-  " highlight NvimTreeFolderIcon guifg=blue
-  " highlight NvimTreeGitDirty guifg=#ff5f5f
-  " highlight NvimTreeGitStaged guifg=#c9bf00
-  " highlight NvimTreeGitMerge guifg=#00875f
-  " highlight NvimTreeGitRenamed guifg=#c9bf00
-  " highlight NvimTreeGitNew guifg=light#00875f
+  highlight NvimTreeFolderName guifg=#78ad80
+  highlight NvimTreeRootFolder  guifg=#78ad80
+  highlight NvimTreeFolderIcon guifg=#78ad80
+  highlight NvimTreeEmptyFolderName guifg=#78ad80
+  highlight NvimTreeOpenedFolderName guifg=#78ad80
+  highlight NvimTreeGitignoreIcon guifg=#78ad80
 
 ]]
 
@@ -77,6 +77,10 @@ require'nvim-tree'.setup {
   update_to_buf_dir   = {
     enable = true,
     auto_open = true,
+  },
+  git = {
+    enable = true,
+
   },
   diagnostics = {
     enable = false,
