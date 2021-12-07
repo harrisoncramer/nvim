@@ -24,5 +24,6 @@ nnoremap('<c-b>', "<cmd>lua require('telescope.builtin').buffers({ hidden = true
 nnoremap('<leader>th', "<cmd>lua require('telescope.builtin').oldfiles({ hidden = true })<cr>")
 
 vim.cmd[[
-  nnoremap <expr> <leader>tf ':Telescope live_grep<cr>' . expand('<cword>')
+  nnoremap <expr> <leader>tF ':Telescope live_grep<cr>' . expand('<cword>')
+  nnoremap <expr> <leader>tf ':Telescope find_files<cr>' . expand('<cword>')
 ]]
