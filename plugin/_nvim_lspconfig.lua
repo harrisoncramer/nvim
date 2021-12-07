@@ -1,6 +1,7 @@
 local cmp = require'cmp'
 local util = require'lspconfig/util'
 local lsp_installer = require("nvim-lsp-installer")
+local lspkind = require('lspkind')
 
 -- Setup completion engine
 cmp.setup({
@@ -8,6 +9,17 @@ cmp.setup({
     expand = function(args)
       vim.fn["UltiSnips#Anon"](args.body)
     end,
+  },
+  formatting = {
+    format = lspkind.cmp_format({
+      with_text = false, -- do not show text alongside icons
+      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      -- The function below will be called before any actual modifications from lspkind
+      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+      before = function (entry, vim_item)
+        return vim_item
+      end
+    })
   },
   mapping = {
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
@@ -72,14 +84,11 @@ lsp_installer.on_server_ready(function(server)
     end
     if server.name == "clojure_lsp" then
       opts.root_dir = util.root_pattern("project.clj")
-      opts.on_attach = function(client)
-          on_attach(client)
-      end
     end
-    if server.name == "vuels" then
+    if server.name == "vuels" or server.name == "volar" then
      opts.on_attach = function(client)
-         client.resolved_capabilities.document_formatting = true
-         on_attach(client)
+       client.resolved_capabilities.document_formatting = true
+       on_attach(client)
      end
      opts.root_dir = util.root_pattern("package.json", 'vue.config.js')
      opts.settings = {

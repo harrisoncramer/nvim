@@ -4,12 +4,16 @@ if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
+if vim.fn.has('macunix') then
+  require'packer'.init({ max_jobs=4 })
+end
 require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Let packer manage itself
   -- LANGUAGE SERVER --
   use 'hrsh7th/cmp-nvim-lsp' -- Completion
   use 'neovim/nvim-lspconfig' -- Configuring LSPs
   use 'williamboman/nvim-lsp-installer' -- For installing language servers
+  use 'onsails/lspkind-nvim' -- Images inside of cmp
   use 'quangnguyen30192/cmp-nvim-ultisnips'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
@@ -95,5 +99,3 @@ require("colors")
 require("mappings")
 require("functions")
 require("autocommands")
-
-vim.g.gruvbox_sign_column = 'white'
