@@ -85,7 +85,58 @@ lsp_installer.on_server_ready(function(server)
     if server.name == "clojure_lsp" then
       opts.root_dir = util.root_pattern("project.clj")
     end
-    if server.name == "vuels" or server.name == "volar" then
+    if server.name == "volar" then
+       -- Give volar the globally installed typescript, not the one in the project.
+       opts.init_options = {
+          typescript = {
+              serverPath = '/home/harrycramer/.nvm/versions/node/v16.13.0/lib/node_modules/typescript/lib/tsserverlibrary.js',
+          },
+          languageFeatures = {
+            references = true,
+            definition = true,
+            typeDefinition = true,
+            callHierarchy = true,
+            hover = true,
+            rename = true,
+            signatureHelp = true,
+            codeAction = true,
+            completion = {
+                defaultTagNameCase = 'both',
+                defaultAttrNameCase = 'kebabCase',
+            },
+            schemaRequestService = true,
+            documentHighlight = true,
+            codeLens = true,
+            semanticTokens = true,
+            diagnostics = true,
+          },
+          documentFeatures = {
+            selectionRange = true,
+            foldingRange = true,
+            linkedEditingRange = true,
+            documentSymbol = true,
+            documentColor = true,
+            documentFormatting = {
+              defaultPrintWidth = 100,
+            }
+         }
+       }
+       opts.settings = {
+         volar = {
+            codeLens = {
+              references = true,
+              pugTools = true,
+              scriptSetupTools = true,
+            },
+         }
+       }
+       opts.on_attach = function(client)
+         client.resolved_capabilities.document_formatting = true
+         on_attach(client)
+       end
+      opts.root_dir = util.root_pattern('package.json', 'vue.config.js')
+    end
+    if server.name == "vuels" then
      opts.on_attach = function(client)
        client.resolved_capabilities.document_formatting = true
        on_attach(client)

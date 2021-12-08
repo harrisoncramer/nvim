@@ -20,8 +20,10 @@ nnoremap('<c-f>', "<cmd>lua require('telescope.builtin').live_grep({ hidden = tr
 nnoremap('<c-g>', "<cmd>lua require('telescope.builtin').file_browser({ hidden = true })<cr>")
 nnoremap('<c-b>', "<cmd>lua require('telescope.builtin').buffers({ hidden = true })<cr>")
 
--- Other telescope mappings start with T
-nnoremap('<leader>th', "<cmd>lua require('telescope.builtin').oldfiles({ hidden = true })<cr>")
+-- Other telescope mappings start with t
+nnoremap('<leader>th', ':Telescope oldfiles<cr>')
+nnoremap('<leader>td', ':Telescope lsp_document_diagnostics<cr>')
+nnoremap('<leader>tg', ':Telescope git_commits<cr>')
 
 vim.cmd[[
   nnoremap <expr> <leader>tF ':Telescope live_grep<cr>' . expand('<cword>')
