@@ -36,7 +36,7 @@ nnoremap('<C-a>', '<esc>ggVG<CR>') -- Select all
 nnoremap('*', ':keepjumps normal! mi*`i<CR>') -- " Use * to add w/out jumping
 vnoremap('<Leader>y', '"+y', 'silent') -- Copy to clipboard
 nnoremap('<Leader>p', '"*p', 'silent') -- Paste from system clipboard
-nnoremap('H', ':w<CR>') -- Quick save (no format)
+nnoremap('H', ':lua vim.lsp.buf.formatting()<CR> :w<CR>') -- Quick save (no format)
 nnoremap('C-l', 'zL') -- Scroll to right
 nnoremap('C-h', 'zH') -- Scroll to left
 nnoremap('Y', 'y$') -- Copy until end of line

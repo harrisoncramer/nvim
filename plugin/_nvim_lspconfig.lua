@@ -131,14 +131,21 @@ lsp_installer.on_server_ready(function(server)
          }
        }
        opts.on_attach = function(client)
-         client.resolved_capabilities.document_formatting = true
+         client.resolved_capabilities.document_formatting = false
          on_attach(client)
        end
       opts.root_dir = util.root_pattern('package.json', 'vue.config.js')
     end
-    if server.name == "vuels" then
+    if server.name == "eslint" then
      opts.on_attach = function(client)
        client.resolved_capabilities.document_formatting = true
+       on_attach(client)
+     end
+     opts.root_dir = util.root_pattern('.eslintrc.js', '.eslintignore')
+    end
+    if server.name == "vuels" then
+     opts.on_attach = function(client)
+       client.resolved_capabilities.document_formatting = false
        on_attach(client)
      end
      opts.root_dir = util.root_pattern("package.json", 'vue.config.js')
