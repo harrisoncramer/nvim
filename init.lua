@@ -70,6 +70,7 @@ require('packer').startup(function()
       require('gitsigns').setup()
     end
   }
+  use 'gelguy/wilder.nvim' -- Better ex command view
   use 'p00f/nvim-ts-rainbow' -- Rainbow brackets for Clojure
   use 'shinchu/lightline-gruvbox.vim' -- Lightline color scheme
   use 'kyazdani42/nvim-web-devicons' -- Icons
