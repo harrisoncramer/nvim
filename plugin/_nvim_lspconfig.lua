@@ -103,23 +103,32 @@ lsp_installer.on_server_ready(function(server)
             completion = {
                 defaultTagNameCase = 'both',
                 defaultAttrNameCase = 'kebabCase',
-                getDocumentNameCasesRequest = true,
-                getDocumentSelectionRequest = true,
             },
-            documentLink = true,
+            schemaRequestService = true,
+            documentHighlight = true,
             codeLens = true,
+            semanticTokens = true,
             diagnostics = true,
           },
           documentFeatures = {
-              selectionRange = true,
-              foldingRange = true,
-              documentSymbol = true,
-              documentColor = true,
-              documentFormatting = {
-                  defaultPrintWidth = 100,
-                  getDocumentPrintWidthRequest = true,
-              },
-          },
+            selectionRange = true,
+            foldingRange = true,
+            linkedEditingRange = true,
+            documentSymbol = true,
+            documentColor = true,
+            documentFormatting = {
+              defaultPrintWidth = 100,
+            }
+         }
+       }
+       opts.settings = {
+         volar = {
+            codeLens = {
+              references = true,
+              pugTools = true,
+              scriptSetupTools = true,
+            },
+         }
        }
        opts.on_attach = function(client)
          client.resolved_capabilities.document_formatting = true
