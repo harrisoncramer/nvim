@@ -39,7 +39,11 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 local on_attach = function(client, bufnr)
 
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Turn off formatting by default
+  client.resolved_capabilities.document_formatting = false
 
   local opts = { noremap=true, silent=true }
 
@@ -77,11 +81,9 @@ local opts = {
   }
 }
 
+-- Also installed: tailwindcss, tsserver
 -- Loop over installed servers and set them up. Register a handler that will be called for all installed servers.
 lsp_installer.on_server_ready(function(server)
-    if server.name == "tsserver" then
-      opts.root_dir = util.root_pattern("package.json", "webpack.config.js")
-    end
     if server.name == "clojure_lsp" then
       opts.root_dir = util.root_pattern("project.clj")
     end
@@ -116,9 +118,6 @@ lsp_installer.on_server_ready(function(server)
             linkedEditingRange = true,
             documentSymbol = true,
             documentColor = true,
-            documentFormatting = {
-              defaultPrintWidth = 100,
-            }
          }
        }
        opts.settings = {
@@ -130,17 +129,16 @@ lsp_installer.on_server_ready(function(server)
             },
          }
        }
-       opts.on_attach = function(client)
-         client.resolved_capabilities.document_formatting = true
-         on_attach(client)
-       end
       opts.root_dir = util.root_pattern('package.json', 'vue.config.js')
     end
-    if server.name == "vuels" then
+    if server.name == "eslint" then
      opts.on_attach = function(client)
        client.resolved_capabilities.document_formatting = true
        on_attach(client)
      end
+     opts.root_dir = util.root_pattern('.eslintrc.js', '.eslintignore')
+    end
+    if server.name == "vuels" then
      opts.root_dir = util.root_pattern("package.json", 'vue.config.js')
      opts.settings = {
          vetur = {
@@ -149,13 +147,14 @@ lsp_installer.on_server_ready(function(server)
                  autoImport = true,
                  useScaffoldSnippets = true,
              },
-             format = {
-                 defaultFormatter = {
-                     html = "prettier",
-                     js = "prettier",
-                     ts = "prettier",
-                 }
-             },
+             -- Formatting is off by default
+             -- format = {
+             --     defaultFormatter = {
+             --         html = "prettier",
+             --         js = "prettier",
+             --         ts = "prettier",
+             --     }
+             -- },
              validation = {
                  template = true,
                  script = true,

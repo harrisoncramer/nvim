@@ -13,9 +13,8 @@ nnoremap('<leader>gh', ':diffget //3<cr>', 'silent')
 nnoremap('<leader>ga', ':Gitsigns stage_hunk<CR>', 'silent')
 nnoremap('<leader>gb', ':Gitsigns blame_line<CR>', 'silent')
 
-
 function _G.ToggleGStatus()
-  vim.cmd[[
+    vim.cmd [[
     if buflisted(bufname('.git/index'))
         bd .git/index
     else
@@ -24,11 +23,10 @@ function _G.ToggleGStatus()
   ]]
 end
 
-vim.cmd[[ command! ToggleGStatus lua ToggleGStatus() ]]
-
+vim.cmd [[ command! ToggleGStatus lua ToggleGStatus() ]]
 
 function _G.ToggleGLog()
-  vim.cmd[[
+    vim.cmd [[
     if buflisted(bufname('fugitive'))
       :cclose
       :execute "normal! :bdelete fugitive*\<C-a>\<CR>"
@@ -38,10 +36,10 @@ function _G.ToggleGLog()
   ]]
 end
 
-vim.cmd[[ command! ToggleGLog lua ToggleGLog() ]]
+vim.cmd [[ command! ToggleGLog lua ToggleGLog() ]]
 
 function _G.ToggleGDiff()
-  vim.cmd[[
+    vim.cmd [[
     if buflisted(bufname('fugitive'))
       :execute "normal! :bdelete fugitive*\<C-a>\<CR>"
     else
@@ -50,4 +48,4 @@ function _G.ToggleGDiff()
   ]]
 end
 
-vim.cmd[[ command! ToggleGDiff lua ToggleGDiff() ]]
+vim.cmd [[ command! ToggleGDiff lua ToggleGDiff() ]]

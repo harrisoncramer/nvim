@@ -2,6 +2,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+vim.g.wildmenu = true
+-- vim.cmd[[ set wildmode=list:longest,full ]]
+-- vim.g.wildmode = 'list:longest'
 vim.g.wildignore = '**/node_modules/**'
 -- update time for plugins (speed when they act)
 vim.opt.updatetime = 300
