@@ -41,8 +41,7 @@ require('packer').startup(function()
         'numToStr/Comment.nvim',
         config = function() require('Comment').setup() end
     }
-    use 'akinsho/toggleterm.nvim'
-    use 'numToStr/FTerm.nvim'
+    use "numToStr/FTerm.nvim"
     use 'romainl/vim-cool'
     use 'tpope/vim-rhubarb'
     use 'vim-scripts/BufOnly.vim'
