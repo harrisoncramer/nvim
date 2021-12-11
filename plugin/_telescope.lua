@@ -2,6 +2,12 @@ local remap = _G.remap
 local actions = require('telescope.actions')
 local state = require('telescope.actions.state')
 
+function OpenInDiffView(prompt_bufnr)
+  actions.close(prompt_bufnr)
+  local value = state.get_selected_entry(prompt_bufnr).value
+  vim.cmd('DiffviewOpen ' .. value .. '~1..' .. value)
+end
+
 require('telescope').setup {
     defaults = {
         hidden = true,
@@ -19,11 +25,8 @@ require('telescope').setup {
       git_commits = {
         mappings = {
           i = {
-            ["<C-o>"] = function(prompt_bufnr)
-              actions.close(prompt_bufnr)
-              local value = state.get_selected_entry(prompt_bufnr).value
-              vim.cmd('DiffviewOpen ' .. value .. '~1..' .. value)
-            end,
+            ["<C-o>"] = OpenInDiffView,
+            ["<CR>"] = OpenInDiffView
           }
         }
       }
