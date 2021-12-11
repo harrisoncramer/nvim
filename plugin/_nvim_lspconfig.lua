@@ -85,6 +85,9 @@ local opts = {
 -- Also installed: tailwindcss, tsserver
 -- Loop over installed servers and set them up. Register a handler that will be called for all installed servers.
 lsp_installer.on_server_ready(function(server)
+    if server.name == "tsserver" then
+      opts.root_dir = util.root_pattern("package.json")
+    end
     if server.name == "clojure_lsp" then
       opts.root_dir = util.root_pattern("project.clj")
     end
