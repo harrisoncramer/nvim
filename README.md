@@ -1,6 +1,11 @@
 
 ![The editor with tmux enabled](/screenshot.png?raw=true)
 
+# Quickstart
+
+1. `git clone https://github.com/harrisoncramer/neovim-settings.git ~/.config/nvim`
+2. `:PackerSync` (You will see errors on initial startup–this is to be expected, because we don't have the plugins installed yet. You may need to run PackerSync a couple of times).
+
 I use <a href="https://neovim.io/">Neovim</a> as my primary editor. This repository contains my configurations, including key mappings, plugins, and other settings and tools that make me more productive.
 
 Some of the highlights:
@@ -14,11 +19,6 @@ Some of the highlights:
 - <a href="https://github.com/akinsho/bufferline.nvim">bufferline</a> for buffer views
 - <a href="https://github.com/nvim-lualine/lualine.nvim">lualine</a>
 - <a href="https://github.com/ellisonleao/gruvbox.nvim">gruvbox</a> colors scheme
-
-# Quickstart
-
-1. `git clone https://github.com/harrisoncramer/neovim-settings.git ~/.config/nvim`
-2. `:PackerSync` (You will see errors on initial startup–this is to be expected, because we don't have the plugins installed yet. You may need to run PackerSync a couple of times).
 
 # Dependencies
 
