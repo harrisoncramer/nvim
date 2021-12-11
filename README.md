@@ -8,9 +8,10 @@
 
 # About 
 
-I use <a href="https://neovim.io/">Neovim</a> as my primary editor. This repository contains my configurations, including key mappings, plugins, and other settings and tools that make me more productive.
+This repository contains my configurations, including key mappings, plugins, and other settings for Neovim. I'm primarily working day-to-day with Javascript, Typescript, React, Vue, Clojure, and Lua.
 
-Some of the highlights:
+# Features
+
 - Native LSP w/ <a href="https://github.com/nvim-treesitter/nvim-treesitter">treesitter</a>
 - LSPs via <a href="https://github.com/williamboman/nvim-lsp-installer">lsp-installer</a> and configured w/ <a href="https://github.com/neovim/nvim-lspconfig">lspconfig</a>
 - <a href="https://github.com/numToStr/FTerm.nvim">fterm</a> for terminal integration
@@ -24,15 +25,12 @@ Some of the highlights:
 
 # Dependencies
 
-Some of these packages require other external dependencies that must be installed.
-
 1. <a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>
 2. <a href="https://github.com/junegunn/fzf">fzf</a>
 3. <a href="https://github.com/neovim/pynvim">pynvim</a>
 4. Tree Sitter and Neovim
 5. Node (I'd recommend using <a href="https://github.com/Schniz/fnm">fnm</a>)
-
-Finally, the language server for volar expects to use a global installation of Typescript, rather than a local one in your project. I've done this because you may be working in Javascript files, but still want Volar to work. You must therefore pass an environment variable to your nvim startup to tell the LSP where to look, for instance, inside my `.zshrc`, I have the following:
+6. The <a href="https://github.com/johnsoncodehk/volar">volar</a> language server uses a global installation of Typescript, rather than a local one. This is to allow Volar to work with vanilla Javascript/Vue files. During startup, pass an environment variable telling the LSP where to look for the language server. For instance, inside my `.zshrc`, I have the following:
 
 ```
 function v() {
