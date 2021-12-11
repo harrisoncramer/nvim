@@ -31,9 +31,8 @@ This repository contains my configurations, including key mappings, plugins, and
 1. <a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>
 2. <a href="https://github.com/junegunn/fzf">fzf</a>
 3. <a href="https://github.com/neovim/pynvim">pynvim</a>
-4. Tree Sitter and Neovim
-5. Node (I'd recommend using <a href="https://github.com/Schniz/fnm">fnm</a>)
-6. The <a href="https://github.com/johnsoncodehk/volar">volar</a> language server uses a global installation of Typescript, rather than a local one. This is to allow Volar to work with vanilla Javascript/Vue files. During startup, pass an environment variable telling the LSP where to look for the language server. For instance, inside my `.zshrc`, I have the following:
+4. Node (I'd recommend using <a href="https://github.com/Schniz/fnm">fnm</a>)
+5. The <a href="https://github.com/johnsoncodehk/volar">volar</a> language server uses a global installation of Typescript, rather than a local one. This is to allow Volar to work with vanilla Javascript/Vue files. During startup, pass an environment variable telling the LSP where to look for the language server. For instance, inside my `.zshrc`, I have the following:
 
 ```
 function v() {
