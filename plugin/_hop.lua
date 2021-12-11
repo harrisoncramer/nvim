@@ -1,2 +1,4 @@
+local remap = _G.remap
+
 -- The vaunted leader-f hop to character navigation!
-nnoremap('<leader>f', ':HopChar2<CR>', 'silent')
+remap {'n', '<leader>f', ':HopChar2<CR>'}

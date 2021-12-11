@@ -1,99 +1,132 @@
+local vim = vim
+local execute = vim.api.nvim_command
 local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-end
 
-if vim.fn.has('macunix') then
-  require'packer'.init({ max_jobs=4 })
+-- Ensure that packer is installed
+local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+    execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
+    execute 'packadd packer.nvim'
 end
+vim.cmd('packadd packer.nvim')
+local packer = require'packer'
+local util = require'packer.util'
+packer.init({
+  package_root = util.join_paths(vim.fn.stdpath('data'), 'site', 'pack')
+})
+
+--- Startup and add configure plugins
+if vim.fn.has('macunix') then require'packer'.init({max_jobs = 4}) end
 require('packer').startup(function()
-  use 'wbthomason/packer.nvim' -- Let packer manage itself
-  -- LANGUAGE SERVER --
-  use 'hrsh7th/cmp-nvim-lsp' -- Completion
-  use 'neovim/nvim-lspconfig' -- Configuring LSPs
-  use 'williamboman/nvim-lsp-installer' -- For installing language servers
-  use 'onsails/lspkind-nvim' -- Images inside of cmp
-  use 'quangnguyen30192/cmp-nvim-ultisnips'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
-  use 'hrsh7th/nvim-cmp'
-  use 'Olical/conjure'
-  use {
-    'phaazon/hop.nvim',
-    branch = 'v1', -- optional but strongly recommended
-    config = function()
-      -- you can configure Hop the way you like here; see :h hop-config
-      require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-    end
-  }
-  -- CORE --
-  use { 'nvim-telescope/telescope.nvim', requires = { {'nvim-lua/plenary.nvim'} } }
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use 'tpope/vim-dispatch' -- Allows functions to run asyncrhonously from within VIM (:Dispatch)
-  use 'tpope/vim-repeat' -- Allows plugins to repeat
-  use 'tpope/vim-surround' -- Use cs''[encloser] (that's a double-qutation mark) to modify encloser, ysiw[encloser] to add encloser
-  use 'tpope/vim-unimpaired' -- Key mappings
-  use 'tpope/vim-eunuch' -- Rename files
-  use {
-    'numToStr/Comment.nvim',
-    config = function()
-        require('Comment').setup()
-    end
-  }
-  use 'akinsho/toggleterm.nvim' -- Toggling the terminal
-  use 'romainl/vim-cool' -- Turns off hlsearch after search is done
-  use 'tpope/vim-rhubarb' -- Allows :Gbrowse which opens up file in Github
-  use 'vim-scripts/BufOnly.vim' -- Close all buffers but the current one
-  use 'markonm/traces.vim' -- highlights patterns and ranges for Ex commands in Command-line mode.
-  use 'djoshea/vim-autoread' -- Reloads files on change
-  use 'SirVer/ultisnips' -- Vim snippets
-  use 'jtmkrueger/vim-c-cr' -- Auto indent brackets after enter
-  use 'tpope/vim-fugitive' -- Git wrapper (:G followed by git commands)
-  use 'jiangmiao/auto-pairs' -- Auto pairing of brackets/parentheses
-  use {
-    'prettier/vim-prettier',
-    run = 'npm install',
-  }
-  -- VIEW --
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = {'kyazdani42/nvim-web-devicons', opt = true}
-  }
-  use {
-    'lewis6991/gitsigns.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    },
-    config = function()
-      require('gitsigns').setup()
-    end
-  }
-  use 'p00f/nvim-ts-rainbow' -- Rainbow brackets for Clojure
-  use 'shinchu/lightline-gruvbox.vim' -- Lightline color scheme
-  use 'kyazdani42/nvim-web-devicons' -- Icons
-  use 'kyazdani42/nvim-tree.lua' -- Tree
-  use { 'goolord/alpha-nvim', branch = 'main', requires = { 'kyazdani42/nvim-web-devicons' } }
-  use 'itchyny/vim-gitbranch' -- Shows branch name in lightline
-  use { 'harrisoncramer/gruvbox.nvim', requires = { 'rktjmp/lush.nvim' }}
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use 'nvim-treesitter/playground' -- Playground
-  use 'lambdalisue/glyph-palette.vim' -- Colors for icons
-  -- LANGUAGES --
-  use 'posva/vim-vue'
-  use 'adelarsq/vim-matchit' -- Allows HTML tag jumping with %
-  use 'mattn/emmet-vim' -- Enables emmet (coc-emmet provides autocomplete)
-  use 'AndrewRadev/tagalong.vim' -- Automatically changes closing tags
-  use 'alvan/vim-closetag' -- Auto-closing of HTML tags
-  use 'hashivim/vim-terraform' -- Adds auto-formatting + highlighting for terraform
-  use 'ap/vim-css-color' --Colors for CSS
-  use 'jparise/vim-graphql' -- Install linting for graphQl
-  use 'vimwiki/vimwiki' -- Notetaking app
-  use { 'b0o/mapx.nvim', branch = 'main' }
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'neovim/nvim-lspconfig'
+    use 'williamboman/nvim-lsp-installer'
+    use 'onsails/lspkind-nvim'
+    use 'quangnguyen30192/cmp-nvim-ultisnips'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/nvim-cmp'
+    use 'Olical/conjure'
+    use {
+        'phaazon/hop.nvim',
+        branch = 'v1',
+        config = function()
+            require'hop'.setup {keys = 'etovxqpdygfblzhckisuran'}
+        end
+    }
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {{'nvim-lua/plenary.nvim'}}
+    }
+    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
+    use 'tpope/vim-dispatch'
+    use 'tpope/vim-repeat'
+    use 'tpope/vim-surround'
+    use 'tpope/vim-unimpaired'
+    use 'tpope/vim-eunuch'
+    use {
+        'numToStr/Comment.nvim',
+        config = function() require('Comment').setup() end
+    }
+    use "numToStr/FTerm.nvim"
+    use 'romainl/vim-cool'
+    use 'tpope/vim-rhubarb'
+    use 'vim-scripts/BufOnly.vim'
+    use 'markonm/traces.vim'
+    use 'djoshea/vim-autoread'
+    use 'SirVer/ultisnips'
+    use 'jtmkrueger/vim-c-cr'
+    use 'tpope/vim-fugitive'
+    use 'jiangmiao/auto-pairs'
+    use {'prettier/vim-prettier', run = 'npm install'}
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    }
+    use {
+        'lewis6991/gitsigns.nvim',
+        requires = {'nvim-lua/plenary.nvim'},
+        config = function() require('gitsigns').setup() end
+    }
+    use 'gelguy/wilder.nvim'
+    use 'p00f/nvim-ts-rainbow'
+    use 'shinchu/lightline-gruvbox.vim'
+    use 'kyazdani42/nvim-web-devicons'
+    use 'kyazdani42/nvim-tree.lua'
+    use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+    use {
+        'goolord/alpha-nvim',
+        branch = 'main',
+        requires = {'kyazdani42/nvim-web-devicons'}
+    }
+    use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
+    use 'itchyny/vim-gitbranch'
+    use {'harrisoncramer/gruvbox.nvim', requires = {'rktjmp/lush.nvim'}}
+    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+    use 'nvim-treesitter/playground'
+    use 'lambdalisue/glyph-palette.vim'
+    use 'posva/vim-vue'
+    use 'adelarsq/vim-matchit'
+    use 'mattn/emmet-vim'
+    use 'AndrewRadev/tagalong.vim'
+    use 'alvan/vim-closetag'
+    use 'hashivim/vim-terraform'
+    use 'ap/vim-css-color'
+    use 'jparise/vim-graphql'
+    use 'vimwiki/vimwiki'
+    use {
+        "mhartington/formatter.nvim",
+        config = function()
+            require("formatter").setup({
+                filetype = {
+
+                    lua = {
+                        function()
+                            return {exe = "lua-format", stdin = true}
+                        end
+                    }
+                }
+            })
+        end
+    }
 end)
 
--- Main Imports
+-- Remapping function.
+_G.remap = function(key)
+  local opts = {noremap = true, silent = true}
+  for i, v in pairs(key) do
+    if type(i) == 'string' then opts[i] = v end
+  end
+  local buffer = opts.buffer
+  opts.buffer = nil
+  if buffer then
+    vim.api.nvim_buf_set_keymap(0, key[1], key[2], key[3], opts)
+  else
+    vim.api.nvim_set_keymap(key[1], key[2], key[3], opts)
+  end
+end
+
 require("settings")
 require("colors")
 require("mappings")
