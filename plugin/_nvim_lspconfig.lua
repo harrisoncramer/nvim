@@ -89,10 +89,9 @@ lsp_installer.on_server_ready(function(server)
       opts.root_dir = util.root_pattern("project.clj")
     end
     if server.name == "volar" then
-       -- Give volar the globally installed typescript, not the one in the project.
        opts.init_options = {
           typescript = {
-              serverPath = '/home/harrycramer/.nvm/versions/node/v16.13.0/lib/node_modules/typescript/lib/tsserverlibrary.js',
+              serverPath = vim.api.nvim_eval('$TS_SERVER'), -- This must be passed in via the startup in .zshrc....
           },
           languageFeatures = {
             references = true,
