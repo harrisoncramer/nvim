@@ -5,12 +5,13 @@ I use <a href="https://neovim.io/">Neovim</a> as my primary editor. This reposit
 Some of the highlights:
 - Native LSP w/ <a href="https://github.com/nvim-treesitter/nvim-treesitter">treesitter</a>
 - LSPs via <a href="https://github.com/williamboman/nvim-lsp-installer">lsp-installer</a> and configured w/ <a href="https://github.com/neovim/nvim-lspconfig">lspconfig</a>
-- <a href="https://github.com/nvim-lualine/lualine.nvim">lualine</a>
+- <a href="https://github.com/numToStr/FTerm.nvim">fterm</a> for terminal integration
 - <a href="https://github.com/nvim-telescope/telescope.nvim/issues">telescope</a>
 - <a href="https://github.com/sindrets/diffview.nvim">diffview</a> integrated w/ telescope for git history/diffs
-- <a href="https://github.com/samoshkin/vim-mergetool">for merges</a>
+- <a href="https://github.com/samoshkin/vim-mergetool">vim-mergetool</a> for merges
 - Tim Pope's <a href="https://github.com/tpope/vim-fugitive">fugitive</a> for commits (and his other plugins)
 - <a href="https://github.com/akinsho/bufferline.nvim">bufferline</a> for buffer views
+- <a href="https://github.com/nvim-lualine/lualine.nvim">lualine</a>
 - <a href="https://github.com/ellisonleao/gruvbox.nvim">gruvbox</a> colors scheme
 
 # Quickstart
