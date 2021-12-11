@@ -92,7 +92,7 @@ lsp_installer.on_server_ready(function(server)
        -- Give volar the globally installed typescript, not the one in the project.
        opts.init_options = {
           typescript = {
-              serverPath = '/Users/harrisoncramer/.fnm/node-versions/v16.13.0/installation/lib/node_modules/typescript/lib/tsserverlibrary.js',
+              serverPath = '/home/harrycramer/.nvm/versions/node/v16.13.0/lib/node_modules/typescript/lib/tsserverlibrary.js',
           },
           languageFeatures = {
             references = true,
