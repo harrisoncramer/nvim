@@ -39,3 +39,6 @@ remap { 'n', '<C-b>', ":lua require('telescope.builtin').buffers({ hidden = true
 remap { 'n', '<leader>tr', ':Telescope oldfiles<cr>' } -- "recent files"
 remap { 'n', '<leader>td', ':Telescope lsp_document_diagnostics<cr>' }
 remap { 'n', '<leader>tg', ':Telescope git_commits<cr>' }
+
+vim.cmd [[ nnoremap <expr> <leader>tf ':Telescope find_files<cr>' . expand('<cword>') ]]
+remap { 'n', '<leader>tF', ':Telescope grep_string<cr>' }
