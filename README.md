@@ -1,4 +1,5 @@
-# Neovim Configuration
+
+![The editor with tmux enabled](/screenshot.png?raw=true)
 
 I use <a href="https://neovim.io/">Neovim</a> as my primary editor. This repository contains my configurations, including key mappings, plugins, and other settings and tools that make me more productive.
 
@@ -36,7 +37,3 @@ function v() {
   TS_SERVER='/Users/harrisoncramer/.fnm/node-versions/v16.13.0/installation/lib/node_modules/typescript/lib/tsserverlibrary.js' nvim
 }
 ```
-
-# Screenshot
-
-![The editor with tmux enabled](/screenshot.png?raw=true)
