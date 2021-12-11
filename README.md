@@ -6,6 +6,8 @@
 1. `git clone https://github.com/harrisoncramer/neovim-settings.git ~/.config/nvim`
 2. `:PackerSync` (You will see errors on initial startup–this is to be expected, because we don't have the plugins installed yet. You may need to run PackerSync a couple of times).
 
+# About 
+
 I use <a href="https://neovim.io/">Neovim</a> as my primary editor. This repository contains my configurations, including key mappings, plugins, and other settings and tools that make me more productive.
 
 Some of the highlights:
