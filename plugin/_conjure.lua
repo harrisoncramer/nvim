@@ -1,3 +1,5 @@
+local remap = _G.remap
+
 -- Let LSP do documentation and jump definitions
 vim.cmd [[
   let g:conjure#mapping#doc_word = v:false
@@ -5,8 +7,10 @@ vim.cmd [[
 ]]
 
 -- Evaluate buffer again and run the current test.
-nnoremap('<localleader>T',
-         ':ConjureEvalRootForm<CR> <bar> :ConjureCljRunCurrentTest<CR>')
+remap {
+    'n', '<localleader>T',
+    ':ConjureEvalRootForm<CR> <bar> :ConjureCljRunCurrentTest<CR>'
+}
 
 -- , e b evaluates the current buffer
 -- , e f evaluate the code in the file (from the file system)

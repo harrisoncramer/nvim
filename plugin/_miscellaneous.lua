@@ -1,5 +1,7 @@
+local remap = _G.remap
+
 -- BufOnly
-nnoremap(':BO', ':BufOnly<CR>')
+remap{'n', ':BO', ':BufOnly<CR>' }
 
 -- Vim closetag
 vim.g.closetag_filenames = "*.html,*.jsx,*.js,*.tsx,*.vue"

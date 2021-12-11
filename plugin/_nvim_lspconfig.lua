@@ -1,3 +1,4 @@
+local remap = _G.remap
 local cmp = require'cmp'
 local util = require'lspconfig/util'
 local lsp_installer = require("nvim-lsp-installer")
@@ -45,16 +46,16 @@ local on_attach = function(client, bufnr)
   -- Turn off formatting by default
   client.resolved_capabilities.document_formatting = false
 
-  local opts = { noremap=true, silent=true }
+  -- local opts = { noremap=true, silent=true }
 
-  nnoremap('gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  nnoremap('gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  nnoremap('K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  nnoremap('gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  nnoremap('<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  nnoremap('R', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  nnoremap('<leader>[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  nnoremap('<leader>]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  remap{ 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>' }
+  remap{ 'n', 'gD', ':lua vim.lsp.buf.type_definition()<CR>' }
+  remap{ 'n', 'K', ':lua vim.lsp.buf.hover()<CR>' }
+  remap{ 'n', 'gi', ':lua vim.lsp.buf.implementation()<CR>' }
+  remap{ 'n', '<C-k>', ':lua vim.lsp.buf.signature_help()<CR>' }
+  remap{ 'n', 'R', ':lua vim.lsp.buf.rename()<CR>' }
+  remap{ 'n', '<leader>[', ':lua vim.lsp.diagnostic.goto_prev()<CR>' }
+  remap{ 'n', '<leader>]', ':lua vim.lsp.diagnostic.goto_next()<CR>' }
 end
 
 -- Hide inline diagnostics

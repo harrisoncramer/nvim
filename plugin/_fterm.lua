@@ -1,2 +1,4 @@
-nnoremap('<C-z>', ':lua require("FTerm").toggle()<CR>')
-tnoremap('<C-z>', '<C-\\><C-n>:lua require("FTerm").toggle()<CR>')
+local remap = _G.remap
+
+remap{  'n', '<C-z>', ':lua require("FTerm").toggle()<CR>' }
+remap{ 't', '<C-z>', '<C-\\><C-n>:lua require("FTerm").toggle()<CR>' }

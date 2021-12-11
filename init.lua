@@ -2,7 +2,7 @@ local vim = vim
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
--- ensure that packer is installed
+-- Ensure that packer is installed
 local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
     execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
@@ -15,7 +15,7 @@ packer.init({
   package_root = util.join_paths(vim.fn.stdpath('data'), 'site', 'pack')
 })
 
---- startup and add configure plugins
+--- Startup and add configure plugins
 if vim.fn.has('macunix') then require'packer'.init({max_jobs = 4}) end
 require('packer').startup(function()
     use 'hrsh7th/cmp-nvim-lsp'
@@ -110,8 +110,22 @@ require('packer').startup(function()
             })
         end
     }
-    use {'b0o/mapx.nvim', branch = 'main'}
 end)
+
+-- Remapping function.
+_G.remap = function(key)
+  local opts = {noremap = true, silent = true}
+  for i, v in pairs(key) do
+    if type(i) == 'string' then opts[i] = v end
+  end
+  local buffer = opts.buffer
+  opts.buffer = nil
+  if buffer then
+    vim.api.nvim_buf_set_keymap(0, key[1], key[2], key[3], opts)
+  else
+    vim.api.nvim_set_keymap(key[1], key[2], key[3], opts)
+  end
+end
 
 require("settings")
 require("colors")
