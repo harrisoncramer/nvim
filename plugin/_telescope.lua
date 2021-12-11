@@ -1,5 +1,4 @@
 local remap = _G.remap
-local M = {}
 local actions = require('telescope.actions')
 require('telescope').setup {
     defaults = {
@@ -26,7 +25,7 @@ local open_dif = function()
     vim.cmd(cmd)
 end
 
-M.git_commit = function()
+_G.git_commit = function()
     require('telescope.builtin').git_commits({
         attach_mappings = function(_, map)
             map('n', '<c-o>', open_dif)
@@ -38,13 +37,6 @@ end
 remap { 'n', '<C-f>', ":lua require('telescope.builtin').live_grep({ hidden = true })<cr>" }
 remap { 'n', '<C-j>', ":lua require('telescope.builtin').git_files{ find_command = {'rg', '--files', '--hidden', '-g', '!node_modules/**'}}<cr>" }
 remap { 'n', '<C-b>', ":lua require('telescope.builtin').buffers({ hidden = true })<cr>" }
-remap { 'n', '<leader>th', ':Telescope oldfiles<cr>' }
+remap { 'n', '<leader>tr', ':Telescope oldfiles<cr>' } -- "recent files"
 remap { 'n', '<leader>td', ':Telescope lsp_document_diagnostics<cr>' }
 remap { 'n', '<leader>tg', ':Telescope git_commits<cr>' }
-
--- vim.cmd [[
---   nnoremap <expr> <leader>tF ':Telescope live_grep<cr>' . expand('<cword>')
---   nnoremap <expr> <leader>tf ':Telescope find_files<cr>' . expand('<cword>')
--- ]]
-
-return M
