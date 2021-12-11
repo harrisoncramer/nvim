@@ -1,17 +1,14 @@
 -- Main fugitive commands.
 nnoremap('<leader>gs', ':ToggleGStatus<CR>', 'silent')
 nnoremap('<leader>gl', ':ToggleGLog<CR>', 'silent')
-nnoremap('<leader>gp', ':Git push<cr>', 'silent')
+nnoremap('<leader>gP', ':Git push<cr>', 'silent')
 nnoremap('<leader>go', ':G open<cr>')
-
--- Diffing.
-nnoremap('<leader>gd', ':ToggleGDiff<CR>', 'silent')
-nnoremap('<leader>gf', ':diffget //2<cr>', 'silent')
-nnoremap('<leader>gh', ':diffget //3<cr>', 'silent')
 
 -- Gitsigns w/ hunks and blames.
 nnoremap('<leader>ga', ':Gitsigns stage_hunk<CR>', 'silent')
 nnoremap('<leader>gb', ':Gitsigns blame_line<CR>', 'silent')
+nnoremap('<leader>gp', ':Gitsigns prev_hunk<CR>', 'silent')
+nnoremap('<leader>gn', ':Gitsigns next_hunk<CR>', 'silent')
 
 function _G.ToggleGStatus()
     vim.cmd [[
@@ -22,6 +19,8 @@ function _G.ToggleGStatus()
     endif
   ]]
 end
+
+-- No smell...
 
 vim.cmd [[ command! ToggleGStatus lua ToggleGStatus() ]]
 
@@ -38,14 +37,14 @@ end
 
 vim.cmd [[ command! ToggleGLog lua ToggleGLog() ]]
 
-function _G.ToggleGDiff()
-    vim.cmd [[
-    if buflisted(bufname('fugitive'))
-      :execute "normal! :bdelete fugitive*\<C-a>\<CR>"
-    else
-        Gdiff
-    endif
-  ]]
-end
-
-vim.cmd [[ command! ToggleGDiff lua ToggleGDiff() ]]
+-- function _G.ToggleGDiff()
+--     vim.cmd [[
+--     if buflisted(bufname('fugitive'))
+--       :execute "normal! :bdelete fugitive*\<C-a>\<CR>"
+--     else
+--         Gdiff
+--     endif
+--   ]]
+-- end
+--
+-- vim.cmd [[ command! ToggleGDiff lua ToggleGDiff() ]]
