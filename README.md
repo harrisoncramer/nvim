@@ -1,10 +1,13 @@
+# Neovim Configuration
 
 ![The editor with tmux enabled](/screenshot.png?raw=true)
 
 # Quickstart
 
 1. `git clone https://github.com/harrisoncramer/neovim-settings.git ~/.config/nvim`
-2. `:PackerSync` (You will see errors on initial startup–this is to be expected, because we don't have the plugins installed yet. You may need to run PackerSync a couple of times).
+2. `:PackerSync` 
+
+You will see errors on initial startup–this is to be expected, because we don't have the plugins installed yet. You may need to run PackerSync a couple of times.
 
 # About 
 
