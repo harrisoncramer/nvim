@@ -19,6 +19,7 @@ nnoremap('<leader>-', ':bd<CR>', "silent")
 nnoremap('<C-n>', ':bnext<CR>', "silent")
 nnoremap('<C-p>', ':bprev<CR>', "silent")
 nnoremap('<C-t>', '<C-^>', "silent")
+nnoremap('<C-x>', ':bd<CR>', "silent")
 
 -- LSP
 nnoremap('<leader>F', ':lua vim.lsp.buf.formatting()<CR>')
