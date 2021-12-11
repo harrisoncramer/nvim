@@ -49,6 +49,7 @@ require('packer').startup(function()
         'numToStr/Comment.nvim',
         config = function() require('Comment').setup() end
     }
+    use 'samoshkin/vim-mergetool'
     use "numToStr/FTerm.nvim"
     use 'romainl/vim-cool'
     use 'tpope/vim-rhubarb'
