@@ -35,9 +35,8 @@ M.git_commit = function()
     })
 end
 
-remap { 'n', '<C-f>', "<cmd>lua require('telescope.builtin').live_grep({ hidden = true })<cr>" }
-remap { 'n', '<C-j>', ":lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!node_modules/**'}}<cr>" }
-remap { 'n', '<C-g>', ":lua require('telescope.builtin').live_grep({ hidden = true })<cr>" }
+remap { 'n', '<C-f>', ":lua require('telescope.builtin').live_grep({ hidden = true })<cr>" }
+remap { 'n', '<C-j>', ":lua require('telescope.builtin').git_files{ find_command = {'rg', '--files', '--hidden', '-g', '!node_modules/**'}}<cr>" }
 remap { 'n', '<C-b>', ":lua require('telescope.builtin').buffers({ hidden = true })<cr>" }
 remap { 'n', '<leader>th', ':Telescope oldfiles<cr>' }
 remap { 'n', '<leader>td', ':Telescope lsp_document_diagnostics<cr>' }
