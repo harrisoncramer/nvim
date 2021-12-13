@@ -3,7 +3,6 @@ vim.cmd [[
   " Convert .ts files to typescript (as well as other types)
   au BufNewFile,BufRead *.cjs setlocal filetype=javascript
   au BufNewFile,BufRead *.mjs setlocal filetype=javascript
-  autocmd BufRead,BufNewFile *.json set filetype=jsonc
   au BufRead,BufNewFile *.nginx set ft=nginx
   au BufRead,BufNewFile */etc/nginx/* set ft=nginx
   au BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
