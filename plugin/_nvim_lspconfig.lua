@@ -36,6 +36,17 @@ cmp.setup({
 -- Add completion engine to LSP Configuration
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+-- Configure null-ls for formatting.
+local null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        -- null_ls.builtins.diagnostics.eslint_d, -- eslint or eslint_d
+        -- null_ls.builtins.code_actions.eslint_d, -- eslint or eslint_d
+        null_ls.builtins.formatting.prettierd, -- prettier, eslint, eslint_d, or prettierd
+        null_ls.builtins.formatting.eslint_d
+    },
+})
+
 -- Map keys after LSP attaches (utility function)
 local on_attach = function(client, bufnr)
 
@@ -85,12 +96,6 @@ local opts = {
 -- Also installed: tailwindcss, tsserver
 -- Loop over installed servers and set them up. Register a handler that will be called for all installed servers.
 lsp_installer.on_server_ready(function(server)
-    if server.name == "tsserver" then
-      opts.root_dir = util.root_pattern("package.json")
-    end
-    if server.name == "clojure_lsp" then
-      opts.root_dir = util.root_pattern("project.clj")
-    end
     if server.name == "volar" then
        opts.init_options = {
           typescript = {
@@ -134,13 +139,6 @@ lsp_installer.on_server_ready(function(server)
        }
       opts.root_dir = util.root_pattern('package.json', 'vue.config.js')
     end
-    if server.name == "eslint" then
-     opts.on_attach = function(client)
-       client.resolved_capabilities.document_formatting = true
-       on_attach(client)
-     end
-     opts.root_dir = util.root_pattern('.eslintrc.js', '.eslintignore')
-    end
     if server.name == "vuels" then
      opts.root_dir = util.root_pattern("package.json", 'vue.config.js')
      opts.settings = {
@@ -150,14 +148,6 @@ lsp_installer.on_server_ready(function(server)
                  autoImport = true,
                  useScaffoldSnippets = true,
              },
-             -- Formatting is off by default
-             -- format = {
-             --     defaultFormatter = {
-             --         html = "prettier",
-             --         js = "prettier",
-             --         ts = "prettier",
-             --     }
-             -- },
              validation = {
                  template = true,
                  script = true,

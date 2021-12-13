@@ -5,11 +5,11 @@
 # Quickstart
 
 1. `git clone https://github.com/harrisoncramer/neovim-settings.git ~/.config/nvim`
-2. `:PackerSync` 
+2. `:PackerSync`
 
 You will see errors on initial startup–this is to be expected, because we don't have the plugins installed yet. You may need to run PackerSync a couple of times.
 
-# About 
+# About
 
 This repository contains my configurations, including key mappings, plugins, and other settings for Neovim. I'm primarily working day-to-day with Javascript, Typescript, React, Vue, Clojure, and Lua.
 
@@ -24,6 +24,7 @@ This repository contains my configurations, including key mappings, plugins, and
 - Tim Pope's <a href="https://github.com/tpope/vim-fugitive">fugitive</a> for commits (and his other plugins)
 - <a href="https://github.com/akinsho/bufferline.nvim">bufferline</a> for buffer views
 - <a href="https://github.com/nvim-lualine/lualine.nvim">lualine</a>
+- <a href="https://github.com/fsouza/prettierd">prettierd</a> and <a href="https://github.com/mantoni/eslint_d.js">eslintd</a>for formatting, via npm
 - <a href="https://github.com/ellisonleao/gruvbox.nvim">gruvbox</a> colors scheme
 
 # Dependencies

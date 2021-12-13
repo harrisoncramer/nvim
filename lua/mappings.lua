@@ -23,7 +23,7 @@ remap{'n', '<C-t>', '<C-^>'}
 remap{'n', '<C-x>', ':bd<CR>'}
 
 -- LSP
-remap{'n', '<leader>F', ":lua vim.lsp.buf.formatting()<CR>"}
+remap{'n', '<leader>F', ":lua vim.lsp.buf.formatting_seq_sync()<CR>"}
 
 -- Neovim
 remap{'n', '<leader>vv', ':e $MYVIMRC<cr>'}
