@@ -25,11 +25,13 @@ cmp.setup({
   },
   mapping = {
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+
   },
   sources = cmp.config.sources({
-    { name = 'ultisnips' },
-    { name = 'nvim_lua' },
     { name = 'nvim_lsp' },
+    { name = 'nvim_lua' },
+    { name = 'ultisnips' },
     { name = 'buffer' },
   })
 })
