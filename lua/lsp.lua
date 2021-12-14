@@ -39,13 +39,13 @@ cmp.setup({
 -- Add completion engine to LSP Configuration
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
--- Configure null-ls for formatting.
+-- Configure null-ls for formatting. Using eslintd external dependency.
 local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
         -- null_ls.builtins.diagnostics.eslint_d, -- eslint or eslint_d
         -- null_ls.builtins.code_actions.eslint_d, -- eslint or eslint_d
-        null_ls.builtins.formatting.prettierd, -- prettier, eslint, eslint_d, or prettierd
+        -- null_ls.builtins.formatting.prettierd, -- prettier, eslint, eslint_d, or prettierd
         null_ls.builtins.formatting.eslint_d
     },
 })
@@ -60,14 +60,12 @@ local on_attach = function(client, bufnr)
   -- Turn off formatting by default
   client.resolved_capabilities.document_formatting = false
 
-  -- local opts = { noremap=true, silent=true }
-
   remap{ 'n', 'gd', ':lua vim.lsp.buf.definition()<CR>' }
   remap{ 'n', 'gD', ':lua vim.lsp.buf.type_definition()<CR>' }
   remap{ 'n', 'K', ':lua vim.lsp.buf.hover()<CR>' }
   remap{ 'n', 'gi', ':lua vim.lsp.buf.implementation()<CR>' }
   remap{ 'n', '<C-k>', ':lua vim.lsp.buf.signature_help()<CR>' }
-  -- remap{ 'n', 'R', ':lua vim.lsp.buf.rename()<CR>' } -- Using filipdutescu/renamer.nvim
+  -- Using renamer plugin.
   remap{'n', 'R', ':lua require("renamer").rename()<cr>'}
   remap{ 'n', '<leader>[', ':lua vim.lsp.diagnostic.goto_prev()<CR>' }
   remap{ 'n', '<leader>]', ':lua vim.lsp.diagnostic.goto_next()<CR>' }
