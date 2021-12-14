@@ -18,17 +18,18 @@ packer.init({
 --- Startup and add configure plugins
 if vim.fn.has('macunix') then require'packer'.init({max_jobs = 4}) end
 require('packer').startup(function()
-    use 'hrsh7th/cmp-nvim-lsp'
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
     use 'onsails/lspkind-nvim'
-    use 'quangnguyen30192/cmp-nvim-ultisnips'
-    use 'jose-elias-alvarez/null-ls.nvim'
+    use 'hrsh7th/nvim-cmp'
+    use 'hrsh7th/cmp-nvim-lua'
+    use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
-    use 'hrsh7th/nvim-cmp'
+    use 'quangnguyen30192/cmp-nvim-ultisnips'
     use 'Olical/conjure'
+    use 'jose-elias-alvarez/null-ls.nvim'
     use {
         'phaazon/hop.nvim',
         branch = 'v1',
@@ -82,6 +83,11 @@ require('packer').startup(function()
         branch = 'main',
         requires = {'kyazdani42/nvim-web-devicons'}
     }
+    use {
+      'filipdutescu/renamer.nvim',
+      branch = 'master',
+      requires = { {'nvim-lua/plenary.nvim'} }
+    }
     use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
     use 'itchyny/vim-gitbranch'
     use {'harrisoncramer/gruvbox.nvim', requires = {'rktjmp/lush.nvim'}}
@@ -134,3 +140,4 @@ require("colors")
 require("mappings")
 require("functions")
 require("autocommands")
+require("lsp")

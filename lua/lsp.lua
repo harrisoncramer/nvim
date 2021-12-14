@@ -3,6 +3,7 @@ local cmp = require'cmp'
 local util = require'lspconfig/util'
 local lsp_installer = require("nvim-lsp-installer")
 local lspkind = require('lspkind')
+require('renamer').setup{}
 
 -- Setup completion engine
 cmp.setup({
@@ -26,9 +27,9 @@ cmp.setup({
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
   },
   sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
     { name = 'ultisnips' },
-  }, {
+    { name = 'nvim_lua' },
+    { name = 'nvim_lsp' },
     { name = 'buffer' },
   })
 })
@@ -64,7 +65,8 @@ local on_attach = function(client, bufnr)
   remap{ 'n', 'K', ':lua vim.lsp.buf.hover()<CR>' }
   remap{ 'n', 'gi', ':lua vim.lsp.buf.implementation()<CR>' }
   remap{ 'n', '<C-k>', ':lua vim.lsp.buf.signature_help()<CR>' }
-  remap{ 'n', 'R', ':lua vim.lsp.buf.rename()<CR>' }
+  -- remap{ 'n', 'R', ':lua vim.lsp.buf.rename()<CR>' } -- Using filipdutescu/renamer.nvim
+  remap{'n', 'R', ':lua require("renamer").rename()<cr>'}
   remap{ 'n', '<leader>[', ':lua vim.lsp.diagnostic.goto_prev()<CR>' }
   remap{ 'n', '<leader>]', ':lua vim.lsp.diagnostic.goto_next()<CR>' }
 end
@@ -88,6 +90,7 @@ end
 local opts = {
   capabilities = capabilities,
   on_attach = on_attach,
+  auto_start = true,
   flags = {
     debounce_text_changes = 150,
   }
