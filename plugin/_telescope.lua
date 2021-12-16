@@ -41,4 +41,6 @@ remap { 'n', '<leader>td', ':Telescope diagnostics bufnr=0<cr>' }
 remap { 'n', '<leader>tg', ':Telescope git_commits<cr>' }
 
 vim.cmd [[ nnoremap <expr> <leader>tf ':Telescope find_files<cr>' . expand('<cword>') ]]
+remap { 'v', '<leader>tf', 'y<ESC>:Telescope find_files default_text=<c-r>0<CR>' }
 remap { 'n', '<leader>tF', ':Telescope grep_string<cr>' }
+remap { 'v', '<leader>tF', 'y<ESC>:Telescope live_grep default_text=<c-r>0<CR>' }

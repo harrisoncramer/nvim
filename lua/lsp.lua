@@ -41,9 +41,6 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
-        -- null_ls.builtins.diagnostics.eslint_d, -- eslint or eslint_d
-        -- null_ls.builtins.code_actions.eslint_d, -- eslint or eslint_d
-        -- null_ls.builtins.formatting.prettierd, -- prettier, eslint, eslint_d, or prettierd
         null_ls.builtins.formatting.eslint_d
     },
 })
@@ -97,6 +94,13 @@ local opts = {
 -- Also installed: tailwindcss, tsserver
 -- Loop over installed servers and set them up. Register a handler that will be called for all installed servers.
 lsp_installer.on_server_ready(function(server)
+    if server.name == "tsserver" then
+      -- Having issues with root_dir, just always start it.
+      opts.root_dir = util.find_git_ancestor
+    end
+    if server.name == "clojure_lsp" then
+      opts.root_dir = util.root_pattern("project.clj")
+    end
     if server.name == "volar" then
        opts.init_options = {
           typescript = {
