@@ -20,7 +20,7 @@ remap{'n', '<leader>-', ':bd<CR>'}
 remap{'n', '<C-n>', ':bnext<CR>'}
 remap{'n', '<C-p>', ':bprev<CR>'}
 remap{'n', '<C-t>', '<C-^>'}
-remap{'n', '<C-x>', ':bd<CR>'}
+remap{'n', '<C-x>', ':bp <bar> bd#<CR>'}
 
 -- LSP
 remap{'n', '<leader>F', ":lua vim.lsp.buf.formatting_seq_sync()<CR>"}

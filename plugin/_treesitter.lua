@@ -27,6 +27,9 @@ require'nvim-treesitter.configs'.setup {
             return disable
         end, parsers.available_parsers())
     },
+    matchup = {
+      enable = true,
+    },
     playground = {
         enable = true,
         disable = {},

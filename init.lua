@@ -95,7 +95,7 @@ require('packer').startup(function()
     use 'nvim-treesitter/playground'
     use 'lambdalisue/glyph-palette.vim'
     use 'posva/vim-vue'
-    use 'adelarsq/vim-matchit'
+    use 'andymass/vim-matchup'
     use 'mattn/emmet-vim'
     use 'AndrewRadev/tagalong.vim'
     use 'alvan/vim-closetag'
