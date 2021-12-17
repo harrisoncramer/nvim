@@ -26,7 +26,7 @@ require('telescope').setup {
         mappings = {
           i = {
             ["<C-o>"] = OpenInDiffView,
-            ["<CR>"] = OpenInDiffView
+            -- ["<CR>"] = OpenInDiffView (enter checks out branch)
           }
         }
       }
@@ -38,7 +38,8 @@ remap { 'n', '<C-j>', ":lua require('telescope.builtin').git_files{ find_command
 remap { 'n', '<C-b>', ":lua require('telescope.builtin').buffers({ hidden = true })<cr>" }
 remap { 'n', '<leader>tr', ':Telescope oldfiles<cr>' } -- "recent files"
 remap { 'n', '<leader>td', ':Telescope diagnostics bufnr=0<cr>' }
-remap { 'n', '<leader>tg', ':Telescope git_commits<cr>' }
+remap { 'n', '<leader>tgc', ':Telescope git_commits<cr>' }
+remap { 'n', '<leader>tgb', ':Telescope git_branches<cr>' }
 
 vim.cmd [[ nnoremap <expr> <leader>tf ':Telescope find_files<cr>' . expand('<cword>') ]]
 remap { 'v', '<leader>tf', 'y<ESC>:Telescope find_files default_text=<c-r>0<CR>' }

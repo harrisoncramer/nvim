@@ -1,5 +1,6 @@
 local function get_git_head()
     local head = vim.call('FugitiveHead')
+    if (head == '' or head == nil) then return 'DETATCHED ' end
     if (string.len(head) > 20) then head = ".." .. head:sub(15) end
     return " " .. head
 end
