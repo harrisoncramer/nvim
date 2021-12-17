@@ -4,8 +4,23 @@ require('lualine').setup({
         lualine_a = {'branch'},
         lualine_b = {'diagnostics', 'diff'},
         lualine_c = {"vim.fn.expand('%')"},
+        lualine_d = {},
         lualine_x = {'filetype'},
-        lualine_y = {'os.date("%I:%M:%S", os.time())'},
+        lualine_y = {
+            'os.date("%I:%M:%S", os.time())', {
+                'tabs',
+                max_length = vim.o.columns / 3, -- maximum width of tabs component
+                -- can also be a function that returns value of max_length dynamicaly
+                mode = 0, -- 0  shows tab_nr
+                -- 1  shows tab_name
+                -- 2  shows tab_nr + tab_name
+                tabs_color = {
+                    -- Same values like general color option can be used here.
+                    active = {bg = 'ff9900'}, -- color for active tab
+                    inactive = 'lualine_{section}_inactive' -- color for inactive tab
+                }
+            }
+        },
         lualine_z = {}
     }
 })
