@@ -1,12 +1,18 @@
+local function get_git_head()
+    local head = vim.call('FugitiveHead')
+    if (string.len(head) > 20) then head = ".." .. head:sub(15) end
+    return " " .. head
+end
+
 require('lualine').setup({
     options = {
-        component_separators = {left = '', right = ''},
+        component_separators = {right = ''},
         section_separators = {left = '', right = ''},
         theme = 'gruvbox-material'
     },
     sections = {
-        lualine_a = {'branch'},
-        lualine_b = {'diagnostics', 'diff'},
+        lualine_a = {get_git_head},
+        lualine_b = {'diff', 'diagnostics'},
         lualine_c = {"vim.fn.expand('%')"},
         lualine_d = {},
         lualine_x = {'filetype'},
@@ -18,7 +24,7 @@ require('lualine').setup({
                     inactive = {bg = '504c4c'}, -- color for active tab
                     active = {fg = 'black', bg = 'ffac04'}
                 }
-            },
+            }
         },
         lualine_z = {'os.date("%I:%M:%S", os.time())'}
     }

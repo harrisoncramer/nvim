@@ -34,8 +34,6 @@ remap{'n', '*', ':keepjumps normal! mi*`i<CR>'} -- " Use * to add w/out jumping
 remap{'v', '<Leader>y', '"+y' } -- Copy to clipboard
 remap{'n', '<Leader>p', '"*p' } -- Paste from system clipboard
 remap{'n', 'H', ":lua vim.lsp.buf.formatting_seq_sync()<CR>:w<CR>"} -- Quick save (no format)
-remap{'n', 'C-l', 'zL'} -- Scroll to right
-remap{'n', 'C-h', 'zH'} -- Scroll to left
 remap{'n', 'Y', 'y$'} -- Copy until end of line
 remap{'i', '<C-l>', '<Right>'} -- Move right in insert
 
