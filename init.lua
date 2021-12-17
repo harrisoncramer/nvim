@@ -21,7 +21,7 @@ require('packer').startup(function()
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
     use 'onsails/lspkind-nvim'
-    use {'hrsh7th/nvim-cmp', requires = {{ 'hrsh7th/cmp-nvim-lsp' }}}
+    use 'hrsh7th/nvim-cmp'
     use 'hrsh7th/cmp-nvim-lua'
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
@@ -67,11 +67,7 @@ require('packer').startup(function()
         'nvim-lualine/lualine.nvim',
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
-    use {
-        'lewis6991/gitsigns.nvim',
-        requires = {'nvim-lua/plenary.nvim'},
-        config = function() require('gitsigns').setup() end
-    }
+    use { 'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
     use 'gelguy/wilder.nvim'
     use 'p00f/nvim-ts-rainbow'
     use 'shinchu/lightline-gruvbox.vim'

@@ -5,7 +5,7 @@ local M = {}
 remap {'n', '<leader>gs', ':ToggleGStatus<CR>'}
 remap {'n', '<leader>gl', ':ToggleGLog<CR>'}
 remap {'n', '<leader>gP', ':Git push<cr>'}
-remap {'n', '<leader>go', ':G open<cr>'}
+remap {'n', '<leader>go', ':!git open<cr><cr>'}
 
 -- Gitsigns w/ hunks and blames.
 remap {'n', '<leader>ga', ':Gitsigns stage_hunk<CR>'}
