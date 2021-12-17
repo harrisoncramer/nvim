@@ -1,5 +1,9 @@
 require('lualine').setup({
-    options = {theme = 'gruvbox-material'},
+    options = {
+        component_separators = {left = '', right = ''},
+        section_separators = {left = '', right = ''},
+        theme = 'gruvbox-material'
+    },
     sections = {
         lualine_a = {'branch'},
         lualine_b = {'diagnostics', 'diff'},
@@ -7,21 +11,16 @@ require('lualine').setup({
         lualine_d = {},
         lualine_x = {'filetype'},
         lualine_y = {
-            'os.date("%I:%M:%S", os.time())', {
+            {
                 'tabs',
-                max_length = vim.o.columns / 3, -- maximum width of tabs component
-                -- can also be a function that returns value of max_length dynamicaly
-                mode = 0, -- 0  shows tab_nr
-                -- 1  shows tab_name
-                -- 2  shows tab_nr + tab_name
+                mode = 0,
                 tabs_color = {
-                    -- Same values like general color option can be used here.
-                    active = {bg = 'ff9900'}, -- color for active tab
-                    inactive = 'lualine_{section}_inactive' -- color for inactive tab
+                    inactive = {bg = '504c4c'}, -- color for active tab
+                    active = {fg = 'black', bg = 'ffac04'}
                 }
-            }
+            },
         },
-        lualine_z = {}
+        lualine_z = {'os.date("%I:%M:%S", os.time())'}
     }
 })
 
