@@ -44,4 +44,9 @@ function Shortcut()
     open_url(finalUrl)
 end
 
+function Calendar()
+  open_url("https://calendar.google.com/")
+end
+
 vim.cmd [[ command! SC lua Shortcut() ]]
+vim.cmd [[ command! CAL lua Calendar() ]]
