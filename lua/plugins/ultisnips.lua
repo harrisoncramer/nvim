@@ -1,7 +1,7 @@
 local M = {}
 M.setup = function(remap)
-    vim.g.UltiSnipsSnippetsDir = "~/.config/nvim/my-snippets"
-    vim.cmd [[ let g:UltiSnipsSnippetDirectories = ['snippets'] ]]
+    vim.g.UltiSnipsSnippetsDir = "~/.config/nvim/_snippets"
+    vim.cmd [[ let g:UltiSnipsSnippetDirectories = ['_snippets'] ]]
 
     vim.g.UltiSnipsExpandTrigger = "<C-o>"
     vim.g.UltiSnipsJumpForwardTrigger = '<c-j>'
