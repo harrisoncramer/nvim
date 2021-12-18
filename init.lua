@@ -18,6 +18,7 @@ packer.init({
 --- Startup and add configure plugins
 if vim.fn.has('macunix') then require'packer'.init({max_jobs = 4}) end
 require('packer').startup(function()
+    use 'wbthomason/packer.nvim'
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
     use 'onsails/lspkind-nvim'

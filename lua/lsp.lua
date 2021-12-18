@@ -16,11 +16,6 @@ cmp.setup({
     format = lspkind.cmp_format({
       with_text = false, -- do not show text alongside icons
       maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-      -- The function below will be called before any actual modifications from lspkind
-      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-      before = function (entry, vim_item)
-        return vim_item
-      end
     })
   },
   mapping = {
@@ -84,7 +79,7 @@ for type, icon in pairs(signs) do
 end
 
 -- Baseline opts for all Language Servers
-local opts = {
+LspOpts = {
   capabilities = capabilities,
   on_attach = on_attach,
   auto_start = true,
@@ -98,13 +93,13 @@ local opts = {
 lsp_installer.on_server_ready(function(server)
     if server.name == "tsserver" then
       -- Having issues with root_dir, just always start it.
-      opts.root_dir = util.find_git_ancestor
+      LspOpts.root_dir = util.find_git_ancestor
     end
     if server.name == "clojure_lsp" then
-      opts.root_dir = util.root_pattern("project.clj")
+      LspOpts.root_dir = util.root_pattern("project.clj")
     end
     if server.name == "volar" then
-       opts.init_options = {
+       LspOpts.init_options = {
           typescript = {
               serverPath = vim.api.nvim_eval('$TS_SERVER'), -- This must be passed in via the startup in .zshrc....
           },
@@ -135,7 +130,7 @@ lsp_installer.on_server_ready(function(server)
             documentColor = true,
          }
        }
-       opts.settings = {
+       LspOpts.settings = {
          volar = {
             codeLens = {
               references = true,
@@ -144,11 +139,11 @@ lsp_installer.on_server_ready(function(server)
             },
          }
        }
-      opts.root_dir = util.root_pattern('package.json', 'vue.config.js')
+      LspOpts.root_dir = util.root_pattern('package.json', 'vue.config.js')
     end
     if server.name == "vuels" then
-     opts.root_dir = util.root_pattern("package.json", 'vue.config.js')
-     opts.settings = {
+     LspOpts.root_dir = util.root_pattern("package.json", 'vue.config.js')
+     LspOpts.settings = {
          vetur = {
              ignoreProjectWarning = true,
              completion = {
@@ -166,7 +161,7 @@ lsp_installer.on_server_ready(function(server)
      }
    end
    if server.name == "sumneko_lua" then
-    opts.settings = {
+    LspOpts.settings = {
         Lua = {
             runtime = {
                 -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
@@ -186,9 +181,9 @@ lsp_installer.on_server_ready(function(server)
     }
   end
   if server.name == "jsonls" then
-    opts.filetypes = { "json", "jsonc" }
+    LspOpts.filetypes = { "json", "jsonc" }
   end
   -- This setup() function is exactly the same as lspconfig's setup function.
   -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-  server:setup(opts)
+  server:setup(LspOpts)
 end)

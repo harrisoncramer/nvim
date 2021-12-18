@@ -16,8 +16,8 @@ require('lualine').setup({
         lualine_b = {'diff', 'diagnostics'},
         lualine_c = {"vim.fn.expand('%')"},
         lualine_d = {},
-        lualine_x = {'filetype'},
-        lualine_y = {
+        lualine_w = {'filetype'},
+        lualine_x = {
             {
                 'tabs',
                 mode = 0,
@@ -27,7 +27,8 @@ require('lualine').setup({
                 }
             }
         },
-        lualine_z = {'os.date("%I:%M:%S", os.time())'}
+        lualine_y = {'os.date("%I:%M:%S", os.time())'},
+        lualine_z = {}
     }
 })
 
