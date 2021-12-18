@@ -88,7 +88,7 @@ LspOpts = {
   }
 }
 
--- Also installed: tailwindcss, tsserver
+-- Also installed: tailwindcss, tsserver, null-ls, emmet-ls
 -- Loop over installed servers and set them up. Register a handler that will be called for all installed servers.
 lsp_installer.on_server_ready(function(server)
     if server.name == "tsserver" then

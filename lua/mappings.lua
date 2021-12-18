@@ -45,3 +45,17 @@ vim.api.nvim_exec(
     "nnoremap <expr> k (v:count > 1 ? \"m'\" . v:count : '') . 'k'", false)
 vim.api.nvim_exec(
     "nnoremap <expr> j (v:count > 1 ? \"m'\" . v:count : '') . 'j'", false)
+
+vim.cmd[[
+  " Visual mode search with * for selected text
+  function! s:VSetSearch()
+    let temp = @@
+    norm! gvy
+    let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+    " Use this line instead of the above to match matches spanning across lines
+    "let @/ = '\V' . substitute(escape(@@, '\'), '\_s\+', '\\_s\\+', 'g')
+    call histadd('/', substitute(@/, '[?/]', '\="\\%d".char2nr(submatch(0))', 'g'))
+    let @@ = temp
+  endfunction
+  vnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>
+]]
