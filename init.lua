@@ -2,10 +2,18 @@ local vim = vim
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
-local setup = function (mod)
-  local module = require(mod)
-  module.setup()
-end
+-- Load local settings..
+require("settings")
+require("colors")
+require("mappings")
+require("functions")
+require("autocommands")
+require("lsp")
+require("misc")
+
+-- Utility function for plugin settings
+local remap = require("functions").remap
+local setup = function(mod) require(mod).setup(remap) end
 
 -- Ensure that packer is installed w/ git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 if vim.fn.has('macunix') then require'packer'.init({max_jobs = 4}) end
@@ -20,19 +28,21 @@ require('packer').startup(function()
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
-    use 'quangnguyen30192/cmp-nvim-ultisnips'
-    use 'Olical/conjure'
+    use {
+        'quangnguyen30192/cmp-nvim-ultisnips',
+        config = setup("plugins.ultisnips")
+    }
+    use {'Olical/conjure', config = setup("plugins.conjure")}
     use 'jose-elias-alvarez/null-ls.nvim'
     use {
         'phaazon/hop.nvim',
         branch = 'v1',
-        config = function()
-            require'hop'.setup {keys = 'etovxqpdygfblzhckisuran'}
-        end
+        config = setup("plugins.hop")
     }
     use {
         'nvim-telescope/telescope.nvim',
-        requires = {{'nvim-lua/plenary.nvim'}}
+        requires = {{'nvim-lua/plenary.nvim'}},
+        config = setup('plugins.telescope')
     }
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
     use 'tpope/vim-dispatch'
@@ -44,8 +54,8 @@ require('packer').startup(function()
         'numToStr/Comment.nvim',
         config = function() require('Comment').setup() end
     }
-    use 'samoshkin/vim-mergetool'
-    use "numToStr/FTerm.nvim"
+    use {'samoshkin/vim-mergetool', before = require("plugins.mergetool")}
+    use {"numToStr/FTerm.nvim", config = setup("plugins.fterm")}
     use 'romainl/vim-cool'
     use 'tpope/vim-rhubarb'
     use 'vim-scripts/BufOnly.vim'
@@ -53,35 +63,52 @@ require('packer').startup(function()
     use 'djoshea/vim-autoread'
     use 'SirVer/ultisnips'
     use 'jtmkrueger/vim-c-cr'
-    use 'tpope/vim-fugitive'
+    use {'tpope/vim-fugitive', config = setup("plugins.fugitive")}
     use 'jiangmiao/auto-pairs'
     use {'prettier/vim-prettier', run = 'npm install'}
     use {
         'nvim-lualine/lualine.nvim',
-        requires = {'kyazdani42/nvim-web-devicons', opt = true}
+        requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        config = setup("plugins.lualine")
     }
-    use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
-    use 'gelguy/wilder.nvim'
+    use {
+        'lewis6991/gitsigns.nvim',
+        requires = {'nvim-lua/plenary.nvim'},
+        config = setup("plugins.gitsigns")
+    }
+    use {'gelguy/wilder.nvim', config = setup("plugins.wilder")}
     use 'p00f/nvim-ts-rainbow'
     use 'shinchu/lightline-gruvbox.vim'
     use 'kyazdani42/nvim-web-devicons'
-    use 'kyazdani42/nvim-tree.lua'
-    use {'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim'}
+    use {'kyazdani42/nvim-tree.lua', config = setup("plugins.nvim_tree")}
+    use {
+        'sindrets/diffview.nvim',
+        requires = 'nvim-lua/plenary.nvim',
+        config = setup("plugins.diffview")
+    }
     use {
         'goolord/alpha-nvim',
         branch = 'main',
         requires = {'kyazdani42/nvim-web-devicons'},
-        before = setup("plugins.alpha")
+        config = setup("plugins.alpha")
     }
     use {
         'filipdutescu/renamer.nvim',
         branch = 'master',
         requires = {{'nvim-lua/plenary.nvim'}}
     }
-    use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
+    use {
+        'akinsho/bufferline.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = setup("plugins.bufferline")
+    }
     use 'itchyny/vim-gitbranch'
     use {'harrisoncramer/gruvbox.nvim', requires = {'rktjmp/lush.nvim'}}
-    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate',
+        config = setup("plugins.treesitter")
+    }
     use 'nvim-treesitter/playground'
     use 'lambdalisue/glyph-palette.vim'
     use 'posva/vim-vue'
@@ -109,23 +136,3 @@ require('packer').startup(function()
         end
     }
 end)
-
--- Remapping function.
-_G.remap = function(key)
-    local opts = {noremap = true, silent = true}
-    for i, v in pairs(key) do if type(i) == 'string' then opts[i] = v end end
-    local buffer = opts.buffer
-    opts.buffer = nil
-    if buffer then
-        vim.api.nvim_buf_set_keymap(0, key[1], key[2], key[3], opts)
-    else
-        vim.api.nvim_set_keymap(key[1], key[2], key[3], opts)
-    end
-end
-
-require("settings")
-require("colors")
-require("mappings")
-require("functions")
-require("autocommands")
-require("lsp")

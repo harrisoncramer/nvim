@@ -1,3 +1,18 @@
+local M = {}
+
+-- Remapping function.
+M.remap = function(key)
+    local opts = {noremap = true, silent = true}
+    for i, v in pairs(key) do if type(i) == 'string' then opts[i] = v end end
+    local buffer = opts.buffer
+    opts.buffer = nil
+    if buffer then
+        vim.api.nvim_buf_set_keymap(0, key[1], key[2], key[3], opts)
+    else
+        vim.api.nvim_set_keymap(key[1], key[2], key[3], opts)
+    end
+end
+
 -- Remap <leader>q to open quickfix list
 vim.cmd [[
   function! PrintQList()
@@ -12,11 +27,11 @@ vim.cmd [[
   nnoremap <silent> <leader>q :call PrintQList()<cr>
 ]]
 
-local function open_url(url)
+M.open_url = function (url)
   vim.cmd('exec "!xdg-open \'' .. url .. '\'"')
 end
 
-local function get_branch_name()
+M.get_branch_name = function()
     for line in io.popen("git branch 2>nul"):lines() do
         local m = line:match("%* (.+)$")
         if m then return m end
@@ -28,7 +43,7 @@ end
 function Shortcut()
     local branch = get_branch_name()
     local finalUrl = "https://app.shortcut.com/crossbeam/story"
-    branch = get_branch_name() .. "/"
+    branch = M.get_branch_name() .. "/"
 
     if not string.find(branch, "sc%-") then
       print("Not a shortcut branch")
@@ -41,12 +56,14 @@ function Shortcut()
       finalUrl = finalUrl .. "/" .. parts[i]
     end
     finalUrl = finalUrl:gsub("(sc%-)", "")
-    open_url(finalUrl)
+    M.open_url(finalUrl)
 end
 
 function Calendar()
-  open_url("https://calendar.google.com/")
+  M.open_url("https://calendar.google.com/")
 end
 
 vim.cmd [[ command! SC lua Shortcut() ]]
 vim.cmd [[ command! CAL lua Calendar() ]]
+
+return M

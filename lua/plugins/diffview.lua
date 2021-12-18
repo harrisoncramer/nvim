@@ -1,3 +1,5 @@
+local M = {}
+M.setup = function ()
 local cb = require'diffview.config'.diffview_callback
 
 require'diffview'.setup {
@@ -96,3 +98,5 @@ require'diffview'.setup {
         option_panel = {["<tab>"] = cb("select"), ["q"] = cb("close")}
     }
 }
+end
+return M

@@ -1,6 +1,4 @@
--- Use plugin for easier remapping https://github.com/b0o/mapx.nvim
-local remap = _G.remap
-local M = {}
+local remap = require("functions").remap
 
 -- Creating and moving around splits
 remap{'n', 'ss', ':split<Return><C-w>w'}
