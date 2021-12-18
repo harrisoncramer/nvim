@@ -1,6 +1,6 @@
 # Neovim Configuration
 
-![The Editor](/screenshot.png?raw=true)
+![The editor](/screenshot.png?)
 
 # Quickstart
 
