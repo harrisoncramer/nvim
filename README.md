@@ -1,6 +1,6 @@
 # Neovim Configuration
 
-![The editor with tmux enabled](/screenshot.png?raw=true)
+![The Editor](/screenshot.png?raw=true)
 
 # Quickstart
 
