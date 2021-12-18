@@ -1,11 +1,7 @@
-local vim = vim
-local execute = vim.api.nvim_command
-local fn = vim.fn
-
 -- Load local settings..
 require("settings")
 require("colors")
-require("mappings")
+require("mappings_and_commands")
 require("functions")
 require("autocommands")
 require("lsp")

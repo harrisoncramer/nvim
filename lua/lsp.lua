@@ -1,5 +1,4 @@
-local M = {}
-M.setup = function()
+local remap = require("functions").remap
     local cmp = require 'cmp'
     local util = require 'lspconfig/util'
     local lsp_installer = require("nvim-lsp-installer")
@@ -186,6 +185,3 @@ M.setup = function()
         -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
         server:setup(LspOpts)
     end)
-end
-
-return M

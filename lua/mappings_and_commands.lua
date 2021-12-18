@@ -1,5 +1,6 @@
 local remap = require("functions").remap
 
+-- MAPPINGS
 -- Creating and moving around splits
 remap{'n', 'ss', ':split<Return><C-w>w'}
 remap{'n', 'sv', ':vsplit<Return><C-w>w'}
@@ -35,14 +36,28 @@ remap{'n', 'H', ":lua vim.lsp.buf.formatting_seq_sync()<CR>:w<CR>"} -- Quick sav
 remap{'n', 'Y', 'y$'} -- Copy until end of line
 remap{'i', '<C-l>', '<Right>'} -- Move right in insert
 
- -- Jump to end of visual copy
-vim.cmd [[ vnoremap <expr>y "my\"" . v:register . "y`y" ]]
-
 -- Allows numbered jumps to be saved to the jumplist, for use w/ C-o and C-i
 vim.api.nvim_exec(
     "nnoremap <expr> k (v:count > 1 ? \"m'\" . v:count : '') . 'k'", false)
 vim.api.nvim_exec(
     "nnoremap <expr> j (v:count > 1 ? \"m'\" . v:count : '') . 'j'", false)
+
+ -- Jump to end of visual copy
+vim.cmd [[ vnoremap <expr>y "my\"" . v:register . "y`y" ]]
+
+-- Remap <leader>q to open quickfix list
+vim.cmd [[
+  function! PrintQList()
+  for winnr in range(1, winnr('$'))
+      :if getwinvar(winnr, '&syntax') == 'qf'
+        :cclose
+      :else
+        :copen
+      :endif
+  endfor
+  endfunction
+  nnoremap <silent> <leader>q :call PrintQList()<cr>
+]]
 
 vim.cmd[[
   " Visual mode search with * for selected text
@@ -57,3 +72,6 @@ vim.cmd[[
   endfunction
   vnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>
 ]]
+
+vim.cmd[[command! SC lua require("functions").shortcut() ]]
+vim.cmd [[command! CAL lua require("functions").calendar() ]]
