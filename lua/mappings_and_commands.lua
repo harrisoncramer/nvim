@@ -35,6 +35,7 @@ remap{'n', '<Leader>p', '"*p' } -- Paste from system clipboard
 remap{'n', 'H', ":lua vim.lsp.buf.formatting_seq_sync()<CR>:w<CR>"} -- Quick save (no format)
 remap{'n', 'Y', 'y$'} -- Copy until end of line
 remap{'i', '<C-l>', '<Right>'} -- Move right in insert
+remap{'n', '<leader>lf', ':luafile %<cr>'}
 
 -- Allows numbered jumps to be saved to the jumplist, for use w/ C-o and C-i
 vim.api.nvim_exec(

@@ -10,7 +10,7 @@ require('packer').startup(function()
     use 'williamboman/nvim-lsp-installer'
     use 'onsails/lspkind-nvim'
     use 'hrsh7th/nvim-cmp'
-    use { 'hrsh7th/cmp-nvim-lua', ft = {"lua"}}
+    use {'hrsh7th/cmp-nvim-lua', ft = {"lua"}}
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
@@ -21,11 +21,7 @@ require('packer').startup(function()
     }
     use {'Olical/conjure', config = setup("plugins.conjure")}
     use 'jose-elias-alvarez/null-ls.nvim'
-    use {
-        'phaazon/hoplugins.nvim',
-        branch = 'v1',
-        config = setup("plugins.hop")
-    }
+    use {'phaazon/hop.nvim', branch = 'v1', config = setup("plugins.hop")}
     use {
         'nvim-telescope/telescope.nvim',
         requires = {{'nvim-lua/plenary.nvim'}},
@@ -112,7 +108,6 @@ require('packer').startup(function()
         config = function()
             require("formatter").setup({
                 filetype = {
-
                     lua = {
                         function()
                             return {exe = "lua-format", stdin = true}
