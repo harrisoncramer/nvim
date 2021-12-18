@@ -2,20 +2,12 @@ local vim = vim
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
--- Ensure that packer is installed
-local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-    execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
-    execute 'packadd packer.nvim'
+local setup = function (mod)
+  local module = require(mod)
+  module.setup()
 end
-vim.cmd('packadd packer.nvim')
-local packer = require'packer'
-local util = require'packer.util'
-packer.init({
-  package_root = util.join_paths(vim.fn.stdpath('data'), 'site', 'pack')
-})
 
---- Startup and add configure plugins
+-- Ensure that packer is installed w/ git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 if vim.fn.has('macunix') then require'packer'.init({max_jobs = 4}) end
 require('packer').startup(function()
     use 'wbthomason/packer.nvim'
@@ -68,22 +60,23 @@ require('packer').startup(function()
         'nvim-lualine/lualine.nvim',
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
-    use { 'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
+    use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
     use 'gelguy/wilder.nvim'
     use 'p00f/nvim-ts-rainbow'
     use 'shinchu/lightline-gruvbox.vim'
     use 'kyazdani42/nvim-web-devicons'
     use 'kyazdani42/nvim-tree.lua'
-    use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+    use {'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim'}
     use {
         'goolord/alpha-nvim',
         branch = 'main',
-        requires = {'kyazdani42/nvim-web-devicons'}
+        requires = {'kyazdani42/nvim-web-devicons'},
+        before = setup("plugins.alpha")
     }
     use {
-      'filipdutescu/renamer.nvim',
-      branch = 'master',
-      requires = { {'nvim-lua/plenary.nvim'} }
+        'filipdutescu/renamer.nvim',
+        branch = 'master',
+        requires = {{'nvim-lua/plenary.nvim'}}
     }
     use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
     use 'itchyny/vim-gitbranch'
@@ -119,17 +112,15 @@ end)
 
 -- Remapping function.
 _G.remap = function(key)
-  local opts = {noremap = true, silent = true}
-  for i, v in pairs(key) do
-    if type(i) == 'string' then opts[i] = v end
-  end
-  local buffer = opts.buffer
-  opts.buffer = nil
-  if buffer then
-    vim.api.nvim_buf_set_keymap(0, key[1], key[2], key[3], opts)
-  else
-    vim.api.nvim_set_keymap(key[1], key[2], key[3], opts)
-  end
+    local opts = {noremap = true, silent = true}
+    for i, v in pairs(key) do if type(i) == 'string' then opts[i] = v end end
+    local buffer = opts.buffer
+    opts.buffer = nil
+    if buffer then
+        vim.api.nvim_buf_set_keymap(0, key[1], key[2], key[3], opts)
+    else
+        vim.api.nvim_set_keymap(key[1], key[2], key[3], opts)
+    end
 end
 
 require("settings")
