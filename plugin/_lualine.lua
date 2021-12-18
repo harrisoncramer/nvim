@@ -5,6 +5,10 @@ local function get_git_head()
     return " " .. head
 end
 
+local function get_time ()
+  return os.date("%I:%M:%S", os.time()):gsub('^0', '')
+end
+
 require('lualine').setup({
     options = {
         component_separators = {right = ''},
@@ -27,7 +31,7 @@ require('lualine').setup({
                 }
             }
         },
-        lualine_y = {'os.date("%I:%M:%S", os.time())'},
+        lualine_y = {get_time},
         lualine_z = {}
     }
 })
