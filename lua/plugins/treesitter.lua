@@ -49,5 +49,12 @@ M.setup = function()
             }
         }
     }
+
+vim.cmd [[
+  set foldmethod=expr
+  set foldexpr=nvim_treesitter#foldexpr()
+  au BufWinEnter * normal zR
+]]
+
 end
 return M
