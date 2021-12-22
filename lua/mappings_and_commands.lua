@@ -11,9 +11,6 @@ remap{'n', 'sl', '<C-w>l'}
 remap{'n', 'sq', '<C-w>q'}
 remap{'n', 'sp', '<C-w><C-p>'}
 
--- Go to definition in a vertical split.
-remap{'n', 'gvd', ':vsplit<CR> :lua vim.lsp.buf.definition()<CR>'}
-
 -- Buffer management
 remap{'n', '<leader>-', ':bd<CR>'}
 remap{'n', '<C-n>', ':bnext<CR>'}
