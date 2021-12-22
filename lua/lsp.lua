@@ -36,7 +36,10 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp
 
 -- Configure null-ls for formatting. Using eslintd external dependency.
 local null_ls = require("null-ls")
-null_ls.setup({sources = {null_ls.builtins.formatting.eslint_d}})
+null_ls.setup({sources = {
+  null_ls.builtins.formatting.eslint_d,
+  null_ls.builtins.formatting.prettierd
+}})
 
 -- Map keys after LSP attaches (utility function)
 local on_attach = function(client, bufnr)
@@ -77,6 +80,7 @@ end
 -- Also installed: tailwindcss, tsserver, null-ls, emmet-ls
 -- Loop over installed servers and set them up. Register a handler that will be called for all installed servers.
 lsp_installer.on_server_ready(function(server)
+    vim.inspect(server.name)
     local opts = {
         capabilities = capabilities,
         on_attach = on_attach,
@@ -135,6 +139,9 @@ lsp_installer.on_server_ready(function(server)
         opts.root_dir =
             util.root_pattern('package.json', 'vue.config.js')
     end
+    -- if server.name == "emmet_ls" then
+    --   opts.filetypes = { "html", "vue", "javascript", "javascriptreact", "typescriptreact" }
+    -- end
     if server.name == "vuels" then
         opts.root_dir =
             util.root_pattern("package.json", 'vue.config.js')

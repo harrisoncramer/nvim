@@ -1,3 +1,21 @@
+-- Globals
+function _G.put(...)
+  local objects = {}
+  for i = 1, select('#', ...) do
+    local v = select(i, ...)
+    table.insert(objects, vim.inspect(v))
+  end
+
+  print(table.concat(objects, '\n'))
+  return ...
+end
+
+-- Local Utils
+local t = function (val)
+  return vim.api.nvim_replace_termcodes(val, true, true, true)
+end
+
+-- Function Module
 local M = {}
 
 local open_url = function (url)
@@ -11,6 +29,10 @@ local get_branch_name = function()
     end
 
     return false
+end
+
+M.jumpToParentTag = function ()
+  vim.fn.feedkeys('vatath%' .. t('<ESC>'))
 end
 
 M.shortcut = function()
