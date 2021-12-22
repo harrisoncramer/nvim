@@ -87,6 +87,7 @@ require('packer').startup(function()
     }
     use 'itchyny/vim-gitbranch'
     use {'harrisoncramer/gruvbox.nvim', requires = {'rktjmp/lush.nvim'}}
+    use 'rebelot/kanagawa.nvim'
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',

@@ -15,7 +15,7 @@ M.setup = function()
         options = {
             component_separators = {right = ''},
             section_separators = {left = '', right = ''},
-            theme = 'gruvbox-material'
+            -- theme = 'gruvbox-material'
         },
         sections = {
             lualine_a = {get_git_head},
@@ -28,8 +28,7 @@ M.setup = function()
                     'tabs',
                     mode = 0,
                     tabs_color = {
-                        inactive = {bg = '504c4c'}, -- color for active tab
-                        active = {fg = 'black', bg = 'ffac04'}
+                        active = {bg = '285474'}
                     }
                 }
             },
