@@ -61,7 +61,6 @@ require('packer').startup(function()
     }
     use {'gelguy/wilder.nvim', config = setup("plugins.wilder")}
     use 'p00f/nvim-ts-rainbow'
-    use 'shinchu/lightline-gruvbox.vim'
     use 'kyazdani42/nvim-web-devicons'
     use {'kyazdani42/nvim-tree.lua', config = setup("plugins.nvim_tree")}
     use {

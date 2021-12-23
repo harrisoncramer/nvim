@@ -25,6 +25,9 @@ remap{'n', '<leader>F', ":lua vim.lsp.buf.formatting_seq_sync()<CR>"}
 -- Neovim
 remap{'n', '<leader>vv', ':e $MYVIMRC<cr>'}
 
+-- HTML
+remap{'n', '<leader>5', ':lua require("custom").parent()<CR>l'}
+
 -- Miscellaneous
 remap{'n', '<C-a>', '<esc>ggVG<CR>'} -- Select all
 remap{'n', '*', ':keepjumps normal! mi*`i<CR>'} -- " Use * to add w/out jumping

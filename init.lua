@@ -9,3 +9,6 @@ require("misc")
 
 -- Load packer plugins
 require("plugins")
+
+-- Load custom functions
+require("custom")
