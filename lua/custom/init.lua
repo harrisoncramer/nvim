@@ -16,6 +16,25 @@ local get_parent = function (node)
 
 end
 
+_G.get_tag_name_from_element = function (node)
+  for n in node:iter_children() do
+    if(n == nil) then
+      error("That node has no children")
+    end
+    local type = n:type()
+    if type == 'tag_name' then
+      return n
+    end
+
+    -- Recurse until finding tag_name
+    if n:child_count() ~= 0 then
+      return get_tag_name_from_element(n)
+    end
+
+  end
+  error("Could not find tag name.")
+end
+
 local get_master_node = function ()
   local node = ts_utils.get_node_at_cursor()
   if node == nil then
@@ -33,11 +52,32 @@ local get_master_node = function ()
   return node
 end
 
-M.parent = function ()
+M.getParent = function ()
   local node = get_master_node()
   local parent = get_parent(node)
-  local bufnr = vim.api.nvim_get_current_buf()
   ts_utils.goto_node(parent)
+end
+
+M.getNextSibling = function ()
+  local node = get_master_node()
+  local sibling = node:next_sibling()
+  if sibling == nil then
+    error("This is the last element.")
+  end
+
+  local tag_name = get_tag_name_from_element(sibling)
+  ts_utils.goto_node(tag_name)
+end
+
+M.getPrevSibling = function ()
+  local node = get_master_node()
+  local sibling = node:prev_sibling()
+  if sibling == nil then
+    error("This is the last element.")
+  end
+
+  local tag_name = get_tag_name_from_element(sibling)
+  ts_utils.goto_node(tag_name)
 end
 
 return M
