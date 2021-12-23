@@ -5,6 +5,10 @@ local get_parent = function (node)
   local prev = ts_utils.get_previous_node(node, true, true)
   while(prev:parent() == node:parent()) do
     node = prev
+    if(ts_utils.get_previous_node(prev, true, true) == nil) then
+      -- If we're at the last node...
+      return node
+    end
     prev = ts_utils.get_previous_node(prev, true, true)
   end
 
