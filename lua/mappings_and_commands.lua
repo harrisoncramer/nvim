@@ -29,9 +29,9 @@ remap{'n', '<leader>F', ":lua vim.lsp.buf.formatting_seq_sync()<CR>"}
 remap{'n', '<leader>vv', ':e $MYVIMRC<cr>'}
 
 -- HTML
-remap{'n', '<leader>55', ':lua require("custom").getParent()<CR>l'}
-remap{'n', '<leader>5n', ':lua require("custom").getNextSibling()<CR>l'}
-remap{'n', '<leader>5p', ':lua require("custom").getPrevSibling()<CR>l'}
+remap{'n', '<leader>55', ':lua require("custom").getParent()<CR>'}
+remap{'n', '<leader>5n', ':lua require("custom").getNextSibling()<CR>'}
+remap{'n', '<leader>5p', ':lua require("custom").getPrevSibling()<CR>'}
 
 -- Miscellaneous
 remap{'n', '<C-a>', '<esc>ggVG<CR>'} -- Select all

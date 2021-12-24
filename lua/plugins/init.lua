@@ -47,7 +47,7 @@ require('packer').startup(function()
     use 'SirVer/ultisnips'
     use 'jtmkrueger/vim-c-cr'
     use {'tpope/vim-fugitive', config = setup("plugins.fugitive")}
-    use 'jiangmiao/auto-pairs'
+    use {'windwp/nvim-autopairs', config = setup("plugins.autopairs") }
     use {'prettier/vim-prettier', run = 'npm install'}
     use {
         'nvim-lualine/lualine.nvim',

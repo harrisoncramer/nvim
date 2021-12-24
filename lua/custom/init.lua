@@ -51,7 +51,13 @@ end
 
 local get_parent = function (node)
   local prev = ts_utils.get_previous_node(node, true, true)
+  if(prev == nil) then
+    error("This node has no parent")
+  end
   while(prev:parent() == node:parent()) do
+    if(prev == nil) then
+      error("This node has no parent")
+    end
     node = prev
     if(ts_utils.get_previous_node(prev, true, true) == nil) then
       -- If we're at the last node...
@@ -79,7 +85,8 @@ end
 M.getParent = function ()
   local node = get_master_node()
   local parent = get_parent(node)
-  ts_utils.goto_node(parent)
+  local tag_name = parent:child(1)
+  ts_utils.goto_node(tag_name)
 end
 
 M.getNextSibling = function ()
