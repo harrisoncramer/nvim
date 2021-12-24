@@ -17,7 +17,6 @@ remap{'n', '<C-n>', ':bnext<CR>'}
 remap{'n', '<C-p>', ':bprev<CR>'}
 remap{'n', '<C-t>', '<C-^>'}
 remap{'n', '<C-x>', ':bp <bar> bd#<CR>'}
-remap{'n', '<leader>5', ':lua require("functions").jumpToParentTag()<CR>'}
 
 -- Lua
 remap{'n', '<leader>lf', ':luafile %<CR>'}
@@ -27,11 +26,6 @@ remap{'n', '<leader>F', ":lua vim.lsp.buf.formatting_seq_sync()<CR>"}
 
 -- Neovim
 remap{'n', '<leader>vv', ':e $MYVIMRC<cr>'}
-
--- HTML
-remap{'n', '<leader>55', ':lua require("custom").getParent()<CR>'}
-remap{'n', '<leader>5n', ':lua require("custom").getNextSibling()<CR>'}
-remap{'n', '<leader>5p', ':lua require("custom").getPrevSibling()<CR>'}
 
 -- Miscellaneous
 remap{'n', '<C-a>', '<esc>ggVG<CR>'} -- Select all

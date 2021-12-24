@@ -41,6 +41,7 @@ require('packer').startup(function()
     use {"numToStr/FTerm.nvim", config = setup("plugins.fterm")}
     use 'romainl/vim-cool'
     use 'tpope/vim-rhubarb'
+    use 'ellisonleao/glow.nvim'
     use 'vim-scripts/BufOnly.vim'
     use 'markonm/traces.vim'
     use 'djoshea/vim-autoread'
@@ -86,6 +87,7 @@ require('packer').startup(function()
     }
     use 'itchyny/vim-gitbranch'
     use {'harrisoncramer/gruvbox.nvim', requires = {'rktjmp/lush.nvim'}}
+    use {'harrisoncramer/jump-tag', config = setup("plugins.jump-tag")}
     use 'rebelot/kanagawa.nvim'
     use {
         'nvim-treesitter/nvim-treesitter',
