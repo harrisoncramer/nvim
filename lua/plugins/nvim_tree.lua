@@ -6,7 +6,6 @@ M.setup = function(remap)
     vim.g.nvim_tree_git_hl = 1
     vim.g.nvim_tree_indent_markers = 0
     vim.g.nvim_tree_quit_on_open = 0
-    -- vim.g.nvim_tree_gitignore = 0
     vim.g.nvim_tree_root_folder_modifier = ":~"
     vim.g.nvim_tree_add_trailing = 0
     vim.g.nvim_tree_group_empty = 1
@@ -71,7 +70,10 @@ let g:nvim_tree_icons = {
         hijack_cursor = false,
         update_cwd = false,
         update_to_buf_dir = {enable = true, auto_open = true},
-        git = {enable = true},
+        git = {
+          enable = true,
+          ignore = false
+        },
         diagnostics = {
             enable = false,
             icons = {hint = "", info = "", warning = "", error = ""}
