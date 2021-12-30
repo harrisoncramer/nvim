@@ -69,6 +69,7 @@ M.setup = function(remap)
     remap {'n', '<leader>gp', ':Gitsigns prev_hunk<CR>'}
     remap {'n', '<leader>gn', ':Gitsigns next_hunk<CR>'}
     remap {'n', '<leader>gr', ':Gitsigns reset_hunk<CR>'}
+    remap {'n', '<leader>gd', ':Gitsigns preview_hunk<CR>'}
 
 end
 return M
