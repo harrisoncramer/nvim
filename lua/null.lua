@@ -3,22 +3,7 @@ if not null_ls_status_ok then
 	return
 end
 
--- Clojure Formatting w/ Joker
-local h = require("null-ls.helpers")
-local methods = require("null-ls.methods")
 local formatting = null_ls.builtins.formatting
-local FORMATTING = methods.internal.FORMATTING
-
-local joker_clj = h.make_builtin({
-	method = FORMATTING,
-	filetypes = { "clojure" },
-	generator_opts = {
-		command = "joker",
-		args = { "--format", "-" },
-		to_stdin = true,
-	},
-	factory = h.formatter_factory,
-})
 
 null_ls.setup({
 	debug = true,
@@ -31,6 +16,10 @@ null_ls.setup({
 		formatting.eslint_d,
 		formatting.prettierd,
 		formatting.stylua,
-		joker_clj,
+		formatting.joker.with({
+			filetypes = {
+				"clojure",
+			},
+		}),
 	},
 })
