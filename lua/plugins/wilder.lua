@@ -1,7 +1,7 @@
 local M = {}
 M.setup = function()
-    -- Key bindings can be changed, see below
-    vim.cmd [[
+	-- Key bindings can be changed, see below
+	vim.cmd([[
   call wilder#setup({'modes': [':', '/', '?']})
 
 call wilder#set_option('renderer', wilder#popupmenu_renderer({
@@ -39,6 +39,6 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
     \ 'accept_key': '<Down>',
     \ 'reject_key': '<Up>',
   \ })
-]]
+]])
 end
 return M

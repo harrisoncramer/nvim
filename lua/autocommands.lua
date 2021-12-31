@@ -1,4 +1,4 @@
-vim.cmd [[
+vim.cmd([[
 
   " Convert .ts files to typescript (as well as other types)
   au BufNewFile,BufRead *.cjs setlocal filetype=javascript
@@ -34,4 +34,4 @@ vim.cmd [[
     au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=300 }
   augroup END
 
-]]
+]])

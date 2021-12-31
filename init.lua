@@ -1,14 +1,16 @@
--- Load local settings..
+-- Basic Settings
 require("settings")
+
+-- Null-ls and Language Servers
+require("lsp")
+require("null")
+
+-- Other Mappings and Settings
 require("colors")
 require("mappings_and_commands")
 require("functions")
 require("autocommands")
-require("lsp")
 require("misc")
 
--- Load packer plugins
+-- Packer plugins
 require("plugins")
-
--- Load custom functions
-require("custom")

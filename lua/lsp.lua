@@ -7,11 +7,7 @@ require('renamer').setup {}
 
 -- Setup completion engine
 cmp.setup({
-    snippet = {
-        expand = function(args)
-            vim.fn["UltiSnips#Anon"](args.body)
-        end
-    },
+    snippet = {expand = function(args) vim.fn["UltiSnips#Anon"](args.body) end},
     formatting = {
         format = lspkind.cmp_format({
             with_text = false, -- do not show text alongside icons
@@ -33,13 +29,6 @@ cmp.setup({
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp
                                                                      .protocol
                                                                      .make_client_capabilities())
-
--- Configure null-ls for formatting. Using eslintd external dependency.
-local null_ls = require("null-ls")
-null_ls.setup({sources = {
-  null_ls.builtins.formatting.eslint_d,
-  null_ls.builtins.formatting.prettierd
-}})
 
 -- Map keys after LSP attaches (utility function)
 local on_attach = function(client, bufnr)
@@ -76,8 +65,7 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
 end
 
-
--- Also installed: tailwindcss, tsserver, null-ls, emmet-ls
+-- Also installed: tailwindcss, tsserver, emmet-ls
 -- Loop over installed servers and set them up. Register a handler that will be called for all installed servers.
 lsp_installer.on_server_ready(function(server)
     vim.inspect(server.name)
@@ -91,9 +79,6 @@ lsp_installer.on_server_ready(function(server)
     if server.name == "tsserver" then
         -- Having issues with root_dir, just always start it.
         opts.root_dir = util.find_git_ancestor
-    end
-    if server.name == "clojure_lsp" then
-        opts.root_dir = util.root_pattern("project.clj")
     end
     if server.name == "volar" then
         opts.init_options = {
@@ -136,15 +121,11 @@ lsp_installer.on_server_ready(function(server)
                 }
             }
         }
-        opts.root_dir =
-            util.root_pattern('package.json', 'vue.config.js')
+        opts.root_dir = util.root_pattern('package.json', 'vue.config.js')
     end
-    -- if server.name == "emmet_ls" then
-    --   opts.filetypes = { "html", "vue", "javascript", "javascriptreact", "typescriptreact" }
-    -- end
+    if server.name == "sqlls" then util.root_pattern('.git') end
     if server.name == "vuels" then
-        opts.root_dir =
-            util.root_pattern("package.json", 'vue.config.js')
+        opts.root_dir = util.root_pattern("package.json", 'vue.config.js')
         opts.settings = {
             vetur = {
                 ignoreProjectWarning = true,
@@ -171,8 +152,8 @@ lsp_installer.on_server_ready(function(server)
                 diagnostics = {
                     -- Get the language server to recognize the `vim` global
                     globals = {
-                        'vim', 'nnoremap', 'vnoremap', 'inoremap',
-                        'tnoremap', 'use'
+                        'vim', 'nnoremap', 'vnoremap', 'inoremap', 'tnoremap',
+                        'use'
                     }
                 },
                 workspace = {
@@ -185,9 +166,7 @@ lsp_installer.on_server_ready(function(server)
             }
         }
     end
-    if server.name == "jsonls" then
-        opts.filetypes = {"json", "jsonc"}
-    end
+    if server.name == "jsonls" then opts.filetypes = {"json", "jsonc"} end
     -- This setup() function is exactly the same as lspconfig's setup function.
     -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
     server:setup(opts)
