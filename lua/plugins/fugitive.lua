@@ -3,7 +3,7 @@ M.setup = function(remap)
 	remap({ "n", "<leader>gs", ':lua require("plugins.fugitive").ToggleGStatus()<CR>' })
 	remap({ "n", "<leader>gl", ':lua require("plugins.fugitive").ToggleGLog()<CR>' })
 	remap({ "n", "<leader>gP", ":Git push --quiet<cr>" })
-	remap({ "n", "<leader>go", ":!git open<cr><cr>" })
+	remap({ "n", "<leader>go", ":Git open<cr>" })
 end
 
 M.ToggleGStatus = function()
