@@ -32,7 +32,7 @@ remap({ "n", "<C-a>", "<esc>ggVG<CR>" }) -- Select all
 remap({ "n", "*", ":keepjumps normal! mi*`i<CR>" }) -- " Use * to add w/out jumping
 remap({ "v", "<Leader>y", '"+y' }) -- Copy to clipboard
 remap({ "n", "<Leader>p", '"*p' }) -- Paste from system clipboard
-remap({ "n", "H", ":lua vim.lsp.buf.formatting_seq_sync()<CR>:w<CR>" }) -- Quick save (no format)
+remap({ "n", "H", ":w<CR>" }) -- Quick save
 remap({ "n", "Y", "y$" }) -- Copy until end of line
 remap({ "i", "<C-l>", "<Right>" }) -- Move right in insert
 remap({ "n", "<leader>lf", ":luafile %<cr>" })
