@@ -5,9 +5,9 @@ local setup = function(mod)
 end
 
 -- Ensure that packer is installed w/ git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-if vim.fn.has("macunix") then
-	require("packer").init({ max_jobs = 4 })
-end
+-- if vim.fn.has("macunix") then
+-- 	require("packer").init({ max_jobs = 4 })
+-- end
 require("packer").startup(function()
 	use("wbthomason/packer.nvim")
 	use("neovim/nvim-lspconfig")
@@ -38,6 +38,8 @@ require("packer").startup(function()
 	use("tpope/vim-surround")
 	use("tpope/vim-unimpaired")
 	use("tpope/vim-eunuch")
+	use({ "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } })
+	use({ "guns/vim-sexp", ft = { "clojure" } })
 	use({
 		"numToStr/Comment.nvim",
 		config = function()
