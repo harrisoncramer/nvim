@@ -1,6 +1,10 @@
 local M = {}
 local neogit = require("neogit")
-M.setup = function()
+M.setup = function(remap)
+	remap({ "n", "<leader>gs", ':lua require("neogit").open({ kind = "split_above"})<CR>' })
+	remap({ "n", "<leader>gP", ":lua push --quiet<cr>" })
+
+	-- Another thing
 	neogit.setup({
 		disable_signs = false,
 		disable_hint = false,
@@ -8,6 +12,7 @@ M.setup = function()
 		disable_commit_confirmation = true,
 		auto_refresh = true,
 		disable_builtin_notifications = false,
+		disable_insert_on_commit = false,
 		commit_popup = {
 			kind = "split_above",
 		},
@@ -30,7 +35,7 @@ M.setup = function()
 			--   }
 			-- }
 			--
-			diffview = false,
+			diffview = true,
 		},
 		-- Setting any section to `false` will make the section not render at all
 		sections = {
