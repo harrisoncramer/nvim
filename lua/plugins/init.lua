@@ -29,9 +29,10 @@ if fn.empty(fn.glob(install_path)) > 0 then
 		"https://github.com/wbthomason/packer.nvim",
 		install_path,
 	})
-end
 
-vim.cmd([[packadd packer.nvim]])
+	print("Please exit NVIM and re-open, then run :PackerSync")
+	return
+end
 
 if vim.fn.has("macunix") then
 	require("packer").init({ max_jobs = 4 })
@@ -49,7 +50,7 @@ return require("packer").startup(function(use)
 	use("hrsh7th/cmp-path")
 	use("hrsh7th/cmp-cmdline")
 	use("nvim-lua/plenary.nvim")
-	use("rebelot/kanagawa.nvim")
+	use({ "rebelot/kanagawa.nvim", config = setup("plugins.kanagawa", "kanagawa"), event = "colors_loaded" })
 	use({
 		"quangnguyen30192/cmp-nvim-ultisnips",
 		config = setup("plugins.ultisnips"),
@@ -101,7 +102,12 @@ return require("packer").startup(function(use)
 	})
 	use({ "gelguy/wilder.nvim", config = setup("plugins.wilder", "wilder") })
 	use("p00f/nvim-ts-rainbow")
-	use("kyazdani42/nvim-web-devicons")
+	use({
+		"kyazdani42/nvim-web-devicons",
+		config = function()
+			require("nvim-web-devicons").setup({})
+		end,
+	})
 	use({ "kyazdani42/nvim-tree.lua", config = setup("plugins.nvim_tree", "nvim-tree") })
 	use({
 		"sindrets/diffview.nvim",
@@ -134,15 +140,12 @@ return require("packer").startup(function(use)
 	})
 	use("nvim-treesitter/playground")
 	use("lambdalisue/glyph-palette.vim")
-	use("posva/vim-vue")
+	use({ "posva/vim-vue", ft = { "vue" } })
 	use("andymass/vim-matchup")
-	use("mattn/emmet-vim")
+	use({ "mattn/emmet-vim", ft = { "html", "vue", "javascript", "javascriptreact", "typescriptreact" } })
 	use("AndrewRadev/tagalong.vim")
 	use("alvan/vim-closetag")
-	use("hashivim/vim-terraform")
-	use("ap/vim-css-color")
-	use("jparise/vim-graphql")
-	use("vimwiki/vimwiki")
+	use({ "ap/vim-css-color", ft = { "html", "css", "vue", "javascript", "javascriptreact", "typescriptreact" } })
 	if packer_bootstrap then
 		require("packer").sync()
 	end
