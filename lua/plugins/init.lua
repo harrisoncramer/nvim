@@ -61,7 +61,7 @@ require("packer").startup({
 			end,
 		})
 		use({ "samoshkin/vim-mergetool", before = require("plugins.mergetool") })
-		use({ "numToStr/FTerm.nvim", config = setup("plugins.fterm", "Fterm") })
+		use({ "numToStr/FTerm.nvim", config = setup("plugins.fterm") })
 		use("romainl/vim-cool")
 		use("tpope/vim-rhubarb")
 		use("ellisonleao/glow.nvim")
