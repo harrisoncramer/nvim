@@ -18,6 +18,10 @@ remap({ "n", "<C-p>", ":bprev<CR>" })
 remap({ "n", "<C-t>", "<C-^>" })
 remap({ "n", "<C-x>", ":bp <bar> bd#<CR>" })
 
+-- Tabs
+vim.cmd([[ :ca tc tabclose<CR> ]])
+vim.cmd([[ :ca tn tabnew<CR> ]])
+
 -- Lua
 remap({ "n", "<leader>lf", ":luafile %<CR>" })
 

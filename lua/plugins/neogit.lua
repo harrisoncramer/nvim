@@ -1,11 +1,10 @@
 local M = {}
-local neogit = require("neogit")
 M.setup = function(remap)
 	remap({ "n", "<leader>gs", ':lua require("neogit").open({ kind = "split_above"})<CR>' })
 	remap({ "n", "<leader>gP", ":lua push --quiet<cr>" })
 
 	-- Another thing
-	neogit.setup({
+	require("neogit").setup({
 		disable_signs = false,
 		disable_hint = false,
 		disable_context_highlighting = false,
