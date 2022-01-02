@@ -1,7 +1,20 @@
 -- Utility function for plugin settings
 local remap = require("functions").remap
-local setup = function(mod)
-	require(mod).setup(remap)
+
+-- Utility settings loader
+local setup = function(mod, remote)
+	if remote == nil then
+		-- If plugin does not need "require" setup, then just set it up.
+		require(mod).setup(remap)
+	else
+		local status = pcall(require, remote)
+		if not status then
+			print(remote .. "Is not downloaded.")
+			return
+		else
+			require(mod).setup(remap)
+		end
+	end
 end
 
 -- Ensure that packer is installed w/ git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
@@ -27,11 +40,11 @@ require("packer").startup({
 		})
 		use({ "Olical/conjure", config = setup("plugins.conjure") })
 		use("jose-elias-alvarez/null-ls.nvim")
-		use({ "phaazon/hop.nvim", branch = "v1", config = setup("plugins.hop") })
+		use({ "phaazon/hop.nvim", branch = "v1", config = setup("plugins.hop", "hop") })
 		use({
 			"nvim-telescope/telescope.nvim",
 			requires = { { "nvim-lua/plenary.nvim" } },
-			config = setup("plugins.telescope"),
+			config = setup("plugins.telescope", "telescope"),
 		})
 		use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 		use("tpope/vim-dispatch")
@@ -48,7 +61,7 @@ require("packer").startup({
 			end,
 		})
 		use({ "samoshkin/vim-mergetool", before = require("plugins.mergetool") })
-		use({ "numToStr/FTerm.nvim", config = setup("plugins.fterm") })
+		use({ "numToStr/FTerm.nvim", config = setup("plugins.fterm", "Fterm") })
 		use("romainl/vim-cool")
 		use("tpope/vim-rhubarb")
 		use("ellisonleao/glow.nvim")
@@ -57,33 +70,37 @@ require("packer").startup({
 		use("djoshea/vim-autoread")
 		use("SirVer/ultisnips")
 		use("jtmkrueger/vim-c-cr")
-		use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim", config = setup("plugins.neogit") })
-		use({ "windwp/nvim-autopairs", config = setup("plugins.autopairs") })
+		use({
+			"TimUntersberger/neogit",
+			requires = "nvim-lua/plenary.nvim",
+			config = setup("plugins.neogit", "neogit"),
+		})
+		use({ "windwp/nvim-autopairs", config = setup("plugins.autopairs", "nvim-autopairs") })
 		use({ "prettier/vim-prettier", run = "npm install" })
 		use({
 			"nvim-lualine/lualine.nvim",
 			requires = { "kyazdani42/nvim-web-devicons", opt = true },
-			config = setup("plugins.lualine"),
+			config = setup("plugins.lualine", "lualine"),
 		})
 		use({
 			"lewis6991/gitsigns.nvim",
 			requires = { "nvim-lua/plenary.nvim" },
-			config = setup("plugins.gitsigns"),
+			config = setup("plugins.gitsigns", "gitsigns"),
 		})
-		use({ "gelguy/wilder.nvim", config = setup("plugins.wilder") })
+		use({ "gelguy/wilder.nvim", config = setup("plugins.wilder", "wilder") })
 		use("p00f/nvim-ts-rainbow")
 		use("kyazdani42/nvim-web-devicons")
-		use({ "kyazdani42/nvim-tree.lua", config = setup("plugins.nvim_tree") })
+		use({ "kyazdani42/nvim-tree.lua", config = setup("plugins.nvim_tree", "nvim-tree") })
 		use({
 			"sindrets/diffview.nvim",
 			requires = "nvim-lua/plenary.nvim",
-			config = setup("plugins.diffview"),
+			config = setup("plugins.diffview", "diffview"),
 		})
 		use({
 			"goolord/alpha-nvim",
 			branch = "main",
 			requires = { "kyazdani42/nvim-web-devicons" },
-			config = setup("plugins.alpha"),
+			config = setup("plugins.alpha", "alpha"),
 		})
 		use({
 			"filipdutescu/renamer.nvim",
@@ -93,16 +110,16 @@ require("packer").startup({
 		use({
 			"akinsho/bufferline.nvim",
 			requires = "kyazdani42/nvim-web-devicons",
-			config = setup("plugins.bufferline"),
+			config = setup("plugins.bufferline", "bufferline"),
 		})
 		use("itchyny/vim-gitbranch")
 		use({ "harrisoncramer/gruvbox.nvim", requires = { "rktjmp/lush.nvim" } })
-		use({ "harrisoncramer/jump-tag", config = setup("plugins.jump-tag") })
+		use({ "harrisoncramer/jump-tag", config = setup("plugins.jump-tag", "jump-tag") })
 		use("rebelot/kanagawa.nvim")
 		use({
 			"nvim-treesitter/nvim-treesitter",
 			run = ":TSUpdate",
-			config = setup("plugins.treesitter"),
+			config = setup("plugins.treesitter", "nvim-treesitter"),
 		})
 		use("nvim-treesitter/playground")
 		use("lambdalisue/glyph-palette.vim")

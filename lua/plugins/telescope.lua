@@ -3,6 +3,8 @@ M.setup = function(remap)
 	local actions = require("telescope.actions")
 	local state = require("telescope.actions.state")
 
+	-- print("The value is" .. tostring(pcall(require, "telescope")))
+
 	function OpenInDiffView(prompt_bufnr)
 		actions.close(prompt_bufnr)
 		local value = state.get_selected_entry(prompt_bufnr).value
