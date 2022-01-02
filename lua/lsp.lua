@@ -57,7 +57,6 @@ local on_attach = function(client, bufnr)
 	client.resolved_capabilities.document_formatting = false
 
 	remap({ "n", "gd", ":lua vim.lsp.buf.definition()<CR>" })
-	remap({ "n", "gD", ":lua vim.lsp.buf.type_definition()<CR>" })
 	remap({ "n", "K", ":lua vim.lsp.buf.hover()<CR>" })
 	remap({ "n", "gi", ":lua vim.lsp.buf.implementation()<CR>" })
 	remap({ "n", "<C-k>", ":lua vim.lsp.buf.signature_help()<CR>" })

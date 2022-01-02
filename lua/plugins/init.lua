@@ -31,6 +31,12 @@ if fn.empty(fn.glob(install_path)) > 0 then
 	})
 end
 
+vim.cmd([[packadd packer.nvim]])
+
+if vim.fn.has("macunix") then
+	require("packer").init({ max_jobs = 4 })
+end
+
 return require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 	use("neovim/nvim-lspconfig")
@@ -80,12 +86,6 @@ return require("packer").startup(function(use)
 	use("djoshea/vim-autoread")
 	use("SirVer/ultisnips")
 	use("jtmkrueger/vim-c-cr")
-	use({
-		"TimUntersberger/neogit",
-		requires = "nvim-lua/plenary.nvim",
-		config = setup("plugins.neogit", "neogit"),
-		disable = true,
-	})
 	use({ "tpope/vim-fugitive", config = setup("plugins.fugitive") })
 	use({ "windwp/nvim-autopairs", config = setup("plugins.autopairs", "nvim-autopairs") })
 	use({ "prettier/vim-prettier", run = "npm install" })
@@ -105,7 +105,6 @@ return require("packer").startup(function(use)
 	use({ "kyazdani42/nvim-tree.lua", config = setup("plugins.nvim_tree", "nvim-tree") })
 	use({
 		"sindrets/diffview.nvim",
-		after = "kanagawa",
 		requires = "nvim-lua/plenary.nvim",
 		config = setup("plugins.diffview", "diffview"),
 	})
