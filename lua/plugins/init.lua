@@ -19,26 +19,18 @@ end
 
 local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-local packer_bootstrap
 if fn.empty(fn.glob(install_path)) > 0 then
-	packer_bootstrap = fn.system({
-		"git",
-		"clone",
-		"--depth",
-		"1",
-		"https://github.com/wbthomason/packer.nvim",
-		install_path,
-	})
-
-	print("Please exit NVIM and re-open, then run :PackerSync")
+	fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+	print("Packer installed, please exit NVIM and re-open, then run :PackerInstall")
 	return
 end
 
+local packer = require("packer")
 if vim.fn.has("macunix") then
-	require("packer").init({ max_jobs = 4 })
+	packer.init({ max_jobs = 4 })
 end
 
-return require("packer").startup(function(use)
+packer.startup(function(use)
 	use("wbthomason/packer.nvim")
 	use("neovim/nvim-lspconfig")
 	use("williamboman/nvim-lsp-installer")
@@ -50,7 +42,7 @@ return require("packer").startup(function(use)
 	use("hrsh7th/cmp-path")
 	use("hrsh7th/cmp-cmdline")
 	use("nvim-lua/plenary.nvim")
-	use({ "rebelot/kanagawa.nvim", config = setup("plugins.kanagawa", "kanagawa"), event = "colors_loaded" })
+	use({ "rebelot/kanagawa.nvim", config = setup("plugins.kanagawa", "kanagawa") })
 	use({
 		"quangnguyen30192/cmp-nvim-ultisnips",
 		config = setup("plugins.ultisnips"),
@@ -89,7 +81,6 @@ return require("packer").startup(function(use)
 	use("jtmkrueger/vim-c-cr")
 	use({ "tpope/vim-fugitive", config = setup("plugins.fugitive") })
 	use({ "windwp/nvim-autopairs", config = setup("plugins.autopairs", "nvim-autopairs") })
-	use({ "prettier/vim-prettier", run = "npm install" })
 	use({
 		"nvim-lualine/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
@@ -113,6 +104,7 @@ return require("packer").startup(function(use)
 		"sindrets/diffview.nvim",
 		requires = "nvim-lua/plenary.nvim",
 		config = setup("plugins.diffview", "diffview"),
+		event = "VimEnter",
 	})
 	use({
 		"goolord/alpha-nvim",
@@ -138,7 +130,7 @@ return require("packer").startup(function(use)
 		run = ":TSUpdate",
 		config = setup("plugins.treesitter", "nvim-treesitter"),
 	})
-	use("nvim-treesitter/playground")
+	use({ "nvim-treesitter/playground", requires = "nvim-treesitter/nvim-treesitter" })
 	use("lambdalisue/glyph-palette.vim")
 	use({ "posva/vim-vue", ft = { "vue" } })
 	use("andymass/vim-matchup")
@@ -146,7 +138,4 @@ return require("packer").startup(function(use)
 	use("AndrewRadev/tagalong.vim")
 	use("alvan/vim-closetag")
 	use({ "ap/vim-css-color", ft = { "html", "css", "vue", "javascript", "javascriptreact", "typescriptreact" } })
-	if packer_bootstrap then
-		require("packer").sync()
-	end
 end)
