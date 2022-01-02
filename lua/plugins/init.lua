@@ -58,7 +58,7 @@ require("packer").startup({
 		use("SirVer/ultisnips")
 		use("jtmkrueger/vim-c-cr")
 		use({ "tpope/vim-fugitive", config = setup("plugins.fugitive") })
-		use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
+		use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim", config = setup("plugins.neogit") })
 		use({ "windwp/nvim-autopairs", config = setup("plugins.autopairs") })
 		use({ "prettier/vim-prettier", run = "npm install" })
 		use({
