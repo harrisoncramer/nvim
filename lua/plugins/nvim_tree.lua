@@ -49,6 +49,7 @@ return {
 		vim.g.nvim_tree_refresh_wait = 500
 
 		local tree_cb = require("nvim-tree.config").nvim_tree_callback
+		local function cancel() return nil end
 
 		require("nvim-tree").setup({
 			disable_netrw = true,
@@ -102,6 +103,7 @@ return {
 						{ key = "-", cb = tree_cb("dir_up") },
 						{ key = "q", cb = tree_cb("close") },
 						{ key = "g?", cb = tree_cb("toggle_help") },
+            { key = "s", cb = cancel() }
 					},
 				},
 			},

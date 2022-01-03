@@ -15,7 +15,7 @@ require("kanagawa").setup({
 	overrides = {},
 })
 
-vim.cmd("colorscheme kanagawa")
+vim.cmd("colorscheme gruvbox")
 vim.cmd([[
   :hi NonText guifg=bg
   :set signcolumn=yes

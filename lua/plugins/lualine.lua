@@ -19,7 +19,7 @@ return {
 			options = {
 				component_separators = { right = "" },
 				section_separators = { left = "", right = "" },
-				-- theme = 'gruvbox-material'
+				theme = 'gruvbox-material'
 			},
 			sections = {
 				lualine_a = { get_git_head },
