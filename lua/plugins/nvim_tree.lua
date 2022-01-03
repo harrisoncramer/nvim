@@ -2,36 +2,10 @@ return {
 	setup = function(remap)
 		remap({ "n", "<leader>;", ":NvimTreeToggle<CR>" })
 
-		vim.cmd([[
-      let g:nvim_tree_window_picker_exclude = {
-      \   'buftype': [
-      \     'terminal'
-      \   ]
-      \ }
-
-      let g:nvim_tree_show_icons = {
-    \ 'git': 0,
-    \ 'folders': 1,
-    \ 'files': 1,
-    \ 'folder_arrows': 0,
-    \ }
-
-      let g:nvim_tree_show_icons = {
-      \ 'git': 0,
-      \ 'folders': 1,
-      \ 'files': 1,
-      \ 'folder_arrows': 0,
-      \ }
-
-      " a list of groups can be found at `:help nvim_tree_highlight`
-      highlight NvimTreeFolderName guifg=#78ad80
-      highlight NvimTreeRootFolder  guifg=#78ad80
-      highlight NvimTreeFolderIcon guifg=#78ad80
-      highlight NvimTreeEmptyFolderName guifg=#78ad80
-      highlight NvimTreeOpenedFolderName guifg=#78ad80
-      highlight NvimTreeGitignoreIcon guifg=#78ad80
-
-    ]])
+		-- Dummy function used for cancelling default mappings
+		local function cancel()
+			return nil
+		end
 
 		vim.g.nvim_tree_root_folder_modifier = 1
 		vim.g.nvim_tree_highlight_opened_files = 0
@@ -47,6 +21,30 @@ return {
 		vim.g.nvim_tree_respect_buf_cwd = 1
 		vim.g.nvim_tree_create_in_closed_folder = 1
 		vim.g.nvim_tree_refresh_wait = 500
+
+		vim.g.nvim_tree_icons = {
+			default = "",
+			symlink = "",
+			git = {
+				unstaged = "✗",
+				staged = "✓",
+				unmerged = "",
+				renamed = "➜",
+				untracked = "★",
+				deleted = "",
+				ignored = "◌",
+			},
+			folder = {
+				arrow_open = "",
+				arrow_closed = "",
+				default = "",
+				open = "",
+				empty = "",
+				empty_open = "",
+				symlink = "",
+				symlink_open = "",
+			},
+		}
 
 		local tree_cb = require("nvim-tree.config").nvim_tree_callback
 		local function cancel() return nil end
@@ -96,6 +94,7 @@ return {
 						{ key = "r", cb = tree_cb("rename") },
 						{ key = "x", cb = tree_cb("cut") },
 						{ key = "c", cb = tree_cb("copy") },
+						{ key = "s", cb = cancel() },
 						{ key = "p", cb = tree_cb("paste") },
 						{ key = "y", cb = tree_cb("copy_name") },
 						{ key = "Y", cb = tree_cb("copy_path") },
