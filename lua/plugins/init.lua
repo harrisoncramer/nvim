@@ -42,7 +42,7 @@ packer.startup(function(use)
 	use("hrsh7th/cmp-path")
 	use("hrsh7th/cmp-cmdline")
 	use("nvim-lua/plenary.nvim")
-	use({ "rebelot/kanagawa.nvim", config = setup("plugins.kanagawa", "kanagawa") })
+	use("rebelot/kanagawa.nvim") -- In colors.lua file
 	use({
 		"quangnguyen30192/cmp-nvim-ultisnips",
 		config = setup("plugins.ultisnips"),
