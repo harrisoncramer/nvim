@@ -4,10 +4,11 @@
 
 # Quickstart
 
-1. `git clone https://github.com/harrisoncramer/neovim-settings.git ~/.config/nvim`
-2. `:PackerSync`
-
-You will see errors on initial startup–this is to be expected, because we don't have the plugins installed yet. You may need to run PackerSync a couple of times.
+1. Install Packer: `git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim`
+2. Install this Repo: `git clone https://github.com/harrisoncramer/neovim-settings.git ~/.config/nvim`
+3. Open Neovim, and install the dependencies with `:PackerSync`
+4. Restart Neovim.
+5. Profit.
 
 # About
 
@@ -25,7 +26,7 @@ This repository contains my configurations, including key mappings, plugins, and
 - <a href="https://github.com/akinsho/bufferline.nvim">bufferline</a> for buffer views
 - <a href="https://github.com/nvim-lualine/lualine.nvim">lualine</a>
 - <a href="https://github.com/fsouza/prettierd">prettierd</a> and <a href="https://github.com/mantoni/eslint_d.js">eslintd</a>for formatting, via npm
-- <a href="https://github.com/ellisonleao/gruvbox.nvim">gruvbox</a> colors scheme
+- <a href="https://github.com/rebelot/kanagawa.nvim">kanagawa</a> colorscheme
 
 # Dependencies
 
