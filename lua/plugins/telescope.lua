@@ -29,7 +29,6 @@ return {
 					mappings = {
 						i = {
 							["<C-o>"] = OpenInDiffView,
-							-- ["<CR>"] = OpenInDiffView (enter checks out branch)
 						},
 					},
 				},
@@ -47,6 +46,7 @@ return {
 		remap({ "n", "<leader>td", ":Telescope diagnostics bufnr=0<cr>" })
 		remap({ "n", "<leader>tgc", ":Telescope git_commits<cr>" })
 		remap({ "n", "<leader>tgb", ":Telescope git_branches<cr>" })
+		remap({ "n", "<leader>tgs", ":Telescope git_stash<cr>" })
 
 		vim.cmd([[ nnoremap <expr> <leader>tf ':Telescope find_files<cr>' . expand('<cword>') ]])
 		remap({ "v", "<leader>tf", "y<ESC>:Telescope find_files default_text=<c-r>0<CR>" })
