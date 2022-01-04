@@ -1,6 +1,8 @@
 # Neovim Configuration
 
-![The editor](/screenshot.png?)
+![The editor](https://hjc-public.s3.amazonaws.com/nvim3.png)
+![Terminal integration](https://hjc-public.s3.amazonaws.com/nvim2.png)
+![Diffing](https://hjc-public.s3.amazonaws.com/nvim1.png)
 
 # Quickstart
 
