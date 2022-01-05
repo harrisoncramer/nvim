@@ -1,12 +1,15 @@
+local f = require("functions")
+
 return {
 	setup = function(remap)
 		remap({ "n", "<leader>gs", ':lua require("plugins.fugitive").toggleStatus()<CR>' })
-    if vim.fn.has("macunix") then
-		  remap({ "n", "<leader>gP", ":Git push --quiet<cr>" })
+    if f.getOS() == 'Linux' then
+		  remap({ "n", "<leader>gP", ":! git push <cr>" })
+		  remap({ "n", "<leader>go", ":! git open <cr>" })
     else
-		  remap({ "n", "<leader>gP", ":! git push --quiet<cr>" })
+		  remap({ "n", "<leader>gP", ":Git push<cr>" })
+		  remap({ "n", "<leader>go", ":Git open<cr>" })
     end
-		remap({ "n", "<leader>go", ":Git open<cr>" })
 	end,
 	toggleStatus = function()
 		vim.cmd([[

@@ -10,13 +10,12 @@ function _G.put(...)
 	return ...
 end
 
--- Local Utils
-local t = function(val)
-	return vim.api.nvim_replace_termcodes(val, true, true, true)
-end
-
 -- Function Module
 local M = {}
+
+M.getOS = function ()
+  return vim.loop.os_uname().sysname
+end
 
 local open_url = function(url)
 	vim.cmd("exec \"!xdg-open '" .. url .. "'\"")
@@ -31,10 +30,6 @@ local get_branch_name = function()
 	end
 
 	return false
-end
-
-M.jumpToParentTag = function()
-	vim.fn.feedkeys("vatath%" .. t("<ESC>"))
 end
 
 M.shortcut = function()

@@ -1,5 +1,6 @@
 -- Utility function for plugin settings
 local remap = require("functions").remap
+local OS = require("functions").getOS
 
 -- Utility settings loader
 local setup = function(mod, remote)
@@ -26,7 +27,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 local packer = require("packer")
-if vim.fn.has("macunix") then
+if OS() == "Darwin" then
 	packer.init({ max_jobs = 4 })
 end
 
@@ -100,6 +101,7 @@ packer.startup(function(use)
 		end,
 	})
 	use({ "kyazdani42/nvim-tree.lua", config = setup("plugins.nvim_tree", "nvim-tree") })
+  use ({'David-Kunz/treesitter-unit', config = setup("plugins.ts-unit")})
 	use({
 		"sindrets/diffview.nvim",
 		requires = "nvim-lua/plenary.nvim",
