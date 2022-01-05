@@ -41,7 +41,7 @@ return {
 			"<C-j>",
 			":lua require('telescope.builtin').git_files{ find_command = {'rg', '--files', '--hidden', '-g', '!node_modules/**'}}<cr>",
 		})
-		remap({ "n", "<C-b>", ":lua require('telescope.builtin').buffers({ hidden = true })<cr>" })
+		remap({ "n", "<leader>tt", ":lua require('telescope.builtin').buffers({ hidden = true })<cr>" })
 		remap({ "n", "<leader>tr", ":Telescope oldfiles<cr>" }) -- "recent files"
 		remap({ "n", "<leader>td", ":Telescope diagnostics bufnr=0<cr>" })
 		remap({ "n", "<leader>tgc", ":Telescope git_commits<cr>" })
