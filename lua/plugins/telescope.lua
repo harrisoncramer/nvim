@@ -3,12 +3,16 @@ return {
 		local actions = require("telescope.actions")
 		local state = require("telescope.actions.state")
 
-		-- print("The value is" .. tostring(pcall(require, "telescope")))
-
-		function OpenInDiffView(prompt_bufnr)
+		local function SeeCommitChangesInDiffview(prompt_bufnr)
 			actions.close(prompt_bufnr)
 			local value = state.get_selected_entry(prompt_bufnr).value
 			vim.cmd("DiffviewOpen " .. value .. "~1.." .. value)
+		end
+
+		local function CompareWithCurrentBranchInDiffview(prompt_bufnr)
+			actions.close(prompt_bufnr)
+			local value = state.get_selected_entry(prompt_bufnr).value
+			vim.cmd("DiffviewOpen " .. value)
 		end
 
 		require("telescope").setup({
@@ -28,7 +32,8 @@ return {
 				git_commits = {
 					mappings = {
 						i = {
-							["<C-o>"] = OpenInDiffView,
+							["<C-o>"] = SeeCommitChangesInDiffview,
+							["<C-c>"] = CompareWithCurrentBranchInDiffview,
 						},
 					},
 				},

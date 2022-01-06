@@ -13,8 +13,21 @@ end
 -- Function Module
 local M = {}
 
-M.getOS = function ()
-  return vim.loop.os_uname().sysname
+M.capture = function(cmd, raw)
+	local f = assert(io.popen(cmd, "r"))
+	local s = assert(f:read("*a"))
+	f:close()
+	if raw then
+		return s
+	end
+	s = string.gsub(s, "^%s+", "")
+	s = string.gsub(s, "%s+$", "")
+	s = string.gsub(s, "[\n\r]+", " ")
+	return s
+end
+
+M.getOS = function()
+	return vim.loop.os_uname().sysname
 end
 
 local open_url = function(url)
