@@ -15,7 +15,6 @@ return {
     vim.cmd[[
       :autocmd FileType harpoon nnoremap <buffer> <C-n> <Down>
       :autocmd FileType harpoon nnoremap <buffer> <C-p> <Up>
-      :autocmd FileType harpoon :echo 'hi'
     ]]
   end
 }
