@@ -1,9 +1,8 @@
 -- Basic Settings
 require("settings")
 
--- Null-ls and Language Servers
+-- Language Server
 require("lsp")
-require("null")
 
 -- Other Mappings and Settings
 require("colors")

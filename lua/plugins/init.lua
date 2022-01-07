@@ -49,21 +49,21 @@ packer.startup(function(use)
 		config = setup("plugins.ultisnips"),
 	})
 	use({ "Olical/conjure", config = setup("plugins.conjure") })
-	use("jose-elias-alvarez/null-ls.nvim")
+	use({ "jose-elias-alvarez/null-ls.nvim", config = setup("plugins.null") })
 	use({ "phaazon/hop.nvim", branch = "v1", config = setup("plugins.hop", "hop") })
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = { { "nvim-lua/plenary.nvim" } },
 		config = setup("plugins.telescope", "telescope"),
 	})
-  use({ "ThePrimeagen/harpoon", config = setup("plugins.harpoon", "harpoon")})
+	use({ "ThePrimeagen/harpoon", config = setup("plugins.harpoon", "harpoon") })
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 	use("tpope/vim-dispatch")
 	use("tpope/vim-repeat")
 	use("tpope/vim-surround")
 	use("tpope/vim-unimpaired")
 	use("tpope/vim-eunuch")
-  use("tpope/vim-obsession")
+	use("tpope/vim-obsession")
 	use({ "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } })
 	use({ "guns/vim-sexp", ft = { "clojure" } })
 	use({
@@ -95,7 +95,7 @@ packer.startup(function(use)
 		config = setup("plugins.gitsigns", "gitsigns"),
 	})
 	use({ "gelguy/wilder.nvim", config = setup("plugins.wilder", "wilder") })
-	use("p00f/nvim-ts-rainbow")
+	use({ "p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter" })
 	use({
 		"kyazdani42/nvim-web-devicons",
 		config = function()
@@ -103,7 +103,7 @@ packer.startup(function(use)
 		end,
 	})
 	use({ "kyazdani42/nvim-tree.lua", config = setup("plugins.nvim_tree", "nvim-tree") })
-  use ({'David-Kunz/treesitter-unit', config = setup("plugins.ts-unit")})
+	use({ "David-Kunz/treesitter-unit", config = setup("plugins.ts-unit") })
 	use({
 		"sindrets/diffview.nvim",
 		requires = "nvim-lua/plenary.nvim",
@@ -119,11 +119,6 @@ packer.startup(function(use)
 		"filipdutescu/renamer.nvim",
 		branch = "master",
 		requires = { { "nvim-lua/plenary.nvim" } },
-	})
-	use({
-		"akinsho/bufferline.nvim",
-		requires = "kyazdani42/nvim-web-devicons",
-		config = setup("plugins.bufferline", "bufferline"),
 	})
 	use("itchyny/vim-gitbranch")
 	use({ "harrisoncramer/gruvbox.nvim", requires = { "rktjmp/lush.nvim" } })
