@@ -47,7 +47,9 @@ return {
 		}
 
 		local tree_cb = require("nvim-tree.config").nvim_tree_callback
-		local function cancel() return nil end
+		local function cancel()
+			return nil
+		end
 
 		require("nvim-tree").setup({
 			disable_netrw = true,
@@ -90,7 +92,8 @@ return {
 						{ key = "<Tab>", cb = tree_cb("preview") },
 						{ key = "R", cb = tree_cb("refresh") },
 						{ key = "a", cb = tree_cb("create") },
-						{ key = "d", cb = tree_cb("remove") },
+						{ key = "D", cb = tree_cb("remove") },
+						{ key = "d", cb = tree_cb("trash") },
 						{ key = "r", cb = tree_cb("rename") },
 						{ key = "x", cb = tree_cb("cut") },
 						{ key = "c", cb = tree_cb("copy") },
@@ -102,9 +105,13 @@ return {
 						{ key = "-", cb = tree_cb("dir_up") },
 						{ key = "q", cb = tree_cb("close") },
 						{ key = "g?", cb = tree_cb("toggle_help") },
-            { key = "s", cb = cancel() }
+						{ key = "s", cb = cancel() },
 					},
 				},
+			},
+			trash = {
+				cmd = "trash",
+				require_confirm = true,
 			},
 		})
 	end,

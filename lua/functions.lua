@@ -26,6 +26,10 @@ M.capture = function(cmd, raw)
 	return s
 end
 
+M.getBufferName = function()
+	return vim.fn.expand("%")
+end
+
 M.getOS = function()
 	return vim.loop.os_uname().sysname
 end
