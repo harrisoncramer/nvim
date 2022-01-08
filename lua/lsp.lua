@@ -59,7 +59,7 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover)
 	vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
 	vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
-	vim.keymap.set("n", "R", require("renamer").rename)
+	vim.keymap.set("n", "<leader>R", require("renamer").rename)
 	vim.keymap.set("n", "<leader>[", vim.diagnostic.goto_prev)
 	vim.keymap.set("n", "<leader>]", vim.diagnostic.goto_next)
 end
