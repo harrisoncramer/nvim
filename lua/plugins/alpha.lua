@@ -3,7 +3,7 @@ return {
 		local alpha = require("alpha")
 		local dashboard = require("alpha.themes.dashboard")
 
-		dashboard.section.header.val = {
+		local dino = {
 			"                                                ",
 			"            ,                                   ",
 			"           /|                                    ",
@@ -31,6 +31,28 @@ return {
 			"                                 \\ \\MMMMM       ",
 			"                                  \\______/      ",
 		}
+
+		local cow = {
+			"                 /                       \\                          ",
+			"               /X/                      \\X\\                          ",
+			"              |XX\\         _____         /XX|                          ",
+			"              |XXX\\     _/       \\_     /XXX|___________                          ",
+			"               \\XXXXXXX             XXXXXXX/            \\\\                          ",
+			"                 \\XXXX    /     \\    XXXXX/                \\\\                          ",
+			"                      |   0     0   |                         \\                          ",
+			"                       |           |                           \\                          ",
+			"                        \\         /                            |______//                          ",
+			"                         \\       /                             |                          ",
+			"                          | O_O | \\                            |                          ",
+			"                           \\ _ /   \\________________           |                          ",
+			"                                      | |  | |      \\         /                          ",
+			"                Neovim!               / |  | |       \\______/                          ",
+			"                                      | |  | |        | | | |                          ",
+			"                                    __| |__| |      __| |_| |                          ",
+			"                                   |___||___//     |__||___ |                          ",
+		}
+
+		dashboard.section.header.val = cow
 
 		-- Set menu
 		dashboard.section.buttons.val = {

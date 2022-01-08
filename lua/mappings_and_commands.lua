@@ -18,6 +18,12 @@ remap({ "n", "<C-p>", ":bprev<CR>" })
 remap({ "n", "<C-t>", "<C-^>" })
 remap({ "n", "<C-x>", ":bp <bar> bd#<CR>" })
 
+local replace = function()
+	vim.cmd("startreplace")
+end
+
+vim.keymap.set("n", "R", replace)
+
 -- Tabs
 vim.cmd([[ :ca tc tabclose<CR> ]])
 vim.cmd([[ :ca tn tabnew<CR> ]])
