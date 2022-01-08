@@ -109,6 +109,7 @@ packer.startup(function(use)
 		requires = "nvim-lua/plenary.nvim",
 		config = setup("plugins.diffview", "diffview"),
 	})
+	-- Not stable yet
 	use({ "petertriho/nvim-scrollbar", config = setup("plugins.scrollbar", "scrollbar") })
 	use({
 		"goolord/alpha-nvim",

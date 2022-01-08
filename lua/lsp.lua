@@ -1,4 +1,3 @@
-local remap = require("functions").remap
 local cmp_status_ok, cmp = pcall(require, "cmp")
 local lspconfig_status_ok, util = pcall(require, "lspconfig/util")
 local lsp_installer_status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
@@ -56,14 +55,13 @@ local on_attach = function(client, bufnr)
 	-- Turn off formatting by default
 	client.resolved_capabilities.document_formatting = false
 
-	remap({ "n", "gd", ":lua vim.lsp.buf.definition()<CR>" })
-	remap({ "n", "K", ":lua vim.lsp.buf.hover()<CR>" })
-	remap({ "n", "gi", ":lua vim.lsp.buf.implementation()<CR>" })
-	remap({ "n", "<C-k>", ":lua vim.lsp.buf.signature_help()<CR>" })
-	-- Using renamer plugin.
-	remap({ "n", "R", ':lua require("renamer").rename()<cr>' })
-	remap({ "n", "<leader>[", ":lua vim.diagnostic.goto_prev()<CR>" })
-	remap({ "n", "<leader>]", ":lua vim.diagnostic.goto_next()<CR>" })
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+	vim.keymap.set("n", "K", vim.lsp.buf.hover)
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
+	vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
+	vim.keymap.set("n", "R", require("renamer").rename)
+	vim.keymap.set("n", "<leader>[", vim.diagnostic.goto_prev)
+	vim.keymap.set("n", "<leader>]", vim.diagnostic.goto_next)
 end
 
 -- Hide inline diagnostics

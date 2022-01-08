@@ -1,3 +1,4 @@
+local getVisualSelection = require("functions").getVisualSelection
 return {
 	setup = function(remap)
 		local actions = require("telescope.actions")
@@ -17,7 +18,6 @@ return {
 
 		require("telescope").setup({
 			defaults = {
-				hidden = true,
 				layout_strategy = "vertical",
 				file_ignore_patterns = { "node_modules", "package%-lock.json" },
 				mappings = {
@@ -29,7 +29,28 @@ return {
 				},
 			},
 			pickers = {
+				git_files = {
+					prompt_prefix = " ",
+					find_command = { "rg", "--files", "--hidden", "-g", "!node_modules/**" },
+				},
+				git_branches = {
+					prompt_prefix = " ",
+				},
+				live_grep = {
+					prompt_prefix = " ",
+					find_command = { "rg", "-g", "!node_modules/**" },
+				},
+				oldfiles = {
+					prompt_prefix = " ",
+				},
+				grep_string = {
+					prompt_prefix = " ",
+				},
+				buffers = {
+					hidden = true,
+				},
 				git_commits = {
+					prompt_prefix = " ",
 					mappings = {
 						i = {
 							["<C-o>"] = SeeCommitChangesInDiffview,
@@ -40,22 +61,76 @@ return {
 			},
 		})
 
-		remap({ "n", "<C-f>", ":lua require('telescope.builtin').live_grep({ hidden = true })<cr>" })
-		remap({
-			"n",
-			"<C-j>",
-			":lua require('telescope.builtin').git_files{ find_command = {'rg', '--files', '--hidden', '-g', '!node_modules/**'}}<cr>",
-		})
-		remap({ "n", "<leader>tt", ":lua require('telescope.builtin').buffers({ hidden = true })<cr>" })
-		remap({ "n", "<leader>tr", ":Telescope oldfiles<cr>" }) -- "recent files"
-		remap({ "n", "<leader>td", ":Telescope diagnostics bufnr=0<cr>" })
-		remap({ "n", "<leader>tgc", ":Telescope git_commits<cr>" })
-		remap({ "n", "<leader>tgb", ":Telescope git_branches<cr>" })
-		remap({ "n", "<leader>tgs", ":Telescope git_stash<cr>" })
+		local builtin = require("telescope.builtin")
 
-		vim.cmd([[ nnoremap <expr> <leader>tf ':Telescope find_files<cr>' . expand('<cword>') ]])
-		remap({ "v", "<leader>tf", "y<ESC>:Telescope find_files default_text=<c-r>0<CR>" })
-		remap({ "n", "<leader>tF", ":Telescope grep_string<cr>" })
-		remap({ "v", "<leader>tF", "y<ESC>:Telescope live_grep default_text=<c-r>0<CR>" })
+		local function live_grep()
+			builtin.live_grep()
+		end
+
+		local function git_files()
+			builtin.git_files()
+		end
+
+		local function buffers()
+			builtin.buffers()
+		end
+
+		local function oldfiles()
+			builtin.oldfiles()
+		end
+
+		local function git_commits()
+			builtin.git_commits()
+		end
+
+		local function git_stash()
+			builtin.git_stash()
+		end
+
+		local function grep_string()
+			local word = vim.fn.expand("<cword>")
+			builtin.grep_string()
+			vim.api.nvim_feedkeys(word, "i", false)
+		end
+
+		local function git_files_string()
+			local word = vim.fn.expand("<cword>")
+			builtin.git_files()
+			vim.api.nvim_feedkeys(word, "i", false)
+		end
+
+		local function git_files_string_visual()
+			local text = getVisualSelection()
+			vim.api.nvim_input("<esc>")
+			if text[1] == nil then
+				print("No appropriate visual selection found")
+			else
+				builtin.git_files()
+				vim.api.nvim_input(text[1])
+			end
+		end
+
+		local function grep_string_visual()
+			local text = getVisualSelection()
+			vim.api.nvim_input("<esc>")
+			if text[1] == nil then
+				print("No appropriate visual selection found")
+			else
+				builtin.grep_string()
+				vim.api.nvim_input(text[1])
+				vim.api.nvim_feedkeys(text, "i", false)
+			end
+		end
+
+		vim.keymap.set("n", "<C-f>", live_grep)
+		vim.keymap.set("n", "<C-j>", git_files)
+		vim.keymap.set("n", "<C-g>", buffers)
+		vim.keymap.set("n", "<leader>tr", oldfiles)
+		vim.keymap.set("n", "<leader>tgc", git_commits)
+		vim.keymap.set("n", "<leader>tgs", git_stash)
+		vim.keymap.set("n", "<leader>tF", grep_string)
+		vim.keymap.set("n", "<leader>tf", git_files_string)
+		vim.keymap.set("v", "<leader>tf", git_files_string_visual)
+		vim.keymap.set("v", "<leader>tF", grep_string_visual)
 	end,
 }

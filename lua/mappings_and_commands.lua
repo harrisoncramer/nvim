@@ -26,7 +26,7 @@ vim.cmd([[ :ca tn tabnew<CR> ]])
 remap({ "n", "<leader>lf", ":luafile %<CR>" })
 
 -- LSP
-remap({ "n", "<leader>F", ":lua vim.lsp.buf.formatting()<CR>" })
+vim.keymap.set("n", "<leader>F", vim.lsp.buf.formatting)
 
 -- Neovim
 remap({ "n", "<leader>vv", ":e $MYVIMRC<cr>" })
