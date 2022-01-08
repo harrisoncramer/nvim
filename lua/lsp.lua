@@ -62,8 +62,8 @@ local on_attach = function(client, bufnr)
 	remap({ "n", "<C-k>", ":lua vim.lsp.buf.signature_help()<CR>" })
 	-- Using renamer plugin.
 	remap({ "n", "R", ':lua require("renamer").rename()<cr>' })
-	remap({ "n", "<leader>[", ":lua vim.lsp.diagnostic.goto_prev()<CR>" })
-	remap({ "n", "<leader>]", ":lua vim.lsp.diagnostic.goto_next()<CR>" })
+	remap({ "n", "<leader>[", ":lua vim.diagnostic.goto_prev()<CR>" })
+	remap({ "n", "<leader>]", ":lua vim.diagnostic.goto_next()<CR>" })
 end
 
 -- Hide inline diagnostics
