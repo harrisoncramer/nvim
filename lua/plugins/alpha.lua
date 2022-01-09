@@ -52,7 +52,7 @@ return {
 			"                                   |___||___//     |__||___ |                          ",
 		}
 
-		dashboard.section.header.val = cow
+		dashboard.section.header.val = dino
 
 		-- Set menu
 		dashboard.section.buttons.val = {
