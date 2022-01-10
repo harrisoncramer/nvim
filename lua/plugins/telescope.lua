@@ -17,10 +17,23 @@ return {
 			vim.cmd("DiffviewOpen " .. value)
 		end
 
-		local function CopyTextFromPreview()
+		local function CopyTextFromPreview(prompt_bufnr)
 			local selection = require("telescope.actions.state").get_selected_entry()
 			local text = vim.fn.trim(selection["text"])
 			vim.fn.setreg('"', text)
+			actions.close(prompt_bufnr)
+		end
+
+		local function CopyCommitHash(prompt_bufnr)
+			local selection = require("telescope.actions.state").get_selected_entry()
+			vim.fn.setreg('"', selection.value)
+			actions.close(prompt_bufnr)
+		end
+
+		local function CopyBranchName(prompt_bufnr)
+			local selection = require("telescope.actions.state").get_selected_entry()
+			vim.fn.setreg('"', selection.value)
+			actions.close(prompt_bufnr)
 		end
 
 		require("telescope").setup({
@@ -42,6 +55,11 @@ return {
 				},
 				git_branches = {
 					prompt_prefix = " ",
+					mappings = {
+						i = {
+							["<C-y>"] = CopyBranchName,
+						},
+					},
 				},
 				live_grep = {
 					prompt_prefix = " ",
@@ -65,6 +83,7 @@ return {
 					prompt_prefix = " ",
 					mappings = {
 						i = {
+							["<C-y>"] = CopyCommitHash,
 							["<C-o>"] = SeeCommitChangesInDiffview,
 							["<C-c>"] = CompareWithCurrentBranchInDiffview,
 						},
