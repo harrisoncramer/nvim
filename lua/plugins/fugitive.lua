@@ -18,7 +18,7 @@ local gitPush = function()
 			vim.api.nvim_command("! git push")
 		end
 	else
-		vim.fn.confirm("Push to upstream branch for submodule?")
+		vim.fn.confirm("Push to origin/main branch for submodule?")
 		vim.api.nvim_command("! git push origin HEAD:main")
 	end
 end
