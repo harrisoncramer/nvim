@@ -98,6 +98,10 @@ return {
 			builtin.git_commits()
 		end
 
+		local function git_branches()
+			builtin.git_branches()
+		end
+
 		local function git_stash()
 			builtin.git_stash()
 		end
@@ -142,6 +146,7 @@ return {
 		vim.keymap.set("n", "<C-g>", buffers)
 		vim.keymap.set("n", "<leader>tr", oldfiles)
 		vim.keymap.set("n", "<leader>tgc", git_commits)
+		vim.keymap.set("n", "<leader>tgb", git_branches)
 		vim.keymap.set("n", "<leader>tgs", git_stash)
 		vim.keymap.set("n", "<leader>tF", grep_string)
 		vim.keymap.set("n", "<leader>tf", git_files_string)
