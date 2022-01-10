@@ -1,4 +1,5 @@
 local getVisualSelection = require("functions").getVisualSelection
+
 return {
 	setup = function(remap)
 		local actions = require("telescope.actions")
@@ -14,6 +15,12 @@ return {
 			actions.close(prompt_bufnr)
 			local value = state.get_selected_entry(prompt_bufnr).value
 			vim.cmd("DiffviewOpen " .. value)
+		end
+
+		local function CopyTextFromPreview()
+			local selection = require("telescope.actions.state").get_selected_entry()
+			local text = vim.fn.trim(selection["text"])
+			vim.fn.setreg('"', text)
 		end
 
 		require("telescope").setup({
@@ -39,6 +46,11 @@ return {
 				live_grep = {
 					prompt_prefix = " ",
 					find_command = { "rg", "-g", "!node_modules/**" },
+					mappings = {
+						i = {
+							["<C-y>"] = CopyTextFromPreview,
+						},
+					},
 				},
 				oldfiles = {
 					prompt_prefix = " ",
@@ -68,7 +80,10 @@ return {
 		end
 
 		local function git_files()
-			builtin.git_files()
+			local ok = pcall(builtin.git_files)
+			if not ok then
+				require("telescope.builtin").find_files()
+			end
 		end
 
 		local function buffers()
