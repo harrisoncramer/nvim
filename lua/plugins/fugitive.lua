@@ -10,10 +10,16 @@ local toggleStatus = function()
 end
 
 local gitPush = function()
-	if f.getOS() == "Linux" then
-		vim.api.nvim_command("Git push")
+	local isSubmodule = vim.api.nvim_command("!git rev-parse --show-superproject-working-tree")
+	if not isSubmodule == nil then
+		vim.fn.confirm("Push to upstream branch for submodule?")
+		vim.api.nvim_command("! git push origin HEAD:main")
 	else
-		vim.api.nvim_command("! git push")
+		if f.getOS() == "Linux" then
+			vim.api.nvim_command("Git push")
+		else
+			vim.api.nvim_command("! git push")
+		end
 	end
 end
 
