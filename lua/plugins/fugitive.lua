@@ -24,11 +24,7 @@ local gitPush = function()
 end
 
 local gitOpen = function()
-	if f.getOS() == "Linux" then
-		vim.api.nvim_command("Git open")
-	else
-		vim.api.nvim_command("! git open")
-	end
+	vim.api.nvim_command("! git open")
 end
 
 return {
