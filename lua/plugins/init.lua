@@ -110,7 +110,7 @@ packer.startup(function(use)
 		config = setup("plugins.diffview", "diffview"),
 	})
 	-- Not stable yet
-	use({ "petertriho/nvim-scrollbar", config = setup("plugins.scrollbar", "scrollbar") })
+	-- use({ "petertriho/nvim-scrollbar", config = setup("plugins.scrollbar", "scrollbar") })
 	use({
 		"goolord/alpha-nvim",
 		branch = "main",
