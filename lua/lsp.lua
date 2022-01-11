@@ -67,7 +67,7 @@ end
 -- Hide inline diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics,
-	{ virtual_text = false, severity_sort = true, update_on_insert = false }
+	{ virtual_text = false, severity_sort = true, update_in_insert = false }
 )
 
 -- Change Error Signs in Gutter
