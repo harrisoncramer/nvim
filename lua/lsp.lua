@@ -67,7 +67,7 @@ end
 -- Hide inline diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics,
-	{ virtual_text = false, severity_sort = true }
+	{ virtual_text = false, severity_sort = true, update_on_insert = false }
 )
 
 -- Change Error Signs in Gutter
@@ -85,7 +85,7 @@ lsp_installer.on_server_ready(function(server)
 		capabilities = capabilities,
 		on_attach = on_attach,
 		auto_start = true,
-		flags = { debounce_text_changes = 150 },
+		flags = { debounce_text_changes = 500 },
 	}
 
 	if server.name == "tsserver" then
