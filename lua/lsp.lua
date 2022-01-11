@@ -64,11 +64,12 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "<leader>]", vim.diagnostic.goto_next)
 end
 
--- Hide inline diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics,
-	{ virtual_text = false, severity_sort = true, update_in_insert = false }
-)
+-- Global diagnostic settings
+vim.diagnostic.config({
+	virtual_text = false,
+	severity_sort = true,
+	update_in_insert = false,
+})
 
 -- Change Error Signs in Gutter
 local signs = { Error = "✘", Warn = " ", Hint = "", Info = " " }
@@ -102,7 +103,7 @@ lsp_installer.on_server_ready(function(server)
 				definition = true,
 				typeDefinition = true,
 				callHierarchy = true,
-				hover = true,
+				hover = false,
 				rename = true,
 				signatureHelp = true,
 				codeAction = true,
