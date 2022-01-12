@@ -18,7 +18,6 @@ return {
 		require("telescope").setup({
 			defaults = {
 				hidden = true,
-				layout_strategy = "vertical",
 				file_ignore_patterns = { "node_modules", "package%-lock.json" },
 				mappings = {
 					i = {
