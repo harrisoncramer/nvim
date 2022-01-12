@@ -41,6 +41,8 @@ remap({ "n", "Y", "y$" }) -- Copy until end of line
 remap({ "i", "<C-l>", "<Right>" }) -- Move right in insert
 remap({ "n", "<leader>lf", ":luafile %<cr>" })
 
+remap({ "n", "<localleader>m", ":lua require('functions').jumpToMethods()<CR>" })
+
 -- Allows numbered jumps to be saved to the jumplist, for use w/ C-o and C-i
 vim.api.nvim_exec("nnoremap <expr> k (v:count > 1 ? \"m'\" . v:count : '') . 'k'", false)
 vim.api.nvim_exec("nnoremap <expr> j (v:count > 1 ? \"m'\" . v:count : '') . 'j'", false)

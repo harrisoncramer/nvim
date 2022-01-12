@@ -11,7 +11,7 @@ return {
 			end,
 			sources = {
 				formatting.eslint_d,
-				formatting.prettierd,
+				-- formatting.prettierd,
 				formatting.stylua,
 				formatting.joker.with({
 					filetypes = {

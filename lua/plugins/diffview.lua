@@ -2,7 +2,7 @@ return {
 	setup = function(remap)
 		local cb = require("diffview.config").diffview_callback
 
-		remap({ "n", "<leader>gD", ":DiffviewFileHistory<CR>" })
+		remap({ "n", "<leader>df", ":DiffviewFileHistory<CR>" })
 
 		require("diffview").setup({
 			diff_binaries = false,
