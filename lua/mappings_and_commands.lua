@@ -37,6 +37,9 @@ vim.keymap.set("n", "<leader>F", vim.lsp.buf.formatting)
 -- Neovim
 remap({ "n", "<leader>vv", ":e $MYVIMRC<cr>" })
 
+-- Vue
+require("vue")
+
 -- Miscellaneous
 remap({ "n", "<C-a>", "<esc>ggVG<CR>" }) -- Select all
 remap({ "n", "*", ":keepjumps normal! mi*`i<CR>" }) -- " Use * to add w/out jumping

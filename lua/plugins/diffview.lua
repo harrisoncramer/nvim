@@ -2,7 +2,7 @@ return {
 	setup = function(remap)
 		local cb = require("diffview.config").diffview_callback
 
-		remap({ "n", "<leader>gD", ":DiffviewFileHistory<CR>" })
+		remap({ "n", "<leader>df", ":DiffviewFileHistory<CR>" })
 
 		require("diffview").setup({
 			diff_binaries = false,
@@ -47,7 +47,7 @@ return {
 				view = {
 					["<C-n>"] = cb("select_next_entry"), -- Open the diff for the next file
 					["<C-p>"] = cb("select_prev_entry"), -- Open the diff for the previous file
-					["gf"] = cb("goto_file"), -- Open the file in a new split in previous tabpage
+					["<CR>"] = cb("goto_file_edit"), -- Open the file in a new split in previous tabpage
 					["<C-w><C-f>"] = cb("goto_file_split"), -- Open the file in a new split
 					["<C-w>gf"] = cb("goto_file_tab"), -- Open the file in a new tabpage
 					["<leader>e"] = cb("focus_files"), -- Bring focus to the files panel
@@ -69,6 +69,7 @@ return {
 					["<C-n>"] = cb("select_next_entry"),
 					["<C-p>"] = cb("select_prev_entry"),
 					["gf"] = cb("goto_file"),
+					["<CR>"] = cb("goto_file_edit"),
 					["<C-w><C-f>"] = cb("goto_file_split"),
 					["<C-w>gf"] = cb("goto_file_tab"),
 					["i"] = cb("listing_style"), -- Toggle between 'list' and 'tree' views
@@ -92,6 +93,7 @@ return {
 					["<C-n>"] = cb("select_next_entry"),
 					["<C-p>"] = cb("select_prev_entry"),
 					["gf"] = cb("goto_file"),
+					["<CR>"] = cb("goto_file_edit"),
 					["<C-w><C-f>"] = cb("goto_file_split"),
 					["<C-w>gf"] = cb("goto_file_tab"),
 					["<leader>e"] = cb("focus_files"),
