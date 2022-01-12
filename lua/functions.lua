@@ -91,8 +91,4 @@ M.remap = function(key)
 	end
 end
 
-M.jumpToMethods = function()
-	vim.cmd(":/methods: {<CR>")
-end
-
 return M

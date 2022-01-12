@@ -31,6 +31,9 @@ remap({ "n", "<leader>F", ":lua vim.lsp.buf.formatting()<CR>" })
 -- Neovim
 remap({ "n", "<leader>vv", ":e $MYVIMRC<cr>" })
 
+-- Vue
+require("vue")
+
 -- Miscellaneous
 remap({ "n", "<C-a>", "<esc>ggVG<CR>" }) -- Select all
 remap({ "n", "*", ":keepjumps normal! mi*`i<CR>" }) -- " Use * to add w/out jumping
@@ -40,8 +43,6 @@ remap({ "n", "H", ":w<CR>" }) -- Quick save
 remap({ "n", "Y", "y$" }) -- Copy until end of line
 remap({ "i", "<C-l>", "<Right>" }) -- Move right in insert
 remap({ "n", "<leader>lf", ":luafile %<cr>" })
-
-remap({ "n", "<localleader>m", ":lua require('functions').jumpToMethods()<CR>" })
 
 -- Allows numbered jumps to be saved to the jumplist, for use w/ C-o and C-i
 vim.api.nvim_exec("nnoremap <expr> k (v:count > 1 ? \"m'\" . v:count : '') . 'k'", false)
