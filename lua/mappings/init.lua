@@ -1,7 +1,11 @@
 local remap = require("functions").remap
 
--- MAPPINGS
--- Creating and moving around splits
+-- File specific mappings
+require("mappings.vue")
+require("mappings.work")
+require("mappings.git")
+
+-- Splits
 remap({ "n", "ss", ":split<Return><C-w>w" })
 remap({ "n", "sv", ":vsplit<Return><C-w>w" })
 remap({ "n", "sh", "<C-w>h" })
@@ -11,7 +15,7 @@ remap({ "n", "sl", "<C-w>l" })
 remap({ "n", "sq", "<C-w>q" })
 remap({ "n", "sp", "<C-w><C-p>" })
 
--- Buffer management
+-- Buffers
 remap({ "n", "<leader>-", ":bd<CR>" })
 remap({ "n", "<C-n>", ":bnext<CR>" })
 remap({ "n", "<C-p>", ":bprev<CR>" })
@@ -21,18 +25,10 @@ remap({ "n", "<C-x>", ":bp <bar> bd#<CR>" })
 -- Tabs
 vim.cmd([[ :ca tc tabclose<CR> ]])
 vim.cmd([[ :ca tn tabnew<CR> ]])
+vim.cmd([[ :ca tp tabprev<CR> ]])
 
--- Lua
+-- Luafile
 remap({ "n", "<leader>lf", ":luafile %<CR>" })
-
--- LSP
-remap({ "n", "<leader>F", ":lua vim.lsp.buf.formatting()<CR>" })
-
--- Neovim
-remap({ "n", "<leader>vv", ":e $MYVIMRC<cr>" })
-
--- Vue
-require("vue")
 
 -- Miscellaneous
 remap({ "n", "<C-a>", "<esc>ggVG<CR>" }) -- Select all
@@ -48,9 +44,6 @@ remap({ "n", "<leader>lf", ":luafile %<cr>" })
 vim.api.nvim_exec("nnoremap <expr> k (v:count > 1 ? \"m'\" . v:count : '') . 'k'", false)
 vim.api.nvim_exec("nnoremap <expr> j (v:count > 1 ? \"m'\" . v:count : '') . 'j'", false)
 
--- Jump to end of visual copy
-vim.cmd([[ vnoremap <expr>y "my\"" . v:register . "y`y" ]])
-
 -- Remap <leader>q to open quickfix list
 vim.cmd([[
   function! PrintQList()
@@ -65,19 +58,14 @@ vim.cmd([[
   nnoremap <silent> <leader>q :call PrintQList()<cr>
 ]])
 
+-- Visual mode search with * for selected text
 vim.cmd([[
-  " Visual mode search with * for selected text
   function! s:VSetSearch()
     let temp = @@
     norm! gvy
     let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
-    " Use this line instead of the above to match matches spanning across lines
-    "let @/ = '\V' . substitute(escape(@@, '\'), '\_s\+', '\\_s\\+', 'g')
     call histadd('/', substitute(@/, '[?/]', '\="\\%d".char2nr(submatch(0))', 'g'))
     let @@ = temp
   endfunction
   vnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>
 ]])
-
-vim.cmd([[command! SC lua require("functions").shortcut() ]])
-vim.cmd([[command! CAL lua require("functions").calendar() ]])
