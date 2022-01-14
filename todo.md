@@ -9,3 +9,4 @@
 - oldfiles customization
 - tailwind for LSP in style blocks
 - Fix git toggle
+- Enable jump to definition even without .vue extension

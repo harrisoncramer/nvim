@@ -188,6 +188,9 @@ lsp_installer.on_server_ready(function(server)
 	if server.name == "jsonls" then
 		opts.filetypes = { "json", "jsonc" }
 	end
+	if server.name == "bashls" then
+		opts.filetypes = { "bash", "zsh" }
+	end
 	-- This setup() function is exactly the same as lspconfig's setup function.
 	-- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 	server:setup(opts)
