@@ -1,8 +1,8 @@
+local state = require("telescope.actions.state")
+local actions = require("telescope.actions")
+
 return {
 	setup = function(remap)
-		local actions = require("telescope.actions")
-		local state = require("telescope.actions.state")
-
 		local function SeeCommitChangesInDiffview(prompt_bufnr)
 			actions.close(prompt_bufnr)
 			local value = state.get_selected_entry(prompt_bufnr).value
@@ -50,11 +50,13 @@ return {
 		remap({ "n", "<leader>td", ":Telescope diagnostics bufnr=0<cr>" })
 		remap({ "n", "<leader>tgc", ":Telescope git_commits<cr>" })
 		remap({ "n", "<leader>tgb", ":Telescope git_branches<cr>" })
-		remap({ "n", "<leader>tgs", ":Telescope git_stash<cr>" })
 
 		vim.cmd([[ nnoremap <expr> <leader>tf ':Telescope find_files<cr>' . expand('<cword>') ]])
 		remap({ "v", "<leader>tf", "y<ESC>:Telescope find_files default_text=<c-r>0<CR>" })
 		remap({ "n", "<leader>tF", ":Telescope grep_string<cr>" })
 		remap({ "v", "<leader>tF", "y<ESC>:Telescope live_grep default_text=<c-r>0<CR>" })
+
+		-- Setup custom stash search which filters by current branch
+		remap({ "n", "<leader>tgs", ":lua require('pickers').stash_filter({})<CR>" })
 	end,
 }

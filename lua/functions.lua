@@ -49,6 +49,12 @@ local get_branch_name = function()
 	return false
 end
 
+M.get_branch_name = get_branch_name
+
+M.escape_string = function(text)
+	return text:gsub("([^%w])", "%%%1")
+end
+
 M.shortcut = function()
 	local branch = get_branch_name()
 	local finalUrl = "https://app.shortcut.com/crossbeam/story"
