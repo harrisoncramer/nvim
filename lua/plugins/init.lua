@@ -49,7 +49,7 @@ packer.startup(function(use)
 		config = setup("plugins.ultisnips"),
 	})
 	use({ "Olical/conjure", config = setup("plugins.conjure") })
-	use({ "jose-elias-alvarez/null-ls.nvim", config = setup("plugins.null") })
+	use({ "jose-elias-alvarez/null-ls.nvim", config = setup("plugins.null", "null-ls") })
 	use({ "phaazon/hop.nvim", branch = "v1", config = setup("plugins.hop", "hop") })
 	use({
 		"nvim-telescope/telescope.nvim",
