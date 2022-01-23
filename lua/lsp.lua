@@ -89,11 +89,6 @@ lsp_installer.on_server_ready(function(server)
 		auto_start = true,
 		flags = { debounce_text_changes = 150 },
 	}
-
-	if server.name == "tsserver" then
-		-- Having issues with root_dir, just always start it.
-		opts.root_dir = util.find_git_ancestor
-	end
 	if server.name == "volar" then
 		opts.init_options = {
 			typescript = {

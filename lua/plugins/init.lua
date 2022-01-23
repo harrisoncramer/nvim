@@ -57,13 +57,15 @@ packer.startup(function(use)
 		config = setup("plugins.telescope", "telescope"),
 	})
 	use({ "ThePrimeagen/harpoon", config = setup("plugins.harpoon", "harpoon") })
+	-- -- Waiting for PR to be merged per git branch
+	-- use({ "aaronhallaert/harpoon", branch = "marks_git_branch", config = setup("plugins.harpoon", "harpoon") })
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 	use("tpope/vim-dispatch")
 	use("tpope/vim-repeat")
 	use("tpope/vim-surround")
 	use("tpope/vim-unimpaired")
 	use("tpope/vim-eunuch")
-	use("superDross/ticket.vim")
+	use({ "harrisoncramer/ticket.vim", config = setup("plugins.ticket") })
 	use({ "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } })
 	use({ "guns/vim-sexp", ft = { "clojure" } })
 	use({
@@ -103,13 +105,12 @@ packer.startup(function(use)
 		end,
 	})
 	use({ "kyazdani42/nvim-tree.lua", config = setup("plugins.nvim_tree", "nvim-tree") })
-	use({ "David-Kunz/treesitter-unit", config = setup("plugins.ts-unit") })
 	use({
 		"sindrets/diffview.nvim",
 		requires = "nvim-lua/plenary.nvim",
 		config = setup("plugins.diffview", "diffview"),
 	})
-	use({ "petertriho/nvim-scrollbar", config = setup("plugins.scrollbar", "scrollbar") })
+	-- use({ "petertriho/nvim-scrollbar", config = setup("plugins.scrollbar", "scrollbar") })
 	use({
 		"goolord/alpha-nvim",
 		branch = "main",
@@ -122,7 +123,6 @@ packer.startup(function(use)
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 	use("itchyny/vim-gitbranch")
-	use({ "harrisoncramer/gruvbox.nvim", requires = { "rktjmp/lush.nvim" } })
 	use({ "harrisoncramer/jump-tag", config = setup("plugins.jump-tag", "jump-tag") })
 	use({
 		"nvim-treesitter/nvim-treesitter",
