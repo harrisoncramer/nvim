@@ -2,11 +2,6 @@ return {
 	setup = function(remap)
 		remap({ "n", "<leader>;", ":NvimTreeToggle<CR>" })
 
-		-- Dummy function used for cancelling default mappings
-		local function cancel()
-			return nil
-		end
-
 		vim.g.nvim_tree_root_folder_modifier = 1
 		vim.g.nvim_tree_highlight_opened_files = 0
 		vim.g.nvim_tree_git_hl = 1
@@ -46,10 +41,30 @@ return {
 			},
 		}
 
-		local tree_cb = require("nvim-tree.config").nvim_tree_callback
-		local function cancel()
-			return nil
-		end
+		-- Key mappings
+		local list = {
+			{ key = "<C-v>", action = "vsplit" },
+			{ key = "<C-x>", action = "split" },
+			{ key = "<BS>", action = "close_node" },
+			{ key = "<Tab>", action = "preview" },
+			{ key = "I", action = "toggle_ignored" },
+			{ key = "H", action = "toggle_dotfiles" },
+			{ key = "R", action = "refresh" },
+			{ key = "a", action = "create" },
+			{ key = "d", action = "remove" },
+			{ key = "D", action = "trash" },
+			{ key = "r", action = "rename" },
+			{ key = "<C-r>", action = "full_rename" },
+			{ key = "x", action = "cut" },
+			{ key = "c", action = "copy" },
+			{ key = "p", action = "paste" },
+			{ key = "y", action = "copy_name" },
+			{ key = "Y", action = "copy_path" },
+			{ key = "gy", action = "copy_absolute_path" },
+			{ key = "-", action = "dir_up" },
+			{ key = "q", action = "close" },
+			{ key = "g?", action = "toggle_help" },
+		}
 
 		require("nvim-tree").setup({
 			disable_netrw = true,
@@ -62,7 +77,6 @@ return {
 			update_cwd = false,
 			update_to_buf_dir = { enable = true, auto_open = true },
 			git = {
-
 				enable = true,
 				ignore = false,
 			},
@@ -84,29 +98,8 @@ return {
 				auto_resize = false,
 				custom_only = true,
 				mappings = {
-					list = {
-						{ key = "<Enter>", cb = tree_cb("cd") },
-						{ key = { "<Enter>", "o" }, cb = tree_cb("edit") },
-						{ key = "<C-v>", cb = tree_cb("vsplit") },
-						{ key = "<C-x>", cb = tree_cb("split") },
-						{ key = "<Tab>", cb = tree_cb("preview") },
-						{ key = "R", cb = tree_cb("refresh") },
-						{ key = "a", cb = tree_cb("create") },
-						{ key = "D", cb = tree_cb("remove") },
-						{ key = "d", cb = tree_cb("trash") },
-						{ key = "r", cb = tree_cb("rename") },
-						{ key = "x", cb = tree_cb("cut") },
-						{ key = "c", cb = tree_cb("copy") },
-						{ key = "s", cb = cancel() },
-						{ key = "p", cb = tree_cb("paste") },
-						{ key = "y", cb = tree_cb("copy_name") },
-						{ key = "Y", cb = tree_cb("copy_path") },
-						{ key = "gy", cb = tree_cb("copy_absolute_path") },
-						{ key = "-", cb = tree_cb("dir_up") },
-						{ key = "q", cb = tree_cb("close") },
-						{ key = "g?", cb = tree_cb("toggle_help") },
-						{ key = "s", cb = cancel() },
-					},
+					custom_only = true,
+					list = list,
 				},
 			},
 			trash = {
