@@ -4,7 +4,6 @@ return {
 
 		vim.g.nvim_tree_root_folder_modifier = 1
 		vim.g.nvim_tree_highlight_opened_files = 0
-		vim.g.nvim_tree_git_hl = 1
 		vim.g.nvim_tree_indent_markers = 0
 		vim.g.nvim_tree_quit_on_open = 0
 		vim.g.nvim_tree_root_folder_modifier = ":~"
@@ -46,7 +45,9 @@ return {
 			{ key = "<C-v>", action = "vsplit" },
 			{ key = "<C-x>", action = "split" },
 			{ key = "<BS>", action = "close_node" },
+			{ key = "o", action = "toggle_node" },
 			{ key = "<Tab>", action = "preview" },
+			{ key = "<Enter>", action = "edit" },
 			{ key = "I", action = "toggle_ignored" },
 			{ key = "H", action = "toggle_dotfiles" },
 			{ key = "R", action = "refresh" },
