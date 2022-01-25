@@ -13,6 +13,14 @@ end
 -- Function Module
 local M = {}
 
+M.openVim = function()
+	vim.cmd([[ :OpenSession ]])
+end
+
+M.closeVim = function()
+	vim.cmd([[ :SaveSession ]])
+end
+
 M.capture = function(cmd, raw)
 	local f = assert(io.popen(cmd, "r"))
 	local s = assert(f:read("*a"))
