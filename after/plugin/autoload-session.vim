@@ -1,1 +1,1 @@
-OpenSession
+silent! OpenSession
