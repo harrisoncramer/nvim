@@ -13,8 +13,14 @@ end
 -- Function Module
 local M = {}
 
+-- Session Management
 M.closeVim = function()
 	vim.cmd([[ :SaveSession ]])
+end
+
+M.refreshSession = function()
+	vim.cmd([[ :NvimTreeOpen ]])
+	vim.cmd([[ :OpenSession ]])
 end
 
 M.capture = function(cmd, raw)
