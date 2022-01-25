@@ -13,10 +13,6 @@ end
 -- Function Module
 local M = {}
 
-M.openVim = function()
-	vim.cmd([[ :OpenSession ]])
-end
-
 M.closeVim = function()
 	vim.cmd([[ :SaveSession ]])
 end
