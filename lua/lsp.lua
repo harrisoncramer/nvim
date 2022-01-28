@@ -1,4 +1,3 @@
-local remap = require("functions").remap
 local cmp_status_ok, cmp = pcall(require, "cmp")
 local lspconfig_status_ok, util = pcall(require, "lspconfig/util")
 local lsp_installer_status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
@@ -56,21 +55,21 @@ local on_attach = function(client, bufnr)
 	-- Turn off formatting by default
 	client.resolved_capabilities.document_formatting = false
 
-	remap({ "n", "gd", ":lua vim.lsp.buf.definition()<CR>" })
-	remap({ "n", "K", ":lua vim.lsp.buf.hover()<CR>" })
-	remap({ "n", "gi", ":lua vim.lsp.buf.implementation()<CR>" })
-	remap({ "n", "<C-k>", ":lua vim.lsp.buf.signature_help()<CR>" })
-	-- Using renamer plugin.
-	remap({ "n", "R", ':lua require("renamer").rename()<cr>' })
-	remap({ "n", "<leader>[", ":lua vim.diagnostic.goto_prev()<CR>" })
-	remap({ "n", "<leader>]", ":lua vim.diagnostic.goto_next()<CR>" })
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+	vim.keymap.set("n", "K", vim.lsp.buf.hover)
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
+	vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
+	vim.keymap.set("n", "<leader>R", require("renamer").rename)
+	vim.keymap.set("n", "<leader>[", vim.diagnostic.goto_prev)
+	vim.keymap.set("n", "<leader>]", vim.diagnostic.goto_next)
 end
 
--- Hide inline diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics,
-	{ virtual_text = false, severity_sort = true }
-)
+-- Global diagnostic settings
+vim.diagnostic.config({
+	virtual_text = false,
+	severity_sort = true,
+	update_in_insert = false,
+})
 
 -- Change Error Signs in Gutter
 local signs = { Error = "✘", Warn = " ", Hint = "", Info = " " }
@@ -87,7 +86,7 @@ lsp_installer.on_server_ready(function(server)
 		capabilities = capabilities,
 		on_attach = on_attach,
 		auto_start = true,
-		flags = { debounce_text_changes = 150 },
+		flags = { debounce_text_changes = 500 },
 	}
 	if server.name == "volar" then
 		opts.init_options = {
@@ -99,7 +98,7 @@ lsp_installer.on_server_ready(function(server)
 				definition = true,
 				typeDefinition = true,
 				callHierarchy = true,
-				hover = true,
+				hover = false,
 				rename = true,
 				signatureHelp = true,
 				codeAction = true,

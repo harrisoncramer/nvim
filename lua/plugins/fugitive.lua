@@ -1,5 +1,3 @@
-local f = require("functions")
-
 local toggleStatus = function()
 	local ft = vim.bo.filetype
 	if ft == "fugitive" then
@@ -28,12 +26,9 @@ local gitOpen = function()
 end
 
 return {
-	setup = function(remap)
-		remap({ "n", "<leader>gs", ":lua require('plugins.fugitive').toggleStatus()<CR>" })
-		remap({ "n", "<leader>gP", ":lua require('plugins.fugitive').gitPush()<CR>" })
-		remap({ "n", "<leader>go", ":lua require('plugins.fugitive').gitOpen()<CR>" })
+	setup = function()
+		vim.keymap.set("n", "<leader>gs", toggleStatus)
+		vim.keymap.set("n", "<leader>gP", gitPush)
+		vim.keymap.set("n", "<leader>go", gitOpen)
 	end,
-	gitPush = gitPush,
-	gitOpen = gitOpen,
-	toggleStatus = toggleStatus,
 }
