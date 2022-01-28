@@ -1,3 +1,5 @@
+local f = require("functions")
+
 local toggleStatus = function()
 	local ft = vim.bo.filetype
 	if ft == "fugitive" then
