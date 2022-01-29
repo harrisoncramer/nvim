@@ -1,3 +1,4 @@
+local OS = require("functions").getOS
 local cmp_status_ok, cmp = pcall(require, "cmp")
 local lspconfig_status_ok, util = pcall(require, "lspconfig/util")
 local lsp_installer_status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
@@ -8,6 +9,15 @@ local cmp_nvim_lsp_status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 -- Setup renamer
 if renamer_status_ok then
 	renamer.setup({})
+end
+
+-- Typescript server for Volar (non Vue2 projects, which don't have a local installation)
+local ts_server
+if OS() == "Linux" then
+	ts_server = "/home/harrycramer/.nvm/versions/node/v16.13.0/lib/node_modules/typescript/lib/tsserverlibrary.js"
+else
+	ts_server =
+		"/Users/harrisoncramer/.fnm/node-versions/v16.13.0/installation/lib/node_modules/typescript/lib/tsserverlibrary.js"
 end
 
 -- Setup completion engine
@@ -81,17 +91,16 @@ end
 -- Also installed: tailwindcss, tsserver, emmet-ls
 -- Loop over installed servers and set them up. Register a handler that will be called for all installed servers.
 lsp_installer.on_server_ready(function(server)
-	vim.inspect(server.name)
 	local opts = {
 		capabilities = capabilities,
 		on_attach = on_attach,
 		auto_start = true,
-		flags = { debounce_text_changes = 500 },
+		flags = { debounce_text_changes = 150 },
 	}
 	if server.name == "volar" then
 		opts.init_options = {
 			typescript = {
-				serverPath = vim.api.nvim_eval("$TS_SERVER"), -- This must be passed in via the startup in .zshrc....
+				serverPath = ts_server,
 			},
 			languageFeatures = {
 				references = true,
