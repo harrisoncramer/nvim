@@ -50,22 +50,20 @@ packer.startup(function(use)
 	})
 	use({ "Olical/conjure", config = setup("plugins.conjure") })
 	use({ "jose-elias-alvarez/null-ls.nvim", config = setup("plugins.null", "null-ls") })
-	use({ "phaazon/hop.nvim", branch = "v1", config = setup("plugins.hop", "hop") })
+	use({ "phaazon/hop.nvim", config = setup("plugins.hop", "hop") })
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = { { "nvim-lua/plenary.nvim" } },
 		config = setup("plugins.telescope", "telescope"),
 	})
 	use({ "ThePrimeagen/harpoon", config = setup("plugins.harpoon", "harpoon") })
-	-- -- Waiting for PR to be merged per git branch
-	-- use({ "aaronhallaert/harpoon", branch = "marks_git_branch", config = setup("plugins.harpoon", "harpoon") })
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 	use("tpope/vim-dispatch")
 	use("tpope/vim-repeat")
 	use("tpope/vim-surround")
 	use("tpope/vim-unimpaired")
 	use("tpope/vim-eunuch")
-	use({ "harrisoncramer/ticket.vim", config = setup("plugins.ticket") })
+	use({ "rmagatti/auto-session", config = setup("plugins.session", "auto-session") })
 	use({ "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } })
 	use({ "guns/vim-sexp", ft = { "clojure" } })
 	use({
