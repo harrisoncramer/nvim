@@ -1,9 +1,5 @@
 local get_branch_name = require("functions").get_branch_name
 
-vim.cmd([[
-  let g:auto_session_pre_save_cmds = ["lua require'nvim-tree'.setup()", "tabdo NvimTreeClose"]
-]])
-
 local opts = {
 	log_level = "info",
 	auto_session_enable_last_session = true,
@@ -12,7 +8,7 @@ local opts = {
 	auto_save_enabled = true,
 	auto_restore_enabled = true,
 	auto_session_suppress_dirs = nil,
-	pre_save_cmds = { "NvimTreeClose" },
+	pre_save_cmds = { "lua require'nvim-tree'.setup()", "tabdo NvimTreeClose" },
 }
 
 return {

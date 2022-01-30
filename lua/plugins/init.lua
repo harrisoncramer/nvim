@@ -57,8 +57,6 @@ packer.startup(function(use)
 		config = setup("plugins.telescope", "telescope"),
 	})
 	use({ "ThePrimeagen/harpoon", config = setup("plugins.harpoon", "harpoon") })
-	-- -- Waiting for PR to be merged per git branch
-	-- use({ "aaronhallaert/harpoon", branch = "marks_git_branch", config = setup("plugins.harpoon", "harpoon") })
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 	use("tpope/vim-dispatch")
 	use("tpope/vim-repeat")
