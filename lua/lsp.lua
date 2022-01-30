@@ -69,6 +69,12 @@ vim.diagnostic.config({
 	virtual_text = false,
 	severity_sort = true,
 	update_in_insert = false,
+	float = {
+		header = "",
+		source = "always",
+		border = "rounded",
+		focusable = true,
+	},
 })
 
 -- Change Error Signs in Gutter
