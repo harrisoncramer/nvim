@@ -13,16 +13,6 @@ end
 -- Function Module
 local M = {}
 
--- Session Management
-M.closeVim = function()
-	vim.cmd([[ :SaveSession ]])
-end
-
-M.refreshSession = function()
-	vim.cmd([[ :NvimTreeOpen ]])
-	vim.cmd([[ :OpenSession ]])
-end
-
 M.getVisualSelection = function()
 	local modeInfo = vim.api.nvim_get_mode()
 	local mode = modeInfo.mode
