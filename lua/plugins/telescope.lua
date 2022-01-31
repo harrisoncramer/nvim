@@ -84,15 +84,7 @@ return {
 		local function CheckoutAndRestore(prompt_bufnr)
 			vim.cmd("Obsession")
 			actions.git_checkout(prompt_bufnr)
-			local branch = f.get_branch_name()
-			branch = branch:gsub("%W", "")
-			local session_path = ".sessions/session." .. branch .. ".vim"
-			if f.file_exists(session_path) then
-				vim.cmd(string.format("silent source %s", session_path))
-				vim.cmd(string.format("silent Obsession %s", session_path))
-			else
-				vim.cmd(string.format("silent Obsession %s", session_path))
-			end
+			f.create_or_source_obsession()
 		end
 
 		local function CompareWithCurrentBranchInDiffview(prompt_bufnr)

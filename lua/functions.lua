@@ -108,9 +108,23 @@ end
 
 M.get_branch_name = get_branch_name
 
-M.file_exists = function(name)
+local file_exists = function(name)
 	local f = io.open(name, "r")
 	return f ~= nil and io.close(f)
+end
+
+M.file_exists = file_exists
+
+M.create_or_source_obsession = function()
+	local branch = get_branch_name()
+	branch = branch:gsub("%W", "")
+	local session_path = ".sessions/session." .. branch .. ".vim"
+	if file_exists(session_path) then
+		vim.cmd(string.format("silent source %s", session_path))
+		vim.cmd(string.format("silent Obsession %s", session_path))
+	else
+		vim.cmd(string.format("silent Obsession %s", session_path))
+	end
 end
 
 M.escape_string = function(text)
