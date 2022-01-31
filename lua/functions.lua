@@ -118,12 +118,16 @@ M.file_exists = file_exists
 M.create_or_source_obsession = function()
 	local branch = get_branch_name()
 	branch = branch:gsub("%W", "")
-	local session_path = ".sessions/session." .. branch .. ".vim"
-	if file_exists(session_path) then
-		vim.cmd(string.format("silent source %s", session_path))
-		vim.cmd(string.format("silent Obsession %s", session_path))
+	if vim.fn.isdirectory(".sessions") == 1 then
+		local session_path = ".sessions/session." .. branch .. ".vim"
+		if file_exists(session_path) then
+			vim.cmd(string.format("silent source %s", session_path))
+			vim.cmd(string.format("silent Obsession %s", session_path))
+		else
+			vim.cmd(string.format("silent Obsession %s", session_path))
+		end
 	else
-		vim.cmd(string.format("silent Obsession %s", session_path))
+		print("There is no .sessions folder in this project yet!")
 	end
 end
 

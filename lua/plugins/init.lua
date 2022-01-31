@@ -109,6 +109,7 @@ packer.startup(function(use)
 		config = setup("plugins.diffview", "diffview"),
 	})
 	use({ "petertriho/nvim-scrollbar", config = setup("plugins.scrollbar", "scrollbar") })
+	use({ "kevinhwang91/nvim-hlslens" })
 	use({
 		"goolord/alpha-nvim",
 		branch = "main",
