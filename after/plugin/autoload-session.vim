@@ -1,2 +1,2 @@
-" TODO: Only call OpenSession if Vim was loaded without any arguments
-" silent! OpenSession
+" TODO: Only call RestoreSession if Vim was loaded without any arguments
+" silent! RestoreSession

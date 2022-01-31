@@ -1,5 +1,4 @@
 local state = require("telescope.actions.state")
-local get_branch_name = require("functions").get_branch_name
 local pickers = require("telescope.pickers")
 local make_entry = require("telescope.make_entry")
 local finders = require("telescope.finders")
@@ -9,7 +8,7 @@ local actions = require("telescope.actions")
 local entry_display = require("telescope.pickers.entry_display")
 local utils = require("telescope.utils")
 local escape_string = require("functions").escape_string
-local getVisualSelection = require("functions").getVisualSelection
+local f = require("functions")
 
 function make_entry.gen_from_git_stash(opts)
 	local displayer = entry_display.create({
@@ -39,7 +38,7 @@ function make_entry.gen_from_git_stash(opts)
 		local _, commit_branch_name = string.match(splitted[2], "^([WIP on|On]+) (.+)")
 		local commit_info = splitted[3]
 
-		local real_branch = get_branch_name()
+		local real_branch = f.get_branch_name()
 		local escaped_commit_branch_name = escape_string(commit_branch_name)
 
 		local search = string.find(real_branch, escaped_commit_branch_name)
@@ -80,6 +79,20 @@ return {
 			actions.close(prompt_bufnr)
 			local value = state.get_selected_entry(prompt_bufnr).value
 			vim.cmd("DiffviewOpen " .. value .. "~1.." .. value)
+		end
+
+		local function CheckoutAndRestore(prompt_bufnr)
+			vim.cmd("Obsession")
+			actions.git_checkout(prompt_bufnr)
+			local branch = f.get_branch_name()
+			branch = branch:gsub("%W", "")
+			local session_path = ".sessions/session." .. branch .. ".vim"
+			if f.file_exists(session_path) then
+				vim.cmd(string.format("silent source %s", session_path))
+				vim.cmd(string.format("silent Obsession %s", session_path))
+			else
+				vim.cmd(string.format("silent Obsession %s", session_path))
+			end
 		end
 
 		local function CompareWithCurrentBranchInDiffview(prompt_bufnr)
@@ -128,6 +141,8 @@ return {
 					mappings = {
 						i = {
 							["<C-y>"] = CopyBranchName,
+							["<C-o>"] = CheckoutAndRestore,
+							["<Enter>"] = CheckoutAndRestore,
 						},
 					},
 				},
@@ -204,7 +219,7 @@ return {
 		end
 
 		local function git_files_string_visual()
-			local text = getVisualSelection()
+			local text = f.getVisualSelection()
 			vim.api.nvim_input("<esc>")
 			if text[1] == nil then
 				print("No appropriate visual selection found")
@@ -215,7 +230,7 @@ return {
 		end
 
 		local function grep_string_visual()
-			local text = getVisualSelection()
+			local text = f.getVisualSelection()
 			vim.api.nvim_input("<esc>")
 			if text[1] == nil then
 				print("No appropriate visual selection found")

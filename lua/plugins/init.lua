@@ -63,7 +63,7 @@ packer.startup(function(use)
 	use("tpope/vim-surround")
 	use("tpope/vim-unimpaired")
 	use("tpope/vim-eunuch")
-	use({ "harrisoncramer/auto-session", config = setup("plugins.session", "auto-session") })
+	use("tpope/vim-obsession")
 	use({ "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } })
 	use({ "guns/vim-sexp", ft = { "clojure" } })
 	use({

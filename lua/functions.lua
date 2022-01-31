@@ -118,6 +118,11 @@ end
 
 M.get_branch_name = get_branch_name
 
+M.file_exists = function(name)
+	local f = io.open(name, "r")
+	return f ~= nil and io.close(f)
+end
+
 M.escape_string = function(text)
 	return text:gsub("([^%w])", "%%%1")
 end
@@ -145,6 +150,28 @@ end
 
 M.calendar = function()
 	open_url("https://calendar.google.com/")
+end
+
+local exec_and_return = function(command)
+	local f = io.popen(command)
+
+	local l = f:read("*a")
+
+	f:close()
+
+	return l
+end
+
+M.exec_and_return = exec_and_return
+
+M.get_project_name = function()
+	local git_dir = exec_and_return("git rev-parse --show-toplevel")
+	local file_path_split = mysplit(git_dir, "/")
+	local project_name = nil
+	for k, v in pairs(file_path_split) do
+		project_name = v
+	end
+	return project_name
 end
 
 -- Remapping function.
