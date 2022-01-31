@@ -102,8 +102,6 @@ local get_branch_name = function()
 			return m
 		end
 	end
-
-	return false
 end
 
 M.get_branch_name = get_branch_name
@@ -117,6 +115,9 @@ M.file_exists = file_exists
 
 M.create_or_source_obsession = function()
 	local branch = get_branch_name()
+	if branch == nil then
+		return
+	end
 	branch = branch:gsub("%W", "")
 	if vim.fn.isdirectory(".sessions") == 1 then
 		local session_path = ".sessions/session." .. branch .. ".vim"
