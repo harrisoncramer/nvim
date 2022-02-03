@@ -1,0 +1,61 @@
+return {
+	setup = function(on_attach, capabilities)
+		local OS = require("functions").getOS
+
+		local ts_server
+		if OS() == "Linux" then
+			ts_server =
+				"/home/harrycramer/.nvm/versions/node/v16.13.0/lib/node_modules/typescript/lib/tsserverlibrary.js"
+		else
+			ts_server =
+				"/Users/harrisoncramer/.fnm/node-versions/v16.13.0/installation/lib/node_modules/typescript/lib/tsserverlibrary.js"
+		end
+
+		local lspconfig = require("lspconfig")
+		lspconfig.volar.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			init_options = {
+				typescript = {
+					serverPath = ts_server,
+				},
+				languageFeatures = {
+					references = true,
+					definition = true,
+					typeDefinition = true,
+					callHierarchy = true,
+					hover = false,
+					rename = true,
+					signatureHelp = true,
+					codeAction = true,
+					completion = {
+						defaultTagNameCase = "both",
+						defaultAttrNameCase = "kebabCase",
+					},
+					schemaRequestService = true,
+					documentHighlight = true,
+					codeLens = true,
+					semanticTokens = true,
+					diagnostics = true,
+				},
+				documentFeatures = {
+					selectionRange = true,
+					foldingRange = true,
+					linkedEditingRange = true,
+					documentSymbol = true,
+					documentColor = true,
+				},
+			},
+			settings = {
+				volar = {
+					codeLens = {
+						references = true,
+						pugTools = true,
+						scriptSetupTools = true,
+					},
+				},
+			},
+			root_dir = lspconfig.util.root_pattern("package.json", "vue.config.js"),
+		})
+	end,
+}
