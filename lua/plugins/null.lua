@@ -6,7 +6,6 @@ return {
 		local formatting = null_ls.builtins.formatting
 
 		local sources = {
-			formatting.eslint_d,
 			formatting.stylua,
 		}
 

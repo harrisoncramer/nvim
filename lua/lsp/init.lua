@@ -10,12 +10,15 @@ end
 require("lsp.cmp")
 
 -- Map keys after LSP attaches (utility function)
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
 	local function buf_set_option(...)
 		vim.api.nvim_buf_set_option(bufnr, ...)
 	end
 
 	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+
+	-- Turn off formatting by default
+	client.resolved_capabilities.document_formatting = false
 
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover)
