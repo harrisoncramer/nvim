@@ -1,8 +1,16 @@
 return {
-	setup = function(on_attach, capabilities, server)
+	setup = function(common_on_attach, capabilities, server)
 		server:setup({
+			on_attach = function(client, bufnr)
+				client.resolved_capabilities.document_formatting = true
+				common_on_attach(client, bufnr)
+			end,
 			capabilities = capabilities,
-			on_attach = on_attach,
+			settings = {
+				format = {
+					enable = true,
+				},
+			},
 		})
 	end,
 }

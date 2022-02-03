@@ -1,31 +1,33 @@
 return {
 	setup = function(on_attach, capabilities, server)
 		server:setup({
-			capabilities = capabilities,
 			on_attach = on_attach,
-			Lua = {
-				runtime = {
-					-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-					version = "LuaJIT",
-					-- Setup your lua path
-					path = vim.split(package.path, ";"),
-				},
-				diagnostics = {
-					-- Get the language server to recognize the `vim` global
-					globals = {
-						"vim",
-						"nnoremap",
-						"vnoremap",
-						"inoremap",
-						"tnoremap",
-						"use",
+			capabilities = capabilities,
+			settings = {
+				Lua = {
+					runtime = {
+						-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+						version = "LuaJIT",
+						-- Setup your lua path
+						path = vim.split(package.path, ";"),
 					},
-				},
-				workspace = {
-					-- Make the server aware of Neovim runtime files
-					library = {
-						[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-						[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+					diagnostics = {
+						-- Get the language server to recognize the `vim` global
+						globals = {
+							"vim",
+							"nnoremap",
+							"vnoremap",
+							"inoremap",
+							"tnoremap",
+							"use",
+						},
+					},
+					workspace = {
+						-- Make the server aware of Neovim runtime files
+						library = {
+							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+							[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+						},
 					},
 				},
 			},
