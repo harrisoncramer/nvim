@@ -1,5 +1,5 @@
 return {
-	setup = function(on_attach, capabilities)
+	setup = function(on_attach, capabilities, server)
 		local OS = require("functions").getOS
 
 		local ts_server
@@ -12,7 +12,7 @@ return {
 		end
 
 		local lspconfig = require("lspconfig")
-		lspconfig.volar.setup({
+		server:setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			init_options = {

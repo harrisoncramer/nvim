@@ -1,7 +1,6 @@
 return {
-	setup = function(on_attach, capabilities)
-		local lspconfig = require("lspconfig")
-		lspconfig.sumneko_lua.setup({
+	setup = function(on_attach, capabilities, server)
+		server:setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			Lua = {

@@ -35,9 +35,9 @@ lsp_installer.on_server_ready(function(server)
 	local server_status_ok, server_config = pcall(require, "lsp.servers." .. server.name)
 	if not server_status_ok then
 		print("The LSP '" .. server.name .. "' does not have a config.")
-		lsp_config[server.name].setup({})
+		server:setup({})
 	else
-		server_config.setup(on_attach, capabilities)
+		server_config.setup(on_attach, capabilities, server)
 	end
 end)
 
