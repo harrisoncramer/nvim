@@ -120,6 +120,7 @@ packer.startup(function(use)
 		"filipdutescu/renamer.nvim",
 		branch = "master",
 		requires = { { "nvim-lua/plenary.nvim" } },
+		config = setup("plugins.renamer", "renamer"),
 	})
 	use("itchyny/vim-gitbranch")
 	use({ "harrisoncramer/jump-tag", config = setup("plugins.jump-tag", "jump-tag") })
