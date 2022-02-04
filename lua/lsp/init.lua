@@ -24,8 +24,8 @@ local on_attach = function(client, bufnr)
 	-- Debounce by 300ms by default
 	client.config.flags.debounce_text_changes = 300
 
-	-- We could put the formatters in a specific order
-	vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync({}, 400, { 'eslint' })")
+	-- We could put the formatters in a specific order via arguments to seq_sync, see :h
+	vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()")
 
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover)

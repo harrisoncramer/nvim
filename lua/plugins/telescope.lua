@@ -112,9 +112,18 @@ return {
 			actions.close(prompt_bufnr)
 		end
 
-		require("telescope").setup({
+		local telescope = require("telescope")
+		telescope.setup({
 			defaults = {
 				file_ignore_patterns = { "node_modules", "package%-lock.json" },
+				extensions = {
+					fzf = {
+						fuzzy = true,
+						override_generic_sorter = true,
+						override_file_sorter = true,
+						case_mode = "smart_case",
+					},
+				},
 				mappings = {
 					i = {
 						["<esc>"] = actions.close,
@@ -126,7 +135,6 @@ return {
 			pickers = {
 				git_files = {
 					prompt_prefix = " ",
-					find_command = { "rg", "--files", "--hidden", "-g", "!node_modules/**" },
 				},
 				git_branches = {
 					prompt_prefix = " ",
@@ -140,7 +148,6 @@ return {
 				},
 				live_grep = {
 					prompt_prefix = " ",
-					find_command = { "rg", "-g", "!node_modules/**" },
 					mappings = {
 						i = {
 							["<C-y>"] = CopyTextFromPreview,
@@ -168,6 +175,8 @@ return {
 				},
 			},
 		})
+
+		telescope.load_extension("fzf")
 
 		local builtin = require("telescope.builtin")
 
