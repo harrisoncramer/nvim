@@ -1,6 +1,7 @@
 return {
 	setup = function()
 		require("harpoon").setup({
+			mark_branch = true,
 			global_settings = {
 				save_on_toggle = true,
 			},
