@@ -1,5 +1,5 @@
 return {
-	setup = function(on_attach, capabilities, server)
+	setup = function(common_on_attach, capabilities, server)
 		local OS = require("functions").getOS
 
 		local ts_server
@@ -14,7 +14,11 @@ return {
 		local lspconfig = require("lspconfig")
 		server:setup({
 			capabilities = capabilities,
-			on_attach = on_attach,
+			on_attach = function(client, bufnr)
+				common_on_attach(client, bufnr)
+				-- Too slow!
+				client.resolved_capabilities.document_formatting = false
+			end,
 			init_options = {
 				typescript = {
 					serverPath = ts_server,

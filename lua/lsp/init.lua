@@ -17,8 +17,12 @@ local on_attach = function(client, bufnr)
 
 	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
-	-- Turn off formatting by default
+	-- Turn off formatting by default, but call it for whichever
+	-- language servers override this setting in their on_attach functions.
 	client.resolved_capabilities.document_formatting = false
+
+	-- We could put the formatters in a specific order
+	vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync({}, 400, { 'eslint' })")
 
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover)
