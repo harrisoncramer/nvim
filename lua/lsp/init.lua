@@ -21,6 +21,9 @@ local on_attach = function(client, bufnr)
 	-- language servers override this setting in their on_attach functions.
 	client.resolved_capabilities.document_formatting = false
 
+	-- Debounce by 300ms by default
+	client.config.flags.debounce_text_changes = 300
+
 	-- We could put the formatters in a specific order
 	vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync({}, 400, { 'eslint' })")
 
@@ -38,7 +41,10 @@ lsp_installer.on_server_ready(function(server)
 	local server_status_ok, server_config = pcall(require, "lsp.servers." .. server.name)
 	if not server_status_ok then
 		print("The LSP '" .. server.name .. "' does not have a config.")
-		server:setup({})
+		server:setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+		})
 	else
 		server_config.setup(on_attach, capabilities, server)
 	end

@@ -6,6 +6,7 @@ return {
 		local formatting = null_ls.builtins.formatting
 
 		local sources = {
+			formatting.eslint_d,
 			formatting.stylua,
 		}
 
@@ -15,12 +16,7 @@ return {
 		end
 
 		null_ls.setup({
-			debug = true,
-			on_attach = function(client)
-				if client.resolved_capabilities.document_formatting then
-					vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
-				end
-			end,
+			debug = false,
 			sources = sources,
 		})
 	end,
