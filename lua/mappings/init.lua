@@ -30,7 +30,7 @@ vim.keymap.set("n", "R", replace)
 
 -- Tabs
 vim.cmd([[ :ca tc tabclose<CR> ]])
-vim.cmd([[ :ca tn tabnew<CR> ]])
+vim.cmd([[ :ca tn tabnext<CR> ]])
 vim.cmd([[ :ca tp tabprev<CR> ]])
 
 -- Luafile

@@ -1,6 +1,20 @@
+local get_reg = require("functions").get_reg
+
 return {
+	copy_hash_and_open = function()
+		require("diffview").trigger_event("copy_hash")
+		local global_register = get_reg("*")
+		require("diffview").trigger_event("goto_file_tab")
+		local file_name = vim.fn.expand("%")
+		vim.cmd(":Gedit " .. global_register .. ":%")
+		vim.cmd(":vert diffsplit " .. file_name)
+	end,
 	setup = function(remap)
 		local cb = require("diffview.config").diffview_callback
+
+		local go_to_git_file = function()
+			return ':lua require("plugins.diffview").copy_hash_and_open()<CR>'
+		end
 
 		remap({ "n", "<leader>df", ":DiffviewFileHistory<CR>" })
 
@@ -80,7 +94,7 @@ return {
 				file_history_panel = {
 					["g!"] = cb("options"), -- Open the option panel
 					["<C-A-d>"] = cb("open_in_diffview"), -- Open the entry under the cursor in a diffview
-					["y"] = cb("copy_hash"), -- Copy the commit hash of the entry under the cursor
+					["<C-o>"] = go_to_git_file(), -- Open the file and the file from the commit side by side, editable, in a vimdiff
 					["zR"] = cb("open_all_folds"),
 					["zM"] = cb("close_all_folds"),
 					["j"] = cb("next_entry"),
@@ -93,7 +107,6 @@ return {
 					["<C-n>"] = cb("select_next_entry"),
 					["<C-p>"] = cb("select_prev_entry"),
 					["gf"] = cb("goto_file"),
-					["<CR>"] = cb("goto_file_edit"),
 					["<C-w><C-f>"] = cb("goto_file_split"),
 					["<C-w>gf"] = cb("goto_file_tab"),
 					["<leader>e"] = cb("focus_files"),
