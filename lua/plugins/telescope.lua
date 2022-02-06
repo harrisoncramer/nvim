@@ -10,6 +10,70 @@ local utils = require("telescope.utils")
 local escape_string = require("functions").escape_string
 local f = require("functions")
 
+local builtin = require("telescope.builtin")
+
+local function live_grep()
+	builtin.live_grep()
+end
+
+local function git_files()
+	local ok = pcall(builtin.git_files)
+	if not ok then
+		require("telescope.builtin").find_files()
+	end
+end
+
+local function buffers()
+	builtin.buffers()
+end
+
+local function oldfiles()
+	builtin.oldfiles()
+end
+
+local function git_commits()
+	builtin.git_commits()
+end
+
+local function git_branches()
+	builtin.git_branches()
+end
+
+local function grep_string()
+	local word = vim.fn.expand("<cword>")
+	builtin.grep_string()
+	vim.api.nvim_feedkeys(word, "i", false)
+end
+
+local function git_files_string()
+	local word = vim.fn.expand("<cword>")
+	builtin.git_files()
+	vim.api.nvim_feedkeys(word, "i", false)
+end
+
+local function git_files_string_visual()
+	local text = f.getVisualSelection()
+	vim.api.nvim_input("<esc>")
+	if text[1] == nil then
+		print("No appropriate visual selection found")
+	else
+		builtin.git_files()
+		vim.api.nvim_input(text[1])
+	end
+end
+
+local function grep_string_visual()
+	local text = f.getVisualSelection()
+	vim.api.nvim_input("<esc>")
+	if text[1] == nil then
+		print("No appropriate visual selection found")
+	else
+		builtin.grep_string()
+		vim.api.nvim_input(text[1])
+		vim.api.nvim_feedkeys(text, "i", false)
+	end
+end
+
 function make_entry.gen_from_git_stash(opts)
 	local displayer = entry_display.create({
 		separator = " ",
@@ -178,82 +242,71 @@ return {
 
 		telescope.load_extension("fzf")
 
-		local builtin = require("telescope.builtin")
-
-		local function live_grep()
-			builtin.live_grep()
-		end
-
-		local function git_files()
-			local ok = pcall(builtin.git_files)
-			if not ok then
-				require("telescope.builtin").find_files()
-			end
-		end
-
-		local function buffers()
-			builtin.buffers()
-		end
-
-		local function oldfiles()
-			builtin.oldfiles()
-		end
-
-		local function git_commits()
-			builtin.git_commits()
-		end
-
-		local function git_branches()
-			builtin.git_branches()
-		end
-
-		local function grep_string()
-			local word = vim.fn.expand("<cword>")
-			builtin.grep_string()
-			vim.api.nvim_feedkeys(word, "i", false)
-		end
-
-		local function git_files_string()
-			local word = vim.fn.expand("<cword>")
-			builtin.git_files()
-			vim.api.nvim_feedkeys(word, "i", false)
-		end
-
-		local function git_files_string_visual()
-			local text = f.getVisualSelection()
-			vim.api.nvim_input("<esc>")
-			if text[1] == nil then
-				print("No appropriate visual selection found")
-			else
-				builtin.git_files()
-				vim.api.nvim_input(text[1])
-			end
-		end
-
-		local function grep_string_visual()
-			local text = f.getVisualSelection()
-			vim.api.nvim_input("<esc>")
-			if text[1] == nil then
-				print("No appropriate visual selection found")
-			else
-				builtin.grep_string()
-				vim.api.nvim_input(text[1])
-				vim.api.nvim_feedkeys(text, "i", false)
-			end
-		end
-
-		vim.keymap.set("n", "<C-f>", live_grep)
-		vim.keymap.set("n", "<C-j>", git_files)
-		vim.keymap.set("n", "<C-g>", buffers)
-		vim.keymap.set("n", "<leader>tr", oldfiles)
-		vim.keymap.set("n", "<leader>tgc", git_commits)
-		vim.keymap.set("n", "<leader>tgb", git_branches)
-		vim.keymap.set("n", "<leader>tF", grep_string)
-		vim.keymap.set("n", "<leader>tf", git_files_string)
-		vim.keymap.set("v", "<leader>tf", git_files_string_visual)
-		vim.keymap.set("v", "<leader>tF", grep_string_visual)
+		require("compat").remap("n", "<C-f>", live_grep, {}, ":lua require('plugins/telescope').live_grep()<CR>")
+		require("compat").remap("n", "<C-j>", git_files, {}, ":lua require('plugins/telescope').git_files()<CR>")
+		require("compat").remap("n", "<C-g>", buffers, {}, ":lua require('plugins/telescope').buffers()<CR>")
+		require("compat").remap("n", "<leader>tr", oldfiles, {}, ":lua require('plugins/telescope').oldfiles()<CR>")
+		require("compat").remap(
+			"n",
+			"<leader>tgc",
+			git_commits,
+			{},
+			":lua require('plugins/telescope').git_commits()<CR>"
+		)
+		require("compat").remap(
+			"n",
+			"<leader>tgb",
+			git_branches,
+			{},
+			":lua require('plugins/telescope').git_branches()<CR>"
+		)
+		require("compat").remap(
+			"n",
+			"<leader>tF",
+			grep_string,
+			{},
+			":lua require('plugins/telescope').grep_string()<CR>"
+		)
+		require("compat").remap(
+			"n",
+			"<leader>tf",
+			git_files_string,
+			{},
+			":lua require('plugins/telescope').git_files_string()<CR>"
+		)
+		require("compat").remap(
+			"v",
+			"<leader>tf",
+			git_files_string_visual,
+			{},
+			":lua require('plugins/telescope').git_files_string_visual()<CR>"
+		)
+		require("compat").remap(
+			"v",
+			"<leader>tF",
+			grep_string_visual,
+			{},
+			":lua require('plugins/telescope').grep_string_visual()<CR>"
+		)
 
 		-- Setup custom stash search which filters by current branch
-		vim.keymap.set("n", "<leader>tgs", stash_filter)
+		require("compat").remap(
+			"n",
+			"<leader>tgs",
+			stash_filter,
+			{},
+			":lua require('plugins/telescope').stash_filter()<CR>"
+		)
 	end,
+	live_grep = live_grep,
+	git_files = git_files,
+	buffers = buffers,
+	oldfiles = oldfiles,
+	git_commits = git_commits,
+	git_branches = git_branches,
+	grep_string = grep_string,
+	git_files_string = git_files_string,
+	git_files_string_visual = git_files_string_visual,
+	grep_string_visual = grep_string_visual,
+	stash_filter = stash_filter,
 }

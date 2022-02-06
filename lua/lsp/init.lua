@@ -27,12 +27,12 @@ local on_attach = function(client, bufnr)
 	-- We could put the formatters in a specific order via arguments to seq_sync, see :h
 	vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()")
 
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-	vim.keymap.set("n", "K", vim.lsp.buf.hover)
-	vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
-	vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
-	vim.keymap.set("n", "<leader>[", vim.diagnostic.goto_prev)
-	vim.keymap.set("n", "<leader>]", vim.diagnostic.goto_next)
+	require("compat").remap("n", "gd", vim.lsp.buf.definition, {}, ":lua vim.lsp.buf.definition()<CR>")
+	require("compat").remap("n", "K", vim.lsp.buf.hover, {}, ":lua vim.lsp.buf.hover()<CR>")
+	require("compat").remap("n", "gi", vim.lsp.buf.implementation, {}, ":lua vim.lsp.buf.implementation()<CR>")
+	require("compat").remap("n", "<C-k>", vim.lsp.buf.signature_help, {}, ":lua vim.lsp.buf.signature_help()<CR>")
+	require("compat").remap("n", "<leader>[", vim.diagnostic.goto_prev, {}, ":lua vim.diagnostic.goto_prev()<CR>")
+	require("compat").remap("n", "<leader>]", vim.diagnostic.goto_next, {}, ":lua vim.diagnostic.goto_next()<CR>")
 end
 
 local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())

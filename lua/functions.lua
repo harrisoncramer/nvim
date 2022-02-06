@@ -17,6 +17,10 @@ M.get_reg = function(char)
 	return vim.api.nvim_exec([[echo getreg(']] .. char .. [[')]], true):gsub("[\n\r]", "^J")
 end
 
+M.start_replace = function()
+	vim.cmd("startreplace")
+end
+
 M.getVisualSelection = function()
 	local modeInfo = vim.api.nvim_get_mode()
 	local mode = modeInfo.mode

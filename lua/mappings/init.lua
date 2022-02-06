@@ -22,11 +22,13 @@ remap({ "n", "<C-p>", ":bprev<CR>" })
 remap({ "n", "<C-t>", "<C-^>" })
 remap({ "n", "<C-x>", ":bp <bar> bd#<CR>" })
 
-local replace = function()
-	vim.cmd("startreplace")
-end
-
-vim.keymap.set("n", "R", replace)
+require("compat").remap(
+	"n",
+	"R",
+	require("functions").start_replace,
+	{},
+	":lua require('functions').start_replace()<CR>"
+)
 
 -- Tabs
 vim.cmd([[ :ca tc tabclose<CR> ]])
@@ -37,7 +39,7 @@ vim.cmd([[ :ca tp tabprev<CR> ]])
 remap({ "n", "<leader>lf", ":luafile %<CR>" })
 
 -- LSP
-vim.keymap.set("n", "<leader>F", vim.lsp.buf.formatting)
+require("compat").remap("n", "<leader>F", vim.lsp.buf.formatting, {}, ":lua vim.lsp.buf.formatting()<CR>")
 
 -- Neovim
 remap({ "n", "<leader>vv", ":e $MYVIMRC<cr>" })
@@ -81,3 +83,5 @@ vim.cmd([[
   endfunction
   vnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>
 ]])
+
+return {}

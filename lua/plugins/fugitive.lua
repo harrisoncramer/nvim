@@ -1,6 +1,6 @@
 local f = require("functions")
 
-local toggleStatus = function()
+local toggle_status = function()
 	local ft = vim.bo.filetype
 	if ft == "fugitive" then
 		vim.api.nvim_command("bd")
@@ -9,7 +9,7 @@ local toggleStatus = function()
 	end
 end
 
-local gitPush = function()
+local git_push = function()
 	local isSubmodule = vim.fn.trim(vim.fn.system("git rev-parse --show-superproject-working-tree"))
 	if isSubmodule == "" then
 		if f.getOS() == "Linux" then
@@ -23,14 +23,23 @@ local gitPush = function()
 	end
 end
 
-local gitOpen = function()
+local git_open = function()
 	vim.api.nvim_command("! git open")
 end
 
 return {
+	toggle_status = toggle_status,
+	git_push = git_push,
+	git_open = git_open,
 	setup = function()
-		vim.keymap.set("n", "<leader>gs", toggleStatus)
-		vim.keymap.set("n", "<leader>gP", gitPush)
-		vim.keymap.set("n", "<leader>go", gitOpen)
+		require("compat").remap(
+			"n",
+			"<leader>gs",
+			toggle_status,
+			{},
+			":lua require('plugins/fugitive').toggle_status()<CR>"
+		)
+		require("compat").remap("n", "<leader>gP", git_push, {}, ":lua require('plugins/fugitive').git_push()<CR>")
+		require("compat").remap("n", "<leader>go", git_open, {}, ":lua require('plugins/fugitive').git_open()<CR>")
 	end,
 }

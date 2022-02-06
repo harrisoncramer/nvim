@@ -1,9 +1,9 @@
 return {
 	setup = function()
 		local jump = require("jump-tag")
-		vim.keymap.set("n", "<leader>55", jump.jumpParent)
-		vim.keymap.set("n", "<leader>5n", jump.jumpNextSibling)
-		vim.keymap.set("n", "<leader>5p", jump.jumpPrevSibling)
-		vim.keymap.set("n", "<leader>5c", jump.jumpChild)
+		-- require('compat').remap("n", "<leader>55", jump.jumpParent, {})
+		-- require('compat').remap("n", "<leader>5n", jump.jumpNextSibling, {})
+		-- require('compat').remap("n", "<leader>5p", jump.jumpPrevSibling, {})
+		-- require('compat').remap("n", "<leader>5c", jump.jumpChild, {})
 	end,
 }
