@@ -122,10 +122,10 @@ end
 M.file_exists = file_exists
 
 M.create_or_source_obsession = function()
-	if not file_exists(".git") then
+	local branch = get_branch_name()
+	if not branch then
 		return
 	end
-	local branch = get_branch_name()
 	branch = branch:gsub("%W", "")
 	if vim.fn.isdirectory(".sessions") == 1 then
 		local session_path = ".sessions/session." .. branch .. ".vim"
