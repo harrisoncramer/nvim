@@ -181,15 +181,15 @@ end
 
 M.exec_and_return = exec_and_return
 
-M.get_project_name = function()
-	local git_dir = exec_and_return("git rev-parse --show-toplevel")
-	local file_path_split = mysplit(git_dir, "/")
-	local project_name = nil
-	for k, v in pairs(file_path_split) do
-		project_name = v
-	end
-	return project_name
-end
+-- M.get_project_name = function()
+-- 	local git_dir = exec_and_return("git rev-parse --show-toplevel")
+-- 	local file_path_split = mysplit(git_dir, "/")
+-- 	local project_name = nil
+-- 	for k, v in pairs(file_path_split) do
+-- 		project_name = v
+-- 	end
+-- 	return project_name
+-- end
 
 -- Remapping function.
 M.remap = function(key)
