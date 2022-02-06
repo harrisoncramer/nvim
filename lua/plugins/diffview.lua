@@ -1,9 +1,10 @@
 local get_reg = require("functions").get_reg
+local getOS = require("functions").getOS
 
 return {
 	copy_hash_and_open = function()
 		require("diffview").trigger_event("copy_hash")
-		local global_register = get_reg("*")
+		local global_register = get_reg(getOS() == "Linux" and "+" or "*")
 		require("diffview").trigger_event("goto_file_tab")
 		local file_name = vim.fn.expand("%")
 		vim.cmd(":Gedit " .. global_register .. ":%")
