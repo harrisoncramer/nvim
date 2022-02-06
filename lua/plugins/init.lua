@@ -90,6 +90,11 @@ packer.startup(function(use)
 		config = setup("plugins.lualine", "lualine"),
 	})
 	use({
+		"alvarosevilla95/luatab.nvim",
+		config = setup("plugins/luatab", "luatab"),
+		requires = "kyazdani42/nvim-web-devicons",
+	})
+	use({
 		"lewis6991/gitsigns.nvim",
 		requires = { "nvim-lua/plenary.nvim" },
 		config = setup("plugins.gitsigns", "gitsigns"),
