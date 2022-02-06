@@ -18,6 +18,10 @@ return {
 		null_ls.setup({
 			debug = false,
 			sources = sources,
+			on_attach = function(client)
+				vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()")
+				client.resolved_capabilities.document_formatting = true
+			end,
 		})
 	end,
 }

@@ -17,15 +17,10 @@ local on_attach = function(client, bufnr)
 
 	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
-	-- Turn off formatting by default, but call it for whichever
-	-- language servers override this setting in their on_attach functions.
 	client.resolved_capabilities.document_formatting = false
 
 	-- Debounce by 300ms by default
 	client.config.flags.debounce_text_changes = 300
-
-	-- We could put the formatters in a specific order via arguments to seq_sync, see :h
-	vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()")
 
 	require("compat").remap("n", "gd", vim.lsp.buf.definition, {}, ":lua vim.lsp.buf.definition()<CR>")
 	require("compat").remap("n", "K", vim.lsp.buf.hover, {}, ":lua vim.lsp.buf.hover()<CR>")

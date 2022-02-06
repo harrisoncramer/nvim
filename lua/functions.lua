@@ -104,10 +104,13 @@ local open_url = function(url)
 end
 
 local get_branch_name = function()
-	for line in io.popen("git branch 2>/dev/null"):lines() do
-		local m = line:match("%* (.+)$")
-		if m then
-			return m
+	local is_git_branch = io.popen("git rev-parse --is-inside-work-tree 2>/dev/null"):read("*a")
+	if is_git_branch == "true\n" then
+		for line in io.popen("git branch 2>/dev/null"):lines() do
+			local m = line:match("%* (.+)$")
+			if m then
+				return m
+			end
 		end
 	end
 end
@@ -122,11 +125,12 @@ end
 M.file_exists = file_exists
 
 M.create_or_source_obsession = function()
-	if not file_exists(".git") then
-		return
-	end
 	local branch = get_branch_name()
-	branch = branch:gsub("%W", "")
+	if not branch then
+		branch = "init_branch_session"
+	else
+		branch = branch:gsub("%W", "")
+	end
 	if vim.fn.isdirectory(".sessions") == 1 then
 		local session_path = ".sessions/session." .. branch .. ".vim"
 		if file_exists(session_path) then

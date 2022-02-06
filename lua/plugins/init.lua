@@ -57,7 +57,6 @@ packer.startup(function(use)
 		requires = { { "nvim-lua/plenary.nvim" } },
 		config = setup("plugins.telescope", "telescope"),
 	})
-	use({ "ThePrimeagen/harpoon", config = setup("plugins.harpoon", "harpoon") })
 	use("tpope/vim-dispatch")
 	use("tpope/vim-repeat")
 	use("tpope/vim-surround")

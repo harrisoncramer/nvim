@@ -16,8 +16,6 @@ return {
 			capabilities = capabilities,
 			on_attach = function(client, bufnr)
 				common_on_attach(client, bufnr)
-				-- Too slow!
-				client.resolved_capabilities.document_formatting = false
 			end,
 			init_options = {
 				typescript = {
