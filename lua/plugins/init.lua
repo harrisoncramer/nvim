@@ -51,13 +51,13 @@ packer.startup(function(use)
 	use({ "Olical/conjure", config = setup("plugins.conjure") })
 	use({ "jose-elias-alvarez/null-ls.nvim", config = setup("plugins.null", "null-ls") })
 	use({ "phaazon/hop.nvim", config = setup("plugins.hop", "hop") })
+	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = { { "nvim-lua/plenary.nvim" } },
 		config = setup("plugins.telescope", "telescope"),
 	})
 	use({ "ThePrimeagen/harpoon", config = setup("plugins.harpoon", "harpoon") })
-	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 	use("tpope/vim-dispatch")
 	use("tpope/vim-repeat")
 	use("tpope/vim-surround")
@@ -115,12 +115,6 @@ packer.startup(function(use)
 	})
 	use({ "petertriho/nvim-scrollbar", config = setup("plugins.scrollbar", "scrollbar") })
 	use({ "kevinhwang91/nvim-hlslens" })
-	use({
-		"goolord/alpha-nvim",
-		branch = "main",
-		requires = { "kyazdani42/nvim-web-devicons" },
-		config = setup("plugins.alpha", "alpha"),
-	})
 	use({
 		"filipdutescu/renamer.nvim",
 		branch = "master",

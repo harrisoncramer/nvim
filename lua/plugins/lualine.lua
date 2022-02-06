@@ -43,15 +43,7 @@ return {
 				},
 				lualine_d = {},
 				lualine_w = {},
-				lualine_x = {
-					{
-						"tabs",
-						mode = 0,
-						tabs_color = {
-							active = { bg = "285474" },
-						},
-					},
-				},
+				lualine_x = {},
 				lualine_y = {},
 				lualine_z = {},
 			},
@@ -66,8 +58,9 @@ return {
 		else
 			_G.Statusline_timer:stop()
 		end
+		-- Don't immediately redraw the screen
 		_G.Statusline_timer:start(
-			0,
+			10000,
 			1000,
 			vim.schedule_wrap(function()
 				vim.api.nvim_command("redrawstatus")

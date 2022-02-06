@@ -1,6 +1,7 @@
+local is_open = false
 return {
 	setup = function(remap)
-		remap({ "n", "<leader>;", ":NvimTreeToggle<CR>" })
+		remap({ "n", "<leader>;", ":lua require('plugins/nvim_tree').setup_and_open()<CR>" })
 
 		vim.g.nvim_tree_root_folder_modifier = 1
 		vim.g.nvim_tree_highlight_opened_files = 0
@@ -39,7 +40,8 @@ return {
 				symlink_open = "",
 			},
 		}
-
+	end,
+	setup_and_open = function()
 		-- Key mappings
 		local list = {
 			{ key = "<C-v>", action = "vsplit" },
@@ -67,46 +69,52 @@ return {
 			{ key = "g?", action = "toggle_help" },
 		}
 
-		require("nvim-tree").setup({
-			disable_netrw = true,
-			hijack_netrw = true,
-			open_on_setup = false,
-			ignore_ft_on_setup = {},
-			auto_close = false,
-			open_on_tab = false,
-			hijack_cursor = false,
-			update_cwd = false,
-			update_to_buf_dir = { enable = true, auto_open = true },
-			git = {
-				enable = true,
-				ignore = false,
-			},
-			diagnostics = {
-				enable = true,
-				icons = { hint = "", info = "", warning = "", error = " " },
-			},
-			update_focused_file = {
-				enable = true,
+		if is_open then
+			vim.cmd("NvimTreeToggle")
+		else
+			is_open = true
+			require("nvim-tree").setup({
+				disable_netrw = true,
+				hijack_netrw = true,
+				open_on_setup = false,
+				ignore_ft_on_setup = {},
+				auto_close = false,
+				open_on_tab = false,
+				hijack_cursor = false,
 				update_cwd = false,
-				ignore_list = {},
-			},
-			filters = { dotfiles = false, custom = {} },
-			view = {
-				width = 40,
-				height = 30,
-				hide_root_folder = false,
-				side = "left",
-				auto_resize = false,
-				custom_only = true,
-				mappings = {
-					custom_only = true,
-					list = list,
+				update_to_buf_dir = { enable = true, auto_open = true },
+				git = {
+					enable = true,
+					ignore = false,
 				},
-			},
-			trash = {
-				cmd = "trash",
-				require_confirm = true,
-			},
-		})
+				diagnostics = {
+					enable = true,
+					icons = { hint = "", info = "", warning = "", error = " " },
+				},
+				update_focused_file = {
+					enable = true,
+					update_cwd = false,
+					ignore_list = {},
+				},
+				filters = { dotfiles = false, custom = {} },
+				view = {
+					width = 40,
+					height = 30,
+					hide_root_folder = false,
+					side = "left",
+					auto_resize = false,
+					custom_only = true,
+					mappings = {
+						custom_only = true,
+						list = list,
+					},
+				},
+				trash = {
+					cmd = "trash",
+					require_confirm = true,
+				},
+			})
+			vim.cmd("NvimTreeOpen")
+		end
 	end,
 }
