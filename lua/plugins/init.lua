@@ -120,6 +120,7 @@ packer.startup(function(use)
 		requires = { { "nvim-lua/plenary.nvim" } },
 		config = setup("plugins.renamer", "renamer"),
 	})
+	use({ "karb94/neoscroll.nvim", config = setup("plugins.neoscroll", "neoscroll") })
 	use("itchyny/vim-gitbranch")
 	use({ "harrisoncramer/jump-tag", config = setup("plugins.jump-tag", "jump-tag") })
 	use({
