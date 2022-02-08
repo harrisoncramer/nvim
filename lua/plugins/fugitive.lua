@@ -27,10 +27,19 @@ local git_open = function()
 	vim.api.nvim_command("! git open")
 end
 
+local git_mr_open = function()
+	if f.getOS() == "Linux" then
+		os.execute(
+			string.format("firefox --new-tab 'https://gitlab.com/crossbeam/%s/-/merge_requests'", f.currentDir())
+		)
+	end
+end
+
 return {
 	toggle_status = toggle_status,
 	git_push = git_push,
 	git_open = git_open,
+	git_mr_open = git_mr_open,
 	setup = function()
 		require("compat").remap(
 			"n",
@@ -41,5 +50,12 @@ return {
 		)
 		require("compat").remap("n", "<leader>gP", git_push, {}, ":lua require('plugins/fugitive').git_push()<CR>")
 		require("compat").remap("n", "<leader>go", git_open, {}, ":lua require('plugins/fugitive').git_open()<CR>")
+		require("compat").remap(
+			"n",
+			"<leader>gm",
+			git_mr_open,
+			{},
+			":lua require('plugins/fugitive').git_mr_open()<CR>"
+		)
 	end,
 }

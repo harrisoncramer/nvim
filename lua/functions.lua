@@ -99,6 +99,10 @@ M.getOS = function()
 	return vim.loop.os_uname().sysname
 end
 
+M.currentDir = function()
+	return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+end
+
 local open_url = function(url)
 	vim.cmd("exec \"!xdg-open '" .. url .. "'\"")
 end
