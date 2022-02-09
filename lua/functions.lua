@@ -183,25 +183,20 @@ end
 
 local exec_and_return = function(command)
 	local f = io.popen(command)
-
 	local l = f:read("*a")
-
 	f:close()
-
 	return l
 end
 
 M.exec_and_return = exec_and_return
 
--- M.get_project_name = function()
--- 	local git_dir = exec_and_return("git rev-parse --show-toplevel")
--- 	local file_path_split = mysplit(git_dir, "/")
--- 	local project_name = nil
--- 	for k, v in pairs(file_path_split) do
--- 		project_name = v
--- 	end
--- 	return project_name
--- end
+M.run_script = function(script_name)
+	local nvim_scripts_dir = "~/.config/nvim/scripts"
+	local f = io.popen(string.format("/bin/bash %1s/%2s", nvim_scripts_dir, script_name))
+	local l = f:read("*a")
+	f:close()
+	return l
+end
 
 -- Remapping function.
 M.remap = function(key)
