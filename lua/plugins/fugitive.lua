@@ -30,7 +30,10 @@ end
 local git_mr_open = function()
 	if f.getOS() == "Linux" then
 		os.execute(
-			string.format("firefox --new-tab 'https://gitlab.com/crossbeam/%s/-/merge_requests'", f.currentDir())
+			string.format(
+				"firefox --new-tab 'https://gitlab.com/crossbeam/%s/-/merge_requests?scope=all&state=opened&author_username=hcramer1'",
+				f.currentDir()
+			)
 		)
 	end
 end
