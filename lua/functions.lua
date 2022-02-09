@@ -129,6 +129,10 @@ end
 M.file_exists = file_exists
 
 M.create_or_source_obsession = function()
+	local args = vim.v.argv
+	if #args ~= 1 then
+		return nil
+	end
 	local branch = get_branch_name()
 	if not branch then
 		branch = "init_branch_session"
