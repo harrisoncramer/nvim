@@ -30,11 +30,6 @@ require("compat").remap(
 	":lua require('functions').start_replace()<CR>"
 )
 
--- Tabs
-vim.cmd([[ :ca tc tabclose<CR> ]])
-vim.cmd([[ :ca tn tabnext<CR> ]])
-vim.cmd([[ :ca tp tabprev<CR> ]])
-
 -- Luafile
 remap({ "n", "<leader>lf", ":luafile %<CR>" })
 
@@ -57,20 +52,6 @@ remap({ "n", "<leader>lf", ":luafile %<cr>" })
 -- Allows numbered jumps to be saved to the jumplist, for use w/ C-o and C-i
 vim.api.nvim_exec("nnoremap <expr> k (v:count > 1 ? \"m'\" . v:count : '') . 'k'", false)
 vim.api.nvim_exec("nnoremap <expr> j (v:count > 1 ? \"m'\" . v:count : '') . 'j'", false)
-
--- Remap <leader>q to open quickfix list
-vim.cmd([[
-  function! PrintQList()
-  for winnr in range(1, winnr('$'))
-      :if getwinvar(winnr, '&syntax') == 'qf'
-        :cclose
-      :else
-        :copen
-      :endif
-  endfor
-  endfunction
-  nnoremap <silent> <leader>q :call PrintQList()<cr>
-]])
 
 -- Visual mode search with * for selected text
 vim.cmd([[

@@ -61,6 +61,13 @@ packer.startup(function(use)
 	use("tpope/vim-repeat")
 	use("tpope/vim-surround")
 	use("tpope/vim-unimpaired")
+	use({ "kevinhwang91/nvim-bqf", requires = "junegunn/fzf.vim", config = setup("plugins.bqf", "bqf") })
+	use({
+		"junegunn/fzf",
+		run = function()
+			vim.fn["fzf#install"]()
+		end,
+	})
 	use("tpope/vim-eunuch")
 	use("tpope/vim-obsession")
 	use({ "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } })

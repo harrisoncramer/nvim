@@ -1,4 +1,3 @@
-local state = require("telescope.actions.state")
 local pickers = require("telescope.pickers")
 local make_entry = require("telescope.make_entry")
 local finders = require("telescope.finders")
@@ -7,6 +6,7 @@ local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
 local entry_display = require("telescope.pickers.entry_display")
 local utils = require("telescope.utils")
+local state = require("telescope.actions.state")
 local escape_string = require("functions").escape_string
 local f = require("functions")
 
@@ -176,6 +176,10 @@ return {
 			actions.close(prompt_bufnr)
 		end
 
+		local function CreateFile(prompt_bufnr)
+			print("WIP")
+		end
+
 		local telescope = require("telescope")
 		telescope.setup({
 			defaults = {
@@ -199,6 +203,11 @@ return {
 			pickers = {
 				git_files = {
 					prompt_prefix = " ",
+					mappings = {
+						i = {
+							["<C-e>"] = CreateFile,
+						},
+					},
 				},
 				git_branches = {
 					prompt_prefix = " ",
