@@ -74,6 +74,10 @@ local function grep_string_visual()
 	end
 end
 
+local function current_buffer_fuzzy_find()
+	require("telescope.builtin").current_buffer_fuzzy_find()
+end
+
 function make_entry.gen_from_git_stash(opts)
 	local displayer = entry_display.create({
 		separator = " ",
@@ -233,6 +237,11 @@ return {
 				grep_string = {
 					prompt_prefix = " ",
 				},
+				current_buffer_fuzzy_find = {
+					previewer = false,
+					sorting_strategy = "ascending",
+					prompt_prefix = " ",
+				},
 				buffers = {
 					hidden = true,
 				},
@@ -252,6 +261,13 @@ return {
 		telescope.load_extension("fzf")
 
 		require("compat").remap("n", "<C-f>", live_grep, {}, ":lua require('plugins/telescope').live_grep()<CR>")
+		require("compat").remap(
+			"n",
+			"<C-c>",
+			current_buffer_fuzzy_find,
+			{},
+			":lua require('plugins/telescope').current_buffer_fuzzy_find()<CR>"
+		)
 		require("compat").remap("n", "<C-j>", git_files, {}, ":lua require('plugins/telescope').git_files()<CR>")
 		require("compat").remap("n", "<C-g>", buffers, {}, ":lua require('plugins/telescope').buffers()<CR>")
 		require("compat").remap("n", "<leader>tr", oldfiles, {}, ":lua require('plugins/telescope').oldfiles()<CR>")
@@ -314,6 +330,7 @@ return {
 	git_commits = git_commits,
 	git_branches = git_branches,
 	grep_string = grep_string,
+	current_buffer_fuzzy_find = current_buffer_fuzzy_find,
 	git_files_string = git_files_string,
 	git_files_string_visual = git_files_string_visual,
 	grep_string_visual = grep_string_visual,

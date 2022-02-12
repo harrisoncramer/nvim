@@ -5,12 +5,3 @@ vim.cmd([[
     au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=300 }
   augroup END
 ]])
-
--- Open quickfix automatically
-vim.cmd([[
-  augroup autoquickfix
-      autocmd!
-      autocmd QuickFixCmdPost [^l]* cwindow
-      autocmd QuickFixCmdPost    l* lwindow
-  augroup END
-]])
