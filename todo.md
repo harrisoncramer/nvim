@@ -1,8 +1,9 @@
 # TODO
 
-- Write custom handler for prepareRename for VUELS
-- Write custom function to create file in grep files if it doesn't exist already
-- oldfiles customization
-- tailwind for LSP in style blocks
-- Fix git toggle
-- Enable jump to definition even without .vue extension
+# Immediate
+- Automatically add all merge conflicts to the quickfix list (or some similar functionality)
+- Write custom function to create file in Telescope's git_files (grab current state from Telescope's state/actions)
+- Write custom function to delete file in Telescope's git_files 
+
+# Long-term
+- Figure out what's causing the LSP slowdown in v0.7

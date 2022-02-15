@@ -28,6 +28,11 @@ local on_attach = function(client, bufnr)
 	require("compat").remap("n", "<C-k>", vim.lsp.buf.signature_help, {}, ":lua vim.lsp.buf.signature_help()<CR>")
 	require("compat").remap("n", "<leader>[", vim.diagnostic.goto_prev, {}, ":lua vim.diagnostic.goto_prev()<CR>")
 	require("compat").remap("n", "<leader>]", vim.diagnostic.goto_next, {}, ":lua vim.diagnostic.goto_next()<CR>")
+
+	-- This is ripped off from https://github.com/kabouzeid/dotfiles, it's for tailwind preview support
+	if client.server_capabilities.colorProvider then
+		require("lsp/colorizer").buf_attach(bufnr, { single_column = false })
+	end
 end
 
 local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
