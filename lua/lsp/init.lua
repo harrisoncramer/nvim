@@ -42,6 +42,10 @@ local on_attach = function(client, bufnr)
 		{ severity = vim.diagnostic.severity.ERROR },
 		":lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })<CR>"
 	)
+	-- This is ripped off from https://github.com/kabouzeid/dotfiles, it's for tailwind preview support
+	if client.server_capabilities.colorProvider then
+		require("lsp/colorizer").buf_attach(bufnr, { single_column = false, debounce = 500 })
+	end
 end
 
 local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())

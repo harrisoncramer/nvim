@@ -114,7 +114,6 @@ return {
 					require_confirm = true,
 				},
 			})
-			vim.cmd("NvimTreeOpen")
 		end
 	end,
 }
