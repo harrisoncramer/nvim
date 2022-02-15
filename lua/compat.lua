@@ -6,7 +6,9 @@ return {
 		if vim_version < 7 then
 			vim.api.nvim_set_keymap(mode, lhs, fallback, { silent = true })
 		else
-			vim.keymap.set(mode, lhs, rhs, opts)
+			vim.keymap.set(mode, lhs, function()
+				rhs(opts)
+			end)
 		end
 	end,
 }
