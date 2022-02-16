@@ -52,10 +52,10 @@ return {
 			":lua require('plugins/fugitive').toggle_status()<CR>"
 		)
 		require("compat").remap("n", "<leader>gP", git_push, {}, ":lua require('plugins/fugitive').git_push()<CR>")
-		require("compat").remap("n", "<leader>go", git_open, {}, ":lua require('plugins/fugitive').git_open()<CR>")
+		require("compat").remap("n", "<leader>goo", git_open, {}, ":lua require('plugins/fugitive').git_open()<CR>")
 		require("compat").remap(
 			"n",
-			"<leader>gm",
+			"<leader>gom",
 			git_mr_open,
 			{},
 			":lua require('plugins/fugitive').git_mr_open()<CR>"

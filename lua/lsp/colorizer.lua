@@ -65,7 +65,6 @@ local ATTACHED_BUFFERS = {}
 
 local function buf_set_highlights(bufnr, colors, options)
 	-- vim.api.nvim_buf_clear_namespace(bufnr, NAMESPACE, 0, -1)
-
 	for _, color_info in pairs(colors) do
 		local rgb_hex = lsp_color_to_hex(color_info.color)
 		local highlight_name = create_highlight(rgb_hex, options)

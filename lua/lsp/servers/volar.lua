@@ -5,7 +5,7 @@ return {
 		local ts_server
 		if OS() == "Linux" then
 			ts_server =
-				"/home/harrycramer/.nvm/versions/node/v16.13.0/lib/node_modules/typescript/lib/tsserverlibrary.js"
+				"/home/harrycramer/.local/share/nvim/lsp_servers/volar/node_modules/typescript/lib/tsserverlibrary.js"
 		else
 			ts_server =
 				"/Users/harrisoncramer/.fnm/node-versions/v16.13.0/installation/lib/node_modules/typescript/lib/tsserverlibrary.js"

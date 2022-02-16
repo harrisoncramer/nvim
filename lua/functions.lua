@@ -103,6 +103,10 @@ M.currentDir = function()
 	return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
 end
 
+M.is_diff_mode = function()
+	return vim.api.nvim_win_get_option(0, "diff")
+end
+
 local open_url = function(url)
 	vim.cmd("exec \"!xdg-open '" .. url .. "'\"")
 end
