@@ -18,6 +18,16 @@ local setup = function(mod, remote)
 	end
 end
 
+local no_setup = function(mod)
+	local status = pcall(require, mod)
+	if not status then
+		print(mod .. " is not downloaded.")
+		return
+	else
+		require(mod).setup({})
+	end
+end
+
 local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -72,12 +82,7 @@ packer.startup(function(use)
 	use("tpope/vim-obsession")
 	use({ "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } })
 	use({ "guns/vim-sexp", ft = { "clojure" } })
-	use({
-		"numToStr/Comment.nvim",
-		config = function()
-			require("Comment").setup()
-		end,
-	})
+	use({ "numToStr/Comment.nvim", config = no_setup("Comment") })
 	use({ "samoshkin/vim-mergetool", before = require("plugins.mergetool") })
 	use({ "numToStr/FTerm.nvim", config = setup("plugins.fterm", "FTerm") })
 	use("romainl/vim-cool")
@@ -107,12 +112,7 @@ packer.startup(function(use)
 	})
 	use({ "gelguy/wilder.nvim", config = setup("plugins.wilder", "wilder") })
 	use({ "p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter" })
-	use({
-		"kyazdani42/nvim-web-devicons",
-		config = function()
-			require("nvim-web-devicons").setup({})
-		end,
-	})
+	use({ "kyazdani42/nvim-web-devicons", no_setup("nvim-web-devicons") })
 	use({ "kyazdani42/nvim-tree.lua", config = setup("plugins.nvim_tree", "nvim-tree") })
 	use({
 		"sindrets/diffview.nvim",
