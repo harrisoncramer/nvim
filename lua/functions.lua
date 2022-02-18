@@ -1,5 +1,5 @@
 -- Globals
-function _G.put(...)
+function _G.P(...)
 	local objects = {}
 	for i = 1, select("#", ...) do
 		local v = select(i, ...)
@@ -91,9 +91,11 @@ M.capture = function(cmd, raw)
 	return s
 end
 
-M.getBufferName = function()
+local getBufferName = function()
 	return vim.fn.expand("%")
 end
+
+M.getBufferName = getBufferName
 
 M.getOS = function()
 	return vim.loop.os_uname().sysname
@@ -158,6 +160,39 @@ end
 
 M.escape_string = function(text)
 	return text:gsub("([^%w])", "%%%1")
+end
+
+local split = function(str, delimiter)
+	local result = {}
+	for match in (str .. delimiter):gmatch("(.-)" .. delimiter) do
+		table.insert(result, match)
+	end
+	return result
+end
+
+M.split = split
+
+local reload = function(package_name)
+	local t = split(package_name, " ")
+	for _, value in ipairs(t) do
+		package.loaded[value] = nil
+		local status = pcall(require, value)
+		if not status then
+			print(value .. " is not available.")
+		end
+	end
+end
+
+M.reload = reload
+
+M.reload_current = function()
+	local current_buffer = getBufferName()
+	local module_name = split(current_buffer, "/lua")
+	local patterns = { "/", ".lua" }
+	for _, value in ipairs(patterns) do
+		module_name = string.gsub(current_buffer, value, "")
+	end
+	reload(module_name)
 end
 
 M.shortcut = function()
