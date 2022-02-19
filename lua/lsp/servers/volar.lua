@@ -1,9 +1,8 @@
+local u = require("functions.utils")
 return {
 	setup = function(common_on_attach, capabilities, server)
-		local OS = require("functions").getOS
-
 		local ts_server
-		if OS() == "Linux" then
+		if u.get_os() == "Linux" then
 			ts_server =
 				"/home/harrycramer/.local/share/nvim/lsp_servers/volar/node_modules/typescript/lib/tsserverlibrary.js"
 		else

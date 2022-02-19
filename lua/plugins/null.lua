@@ -1,4 +1,4 @@
-local OS = require("functions").getOS
+local u = require("functions.utils")
 
 return {
 	setup = function()
@@ -10,7 +10,7 @@ return {
 			formatting.stylua,
 		}
 
-		if OS() == "Darwin" then
+		if u.get_os() == "Darwin" then
 			table.insert(sources, formatting.prettierd)
 			table.insert(sources, formatting.joker.with({ filetypes = { "clojure" } }))
 		end

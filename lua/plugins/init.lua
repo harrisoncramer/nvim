@@ -1,6 +1,6 @@
 -- Utility function for plugin settings
 local remap = require("functions").remap
-local OS = require("functions").getOS
+local u = require("functions.utils")
 
 -- Utility settings loader
 local setup = function(mod, remote)
@@ -37,7 +37,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 local packer = require("packer")
-if OS() == "Darwin" then
+if u.get_os() == "Darwin" then
 	packer.init({ max_jobs = 4 })
 end
 

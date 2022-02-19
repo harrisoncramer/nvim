@@ -9,6 +9,7 @@ local utils = require("telescope.utils")
 local state = require("telescope.actions.state")
 local escape_string = require("functions").escape_string
 local f = require("functions")
+local u = require("functions.utils")
 
 local builtin = require("telescope.builtin")
 
@@ -52,7 +53,7 @@ local function git_files_string()
 end
 
 local function git_files_string_visual()
-	local text = f.getVisualSelection()
+	local text = u.get_visual_selection()
 	vim.api.nvim_input("<esc>")
 	if text[1] == nil then
 		print("No appropriate visual selection found")
@@ -63,7 +64,7 @@ local function git_files_string_visual()
 end
 
 local function grep_string_visual()
-	local text = f.getVisualSelection()
+	local text = u.get_visual_selection()
 	vim.api.nvim_input("<esc>")
 	if text[1] == nil then
 		print("No appropriate visual selection found")

@@ -1,11 +1,11 @@
-local get_reg = require("functions").get_reg
-local getOS = require("functions").getOS
+local u = require("functions.utils")
+local diffview = require("diffview")
 
 return {
 	copy_hash_and_open = function()
-		require("diffview").trigger_event("copy_hash")
-		local global_register = get_reg(getOS() == "Linux" and "+" or "*")
-		require("diffview").trigger_event("goto_file_tab")
+		diffview.trigger_event("copy_hash")
+		local global_register = u.get_register(u.get_os() == "Linux" and "+" or "*")
+		diffview.trigger_event("goto_file_tab")
 		local file_name = vim.fn.expand("%")
 		vim.cmd(":Gedit " .. global_register .. ":%")
 		vim.cmd(":vert diffsplit " .. file_name)
@@ -19,7 +19,7 @@ return {
 
 		remap({ "n", "<leader>df", ":DiffviewFileHistory<CR>" })
 
-		require("diffview").setup({
+		diffview.setup({
 			diff_binaries = false,
 			use_icons = true, -- Requires nvim-web-devicons
 			icons = {

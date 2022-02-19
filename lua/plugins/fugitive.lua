@@ -1,4 +1,5 @@
 local f = require("functions")
+local u = require("functions.utils")
 
 local toggle_status = function()
 	local ft = vim.bo.filetype
@@ -12,7 +13,7 @@ end
 local git_push = function()
 	local isSubmodule = vim.fn.trim(vim.fn.system("git rev-parse --show-superproject-working-tree"))
 	if isSubmodule == "" then
-		if f.getOS() == "Linux" then
+		if u.get_os() == "Linux" then
 			vim.api.nvim_command("Git push")
 		else
 			vim.api.nvim_command("! git push")
@@ -28,7 +29,7 @@ local git_open = function()
 end
 
 local git_mr_open = function()
-	if f.getOS() == "Linux" then
+	if u.get_os() == "Linux" then
 		os.execute(
 			string.format(
 				"firefox --new-tab 'https://gitlab.com/crossbeam/%s/-/merge_requests?scope=all&state=opened&author_username=hcramer1'",

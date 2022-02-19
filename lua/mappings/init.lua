@@ -2,7 +2,6 @@ local remap = require("functions").remap
 
 -- File specific mappings
 require("mappings.vue")
-require("mappings.work")
 require("mappings.git")
 
 -- Splits
@@ -32,8 +31,6 @@ require("compat").remap(
 
 -- Luafile
 remap({ "n", "<leader>lf", ":luafile %<CR>" })
-vim.cmd([[command! -nargs=1 RL lua require("functions").reload(<f-args>)]])
-vim.cmd([[command! RLC lua require("functions").reload_current()]])
 
 -- LSP
 require("compat").remap("n", "<leader>F", vim.lsp.buf.formatting, {}, ":lua vim.lsp.buf.formatting()<CR>")
