@@ -39,6 +39,8 @@ function make_entry.gen_from_git_stash(opts)
 		local real_branch = u.get_branch_name()
 		local escaped_commit_branch_name = u.escape_string(commit_branch_name)
 
+		print(escaped_commit_branch_name)
+
 		local search = string.find(real_branch, escaped_commit_branch_name)
 		if search == nil then
 			return nil

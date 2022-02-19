@@ -106,7 +106,7 @@ function make_entry.gen_from_git_stash(opts)
 		local _, commit_branch_name = string.match(splitted[2], "^([WIP on|On]+) (.+)")
 		local commit_info = splitted[3]
 
-		local real_branch = f.get_branch_name()
+		local real_branch = u.get_branch_name()
 		local escaped_commit_branch_name = u.escape_string(commit_branch_name)
 
 		local search = string.find(real_branch, escaped_commit_branch_name)

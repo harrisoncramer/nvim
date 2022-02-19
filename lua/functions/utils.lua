@@ -80,6 +80,7 @@ return {
 		vim.cmd("exec \"!xdg-open '" .. url .. "'\"")
 	end,
 	get_branch_name = function()
+		print("getting branch")
 		local is_git_branch = io.popen("git rev-parse --is-inside-work-tree 2>/dev/null"):read("*a")
 		if is_git_branch == "true\n" then
 			for line in io.popen("git branch 2>/dev/null"):lines() do
