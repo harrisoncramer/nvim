@@ -58,11 +58,11 @@ return {
 			yadm = { enable = false },
 		})
 		-- Gitsigns w/ hunks and blames.
-		remap({ "n", "<leader>ga", ":Gitsigns stage_hunk<CR>" })
-		remap({ "n", "<leader>gb", ":Gitsigns blame_line<CR>" })
-		remap({ "n", "<leader>gp", ":Gitsigns prev_hunk<CR>" })
-		remap({ "n", "<leader>gn", ":Gitsigns next_hunk<CR>" })
-		remap({ "n", "<leader>gr", ":Gitsigns reset_hunk<CR>" })
-		remap({ "n", "<leader>gd", ":Gitsigns preview_hunk<CR>" })
+		vim.keymap.set("n", "<leader>ga", ":Gitsigns stage_hunk<CR>")
+		vim.keymap.set("n", "<leader>gb", ":Gitsigns blame_line<CR>")
+		vim.keymap.set("n", "<leader>gp", ":Gitsigns prev_hunk<CR>")
+		vim.keymap.set("n", "<leader>gn", ":Gitsigns next_hunk<CR>")
+		vim.keymap.set("n", "<leader>gr", ":Gitsigns reset_hunk<CR>")
+		vim.keymap.set("n", "<leader>gd", ":Gitsigns preview_hunk<CR>")
 	end,
 }

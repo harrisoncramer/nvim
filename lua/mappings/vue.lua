@@ -1,7 +1,6 @@
-local remap = require("functions.utils").remap
-remap({ "n", "<localleader>m", ":/methods: {<CR>" })
-remap({ "n", "<localleader>c", ":/computed: {<CR>" })
-remap({ "n", "<localleader>d", ":/data () {<CR>" })
-remap({ "n", "<localleader>i", ":/import <CR>" })
-remap({ "n", "<localleader>p", ":/props: {<CR>" })
-remap({ "n", "<localleader>s", ":/<style <CR>" })
+vim.keymap.set("n", "<localleader>m", ":/methods: {<CR>")
+vim.keymap.set("n", "<localleader>c", ":/computed: {<CR>")
+vim.keymap.set("n", "<localleader>d", ":/data () {<CR>")
+vim.keymap.set("n", "<localleader>i", ":/import <CR>")
+vim.keymap.set("n", "<localleader>p", ":/props: {<CR>")
+vim.keymap.set("n", "<localleader>s", ":/<style <CR>")

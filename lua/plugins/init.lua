@@ -1,19 +1,18 @@
 -- Utility function for plugin settings
-local remap = require("functions.utils").remap
 local u = require("functions.utils")
 
 -- Utility settings loader
 local setup = function(mod, remote)
 	if remote == nil then
 		-- If plugin does not need "require" setup, then just set it up.
-		require(mod).setup(remap)
+		require(mod).setup()
 	else
 		local status = pcall(require, remote)
 		if not status then
 			print(remote .. " is not downloaded.")
 			return
 		else
-			require(mod).setup(remap)
+			require(mod).setup()
 		end
 	end
 end

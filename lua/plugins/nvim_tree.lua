@@ -1,7 +1,7 @@
 local is_open = false
 return {
-	setup = function(remap)
-		remap({ "n", "<leader>;", ":lua require('plugins/nvim_tree').setup_and_open()<CR>" })
+	setup = function()
+		vim.keymap.set("n", "<leader>;", require("plugins/nvim_tree").setup_and_open)
 
 		vim.g.nvim_tree_root_folder_modifier = 1
 		vim.g.nvim_tree_highlight_opened_files = 0

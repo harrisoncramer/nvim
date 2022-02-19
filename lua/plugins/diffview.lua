@@ -10,14 +10,14 @@ return {
 		vim.cmd(":Gedit " .. global_register .. ":%")
 		vim.cmd(":vert diffsplit " .. file_name)
 	end,
-	setup = function(remap)
+	setup = function()
 		local cb = require("diffview.config").diffview_callback
 
 		local go_to_git_file = function()
 			return ':lua require("plugins.diffview").copy_hash_and_open()<CR>'
 		end
 
-		remap({ "n", "<leader>df", ":DiffviewFileHistory<CR>" })
+		vim.keymap.set("n", "<leader>df", ":DiffviewFileHistory<CR>")
 
 		diffview.setup({
 			diff_binaries = false,

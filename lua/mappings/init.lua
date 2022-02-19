@@ -1,46 +1,44 @@
-local remap = require("functions.utils").remap
-
 -- File specific mappings
 require("mappings.vue")
 require("mappings.git")
 
 -- Splits
-remap({ "n", "ss", ":split<Return><C-w>w" })
-remap({ "n", "sv", ":vsplit<Return><C-w>w" })
-remap({ "n", "sh", "<C-w>h" })
-remap({ "n", "sj", "<C-w>j" })
-remap({ "n", "sk", "<C-w>k" })
-remap({ "n", "sl", "<C-w>l" })
-remap({ "n", "sq", "<C-w>q" })
-remap({ "n", "sp", "<C-w><C-p>" })
+vim.keymap.set("n", "ss", ":split<Return><C-w>w")
+vim.keymap.set("n", "sv", ":vsplit<Return><C-w>w")
+vim.keymap.set("n", "sh", "<C-w>h")
+vim.keymap.set("n", "sj", "<C-w>j")
+vim.keymap.set("n", "sk", "<C-w>k")
+vim.keymap.set("n", "sl", "<C-w>l")
+vim.keymap.set("n", "sq", "<C-w>q")
+vim.keymap.set("n", "sp", "<C-w><C-p>")
 
 -- Buffers
-remap({ "n", "<leader>-", ":bd<CR>" })
-remap({ "n", "<C-n>", ":bnext<CR>" })
-remap({ "n", "<C-p>", ":bprev<CR>" })
-remap({ "n", "<C-t>", "<C-^>" })
-remap({ "n", "<C-x>", ":bp <bar> bd#<CR>" })
+vim.keymap.set("n", "<leader>-", ":bd<CR>")
+vim.keymap.set("n", "<C-n>", ":bnext<CR>")
+vim.keymap.set("n", "<C-p>", ":bprev<CR>")
+vim.keymap.set("n", "<C-t>", "<C-^>")
+vim.keymap.set("n", "<C-x>", ":bp <bar> bd#<CR>")
 
 vim.keymap.set("n", "R", require("functions").start_replace, {})
 
 -- Luafile
-remap({ "n", "<leader>lf", ":luafile %<CR>" })
+vim.keymap.set("n", "<leader>lf", ":luafile %<CR>")
 
 -- LSP
 vim.keymap.set("n", "<leader>F", vim.lsp.buf.formatting, {})
 
 -- Neovim
-remap({ "n", "<leader>vv", ":e $MYVIMRC<cr>" })
+vim.keymap.set("n", "<leader>vv", ":e $MYVIMRC<cr>")
 
 -- Miscellaneous
-remap({ "n", "<C-a>", "<esc>ggVG<CR>" }) -- Select all
-remap({ "n", "*", ":keepjumps normal! mi*`i<CR>" }) -- " Use * to add w/out jumping
-remap({ "v", "<Leader>y", '"+y' }) -- Copy to clipboard
-remap({ "n", "<Leader>p", '"*p' }) -- Paste from system clipboard
-remap({ "n", "H", ":w<CR>" }) -- Quick save
-remap({ "n", "Y", "y$" }) -- Copy until end of line
-remap({ "i", "<C-l>", "<Right>" }) -- Move right in insert
-remap({ "n", "<leader>lf", ":luafile %<cr>" })
+vim.keymap.set("n", "<C-a>", "<esc>ggVG<CR>") -- Select all
+vim.keymap.set("n", "*", ":keepjumps normal! mi*`i<CR>") -- " Use * to add w/out jumping
+vim.keymap.set("v", "<Leader>y", '"+y') -- Copy to clipboard
+vim.keymap.set("n", "<Leader>p", '"*p') -- Paste from system clipboard
+vim.keymap.set("n", "H", ":w<CR>") -- Quick save
+vim.keymap.set("n", "Y", "y$") -- Copy until end of line
+vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
+vim.keymap.set("n", "<leader>lf", ":luafile %<cr>")
 
 -- Allows numbered jumps to be saved to the jumplist, for use w/ C-o and C-i
 vim.api.nvim_exec("nnoremap <expr> k (v:count > 1 ? \"m'\" . v:count : '') . 'k'", false)

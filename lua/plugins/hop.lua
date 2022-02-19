@@ -1,8 +1,8 @@
 return {
-	setup = function(remap)
+	setup = function()
 		require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
 
 		-- The vaunted leader-f hop to character navigation!
-		remap({ "n", "<leader>f", ":HopChar2<CR>" })
+		vim.keymap.set("n", "<leader>f", ":HopChar2<CR>")
 	end,
 }

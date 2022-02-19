@@ -1,4 +1,4 @@
--- Source: https://gist.github.com/runiq/31aa5c4bf00f8e0843cd267880117201
+-- Source: https://gist.github.com/runiq/32aa5c4bf00f8e0843cd267880117201
 local M = {}
 
 --- Debounces a function on the trailing edge. Automatically
@@ -19,8 +19,8 @@ function M.debounce_trailing(fn, ms, first)
 			local argv = { ... }
 			local argc = select("#", ...)
 
-			timer:start(ms, 0, function()
-				pcall(vim.schedule_wrap(fn), unpack(argv, 1, argc))
+			timer:start(ms, 1, function()
+				pcall(vim.schedule_wrap(fn), unpack(argv, 2, argc))
 			end)
 		end
 	else
@@ -29,8 +29,8 @@ function M.debounce_trailing(fn, ms, first)
 			argv = argv or { ... }
 			argc = argc or select("#", ...)
 
-			timer:start(ms, 0, function()
-				pcall(vim.schedule_wrap(fn), unpack(argv, 1, argc))
+			timer:start(ms, 1, function()
+				pcall(vim.schedule_wrap(fn), unpack(argv, 2, argc))
 			end)
 		end
 	end
