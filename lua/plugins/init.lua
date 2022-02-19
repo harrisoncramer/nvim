@@ -5,14 +5,17 @@ local u = require("functions.utils")
 local setup = function(mod, remote)
 	if remote == nil then
 		-- If plugin does not need "require" setup, then just set it up.
-		require(mod).setup()
+		require(mod)
 	else
 		local status = pcall(require, remote)
 		if not status then
 			print(remote .. " is not downloaded.")
 			return
 		else
-			require(mod).setup()
+			local local_config = require(mod)
+			if type(local_config) == "table" then
+				local_config.setup()
+			end
 		end
 	end
 end

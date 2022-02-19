@@ -1,8 +1,4 @@
-return {
-	setup = function()
-		require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
+require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
 
-		-- The vaunted leader-f hop to character navigation!
-		vim.keymap.set("n", "<leader>f", ":HopChar2<CR>")
-	end,
-}
+-- The vaunted leader-f hop to character navigation!
+vim.keymap.set("n", "<leader>f", ":HopChar2<CR>")

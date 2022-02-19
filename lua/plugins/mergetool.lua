@@ -16,7 +16,3 @@ local function mergetool_toggle()
 end
 
 vim.keymap.set("n", "<leader>gm", mergetool_toggle, {})
-
-return {
-	mergetool_toggle = mergetool_toggle,
-}

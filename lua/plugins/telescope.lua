@@ -141,136 +141,132 @@ local stash_filter = function()
 	}):find()
 end
 
-return {
-	setup = function()
-		local function SeeCommitChangesInDiffview(prompt_bufnr)
-			actions.close(prompt_bufnr)
-			local value = state.get_selected_entry(prompt_bufnr).value
-			vim.cmd("DiffviewOpen " .. value .. "~1.." .. value)
-		end
+local function SeeCommitChangesInDiffview(prompt_bufnr)
+	actions.close(prompt_bufnr)
+	local value = state.get_selected_entry(prompt_bufnr).value
+	vim.cmd("DiffviewOpen " .. value .. "~1.." .. value)
+end
 
-		local function CheckoutAndRestore(prompt_bufnr)
-			vim.cmd("Obsession")
-			actions.git_checkout(prompt_bufnr)
-			f.create_or_source_obsession()
-		end
+local function CheckoutAndRestore(prompt_bufnr)
+	vim.cmd("Obsession")
+	actions.git_checkout(prompt_bufnr)
+	f.create_or_source_obsession()
+end
 
-		local function CompareWithCurrentBranchInDiffview(prompt_bufnr)
-			actions.close(prompt_bufnr)
-			local value = state.get_selected_entry(prompt_bufnr).value
-			vim.cmd("DiffviewOpen " .. value)
-		end
+local function CompareWithCurrentBranchInDiffview(prompt_bufnr)
+	actions.close(prompt_bufnr)
+	local value = state.get_selected_entry(prompt_bufnr).value
+	vim.cmd("DiffviewOpen " .. value)
+end
 
-		local function CopyTextFromPreview(prompt_bufnr)
-			local selection = require("telescope.actions.state").get_selected_entry()
-			local text = vim.fn.trim(selection["text"])
-			vim.fn.setreg('"', text)
-			actions.close(prompt_bufnr)
-		end
+local function CopyTextFromPreview(prompt_bufnr)
+	local selection = require("telescope.actions.state").get_selected_entry()
+	local text = vim.fn.trim(selection["text"])
+	vim.fn.setreg('"', text)
+	actions.close(prompt_bufnr)
+end
 
-		local function CopyCommitHash(prompt_bufnr)
-			local selection = require("telescope.actions.state").get_selected_entry()
-			vim.fn.setreg('"', selection.value)
-			actions.close(prompt_bufnr)
-		end
+local function CopyCommitHash(prompt_bufnr)
+	local selection = require("telescope.actions.state").get_selected_entry()
+	vim.fn.setreg('"', selection.value)
+	actions.close(prompt_bufnr)
+end
 
-		local function CopyBranchName(prompt_bufnr)
-			local selection = require("telescope.actions.state").get_selected_entry()
-			vim.fn.setreg('"', selection.value)
-			actions.close(prompt_bufnr)
-		end
+local function CopyBranchName(prompt_bufnr)
+	local selection = require("telescope.actions.state").get_selected_entry()
+	vim.fn.setreg('"', selection.value)
+	actions.close(prompt_bufnr)
+end
 
-		local function CreateFile(prompt_bufnr)
-			print("WIP")
-		end
+local function CreateFile(prompt_bufnr)
+	print("WIP")
+end
 
-		local telescope = require("telescope")
-		telescope.setup({
-			defaults = {
-				file_ignore_patterns = { "node_modules", "package%-lock.json" },
-				extensions = {
-					fzf = {
-						fuzzy = true,
-						override_generic_sorter = true,
-						override_file_sorter = true,
-						case_mode = "smart_case",
-					},
-				},
-				mappings = {
-					i = {
-						["<esc>"] = actions.close,
-						["<C-j>"] = actions.cycle_history_next,
-						["<C-k>"] = actions.cycle_history_prev,
-					},
+local telescope = require("telescope")
+telescope.setup({
+	defaults = {
+		file_ignore_patterns = { "node_modules", "package%-lock.json" },
+		extensions = {
+			fzf = {
+				fuzzy = true,
+				override_generic_sorter = true,
+				override_file_sorter = true,
+				case_mode = "smart_case",
+			},
+		},
+		mappings = {
+			i = {
+				["<esc>"] = actions.close,
+				["<C-j>"] = actions.cycle_history_next,
+				["<C-k>"] = actions.cycle_history_prev,
+			},
+		},
+	},
+	pickers = {
+		git_files = {
+			prompt_prefix = " ",
+			mappings = {
+				i = {
+					["<C-e>"] = CreateFile,
 				},
 			},
-			pickers = {
-				git_files = {
-					prompt_prefix = " ",
-					mappings = {
-						i = {
-							["<C-e>"] = CreateFile,
-						},
-					},
-				},
-				git_branches = {
-					prompt_prefix = " ",
-					mappings = {
-						i = {
-							["<C-y>"] = CopyBranchName,
-							["<C-o>"] = CheckoutAndRestore,
-							["<Enter>"] = CheckoutAndRestore,
-						},
-					},
-				},
-				live_grep = {
-					prompt_prefix = " ",
-					mappings = {
-						i = {
-							["<C-y>"] = CopyTextFromPreview,
-						},
-					},
-				},
-				oldfiles = {
-					prompt_prefix = " ",
-				},
-				grep_string = {
-					prompt_prefix = " ",
-				},
-				current_buffer_fuzzy_find = {
-					previewer = false,
-					sorting_strategy = "ascending",
-					prompt_prefix = " ",
-				},
-				buffers = {
-					hidden = true,
-				},
-				git_commits = {
-					prompt_prefix = " ",
-					mappings = {
-						i = {
-							["<C-y>"] = CopyCommitHash,
-							["<C-o>"] = SeeCommitChangesInDiffview,
-							["<C-c>"] = CompareWithCurrentBranchInDiffview,
-						},
-					},
+		},
+		git_branches = {
+			prompt_prefix = " ",
+			mappings = {
+				i = {
+					["<C-y>"] = CopyBranchName,
+					["<C-o>"] = CheckoutAndRestore,
+					["<Enter>"] = CheckoutAndRestore,
 				},
 			},
-		})
+		},
+		live_grep = {
+			prompt_prefix = " ",
+			mappings = {
+				i = {
+					["<C-y>"] = CopyTextFromPreview,
+				},
+			},
+		},
+		oldfiles = {
+			prompt_prefix = " ",
+		},
+		grep_string = {
+			prompt_prefix = " ",
+		},
+		current_buffer_fuzzy_find = {
+			previewer = false,
+			sorting_strategy = "ascending",
+			prompt_prefix = " ",
+		},
+		buffers = {
+			hidden = true,
+		},
+		git_commits = {
+			prompt_prefix = " ",
+			mappings = {
+				i = {
+					["<C-y>"] = CopyCommitHash,
+					["<C-o>"] = SeeCommitChangesInDiffview,
+					["<C-c>"] = CompareWithCurrentBranchInDiffview,
+				},
+			},
+		},
+	},
+})
 
-		telescope.load_extension("fzf")
+telescope.load_extension("fzf")
 
-		vim.keymap.set("n", "<C-f>", live_grep, {})
-		vim.keymap.set("n", "<C-c>", current_buffer_fuzzy_find, {})
-		vim.keymap.set("n", "<C-j>", git_files, {})
-		vim.keymap.set("n", "<C-g>", buffers, {})
-		vim.keymap.set("n", "<leader>tr", oldfiles, {})
-		vim.keymap.set("n", "<leader>tgc", git_commits, {})
-		vim.keymap.set("n", "<leader>tgb", git_branches, {})
-		vim.keymap.set("n", "<leader>tF", grep_string, {})
-		vim.keymap.set("n", "<leader>tf", git_files_string, {})
-		vim.keymap.set("v", "<leader>tf", git_files_string_visual, {})
-		vim.keymap.set("v", "<leader>tF", grep_string_visual, {})
-		vim.keymap.set("n", "<leader>tgs", stash_filter, {})
-	end,
-}
+vim.keymap.set("n", "<C-f>", live_grep, {})
+vim.keymap.set("n", "<C-c>", current_buffer_fuzzy_find, {})
+vim.keymap.set("n", "<C-j>", git_files, {})
+vim.keymap.set("n", "<C-g>", buffers, {})
+vim.keymap.set("n", "<leader>tr", oldfiles, {})
+vim.keymap.set("n", "<leader>tgc", git_commits, {})
+vim.keymap.set("n", "<leader>tgb", git_branches, {})
+vim.keymap.set("n", "<leader>tF", grep_string, {})
+vim.keymap.set("n", "<leader>tf", git_files_string, {})
+vim.keymap.set("v", "<leader>tf", git_files_string_visual, {})
+vim.keymap.set("v", "<leader>tF", grep_string_visual, {})
+vim.keymap.set("n", "<leader>tgs", stash_filter, {})

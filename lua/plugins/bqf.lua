@@ -7,25 +7,21 @@ local function toggleQf()
 	end
 end
 
-return {
-	setup = function()
-		vim.keymap.set("n", "<leader>q", toggleQf, {})
-		require("bqf").setup({
-			func_map = {
-				cool = function()
-					print("wow")
-				end,
+vim.keymap.set("n", "<leader>q", toggleQf, {})
+require("bqf").setup({
+	func_map = {
+		cool = function()
+			print("wow")
+		end,
+	},
+	preview = {
+		border_chars = { "│", "│", "─", "─", "╭", "╮", "╰", "╯", "│" },
+	},
+	filter = {
+		fzf = {
+			action_for = {
+				["enter"] = "signtoggle",
 			},
-			preview = {
-				border_chars = { "│", "│", "─", "─", "╭", "╮", "╰", "╯", "│" },
-			},
-			filter = {
-				fzf = {
-					action_for = {
-						["enter"] = "signtoggle",
-					},
-				},
-			},
-		})
-	end,
-}
+		},
+	},
+})

@@ -1,4 +1,3 @@
-local f = require("functions")
 local u = require("functions.utils")
 
 local toggle_status = function()
@@ -39,11 +38,7 @@ local git_mr_open = function()
 	end
 end
 
-return {
-	setup = function()
-		vim.keymap.set("n", "<leader>gs", toggle_status, {})
-		vim.keymap.set("n", "<leader>gP", git_push, {})
-		vim.keymap.set("n", "<leader>goo", git_open, {})
-		vim.keymap.set("n", "<leader>gom", git_mr_open, {})
-	end,
-}
+vim.keymap.set("n", "<leader>gs", toggle_status, {})
+vim.keymap.set("n", "<leader>gP", git_push, {})
+vim.keymap.set("n", "<leader>goo", git_open, {})
+vim.keymap.set("n", "<leader>gom", git_mr_open, {})
