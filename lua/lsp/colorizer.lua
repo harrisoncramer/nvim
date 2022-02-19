@@ -64,7 +64,7 @@ end
 local ATTACHED_BUFFERS = {}
 
 local function buf_set_highlights(bufnr, colors, options)
-	-- vim.api.nvim_buf_clear_namespace(bufnr, NAMESPACE, 0, -1)
+	vim.api.nvim_buf_clear_namespace(bufnr, NAMESPACE, 0, -1)
 
 	for _, color_info in pairs(colors) do
 		local rgb_hex = lsp_color_to_hex(color_info.color)
@@ -110,15 +110,12 @@ function M.buf_attach(bufnr, options)
 	options = options or {}
 
 	-- VSCode extension also does 200ms debouncing
-	local trigger_update_highlight, timer = require("lsp/utils/defer").debounce_trailing(
+	local trigger_update_highlight, timer = require("functions.utils").debounce(
 		M.update_highlight,
 		options.debounce or 200,
 		false
 	)
 
-	-- for the first request, the server needs some time before it's ready
-	-- sometimes 200ms is not enough for this
-	-- TODO: figure out when the first request can be send
 	trigger_update_highlight(bufnr, options)
 
 	-- react to changes

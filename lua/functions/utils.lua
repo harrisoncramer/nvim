@@ -1,5 +1,20 @@
 -- These are functions that are used within the Lua configuration and
 -- are not meant for export to the end user.
+
+-- Validates number + function for debounce, see https://gist.github.com/runiq/31aa5c4bf00f8e0843cd267880117201
+local function td_validate(fn, ms)
+	vim.validate({
+		fn = { fn, "f" },
+		ms = {
+			ms,
+			function(ms)
+				return type(ms) == "number" and ms > 0
+			end,
+			"number > 0",
+		},
+	})
+end
+
 return {
 	get_os = function()
 		return vim.loop.os_uname().sysname
@@ -96,5 +111,32 @@ return {
 	end,
 	escape_string = function(text)
 		return text:gsub("([^%w])", "%%%1")
+	end,
+	debounce = function(fn, ms, first)
+		td_validate(fn, ms)
+		local timer = vim.loop.new_timer()
+		local wrapped_fn
+
+		if not first then
+			function wrapped_fn(...)
+				local argv = { ... }
+				local argc = select("#", ...)
+
+				timer:start(ms, 0, function()
+					pcall(vim.schedule_wrap(fn), unpack(argv, 1, argc))
+				end)
+			end
+		else
+			local argv, argc
+			function wrapped_fn(...)
+				argv = argv or { ... }
+				argc = argc or select("#", ...)
+
+				timer:start(ms, 0, function()
+					pcall(vim.schedule_wrap(fn), unpack(argv, 1, argc))
+				end)
+			end
+		end
+		return wrapped_fn, timer
 	end,
 }
