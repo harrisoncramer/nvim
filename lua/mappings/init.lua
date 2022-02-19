@@ -1,4 +1,4 @@
-local remap = require("functions").remap
+local remap = require("functions.utils").remap
 
 -- File specific mappings
 require("mappings.vue")
@@ -21,19 +21,13 @@ remap({ "n", "<C-p>", ":bprev<CR>" })
 remap({ "n", "<C-t>", "<C-^>" })
 remap({ "n", "<C-x>", ":bp <bar> bd#<CR>" })
 
-require("compat").remap(
-	"n",
-	"R",
-	require("functions").start_replace,
-	{},
-	":lua require('functions').start_replace()<CR>"
-)
+vim.keymap.set("n", "R", require("functions").start_replace, {})
 
 -- Luafile
 remap({ "n", "<leader>lf", ":luafile %<CR>" })
 
 -- LSP
-require("compat").remap("n", "<leader>F", vim.lsp.buf.formatting, {}, ":lua vim.lsp.buf.formatting()<CR>")
+vim.keymap.set("n", "<leader>F", vim.lsp.buf.formatting, {})
 
 -- Neovim
 remap({ "n", "<leader>vv", ":e $MYVIMRC<cr>" })

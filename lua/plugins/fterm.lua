@@ -1,7 +1,8 @@
+local fTerm = require("FTerm")
 return {
+
 	setup = function(remap)
-		local fTerm = require("FTerm")
-		require("compat").remap("n", "<C-z>", fTerm.toggle, {}, ":lua require('FTerm').toggle()<CR>")
+		vim.keymap.set("n", "<C-z>", fTerm.toggle, {})
 		remap({ "t", "<C-z>", '<C-\\><C-n>:lua require("FTerm").toggle()<CR>' })
 	end,
 }

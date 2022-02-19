@@ -33,33 +33,17 @@ local git_mr_open = function()
 		os.execute(
 			string.format(
 				"firefox --new-tab 'https://gitlab.com/crossbeam/%s/-/merge_requests?scope=all&state=opened&author_username=hcramer1'",
-				f.currentDir()
+				u.current_dir()
 			)
 		)
 	end
 end
 
 return {
-	toggle_status = toggle_status,
-	git_push = git_push,
-	git_open = git_open,
-	git_mr_open = git_mr_open,
 	setup = function()
-		require("compat").remap(
-			"n",
-			"<leader>gs",
-			toggle_status,
-			{},
-			":lua require('plugins/fugitive').toggle_status()<CR>"
-		)
-		require("compat").remap("n", "<leader>gP", git_push, {}, ":lua require('plugins/fugitive').git_push()<CR>")
-		require("compat").remap("n", "<leader>goo", git_open, {}, ":lua require('plugins/fugitive').git_open()<CR>")
-		require("compat").remap(
-			"n",
-			"<leader>gom",
-			git_mr_open,
-			{},
-			":lua require('plugins/fugitive').git_mr_open()<CR>"
-		)
+		vim.keymap.set("n", "<leader>gs", toggle_status, {})
+		vim.keymap.set("n", "<leader>gP", git_push, {})
+		vim.keymap.set("n", "<leader>goo", git_open, {})
+		vim.keymap.set("n", "<leader>gom", git_mr_open, {})
 	end,
 }

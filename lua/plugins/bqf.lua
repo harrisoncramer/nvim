@@ -8,9 +8,8 @@ local function toggleQf()
 end
 
 return {
-	toggleQf = toggleQf,
 	setup = function()
-		require("compat").remap("n", "<leader>q", toggleQf, {}, ":lua require('plugins/bqf').toggleQf()<CR>")
+		vim.keymap.set("n", "<leader>q", toggleQf, {})
 		require("bqf").setup({
 			func_map = {
 				cool = function()

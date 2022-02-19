@@ -1,6 +1,6 @@
 return {
 	setup = function(remap)
-		require("compat").remap("n", "<leader>r", require("renamer").rename, {}, ":lua require('renamer').rename()<CR>")
+		vim.keymap.set("n", "<leader>r", require("renamer").rename, {})
 
 		local mappings_utils = require("renamer.mappings.utils")
 		require("renamer").setup({

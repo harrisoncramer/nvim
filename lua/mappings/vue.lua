@@ -1,4 +1,4 @@
-local remap = require("functions").remap
+local remap = require("functions.utils").remap
 remap({ "n", "<localleader>m", ":/methods: {<CR>" })
 remap({ "n", "<localleader>c", ":/computed: {<CR>" })
 remap({ "n", "<localleader>d", ":/data () {<CR>" })

@@ -7,7 +7,6 @@ local actions = require("telescope.actions")
 local entry_display = require("telescope.pickers.entry_display")
 local utils = require("telescope.utils")
 local state = require("telescope.actions.state")
-local escape_string = require("functions").escape_string
 local f = require("functions")
 local u = require("functions.utils")
 
@@ -108,7 +107,7 @@ function make_entry.gen_from_git_stash(opts)
 		local commit_info = splitted[3]
 
 		local real_branch = f.get_branch_name()
-		local escaped_commit_branch_name = escape_string(commit_branch_name)
+		local escaped_commit_branch_name = u.escape_string(commit_branch_name)
 
 		local search = string.find(real_branch, escaped_commit_branch_name)
 		if search == nil then
@@ -261,79 +260,17 @@ return {
 
 		telescope.load_extension("fzf")
 
-		require("compat").remap("n", "<C-f>", live_grep, {}, ":lua require('plugins/telescope').live_grep()<CR>")
-		require("compat").remap(
-			"n",
-			"<C-c>",
-			current_buffer_fuzzy_find,
-			{},
-			":lua require('plugins/telescope').current_buffer_fuzzy_find()<CR>"
-		)
-		require("compat").remap("n", "<C-j>", git_files, {}, ":lua require('plugins/telescope').git_files()<CR>")
-		require("compat").remap("n", "<C-g>", buffers, {}, ":lua require('plugins/telescope').buffers()<CR>")
-		require("compat").remap("n", "<leader>tr", oldfiles, {}, ":lua require('plugins/telescope').oldfiles()<CR>")
-		require("compat").remap(
-			"n",
-			"<leader>tgc",
-			git_commits,
-			{},
-			":lua require('plugins/telescope').git_commits()<CR>"
-		)
-		require("compat").remap(
-			"n",
-			"<leader>tgb",
-			git_branches,
-			{},
-			":lua require('plugins/telescope').git_branches()<CR>"
-		)
-		require("compat").remap(
-			"n",
-			"<leader>tF",
-			grep_string,
-			{},
-			":lua require('plugins/telescope').grep_string()<CR>"
-		)
-		require("compat").remap(
-			"n",
-			"<leader>tf",
-			git_files_string,
-			{},
-			":lua require('plugins/telescope').git_files_string()<CR>"
-		)
-		require("compat").remap(
-			"v",
-			"<leader>tf",
-			git_files_string_visual,
-			{},
-			":lua require('plugins/telescope').git_files_string_visual()<CR>"
-		)
-		require("compat").remap(
-			"v",
-			"<leader>tF",
-			grep_string_visual,
-			{},
-			":lua require('plugins/telescope').grep_string_visual()<CR>"
-		)
-
-		-- Setup custom stash search which filters by current branch
-		require("compat").remap(
-			"n",
-			"<leader>tgs",
-			stash_filter,
-			{},
-			":lua require('plugins/telescope').stash_filter()<CR>"
-		)
+		vim.keymap.set("n", "<C-f>", live_grep, {})
+		vim.keymap.set("n", "<C-c>", current_buffer_fuzzy_find, {})
+		vim.keymap.set("n", "<C-j>", git_files, {})
+		vim.keymap.set("n", "<C-g>", buffers, {})
+		vim.keymap.set("n", "<leader>tr", oldfiles, {})
+		vim.keymap.set("n", "<leader>tgc", git_commits, {})
+		vim.keymap.set("n", "<leader>tgb", git_branches, {})
+		vim.keymap.set("n", "<leader>tF", grep_string, {})
+		vim.keymap.set("n", "<leader>tf", git_files_string, {})
+		vim.keymap.set("v", "<leader>tf", git_files_string_visual, {})
+		vim.keymap.set("v", "<leader>tF", grep_string_visual, {})
+		vim.keymap.set("n", "<leader>tgs", stash_filter, {})
 	end,
-	live_grep = live_grep,
-	git_files = git_files,
-	buffers = buffers,
-	oldfiles = oldfiles,
-	git_commits = git_commits,
-	git_branches = git_branches,
-	grep_string = grep_string,
-	current_buffer_fuzzy_find = current_buffer_fuzzy_find,
-	git_files_string = git_files_string,
-	git_files_string_visual = git_files_string_visual,
-	grep_string_visual = grep_string_visual,
-	stash_filter = stash_filter,
 }

@@ -1,4 +1,6 @@
-local is_diff_mode = require("functions").is_diff_mode
+local is_diff_mode = function()
+	return vim.api.nvim_win_get_option(0, "diff")
+end
 
 vim.g.mergetool_layout = "mr"
 vim.g.mergetool_prefer_revision = "local"
@@ -13,13 +15,7 @@ local function mergetool_toggle()
 	end
 end
 
-require("compat").remap(
-	"n",
-	"<leader>gm",
-	mergetool_toggle,
-	{},
-	":lua require('plugins.mergetool').mergetool_toggle()<CR>"
-)
+vim.keymap.set("n", "<leader>gm", mergetool_toggle, {})
 
 return {
 	mergetool_toggle = mergetool_toggle,

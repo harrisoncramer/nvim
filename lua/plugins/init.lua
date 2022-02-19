@@ -1,5 +1,5 @@
 -- Utility function for plugin settings
-local remap = require("functions").remap
+local remap = require("functions.utils").remap
 local u = require("functions.utils")
 
 -- Utility settings loader

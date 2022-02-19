@@ -22,26 +22,15 @@ local on_attach = function(client, bufnr)
 	-- Debounce by 300ms by default
 	client.config.flags.debounce_text_changes = 300
 
-	require("compat").remap("n", "gd", vim.lsp.buf.definition, {}, ":lua vim.lsp.buf.definition()<CR>")
-	require("compat").remap("n", "K", vim.lsp.buf.hover, {}, ":lua vim.lsp.buf.hover()<CR>")
-	require("compat").remap("n", "gi", vim.lsp.buf.implementation, {}, ":lua vim.lsp.buf.implementation()<CR>")
-	require("compat").remap("n", "<C-k>", vim.lsp.buf.signature_help, {}, ":lua vim.lsp.buf.signature_help()<CR>")
-	require("compat").remap("n", "<leader>[", vim.diagnostic.goto_prev, {}, ":lua vim.diagnostic.goto_prev()<CR>")
-	require("compat").remap("n", "<leader>]", vim.diagnostic.goto_next, {}, ":lua vim.diagnostic.goto_next()<CR>")
-	require("compat").remap(
-		"n",
-		"<leader>e[",
-		vim.diagnostic.goto_prev,
-		{ severity = vim.diagnostic.severity.ERROR },
-		":lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })<CR>"
-	)
-	require("compat").remap(
-		"n",
-		"<leader>e]",
-		vim.diagnostic.goto_next,
-		{ severity = vim.diagnostic.severity.ERROR },
-		":lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })<CR>"
-	)
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
+	vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
+	vim.keymap.set("n", "<leader>[", vim.diagnostic.goto_prev, {})
+	vim.keymap.set("n", "<leader>]", vim.diagnostic.goto_next, {})
+	-- vim.keymap.set("n", "<leader>e[", vim.diagnostic.goto_prev, { severity = vim.diagnostic.severity.ERROR })
+	-- vim.keymap.set("n", "<leader>e]", vim.diagnostic.goto_next, { severity = vim.diagnostic.severity.ERROR })
+
 	-- This is ripped off from https://github.com/kabouzeid/dotfiles, it's for tailwind preview support
 	if client.server_capabilities.colorProvider then
 		require("lsp/colorizer").buf_attach(bufnr, { single_column = false, debounce = 500 })
