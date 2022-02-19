@@ -12,6 +12,9 @@ function _G.P(...)
 	return ...
 end
 
+-- These are functions that could theoretically be called by the user
+-- although they are generally used by other commands (in the commands.lua file)
+-- or are used by mappings (in the mappings folder)
 return {
 	capture = function(cmd, raw)
 		local f = assert(io.popen(cmd, "r"))

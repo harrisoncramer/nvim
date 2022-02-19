@@ -9,7 +9,6 @@ require("colors")
 require("mappings")
 require("functions")
 require("autocommands")
-require("misc")
 require("commands")
 
 -- Packer plugins

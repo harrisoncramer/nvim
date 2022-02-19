@@ -1,4 +1,4 @@
-local get_branch_name = require("functions").get_branch_name
+local u = require("functions.utils")
 local pickers = require("telescope.pickers")
 local make_entry = require("telescope.make_entry")
 local finders = require("telescope.finders")
@@ -6,7 +6,7 @@ local conf = require("telescope.config").values
 local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
 local entry_display = require("telescope.pickers.entry_display")
-local u = require("telescope.utils")
+local telescope_utils = require("telescope.utils")
 
 function make_entry.gen_from_git_stash(opts)
 	local displayer = entry_display.create({
@@ -31,12 +31,12 @@ function make_entry.gen_from_git_stash(opts)
 			return nil
 		end
 
-		local splitted = u.max_split(entry, ": ", 2)
+		local splitted = telescope_utils.max_split(entry, ": ", 2)
 		local stash_idx = splitted[1]
 		local _, commit_branch_name = string.match(splitted[2], "^([WIP on|On]+) (.+)")
 		local commit_info = splitted[3]
 
-		local real_branch = get_branch_name()
+		local real_branch = u.get_branch_name()
 		local escaped_commit_branch_name = u.escape_string(commit_branch_name)
 
 		local search = string.find(real_branch, escaped_commit_branch_name)

@@ -1,5 +1,5 @@
--- Functions that are used within the Lua configuration and
--- are not meant for export.
+-- These are functions that are used within the Lua configuration and
+-- are not meant for export to the end user.
 return {
 	get_os = function()
 		return vim.loop.os_uname().sysname

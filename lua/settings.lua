@@ -53,3 +53,8 @@ vim.opt.smartindent = true
 vim.opt.cindent = true
 vim.opt.tabstop = 2
 vim.opt.expandtab = true
+
+-- Plugins
+vim.g.closetag_filenames = "*.html,*.jsx,*.js,*.tsx,*.vue"
+vim.g.vimwiki_map_prefix = "<Leader><F13>"
+vim.g.user_emmet_leader_key = "<C-e>"
