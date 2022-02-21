@@ -20,7 +20,11 @@ vim.keymap.set("n", "<C-p>", ":bprev<CR>")
 vim.keymap.set("n", "<C-t>", "<C-^>")
 vim.keymap.set("n", "<C-x>", ":bp <bar> bd#<CR>")
 
+-- Shortcuts
 vim.keymap.set("n", "R", require("functions").start_replace, {})
+vim.keymap.set("n", "<leader>y", function()
+	vim.api.nvim_feedkeys("^vg_y", "n", false)
+end)
 
 -- Luafile
 vim.keymap.set("n", "<leader>lf", ":luafile %<CR>")
