@@ -25,10 +25,10 @@ if cmp_status_ok then
 			["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 		},
 		sources = cmp.config.sources({
-			{ name = "nvim_lsp" },
-			{ name = "nvim_lua" },
-			{ name = "ultisnips" },
-			{ name = "buffer" },
+			{ name = "nvim_lsp", max_item_count = 5 },
+			{ name = "nvim_lua", max_item_count = 5 },
+			{ name = "ultisnips", max_item_count = 5 },
+			{ name = "buffer", max_item_count = 5 },
 		}),
 	})
 end
