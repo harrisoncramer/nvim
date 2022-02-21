@@ -1,6 +1,7 @@
 -- File specific mappings
 require("mappings.vue")
 require("mappings.git")
+require("mappings.clojure")
 
 -- Splits
 vim.keymap.set("n", "ss", ":split<Return><C-w>w")
