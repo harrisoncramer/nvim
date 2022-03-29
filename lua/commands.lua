@@ -17,3 +17,7 @@ end, { nargs = 0 })
 vim.api.nvim_add_user_command("Stash", function(opts)
 	require("mappings.git").stash(opts.args)
 end, { nargs = 1 })
+
+vim.api.nvim_add_user_command("JQ", function()
+	vim.api.nvim_command(".!jq .")
+end, { nargs = 0 })
