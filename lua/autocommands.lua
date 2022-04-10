@@ -7,6 +7,5 @@ vim.cmd([[
 ]])
 
 vim.cmd([[
-  augroup break_in_markdown
-  autocmd FileType markdown,text set wrap linebreak nolist
+  autocmd FileType markdown,text set wrap linebreak nolist textwidth=80 formatoptions=cqt wrapmargin=0
 ]])
