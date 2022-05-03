@@ -13,11 +13,30 @@ if u.get_os() == "Darwin" then
 	table.insert(sources, formatting.joker.with({ filetypes = { "clojure" } }))
 end
 
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
+local format = function(payload)
+	vim.lsp.buf.format({
+		filter = function(clients)
+			return vim.tbl_filter(function(client)
+				return client.name ~= "volar"
+			end, clients)
+		end,
+	})
+end
+
 null_ls.setup({
 	debug = false,
 	sources = sources,
-	on_attach = function(client)
-		vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()")
-		client.resolved_capabilities.document_formatting = true
+	on_attach = function(client, bufnr)
+		if client.supports_method("textDocument/formatting") then
+			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				group = augroup,
+				buffer = bufnr,
+				-- on 0.8, you should use vim.lsp.buf.format instead
+				callback = format,
+			})
+		end
 	end,
 })

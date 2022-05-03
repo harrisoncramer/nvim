@@ -17,8 +17,6 @@ local on_attach = function(client, bufnr)
 
 	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
-	client.resolved_capabilities.document_formatting = false
-
 	-- Debounce by 300ms by default
 	client.config.flags.debounce_text_changes = 300
 
