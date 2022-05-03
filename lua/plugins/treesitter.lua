@@ -2,17 +2,26 @@
 local enabled_list = { "clojure" }
 local parsers = require("nvim-treesitter.parsers")
 
+local disable_function = function(lang, bufnr)
+	if not bufnr then
+		bufnr = 0
+	end
+	local line_count = vim.api.nvim_buf_line_count(bufnr)
+	if line_count > 20000 or (line_count == 1 and lang == "json") then
+		vim.g.matchup_matchparen_enabled = 0
+		return true
+	else
+		return false
+	end
+end
+
 require("nvim-treesitter.configs").setup({
 	ensure_installed = "all",
 	sync_install = false,
 	ignore_install = { "haskell", "phpdoc" },
 	highlight = {
 		enable = true, -- false will disable the whole extension
-		disable = { "c", "rust" }, -- list of language that will be disabled
-		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-		-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-		-- Using this option may slow down your editor, and you may see some duplicate highlights.
-		-- Instead of true it can also be a list of languages
+		disable = disable_function,
 		additional_vim_regex_highlighting = false,
 	},
 	-- Rainbow parens plugin
@@ -29,7 +38,10 @@ require("nvim-treesitter.configs").setup({
 			return disable
 		end, parsers.available_parsers()),
 	},
-	matchup = { enable = true },
+	matchup = {
+		enable = true,
+		disable = { "json", "csv" },
+	},
 	playground = {
 		enable = true,
 		disable = {},
