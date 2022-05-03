@@ -19,6 +19,7 @@ local on_attach = function(client, bufnr)
 
 	-- Debounce by 300ms by default
 	client.config.flags.debounce_text_changes = 300
+	client.server_capabilities.documentFormattingProvider = false
 
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
