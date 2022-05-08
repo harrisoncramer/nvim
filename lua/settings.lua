@@ -45,8 +45,6 @@ vim.opt.hidden = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.backspace = "indent,eol,start"
--- Allow vim to use formatting options automatically
-vim.opt.formatoptions = "jcroqla"
 
 -- Indenting
 vim.opt.shiftwidth = 2
