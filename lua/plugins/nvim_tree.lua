@@ -5,12 +5,9 @@ return {
 
 		vim.g.nvim_tree_root_folder_modifier = 1
 		vim.g.nvim_tree_highlight_opened_files = 0
-		vim.g.nvim_tree_indent_markers = 0
-		vim.g.nvim_tree_quit_on_open = 0
 		vim.g.nvim_tree_root_folder_modifier = ":~"
 		vim.g.nvim_tree_add_trailing = 0
 		vim.g.nvim_tree_group_empty = 1
-		vim.g.nvim_tree_disable_window_picker = 1
 		vim.g.nvim_tree_icon_padding = " "
 		vim.g.nvim_tree_symlink_arrow = ">>"
 		vim.g.nvim_tree_respect_buf_cwd = 1
@@ -78,7 +75,6 @@ return {
 				hijack_netrw = true,
 				open_on_setup = false,
 				ignore_ft_on_setup = {},
-				auto_close = false,
 				open_on_tab = false,
 				hijack_cursor = false,
 				update_cwd = false,
@@ -103,9 +99,7 @@ return {
 					hide_root_folder = false,
 					side = "left",
 					auto_resize = false,
-					custom_only = true,
 					mappings = {
-						custom_only = true,
 						list = list,
 					},
 				},
