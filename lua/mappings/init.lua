@@ -3,6 +3,8 @@ require("mappings.vue")
 require("mappings.git")
 require("mappings.clojure")
 
+local u = require("functions.utils")
+
 -- Splits
 vim.keymap.set("n", "ss", ":split<Return><C-w>w")
 vim.keymap.set("n", "sv", ":vsplit<Return><C-w>w")
@@ -44,6 +46,10 @@ vim.keymap.set("n", "H", ":w<CR>") -- Quick save
 vim.keymap.set("n", "Y", "y$") -- Copy until end of line
 vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
 vim.keymap.set("n", "<leader>lf", ":luafile %<cr>")
+
+-- Open Links
+local opener = u.get_os() == "Linux" and "xdg-open" or "open"
+vim.keymap.set("n", "gx", string.format('yiW:! %1s <cWORD><CR> <C-r>" & <CR><CR>', opener))
 
 -- Allows numbered jumps to be saved to the jumplist, for use w/ C-o and C-i
 vim.api.nvim_exec("nnoremap <expr> k (v:count > 1 ? \"m'\" . v:count : '') . 'k'", false)
