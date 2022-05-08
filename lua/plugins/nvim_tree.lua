@@ -100,6 +100,7 @@ return {
 					side = "left",
 					auto_resize = false,
 					mappings = {
+						custom_only = true,
 						list = list,
 					},
 				},
