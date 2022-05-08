@@ -1,3 +1,4 @@
+local u = require("functions.utils")
 vim.api.nvim_create_user_command("RL", function(opts)
 	require("functions").reload(opts.args)
 end, { nargs = "*" })
@@ -15,8 +16,11 @@ vim.api.nvim_create_user_command("CAL", function()
 end, { nargs = 0 })
 
 vim.api.nvim_create_user_command("Stash", function(opts)
-	require("mappings.git").stash(opts.args)
-end, { nargs = 1 })
+  local name = opts.args ~= '' and opts.args or u.get_date_time()
+  name = string.gsub(name, "%s+", "_")
+	require("mappings.git").stash(name)
+  print(string.format("Stashed %s", name))
+end, { nargs = '?' })
 
 vim.api.nvim_create_user_command("JQ", function()
 	vim.api.nvim_command(".!jq .")
