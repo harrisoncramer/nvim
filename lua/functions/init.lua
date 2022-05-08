@@ -100,9 +100,14 @@ return {
 			print("There is no .sessions folder in this project yet!")
 		end
 	end,
-	run_script = function(script_name)
+	run_script = function(script_name, args)
 		local nvim_scripts_dir = "~/.config/nvim/scripts"
-		local f = io.popen(string.format("/bin/bash %1s/%2s", nvim_scripts_dir, script_name))
+		local f = nil
+		if args == nil then
+			f = io.popen(string.format("/bin/bash %1s/%2s", nvim_scripts_dir, script_name))
+		else
+			f = io.popen(string.format("/bin/bash %1s/%2s %3s", nvim_scripts_dir, script_name, args))
+		end
 		local l = f:read("*a")
 		f:close()
 		return l

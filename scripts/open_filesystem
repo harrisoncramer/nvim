@@ -1,0 +1,6 @@
+#!/bin/bash
+if [[ $OSTYPE = darwin*  ]]; then
+  open .
+else
+  xdg-open .
+fi
