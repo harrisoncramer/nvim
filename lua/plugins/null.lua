@@ -29,9 +29,7 @@ null_ls.setup({
 	debug = false,
 	sources = sources,
 	on_attach = function(client, bufnr)
-		P(client.server_capabilities)
 		if client.server_capabilities.documentFormattingProvider then
-			print("supported")
 			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				group = augroup,
