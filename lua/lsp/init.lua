@@ -27,6 +27,7 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
 	vim.keymap.set("n", "<leader>[", vim.diagnostic.goto_prev, {})
 	vim.keymap.set("n", "<leader>]", vim.diagnostic.goto_next, {})
+	vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, {})
 	-- vim.keymap.set("n", "<leader>e[", vim.diagnostic.goto_prev, { severity = vim.diagnostic.severity.ERROR })
 	-- vim.keymap.set("n", "<leader>e]", vim.diagnostic.goto_next, { severity = vim.diagnostic.severity.ERROR })
 
