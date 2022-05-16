@@ -150,15 +150,11 @@ local git_checkout = function(prompt_bufnr)
 		return
 	end
 
-	local real_selection = selection[1]:gmatch("%w+")
-	local words = {}
-	for word in real_selection do
-		table.insert(words, word)
-	end
-	local commit = words[5]
+	local strings = u.split_on(selection[1], " ")
+	local branch = strings[3]
 
 	actions.close(prompt_bufnr)
-	local _, ret, stderr = utils.get_os_command_output({ "git", "checkout", commit }, cwd)
+	local _, ret, stderr = utils.get_os_command_output({ "git", "checkout", branch }, cwd)
 	if ret == 0 then
 		utils.notify("actions.git_checkout", {
 			msg = string.format("Checked out: %s", selection.value),

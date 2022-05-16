@@ -23,13 +23,13 @@ return {
 	get_register = function(char)
 		return vim.api.nvim_exec([[echo getreg(']] .. char .. [[')]], true):gsub("[\n\r]", "^J")
 	end,
-  get_date_time = function () 
-    local date_table = os.date("*t")
-    local hour, minute = date_table.hour, date_table.min
-    local year, month, day = date_table.year, date_table.month, date_table.day   -- date_table.wday to date_table.day
-    local result = string.format("%02d-%02d-%04d__%d:%d", month, day, year, hour, minute)
-    return result
-  end,
+	get_date_time = function()
+		local date_table = os.date("*t")
+		local hour, minute = date_table.hour, date_table.min
+		local year, month, day = date_table.year, date_table.month, date_table.day -- date_table.wday to date_table.day
+		local result = string.format("%02d-%02d-%04d__%d:%d", month, day, year, hour, minute)
+		return result
+	end,
 	get_visual_selection = function()
 		local modeInfo = vim.api.nvim_get_mode()
 		local mode = modeInfo.mode
@@ -146,5 +146,12 @@ return {
 			end
 		end
 		return wrapped_fn, timer
+	end,
+	split_on = function(s, delimiter)
+		local result = {}
+		for match in (s .. delimiter):gmatch("(.-)" .. delimiter) do
+			table.insert(result, match)
+		end
+		return result
 	end,
 }
