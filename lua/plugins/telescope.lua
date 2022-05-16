@@ -143,35 +143,37 @@ local stash_filter = function()
 end
 
 local git_checkout = function(prompt_bufnr)
-  local cwd = action_state.get_current_picker(prompt_bufnr).cwd
-  local selection = action_state.get_selected_entry()
-  if selection == nil then
-    utils.__warn_no_selection "actions.git_checkout"
-    return
-  end
+	local cwd = action_state.get_current_picker(prompt_bufnr).cwd
+	local selection = action_state.get_selected_entry()
+	if selection == nil then
+		utils.__warn_no_selection("actions.git_checkout")
+		return
+	end
 
-  local real_selection = selection[1]:gmatch("%w+")
-  local words = {}
-  for word in real_selection do table.insert(words, word) end
-  local commit = words[5]
+	local real_selection = selection[1]:gmatch("%w+")
+	local words = {}
+	for word in real_selection do
+		table.insert(words, word)
+	end
+	local commit = words[5]
 
-  actions.close(prompt_bufnr)
-  local _, ret, stderr = utils.get_os_command_output({ "git", "checkout", commit }, cwd)
-  if ret == 0 then
-    utils.notify("actions.git_checkout", {
-      msg = string.format("Checked out: %s", selection.value),
-      level = "INFO",
-    })
-  else
-    utils.notify("actions.git_checkout", {
-      msg = string.format(
-        "Error when checking out: %s. Git returned: '%s'",
-        selection.value,
-        table.concat(stderr, " ")
-      ),
-      level = "ERROR",
-    })
-  end
+	actions.close(prompt_bufnr)
+	local _, ret, stderr = utils.get_os_command_output({ "git", "checkout", commit }, cwd)
+	if ret == 0 then
+		utils.notify("actions.git_checkout", {
+			msg = string.format("Checked out: %s", selection.value),
+			level = "INFO",
+		})
+	else
+		utils.notify("actions.git_checkout", {
+			msg = string.format(
+				"Error when checking out: %s. Git returned: '%s'",
+				selection.value,
+				table.concat(stderr, " ")
+			),
+			level = "ERROR",
+		})
+	end
 end
 
 local function CheckoutAndRestore(prompt_bufnr)
@@ -181,14 +183,14 @@ local function CheckoutAndRestore(prompt_bufnr)
 end
 
 -- Relies on external Git alias "git recent"
-local branch_filter = function ()
-  local opts = {}
+local branch_filter = function()
+	local opts = {}
 	pickers.new(opts, {
 		prompt_title = "Branches",
-		finder = finders.new_oneshot_job({ "git", "recent"}, {}),
+		finder = finders.new_oneshot_job({ "git", "recent" }, {}),
 		sorter = conf.file_sorter(opts),
 		attach_mappings = function()
-      actions.select_default:replace(CheckoutAndRestore)
+			actions.select_default:replace(CheckoutAndRestore)
 			return true
 		end,
 	}):find()
