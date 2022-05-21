@@ -160,6 +160,7 @@ local git_checkout = function(prompt_bufnr)
 			msg = string.format("Checked out: %s", selection.value),
 			level = "INFO",
 		})
+		f.create_or_source_obsession()
 	else
 		utils.notify("actions.git_checkout", {
 			msg = string.format(
@@ -175,7 +176,6 @@ end
 local function CheckoutAndRestore(prompt_bufnr)
 	vim.cmd("Obsession")
 	git_checkout(prompt_bufnr)
-	f.create_or_source_obsession()
 end
 
 -- Relies on external Git alias "git recent"
