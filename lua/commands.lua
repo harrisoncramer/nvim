@@ -51,5 +51,5 @@ vim.cmd([[
       let &l:efm = l:efm
   endfunction
 
-  command! -complete=file -nargs=1 -bang Lfile call <SID>load_file('l', <bang>0, <f-args>)
+  command! -complete=file -nargs=1 -bang Qfl call <SID>load_file('c', <bang>0, <f-args>)
 ]])
