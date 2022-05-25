@@ -49,6 +49,7 @@ vim.cmd([[
       let l:cmd = a:bang ? 'getfile' : 'file'
       exec a:type.l:cmd.' '.a:file
       let &l:efm = l:efm
+      execute 'copen'
   endfunction
 
   command! -complete=file -nargs=1 -bang Qfl call <SID>load_file('c', <bang>0, <f-args>)
