@@ -34,4 +34,22 @@ local is_sharing = false
 vim.api.nvim_create_user_command("Share", function()
 	require("functions").share_screen(is_sharing)
 	is_sharing = not is_sharing
-end, { nargs = 0})
+end, { nargs = 0 })
+
+-- Load quickfix lists! They can be saved with :w to .qf folder, which is globally gitignored
+vim.cmd([[
+  if exists('g:loaded_hqf')
+      finish
+  endif
+  let g:loaded_hqf = 1
+
+  function! s:load_file(type, bang, file) abort
+      let l:efm = &l:efm
+      let &l:errorformat = "%-G%f:%l: All of '%#%.depend'%.%#,%f%.%l col %c%. %m"
+      let l:cmd = a:bang ? 'getfile' : 'file'
+      exec a:type.l:cmd.' '.a:file
+      let &l:efm = l:efm
+  endfunction
+
+  command! -complete=file -nargs=1 -bang Lfile call <SID>load_file('l', <bang>0, <f-args>)
+]])
