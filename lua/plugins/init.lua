@@ -13,9 +13,7 @@ local setup = function(mod, remote)
 			return
 		else
 			local local_config = require(mod)
-			print("hi")
 			if type(local_config) == "table" then
-				P(local_config)
 				local_config.setup()
 			end
 		end
@@ -140,5 +138,5 @@ packer.startup(function(use)
 	use("AndrewRadev/tagalong.vim")
 	use("alvan/vim-closetag")
 	use("tomasiser/vim-code-dark")
-	use({ "harrisoncramer/psql", ft = { "sql" }, config = setup("plugins.psql", "psql") })
+	use({ "harrisoncramer/psql.nvim", config = setup("plugins.psql", "psql") })
 end)
