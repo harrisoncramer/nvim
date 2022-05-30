@@ -1,6 +1,4 @@
-# Immediate
-
 # TODO
-- Go to definition in split
-- Paint plugin that persists highlighting
-- Telescope send selected results to quickfix (better mapping?)
+
+- Write commands to setup psql.nvim with different environments based on
+  environment variables, for production, staging, local DBs (different setup calls)
