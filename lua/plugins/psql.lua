@@ -10,3 +10,4 @@ psql.setup({
 local map_opts = { noremap = true, silent = true, nowait = true }
 vim.keymap.set("n", "<localleader>r", psql.query_paragraph, map_opts)
 vim.keymap.set("n", "<localleader>e", psql.query_current_line, map_opts)
+vim.keymap.set("v", "<localleader>e", psql.query_selection, map_opts)
