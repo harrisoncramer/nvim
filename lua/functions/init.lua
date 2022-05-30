@@ -15,6 +15,7 @@ end
 -- These are functions that could theoretically be called by the user
 -- although they are generally used by other commands (in the commands.lua file)
 -- or are used by mappings (in the mappings folder)
+
 return {
 	capture = function(cmd, raw)
 		local f = assert(io.popen(cmd, "r"))
@@ -108,8 +109,17 @@ return {
 		else
 			f = io.popen(string.format("/bin/bash %1s/%2s %3s", nvim_scripts_dir, script_name, args))
 		end
-		local l = f:read("*a")
+		local output = f:read("*a")
 		f:close()
-		return l
+		return output
+	end,
+	share_screen = function(is_sharing)
+		vim.cmd("set relativenumber!")
+		if is_sharing then
+			vim.cmd("colorscheme kanagawa")
+		else
+			vim.cmd("colorscheme codedark")
+		end
+		require("functions").run_script("share_screen", is_sharing)
 	end,
 }
