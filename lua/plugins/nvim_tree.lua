@@ -2,41 +2,6 @@ local is_open = false
 return {
 	setup = function()
 		vim.keymap.set("n", "<leader>;", require("plugins/nvim_tree").setup_and_open)
-
-		vim.g.nvim_tree_root_folder_modifier = 1
-		vim.g.nvim_tree_highlight_opened_files = 0
-		vim.g.nvim_tree_root_folder_modifier = ":~"
-		vim.g.nvim_tree_add_trailing = 0
-		vim.g.nvim_tree_group_empty = 1
-		vim.g.nvim_tree_icon_padding = " "
-		vim.g.nvim_tree_symlink_arrow = ">>"
-		vim.g.nvim_tree_respect_buf_cwd = 1
-		vim.g.nvim_tree_create_in_closed_folder = 1
-		vim.g.nvim_tree_refresh_wait = 500
-
-		vim.g.nvim_tree_icons = {
-			default = "",
-			symlink = "",
-			git = {
-				unstaged = "✗",
-				staged = "✓",
-				unmerged = "",
-				renamed = "➜",
-				untracked = "★",
-				deleted = "",
-				ignored = "◌",
-			},
-			folder = {
-				arrow_open = "",
-				arrow_closed = "",
-				default = "",
-				open = "",
-				empty = "",
-				empty_open = "",
-				symlink = "",
-				symlink_open = "",
-			},
-		}
 	end,
 	setup_and_open = function()
 		-- Key mappings
@@ -71,6 +36,31 @@ return {
 		else
 			is_open = true
 			require("nvim-tree").setup({
+				renderer = {
+					icons = {
+						glyphs = {
+							git = {
+								unstaged = "✗",
+								staged = "✓",
+								unmerged = "",
+								renamed = "➜",
+								untracked = "★",
+								deleted = "",
+								ignored = "◌",
+							},
+							folder = {
+								arrow_open = "",
+								arrow_closed = "",
+								default = "",
+								open = "",
+								empty = "",
+								empty_open = "",
+								symlink = "",
+								symlink_open = "",
+							},
+						},
+					},
+				},
 				disable_netrw = true,
 				hijack_netrw = true,
 				open_on_setup = false,
