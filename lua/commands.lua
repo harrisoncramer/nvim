@@ -22,6 +22,13 @@ vim.api.nvim_create_user_command("Stash", function(opts)
 	print(string.format("Stashed %s", name))
 end, { nargs = "?" })
 
+vim.api.nvim_create_user_command("SQL", function(opts)
+	local db = opts.args
+	local var_table = require("env." .. db)
+	require("psql").setup(var_table)
+	print("PSQL set to " .. db)
+end, { nargs = 1 })
+
 vim.api.nvim_create_user_command("JQ", function()
 	vim.api.nvim_command(".!jq .")
 end, { nargs = 0 })

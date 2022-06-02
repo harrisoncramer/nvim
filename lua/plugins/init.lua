@@ -138,5 +138,15 @@ packer.startup(function(use)
 	use("AndrewRadev/tagalong.vim")
 	use("alvan/vim-closetag")
 	use("tomasiser/vim-code-dark")
-	use({ "harrisoncramer/psql.nvim", ft = { "sql" }, config = setup("plugins.psql", "psql") })
+	use({
+		"harrisoncramer/psql",
+		ft = { "sql" },
+		config = function()
+			local map_opts = { noremap = true, silent = true, nowait = true }
+			local psql = require("psql")
+			vim.keymap.set("n", "<localleader>r", psql.query_paragraph, map_opts)
+			vim.keymap.set("n", "<localleader>e", psql.query_current_line, map_opts)
+			vim.keymap.set("v", "<localleader>e", psql.query_selection, map_opts)
+		end,
+	})
 end)

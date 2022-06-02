@@ -4,3 +4,4 @@
 .vim
 plugged/
 plugin/packer_compiled.lua
+env
