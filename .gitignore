@@ -5,3 +5,4 @@
 plugged/
 plugin/packer_compiled.lua
 env
+lua/psql
