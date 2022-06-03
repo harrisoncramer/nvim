@@ -1,9 +1,5 @@
 -- Password is hard-coded in the plugin for now to "postgres"
 return {
-	setup = function()
-		local psql = require("psql")
-		psql.setup({})
-	end,
 	set_keybindings = function()
 		local psql = require("psql")
 		local map_opts = { noremap = true, silent = true, nowait = true }
