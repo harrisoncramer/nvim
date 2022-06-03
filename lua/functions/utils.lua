@@ -154,4 +154,12 @@ return {
 		end
 		return result
 	end,
+	reload_plugin = function(plugin)
+		for k in pairs(package.loaded) do
+			if k:match(plugin) then
+				package.loaded[k] = nil
+				require(k)
+			end
+		end
+	end,
 }
