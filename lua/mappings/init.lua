@@ -27,6 +27,8 @@ vim.keymap.set("n", "R", require("functions").start_replace, {})
 vim.keymap.set("n", "<leader>y", function()
 	vim.api.nvim_feedkeys("^vg_y", "n", false)
 end)
+vim.keymap.set("n", "<C-l>", "20zl")
+vim.keymap.set("n", "<C-h>", "40zh")
 
 -- Luafile
 vim.keymap.set("n", "<leader>lf", ":luafile %<CR>")
