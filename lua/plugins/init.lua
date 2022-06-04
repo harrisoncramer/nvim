@@ -62,7 +62,6 @@ packer.startup(function(use)
 	})
 	use({ "Olical/conjure", config = setup("plugins.conjure") })
 	use({ "jose-elias-alvarez/null-ls.nvim", config = setup("plugins.null", "null-ls") })
-	use({ "phaazon/hop.nvim", config = setup("plugins.hop", "hop") })
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 	use({
 		"nvim-telescope/telescope.nvim",
