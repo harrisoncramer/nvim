@@ -14,8 +14,3 @@ vim.cmd([[
 " Position the (global) quickfix window at the very bottom of the window https://github.com/fatih/vim-go/issues/1757
   autocmd FileType qf if (getwininfo(win_getid())[0].loclist != 1) | wincmd J | endif
 ]])
-
-vim.cmd([[
-  autocmd FileType sql lua require("plugins.psql").set_keybindings()
-  autocmd FileType clojure lua require("functions.utils").reload_plugin("Conjure")
-]])
