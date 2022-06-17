@@ -36,7 +36,16 @@ return {
 			},
 			default_args = { -- Default args prepended to the arg-list for the listed commands
 				DiffviewOpen = {},
-				DiffviewFileHistory = {},
+				DiffviewFileHistory = {
+					-- Follow only the first parent upon seeing a merge commit.
+					first_parent = true,
+					-- Include all refs.
+					all = true,
+					-- List only merge commits.
+					merges = false,
+					-- List commits in reverse order.
+					reverse = false,
+				},
 			},
 			hooks = {}, -- See ':h diffview-config-hooks'
 			key_bindings = {
