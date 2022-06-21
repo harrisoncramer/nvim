@@ -37,7 +37,15 @@ local on_attach = function(client, bufnr)
 	end
 end
 
-local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local normal_capabilities = vim.lsp.protocol.make_client_capabilities()
+
+-- From nvim-ufo
+normal_capabilities.textDocument.foldingRange = {
+	dynamicRegistration = false,
+	lineFoldingOnly = true,
+}
+
+local capabilities = cmp_nvim_lsp.update_capabilities(normal_capabilities)
 
 lsp_installer.on_server_ready(function(server)
 	local server_status_ok, server_config = pcall(require, "lsp.servers." .. server.name)
