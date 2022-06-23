@@ -25,11 +25,13 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
 	vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
-	vim.keymap.set("n", "<leader>[", vim.diagnostic.goto_prev, {})
-	vim.keymap.set("n", "<leader>]", vim.diagnostic.goto_next, {})
 	vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, {})
-	-- vim.keymap.set("n", "<leader>e[", vim.diagnostic.goto_prev, { severity = vim.diagnostic.severity.ERROR })
-	-- vim.keymap.set("n", "<leader>e]", vim.diagnostic.goto_next, { severity = vim.diagnostic.severity.ERROR })
+	vim.keymap.set("n", "<leader>]", function()
+		vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+	end)
+	vim.keymap.set("n", "<leader>[", function()
+		vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+	end)
 
 	-- This is ripped off from https://github.com/kabouzeid/dotfiles, it's for tailwind preview support
 	if client.server_capabilities.colorProvider then
