@@ -5,7 +5,6 @@ local conf = require("telescope.config").values
 local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
 local entry_display = require("telescope.pickers.entry_display")
-local action_state = require("telescope.actions.state")
 local utils = require("telescope.utils")
 local state = require("telescope.actions.state")
 local f = require("functions")
@@ -131,7 +130,7 @@ local stash_filter = function()
 	opts.entry_maker = vim.F.if_nil(opts.entry_maker, make_entry.gen_from_git_stash(opts))
 
 	pickers.new(opts, {
-		prompt_title = "Branch-specific Stashes",
+		prompt_title = "Git Stash",
 		finder = finders.new_oneshot_job({ "git", "--no-pager", "stash", "list" }, opts),
 		previewer = previewers.git_stash_diff.new(opts),
 		sorter = conf.file_sorter(opts),
@@ -142,59 +141,16 @@ local stash_filter = function()
 	}):find()
 end
 
-local git_checkout = function(prompt_bufnr)
-	local cwd = action_state.get_current_picker(prompt_bufnr).cwd
-	local selection = action_state.get_selected_entry()
-	if selection == nil then
-		utils.__warn_no_selection("actions.git_checkout")
-		return
-	end
-
-	local strings = u.split_on(selection[1], " ")
-	local branch = strings[3]
-
-	actions.close(prompt_bufnr)
-	local _, ret, stderr = utils.get_os_command_output({ "git", "checkout", branch }, cwd)
-	if ret == 0 then
-		utils.notify("actions.git_checkout", {
-			msg = string.format("Checked out: %s", selection.value),
-			level = "INFO",
-		})
-		f.create_or_source_obsession()
-	else
-		utils.notify("actions.git_checkout", {
-			msg = string.format(
-				"Error when checking out: %s. Git returned: '%s'",
-				selection.value,
-				table.concat(stderr, " ")
-			),
-			level = "ERROR",
-		})
-	end
-end
-
-local function CheckoutAndRestore(prompt_bufnr)
-	vim.cmd("Obsession")
-	git_checkout(prompt_bufnr)
-end
-
--- Relies on external Git alias "git recent"
-local branch_filter = function()
-	local opts = {}
-	pickers.new(opts, {
-		prompt_title = "Branches",
-		finder = finders.new_oneshot_job({ "git", "recent" }, {}),
-		sorter = conf.file_sorter(opts),
-		attach_mappings = function()
-			actions.select_default:replace(CheckoutAndRestore)
-			return true
-		end,
-	}):find()
-end
 local function SeeCommitChangesInDiffview(prompt_bufnr)
 	actions.close(prompt_bufnr)
 	local value = state.get_selected_entry(prompt_bufnr).value
 	vim.cmd("DiffviewOpen " .. value .. "~1.." .. value)
+end
+
+local function CheckoutAndRestore(prompt_bufnr)
+	vim.cmd("Obsession")
+	actions.git_checkout(prompt_bufnr)
+	f.create_or_source_obsession()
 end
 
 local function CompareWithCurrentBranchInDiffview(prompt_bufnr)
@@ -245,6 +201,15 @@ telescope.setup({
 				},
 			},
 		},
+		git_branches = {
+			prompt_prefix = " ",
+			mappings = {
+				i = {
+					["<C-o>"] = CheckoutAndRestore,
+					["<Enter>"] = CheckoutAndRestore,
+				},
+			},
+		},
 		oldfiles = {
 			prompt_prefix = " ",
 		},
@@ -280,7 +245,7 @@ vim.keymap.set("n", "<C-j>", git_files, {})
 vim.keymap.set("n", "<C-g>", buffers, {})
 vim.keymap.set("n", "<leader>tr", oldfiles, {})
 vim.keymap.set("n", "<leader>tgc", git_commits, {})
-vim.keymap.set("n", "<leader>tgb", branch_filter, {})
+vim.keymap.set("n", "<leader>tgb", git_branches, {})
 vim.keymap.set("n", "<leader>tF", grep_string, {})
 vim.keymap.set("n", "<leader>tf", git_files_string, {})
 vim.keymap.set("v", "<leader>tf", git_files_string_visual, {})
