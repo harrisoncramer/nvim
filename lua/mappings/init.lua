@@ -43,6 +43,11 @@ vim.keymap.set("n", "<leader>vv", ":e $MYVIMRC<cr>")
 -- Miscellaneous
 vim.keymap.set("n", "<C-a>", "<esc>ggVG<CR>") -- Select all
 vim.keymap.set("n", "*", ":keepjumps normal! mi*`i<CR>") -- " Use * to add w/out jumping
+vim.keymap.set("n", "&", function()
+	vim.api.nvim_feedkeys(":keepjumps normal! mi*`i<CR>", "n", false)
+	u.press_enter()
+	vim.api.nvim_feedkeys(":%s//", "n", false)
+end)
 vim.keymap.set("v", "<Leader>y", '"+y') -- Copy to clipboard
 vim.keymap.set("n", "<Leader>p", '"*p') -- Paste from system clipboard
 vim.keymap.set("n", "H", ":w<CR>") -- Quick save

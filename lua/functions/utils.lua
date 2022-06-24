@@ -162,4 +162,7 @@ return {
 			end
 		end
 	end,
+	press_enter = function()
+		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", false, true, true), "n", false)
+	end,
 }
