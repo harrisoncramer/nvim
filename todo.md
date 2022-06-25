@@ -1,5 +1,7 @@
 # TODO
 
-- Ask Reddit about `localleader` per buffer type
-- Write commands to setup psql.nvim with different environments based on
-  environment variables, for production, staging, local DBs (different setup calls)
+- Plugin like PSQL that lets you execute arbitrary Javascript inside of a
+markdown file.
+- Break bad habit of wrapping everything in a visual selection rather than just
+using delete/yank commands
+- Jump to non-error diagnostic

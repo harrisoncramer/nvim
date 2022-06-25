@@ -122,4 +122,7 @@ return {
 		end
 		require("functions").run_script("share_screen", is_sharing)
 	end,
+	stash = function(name)
+		vim.fn.system("git stash -u -m " .. name)
+	end,
 }

@@ -18,3 +18,6 @@ end, map_opts)
 vim.keymap.set("n", "<localleader>tfw", function()
 	vim.cmd(":TestFile --watch")
 end, map_opts)
+
+-- Javascript specific mappings
+-- vim.keymap.set()

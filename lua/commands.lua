@@ -18,7 +18,7 @@ end, { nargs = 0 })
 vim.api.nvim_create_user_command("Stash", function(opts)
 	local name = opts.args ~= "" and opts.args or u.get_date_time()
 	name = string.gsub(name, "%s+", "_")
-	require("mappings.git").stash(name)
+	require("functions").stash(name)
 	print(string.format("Stashed %s", name))
 end, { nargs = "?" })
 
@@ -42,6 +42,11 @@ vim.api.nvim_create_user_command("Share", function()
 	require("functions").share_screen(is_sharing)
 	is_sharing = not is_sharing
 end, { nargs = 0 })
+
+vim.api.nvim_create_user_command("Diff", function()
+	vim.api.nvim_feedkeys(":Gvdiffsplit develop:%", "n", false)
+	u.press_enter()
+end, { nargs = "*" })
 
 -- Load quickfix lists! They can be saved with :w to .qf folder, which is globally gitignored
 vim.cmd([[

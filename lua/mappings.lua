@@ -1,9 +1,3 @@
--- File specific mappings
-require("mappings.vue")
-require("mappings.git")
-require("mappings.clojure")
-require("mappings.markdown")
-
 local u = require("functions.utils")
 
 -- Splits
