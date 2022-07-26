@@ -1,7 +1,12 @@
 local is_open = false
+local u = require("functions.utils")
 return {
 	setup = function()
 		vim.keymap.set("n", "<leader>;", require("plugins.nvim_tree").setup_and_open)
+		vim.keymap.set("n", "<C-h>", function()
+			local file_path = vim.fn.expand("%")
+			u.open_file_in_nvim_tree(file_path)
+		end)
 	end,
 	setup_and_open = function()
 		-- Key mappings

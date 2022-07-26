@@ -3,6 +3,7 @@
 -- user.
 
 -- Validates number + function for debounce, see https://gist.github.com/runiq/31aa5c4bf00f8e0843cd267880117201
+local path = require("plenary.path")
 local function td_validate(fn, ms)
 	vim.validate({
 		fn = { fn, "f" },
@@ -164,5 +165,22 @@ return {
 	end,
 	press_enter = function()
 		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", false, true, true), "n", false)
+	end,
+	open_file_in_nvim_tree = function(entry)
+		local entry_path = path:new(entry):parent():absolute()
+		entry_path = path:new(entry):parent():absolute()
+		entry_path = entry_path:gsub("\\", "\\\\")
+
+		require("plugins.nvim_tree").setup_and_open()
+		vim.cmd("NvimTreeClose")
+		vim.cmd("NvimTreeOpen " .. entry_path)
+
+		local file_name = nil
+		for s in string.gmatch(entry, "[^/]+") do
+			file_name = s
+		end
+
+		vim.cmd("/" .. file_name)
+		vim.api.nvim_feedkeys("-", "i", false)
 	end,
 }

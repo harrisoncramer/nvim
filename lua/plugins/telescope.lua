@@ -12,24 +12,10 @@ local u = require("functions.utils")
 
 local builtin = require("telescope.builtin")
 
-local function open_in_nvim_tree(prompt_bufnr)
-	local path = require("plenary.path")
-	local entry = state.get_selected_entry()[1]
-	local entry_path = path:new(entry):parent():absolute()
+local function open_file_in_nvim_tree(prompt_bufnr)
 	actions._close(prompt_bufnr, true)
-	entry_path = path:new(entry):parent():absolute()
-	entry_path = entry_path:gsub("\\", "\\\\")
-
-	require("plugins.nvim_tree").setup_and_open()
-	vim.cmd("NvimTreeClose")
-	vim.cmd("NvimTreeOpen " .. entry_path)
-
-	local file_name = nil
-	for s in string.gmatch(entry, "[^/]+") do
-		file_name = s
-	end
-
-	vim.cmd("/" .. file_name)
+	local entry = state.get_selected_entry()[1]
+	u.open_file_in_nvim_tree(entry)
 end
 
 local function live_grep()
@@ -225,7 +211,7 @@ telescope.setup({
 		git_files = {
 			mappings = {
 				i = {
-					["<C-h>"] = open_in_nvim_tree,
+					["<C-h>"] = open_file_in_nvim_tree,
 				},
 			},
 		},
