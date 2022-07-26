@@ -1,7 +1,7 @@
 local is_open = false
 return {
 	setup = function()
-		vim.keymap.set("n", "<leader>;", require("plugins/nvim_tree").setup_and_open)
+		vim.keymap.set("n", "<leader>;", require("plugins.nvim_tree").setup_and_open)
 	end,
 	setup_and_open = function()
 		-- Key mappings
@@ -77,7 +77,7 @@ return {
 					icons = { hint = "", info = "", warning = "", error = " " },
 				},
 				update_focused_file = {
-					enable = true,
+					enable = false,
 					update_cwd = false,
 					ignore_list = {},
 				},
