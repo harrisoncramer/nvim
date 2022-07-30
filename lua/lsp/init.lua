@@ -61,11 +61,12 @@ local servers = {
 	"tailwindcss-language-server",
 	"clojure-lsp",
 	"vue-language-server",
+	"vscode-eslint-language-server",
 }
 
 -- Setup Mason + LSPs + CMP
 require("lsp.cmp")
-mason_lspconfig.setup({ ensure_installed = servers })
+mason_lspconfig.setup({ ensure_installed = servers, automatic_installation = true })
 mason.setup({})
 
 -- Setup each server
