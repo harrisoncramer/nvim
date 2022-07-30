@@ -1,12 +1,11 @@
 return {
-	setup = function(common_on_attach, capabilities, server)
+	setup = function(on_attach, capabilities)
 		local ts_server = vim.fn.stdpath("data") .. "/lsp_servers/volar/node_modules/typescript/lib/tsserverlibrary.js"
 		local lspconfig = require("lspconfig")
-		server:setup({
+
+		require("lspconfig").volar.setup({
 			capabilities = capabilities,
-			on_attach = function(client, bufnr)
-				common_on_attach(client, bufnr)
-			end,
+			on_attach = on_attach,
 			init_options = {
 				typescript = {
 					serverPath = ts_server,

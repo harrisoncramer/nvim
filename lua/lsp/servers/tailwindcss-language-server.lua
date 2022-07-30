@@ -1,7 +1,7 @@
 local root_pattern = require("lspconfig.util").root_pattern
 return {
-	setup = function(on_attach, capabilities, server)
-		server:setup({
+	setup = function(on_attach, capabilities)
+		require("lspconfig").tailwindcss.setup({
 			on_attach = on_attach,
 			capabilities = capabilities,
 			cmd = { "tailwindcss-language-server", "--stdio" },

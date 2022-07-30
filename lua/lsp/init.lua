@@ -7,9 +7,6 @@ if not (mason_status_ok and mason_lspconfig_ok and cmp_nvim_lsp_status_ok) then
 	return
 end
 
--- Configure CMP
-require("lsp.cmp")
-
 -- Map keys after LSP attaches (utility function)
 local on_attach = function(client, bufnr)
 	local function buf_set_option(...)
@@ -54,18 +51,25 @@ normal_capabilities.textDocument.foldingRange = {
 
 local capabilities = cmp_nvim_lsp.update_capabilities(normal_capabilities)
 
+-- These servers are automatically installed by Mason.
+-- We then iterate over their names and load their relevant
+-- configuration files, which are stored in lua/lsp/servers,
+-- passing along the global on_attach and capabilities functions
 local servers = {
 	"lua-language-server",
+	"typescript-language-server",
+	"tailwindcss-language-server",
+	"clojure-lsp",
+	"vue-language-server",
 }
-mason_lspconfig.setup({
-	ensure_installed = servers,
-})
 
+-- Setup Mason + LSPs + CMP
+require("lsp.cmp")
+mason_lspconfig.setup({ ensure_installed = servers })
 mason.setup({})
 
 -- Setup each server
 for _, s in pairs(servers) do
-	print(s)
 	local server_config_ok, mod = pcall(require, "lsp.servers." .. s)
 	if not server_config_ok then
 		print("The LSP '" .. s .. "' does not have a config.")
