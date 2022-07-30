@@ -62,6 +62,7 @@ local servers = {
 	"clojure-lsp",
 	"vue-language-server",
 	"vscode-eslint-language-server",
+	"gopls",
 }
 
 -- Setup Mason + LSPs + CMP
