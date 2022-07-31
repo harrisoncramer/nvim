@@ -8,7 +8,7 @@ if not (mason_status_ok and mason_lspconfig_ok and cmp_nvim_lsp_status_ok) then
 end
 
 -- Map keys after LSP attaches (utility function)
-local on_attach = function(client, bufnr)
+local on_attach = function(client, bufnr, formatting)
 	local function buf_set_option(...)
 		vim.api.nvim_buf_set_option(bufnr, ...)
 	end
@@ -17,7 +17,17 @@ local on_attach = function(client, bufnr)
 
 	-- Debounce by 300ms by default
 	client.config.flags.debounce_text_changes = 300
-	client.server_capabilities.documentFormattingProvider = false
+
+	-- This will call format for all the attached LSPs
+	-- We are only using formatting in Golang right now, null-ls for everything else
+	client.server_capabilities.documentFormattingProvider = formatting or false
+	if formatting then
+		local ft = vim.cmd([[echo &filetype]])
+		vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+			pattern = { ft },
+			command = "lua vim.lsp.buf.format()",
+		})
+	end
 
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
