@@ -25,7 +25,9 @@ local on_attach = function(client, bufnr, formatting)
 		local ft = vim.cmd([[echo &filetype]])
 		vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 			pattern = { ft },
-			command = "lua vim.lsp.buf.format()",
+			callback = function()
+				vim.lsp.buf.format()
+			end,
 		})
 	end
 
