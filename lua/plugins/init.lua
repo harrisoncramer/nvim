@@ -73,6 +73,7 @@ packer.startup(function(use)
 	use("tpope/vim-repeat")
 	use("tpope/vim-surround")
 	use("tpope/vim-unimpaired")
+	use("tpope/vim-rhubarb")
 	use({ "kevinhwang91/nvim-bqf", requires = "junegunn/fzf.vim", config = setup("plugins.bqf", "bqf") })
 	use({
 		"junegunn/fzf",
