@@ -21,6 +21,9 @@ return {
 	get_os = function()
 		return vim.loop.os_uname().sysname
 	end,
+	get_home = function()
+		return os.getenv("HOME")
+	end,
 	get_register = function(char)
 		return vim.api.nvim_exec([[echo getreg(']] .. char .. [[')]], true):gsub("[\n\r]", "^J")
 	end,
