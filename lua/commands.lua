@@ -43,6 +43,10 @@ vim.api.nvim_create_user_command("Share", function()
 	is_sharing = not is_sharing
 end, { nargs = 0 })
 
+vim.api.nvim_create_user_command("BufOnly", function()
+	require("functions").buf_only()
+end, { nargs = 0 })
+
 vim.api.nvim_create_user_command("Diff", function(opts)
 	local branch = opts.args ~= "" and opts.args or "develop"
 	vim.api.nvim_feedkeys(":Gvdiffsplit " .. branch .. ":%", "n", false)
