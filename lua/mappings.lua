@@ -67,5 +67,3 @@ vim.cmd([[
   endfunction
   vnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>
 ]])
-
-return {}
