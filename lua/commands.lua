@@ -48,6 +48,7 @@ vim.api.nvim_create_user_command("Diff", function(opts)
 	vim.api.nvim_feedkeys(":Gvdiffsplit " .. branch .. ":%", "n", false)
 	u.press_enter()
 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>L<C-w>h", false, true, true), "n", false)
+	vim.api.nvim_feedkeys("sh", "n", false)
 end, { nargs = "*" })
 
 -- Load quickfix lists! They can be saved with :w to .qf folder, which is globally gitignored
