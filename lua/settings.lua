@@ -30,8 +30,6 @@ vim.opt.signcolumn = "yes"
 -- Search settings
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
--- Create splits vertically by default
-vim.opt.diffopt = "vertical"
 -- set no swap files
 vim.opt.swapfile = false
 vim.opt.backup = false
@@ -59,3 +57,7 @@ vim.g.closetag_filenames = "*.html,*.jsx,*.js,*.tsx,*.vue"
 vim.g.vimwiki_map_prefix = "<Leader><F13>"
 vim.g.user_emmet_leader_key = "<C-e>"
 vim.g.matchup_matchparen_offscreen = { method = "popup" }
+
+-- Diffs (no whitespace and vertical by default)
+vim.opt.diffopt = "vertical,iwhite"
+vim.opt.diffexpr = ""
