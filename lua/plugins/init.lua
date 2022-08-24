@@ -117,6 +117,7 @@ packer.startup(function(use)
 		"sindrets/diffview.nvim",
 		requires = "nvim-lua/plenary.nvim",
 		config = setup("plugins.diffview", "diffview"),
+		commit = "a45163cb9ee65742cf26b940c2b24cc652f295c9",
 	})
 	use({ "petertriho/nvim-scrollbar", config = setup("plugins.scrollbar", "scrollbar") })
 	use({ "karb94/neoscroll.nvim", config = setup("plugins.neoscroll", "neoscroll") })
