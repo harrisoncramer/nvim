@@ -9,11 +9,6 @@ end
 
 vim.keymap.set("n", "<leader>q", toggleQf, {})
 require("bqf").setup({
-	func_map = {
-		cool = function()
-			print("wow")
-		end,
-	},
 	preview = {
 		border_chars = { "│", "│", "─", "─", "╭", "╮", "╰", "╯", "│" },
 	},
