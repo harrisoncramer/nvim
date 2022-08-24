@@ -4,6 +4,7 @@ return {
 		local lspconfig = require("lspconfig")
 
 		require("lspconfig").volar.setup({
+			filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
 			capabilities = capabilities,
 			on_attach = on_attach,
 			init_options = {

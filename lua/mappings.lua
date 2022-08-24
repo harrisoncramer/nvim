@@ -46,7 +46,6 @@ vim.keymap.set("n", "H", ":w<CR>") -- Quick save
 vim.keymap.set("n", "Y", "y$") -- Copy until end of line
 vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
 vim.keymap.set("n", "<leader>lf", ":luafile %<cr>")
-vim.keymap.set("n", "dd", '"_dd')
 
 -- Open Links
 local opener = u.get_os() == "Linux" and "xdg-open" or "open"
