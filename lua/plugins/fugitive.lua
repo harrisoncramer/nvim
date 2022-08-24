@@ -59,5 +59,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	pattern = "COMMIT_EDITMSG",
 	callback = function()
 		require("close_buffers").delete({ regex = "^fugitive*" })
+		require("notify")("Commit saved!")
 	end,
 })
