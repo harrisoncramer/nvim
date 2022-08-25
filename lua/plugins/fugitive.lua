@@ -20,9 +20,9 @@ local git_push = function()
 	else
 		vim.fn.confirm("Push to origin/main branch for submodule?")
 		vim.api.nvim_command("silent ! git push origin HEAD:main")
-		local branch = u.get_branch_name()
-		require("notify")("Pushed to " .. branch)
 	end
+	local branch = u.get_branch_name()
+	require("notify")("Pushed to " .. branch)
 end
 
 local git_open = function()
