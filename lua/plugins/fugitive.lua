@@ -22,7 +22,7 @@ local git_push = function()
 		vim.api.nvim_command("silent ! git push origin HEAD:main")
 	end
 	local branch = u.get_branch_name()
-	require("notify")("Pushed to " .. branch)
+	require("notify")("Pushed to '" .. branch .. "' branch")
 end
 
 local git_open = function()
