@@ -30,6 +30,16 @@ local no_setup = function(mod)
 	end
 end
 
+local ft_setup = function(mod, remote, ft)
+	vim.api.nvim_create_autocmd("BufEnter", {
+		pattern = "*." .. ft,
+		callback = function()
+			setup(mod, remote)
+		end,
+		desc = "Loads the configuration only after opening the given filetype",
+	})
+end
+
 local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -141,4 +151,5 @@ packer.startup(function(use)
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" }, config = setup("plugins.dap", "dap") })
 	use({ "kazhala/close-buffers.nvim", config = no_setup("close_buffers") })
 	use({ "rcarriga/nvim-notify", config = no_setup("notify") })
+	use({ "leoluz/nvim-dap-go", ft = "go", config = ft_setup("dap-go", "plugins.dap-go", "go") })
 end)

@@ -10,11 +10,71 @@ return {
 			f.run_script("install_node_debugger", u.get_home())
 		end
 
+		local delve = u.get_home() .. "/go/bin/dlv"
+		if vim.fn.filereadable(delve) == 0 then
+			os.execute("go install github.com/go-delve/delve/cmd/dlv@latest")
+		end
+
+		dap.adapters.go = function(callback, config)
+			local stdout = vim.loop.new_pipe(false)
+			local handle
+			local pid_or_err
+			local port = 38697
+			local opts = {
+				stdio = { nil, stdout },
+				args = { "dap", "-l", "127.0.0.1:" .. port },
+				detached = true,
+			}
+			handle, pid_or_err = vim.loop.spawn("dlv", opts, function(code)
+				stdout:close()
+				handle:close()
+				if code ~= 0 then
+					print("dlv exited with code", code)
+				end
+			end)
+			assert(handle, "Error running dlv: " .. tostring(pid_or_err))
+			stdout:read_start(function(err, chunk)
+				assert(not err, err)
+				if chunk then
+					vim.schedule(function()
+						require("dap.repl").append(chunk)
+					end)
+				end
+			end)
+			vim.defer_fn(function()
+				callback({ type = "server", host = "127.0.0.1", port = port })
+			end, 100)
+		end
+
+		dap.configurations.go = {
+			{
+				type = "go",
+				name = "Debug",
+				request = "launch",
+				program = "${file}",
+			},
+			{
+				type = "go",
+				name = "Debug test",
+				request = "launch",
+				mode = "test",
+				program = "${file}",
+			},
+			{
+				type = "go",
+				name = "Debug test (go.mod)",
+				request = "launch",
+				mode = "test",
+				program = "./${relativeFileDirname}",
+			},
+		}
+
 		dap.adapters.node2 = {
 			type = "executable",
 			command = "node",
 			args = { os.getenv("HOME") .. "/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js" },
 		}
+
 		dap.configurations.javascript = {
 			{
 				name = "Launch",
@@ -39,8 +99,10 @@ return {
 			require("dapui").open()
 			dap.continue()
 		end)
+
 		vim.keymap.set("n", "<leader>bb", dap.toggle_breakpoint)
 		vim.keymap.set("n", "<leader>bc", dap.step_over)
+		vim.keymap.set("n", "<F5>", dap.continue)
 		-- nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
 		-- nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
 		-- nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
