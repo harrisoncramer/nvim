@@ -86,7 +86,12 @@ return {
 					update_cwd = false,
 					ignore_list = {},
 				},
-				filters = { dotfiles = false, custom = {} },
+				filters = {
+					dotfiles = false,
+					custom = {
+						".DS_Store",
+					},
+				},
 				view = {
 					width = 40,
 					height = 30,
