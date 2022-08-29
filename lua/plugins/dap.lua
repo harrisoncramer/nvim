@@ -95,19 +95,37 @@ return {
 			},
 		}
 
-		vim.keymap.set("n", "<F5>", function()
+		vim.keymap.set("n", "<leader>ds", function()
 			require("dapui").open()
 			dap.continue()
 		end)
 
-		vim.keymap.set("n", "<leader>bb", dap.toggle_breakpoint)
-		vim.keymap.set("n", "<leader>bc", dap.step_over)
-		vim.keymap.set("n", "<F5>", dap.continue)
-		-- nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
-		-- nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
-		-- nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
-		-- nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR>
-		-- nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR>
+		vim.keymap.set("n", "<leader>dr", function()
+			require("dapui").open()
+			require("dap").run({
+				type = "go",
+				name = "Debug",
+				request = "launch",
+				program = "${file}",
+				cwd = vim.fn.getcwd(),
+				args = function()
+					local argument_string = vim.fn.input("Arguments: ")
+					return vim.fn.split(argument_string, " ", true)
+				end,
+			})
+		end)
+
+		vim.keymap.set("n", "<leader>dc", dap.continue)
+		vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint)
+		vim.keymap.set("n", "<leader>dn", dap.step_over)
+		vim.keymap.set("n", "<leader>di", dap.step_into)
+		vim.keymap.set("n", "<leader>do", dap.step_out)
+		vim.keymap.set("n", "<leader>dcb", dap.clear_breakpoints)
+		vim.keymap.set("n", "<leader>de", function()
+			require("dapui").close()
+			require("dap").close()
+		end)
+
 		-- nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
 		-- nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
 		-- nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
