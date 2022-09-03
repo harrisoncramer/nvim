@@ -73,12 +73,16 @@ packer.startup(function(use)
 	})
 	use({ "Olical/conjure", config = setup("plugins.conjure") })
 	use({ "jose-elias-alvarez/null-ls.nvim", config = setup("plugins.null", "null-ls") })
-	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = { { "nvim-lua/plenary.nvim" } },
 		config = setup("plugins.telescope", "telescope"),
 	})
+	use({
+		"nvim-telescope/telescope-file-browser.nvim",
+		requires = "nvim-telescope/telescope.nvim",
+	})
+	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make", requires = "nvim-telescope/telescope.nvim" })
 	use("tpope/vim-dispatch")
 	use("tpope/vim-repeat")
 	use("tpope/vim-surround")

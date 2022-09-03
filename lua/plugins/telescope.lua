@@ -9,6 +9,7 @@ local utils = require("telescope.utils")
 local state = require("telescope.actions.state")
 local f = require("functions")
 local u = require("functions.utils")
+local fb_actions = require("telescope").extensions.file_browser.actions
 
 local builtin = require("telescope.builtin")
 
@@ -27,10 +28,6 @@ local function git_files()
 	if not ok then
 		require("telescope.builtin").find_files()
 	end
-end
-
-local function buffers()
-	builtin.buffers()
 end
 
 local function oldfiles()
@@ -178,8 +175,7 @@ local function CopyCommitHash(prompt_bufnr)
 	actions.close(prompt_bufnr)
 end
 
-local telescope = require("telescope")
-telescope.setup({
+require("telescope").setup({
 	defaults = {
 		file_ignore_patterns = { "node_modules", "package%-lock.json" },
 		extensions = {
@@ -188,6 +184,18 @@ telescope.setup({
 				override_generic_sorter = true,
 				override_file_sorter = true,
 				case_mode = "smart_case",
+			},
+			file_browser = {
+				hijack_netrw = true,
+				mappings = {
+					i = {
+						["-"] = fb_actions.goto_parent_dir,
+						["<C-b>"] = fb_actions.create,
+					},
+					["n"] = {
+						-- your custom normal mode mappings
+					},
+				},
 			},
 		},
 		mappings = {
@@ -251,12 +259,9 @@ telescope.setup({
 	},
 })
 
-telescope.load_extension("fzf")
-
 vim.keymap.set("n", "<C-f>", live_grep, {})
 vim.keymap.set("n", "<C-c>", current_buffer_fuzzy_find, {})
 vim.keymap.set("n", "<C-j>", git_files, {})
-vim.keymap.set("n", "<C-g>", buffers, {})
 vim.keymap.set("n", "<leader>tr", oldfiles, {})
 vim.keymap.set("n", "<leader>tgc", git_commits, {})
 vim.keymap.set("n", "<leader>tgb", git_branches, {})
@@ -265,4 +270,6 @@ vim.keymap.set("n", "<leader>tf", git_files_string, {})
 vim.keymap.set("v", "<leader>tf", git_files_string_visual, {})
 vim.keymap.set("v", "<leader>tF", grep_string_visual, {})
 vim.keymap.set("n", "<leader>tgs", stash_filter, {})
-vim.keymap.set("n", "<C-b>", buffers, {})
+
+require("telescope").load_extension("fzf")
+require("telescope").load_extension("file_browser")
