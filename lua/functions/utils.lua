@@ -186,4 +186,8 @@ return {
 		vim.api.nvim_feedkeys("i" .. file_name, "i", false)
 		actions.select(bufnr)
 	end,
+	basename = function(str)
+		local name = string.gsub(str, "(.*/)(.*)", "%2")
+		return name
+	end,
 }

@@ -5,7 +5,6 @@ local finders = require("telescope.finders")
 local conf = require("telescope.config").values
 local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
-local action_set = require("telescope.actions.set")
 local entry_display = require("telescope.pickers.entry_display")
 local utils = require("telescope.utils")
 local state = require("telescope.actions.state")
@@ -16,21 +15,12 @@ local telescope = require("telescope")
 
 local builtin = require("telescope.builtin")
 
-local function open_file_in_file_browser(prompt_bufnr)
+local function OpenInFileBrowser(prompt_bufnr)
 	actions._close(prompt_bufnr, true)
 	local entry = state.get_selected_entry()[1]
 	local entry_path = path:new(entry):parent():absolute()
-	entry_path = path:new(entry):parent():absolute()
-	entry_path = entry_path:gsub("\\", "\\\\")
-
 	require("telescope").extensions.file_browser.file_browser({ path = entry_path })
-
-	local file_name = nil
-	for s in string.gmatch(entry, "[^/]+") do
-		file_name = s
-	end
-
-	vim.api.nvim_feedkeys("i" .. file_name, "i", false)
+	vim.api.nvim_feedkeys("i" .. u.basename(entry), "i", false)
 end
 
 local function live_grep()
@@ -210,9 +200,6 @@ telescope.setup({
 					end,
 					["<C-x>"] = fb_actions.move,
 				},
-				-- ["n"] = {
-				-- 	-- your custom normal mode mappings
-				-- },
 			},
 		},
 	},
@@ -233,14 +220,14 @@ telescope.setup({
 			mappings = {
 				i = {
 					["<C-y>"] = CopyTextFromPreview,
-					["<C-o>"] = open_file_in_file_browser,
+					["<C-o>"] = OpenInFileBrowser,
 				},
 			},
 		},
 		git_files = {
 			mappings = {
 				i = {
-					["<C-o>"] = open_file_in_file_browser,
+					["<C-o>"] = OpenInFileBrowser,
 				},
 			},
 		},
