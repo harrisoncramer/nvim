@@ -10,6 +10,7 @@ local state = require("telescope.actions.state")
 local f = require("functions")
 local u = require("functions.utils")
 local fb_actions = require("telescope").extensions.file_browser.actions
+local telescope = require("telescope")
 
 local builtin = require("telescope.builtin")
 
@@ -175,29 +176,30 @@ local function CopyCommitHash(prompt_bufnr)
 	actions.close(prompt_bufnr)
 end
 
-require("telescope").setup({
-	defaults = {
-		file_ignore_patterns = { "node_modules", "package%-lock.json" },
-		extensions = {
-			fzf = {
-				fuzzy = true,
-				override_generic_sorter = true,
-				override_file_sorter = true,
-				case_mode = "smart_case",
-			},
-			file_browser = {
-				hijack_netrw = true,
-				mappings = {
-					i = {
-						["-"] = fb_actions.goto_parent_dir,
-						["<C-b>"] = fb_actions.create,
-					},
-					["n"] = {
-						-- your custom normal mode mappings
-					},
+telescope.setup({
+	extensions = {
+		fzf = {
+			fuzzy = true,
+			override_generic_sorter = true,
+			override_file_sorter = true,
+			case_mode = "smart_case",
+		},
+		file_browser = {
+			hijack_netrw = true,
+			mappings = {
+				i = {
+					["-"] = fb_actions.goto_parent_dir,
+					["<C-e>"] = fb_actions.create,
+					["<C-r>"] = fb_actions.rename,
+				},
+				["n"] = {
+					-- your custom normal mode mappings
 				},
 			},
 		},
+	},
+	defaults = {
+		file_ignore_patterns = { "node_modules", "package%-lock.json" },
 		mappings = {
 			i = {
 				["<esc>"] = actions.close,
@@ -262,6 +264,7 @@ require("telescope").setup({
 vim.keymap.set("n", "<C-f>", live_grep, {})
 vim.keymap.set("n", "<C-c>", current_buffer_fuzzy_find, {})
 vim.keymap.set("n", "<C-j>", git_files, {})
+vim.keymap.set("n", "<C-m>", telescope.extensions.file_browser.file_browser, { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>tr", oldfiles, {})
 vim.keymap.set("n", "<leader>tgc", git_commits, {})
 vim.keymap.set("n", "<leader>tgb", git_branches, {})
@@ -271,5 +274,5 @@ vim.keymap.set("v", "<leader>tf", git_files_string_visual, {})
 vim.keymap.set("v", "<leader>tF", grep_string_visual, {})
 vim.keymap.set("n", "<leader>tgs", stash_filter, {})
 
-require("telescope").load_extension("fzf")
-require("telescope").load_extension("file_browser")
+telescope.load_extension("fzf")
+telescope.load_extension("file_browser")
