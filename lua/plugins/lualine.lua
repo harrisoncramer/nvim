@@ -9,10 +9,6 @@ local function get_git_head()
 	return " " .. head
 end
 
--- local function get_time()
--- 	return os.date("%I:%M:%S", os.time()):gsub("^0", "")
--- end
-
 require("lualine").setup({
 	options = {
 		component_separators = { right = "" },
@@ -46,21 +42,3 @@ require("lualine").setup({
 		lualine_z = {},
 	},
 })
-
-vim.cmd([[
-  au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif
-  ]])
-
-if _G.Statusline_timer == nil then
-	_G.Statusline_timer = vim.loop.new_timer()
-else
-	_G.Statusline_timer:stop()
-end
--- Don't immediately redraw the screen
-_G.Statusline_timer:start(
-	10000,
-	1000,
-	vim.schedule_wrap(function()
-		vim.api.nvim_command("redrawstatus")
-	end)
-)

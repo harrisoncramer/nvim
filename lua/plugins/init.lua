@@ -99,8 +99,6 @@ packer.startup(function(use)
 	use({ "samoshkin/vim-mergetool", before = require("plugins.mergetool") })
 	use({ "numToStr/FTerm.nvim", config = setup("plugins.fterm", "FTerm") })
 	use("romainl/vim-cool")
-	use({ "ellisonleao/glow.nvim", branch = "main" })
-	use("djoshea/vim-autoread")
 	use("SirVer/ultisnips")
 	use({ "tpope/vim-fugitive", config = setup("plugins.fugitive") })
 	use({ "windwp/nvim-autopairs", config = setup("plugins.autopairs", "nvim-autopairs") })
@@ -121,6 +119,11 @@ packer.startup(function(use)
 	})
 	use({ "gelguy/wilder.nvim", config = setup("plugins.wilder", "wilder") })
 	use({ "p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter" })
+	use({
+		"nvim-treesitter/nvim-treesitter-context",
+		requires = "nvim-treesitter/nvim-treesitter",
+		confg = setup("plugins.treesitter-context", "treesitter-context"),
+	})
 	use({ "kyazdani42/nvim-web-devicons", no_setup("nvim-web-devicons") })
 	use({ "kyazdani42/nvim-tree.lua", config = setup("plugins.nvim_tree", "nvim-tree") })
 	use({
