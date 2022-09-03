@@ -1,9 +1,11 @@
 local pickers = require("telescope.pickers")
 local make_entry = require("telescope.make_entry")
+local path = require("plenary.path")
 local finders = require("telescope.finders")
 local conf = require("telescope.config").values
 local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
+local action_set = require("telescope.actions.set")
 local entry_display = require("telescope.pickers.entry_display")
 local utils = require("telescope.utils")
 local state = require("telescope.actions.state")
@@ -14,10 +16,21 @@ local telescope = require("telescope")
 
 local builtin = require("telescope.builtin")
 
-local function open_file_in_nvim_tree(prompt_bufnr)
+local function open_file_in_file_browser(prompt_bufnr)
 	actions._close(prompt_bufnr, true)
 	local entry = state.get_selected_entry()[1]
-	u.open_file_in_nvim_tree(entry)
+	local entry_path = path:new(entry):parent():absolute()
+	entry_path = path:new(entry):parent():absolute()
+	entry_path = entry_path:gsub("\\", "\\\\")
+
+	require("telescope").extensions.file_browser.file_browser({ path = entry_path })
+
+	local file_name = nil
+	for s in string.gmatch(entry, "[^/]+") do
+		file_name = s
+	end
+
+	vim.api.nvim_feedkeys("i" .. file_name, "i", false)
 end
 
 local function live_grep()
@@ -186,15 +199,20 @@ telescope.setup({
 		},
 		file_browser = {
 			hijack_netrw = true,
+			hide_parent_dir = true,
 			mappings = {
 				i = {
 					["-"] = fb_actions.goto_parent_dir,
 					["<C-e>"] = fb_actions.create,
-					["<C-r>"] = fb_actions.rename,
+					["<C-d>"] = fb_actions.remove,
+					["<C-r>"] = function(bufnr)
+						fb_actions.rename(bufnr)
+					end,
+					["<C-x>"] = fb_actions.move,
 				},
-				["n"] = {
-					-- your custom normal mode mappings
-				},
+				-- ["n"] = {
+				-- 	-- your custom normal mode mappings
+				-- },
 			},
 		},
 	},
@@ -215,13 +233,14 @@ telescope.setup({
 			mappings = {
 				i = {
 					["<C-y>"] = CopyTextFromPreview,
+					["<C-o>"] = open_file_in_file_browser,
 				},
 			},
 		},
 		git_files = {
 			mappings = {
 				i = {
-					["<C-h>"] = open_file_in_nvim_tree,
+					["<C-o>"] = open_file_in_file_browser,
 				},
 			},
 		},

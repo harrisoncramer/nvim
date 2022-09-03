@@ -169,21 +169,21 @@ return {
 	press_enter = function()
 		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", false, true, true), "n", false)
 	end,
-	open_file_in_nvim_tree = function(entry)
+	-- TODO: Open file in telescope file_browser
+	open_file_in_file_browser = function(entry, bufnr)
 		local entry_path = path:new(entry):parent():absolute()
 		entry_path = path:new(entry):parent():absolute()
 		entry_path = entry_path:gsub("\\", "\\\\")
 
-		require("plugins.nvim_tree").setup_and_open()
-		vim.cmd("NvimTreeClose")
-		vim.cmd("NvimTreeOpen " .. entry_path)
+		require("telescope").extensions.file_browser.file_browser({ path = entry_path })
 
 		local file_name = nil
 		for s in string.gmatch(entry, "[^/]+") do
 			file_name = s
 		end
 
-		vim.cmd("/" .. file_name)
-		vim.api.nvim_feedkeys("-", "i", false)
+		local actions = require("telescope.actions")
+		vim.api.nvim_feedkeys("i" .. file_name, "i", false)
+		actions.select(bufnr)
 	end,
 }

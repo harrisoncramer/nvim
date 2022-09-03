@@ -129,7 +129,6 @@ packer.startup(function(use)
 		confg = setup("plugins.treesitter-context", "treesitter-context"),
 	})
 	use({ "kyazdani42/nvim-web-devicons", no_setup("nvim-web-devicons") })
-	use({ "kyazdani42/nvim-tree.lua", config = setup("plugins.nvim_tree", "nvim-tree") })
 	use({
 		"sindrets/diffview.nvim",
 		requires = "nvim-lua/plenary.nvim",
