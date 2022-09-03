@@ -190,4 +190,8 @@ return {
 		local name = string.gsub(str, "(.*/)(.*)", "%2")
 		return name
 	end,
+	dirname = function(str)
+		local name = string.gsub(str, "(.*/)(.*)", "%1")
+		return name
+	end,
 }

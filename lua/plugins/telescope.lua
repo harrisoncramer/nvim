@@ -15,14 +15,25 @@ local telescope = require("telescope")
 
 local builtin = require("telescope.builtin")
 
+-- Utility functions for file_browser extension
+local function FbOpen(entry)
+	local entry_path = u.dirname(entry)
+	require("telescope").extensions.file_browser.file_browser({ path = entry_path })
+	vim.api.nvim_input(u.basename(entry))
+end
+
 local function OpenInFileBrowser(prompt_bufnr)
 	actions._close(prompt_bufnr, true)
 	local entry = state.get_selected_entry()[1]
-	local entry_path = path:new(entry):parent():absolute()
-	require("telescope").extensions.file_browser.file_browser({ path = entry_path })
-	vim.api.nvim_feedkeys("i" .. u.basename(entry), "i", false)
+	FbOpen(entry)
 end
 
+local function OpenFileInFileBrowser()
+	local file_path = vim.fn.expand("%")
+	FbOpen(file_path)
+end
+
+-- Functions for telescope
 local function live_grep()
 	builtin.live_grep()
 end
@@ -220,14 +231,14 @@ telescope.setup({
 			mappings = {
 				i = {
 					["<C-y>"] = CopyTextFromPreview,
-					["<C-o>"] = OpenInFileBrowser,
+					["<C-h>"] = OpenInFileBrowser,
 				},
 			},
 		},
 		git_files = {
 			mappings = {
 				i = {
-					["<C-o>"] = OpenInFileBrowser,
+					["<C-h>"] = OpenInFileBrowser,
 				},
 			},
 		},
@@ -279,6 +290,8 @@ vim.keymap.set("n", "<leader>tf", git_files_string, {})
 vim.keymap.set("v", "<leader>tf", git_files_string_visual, {})
 vim.keymap.set("v", "<leader>tF", grep_string_visual, {})
 vim.keymap.set("n", "<leader>tgs", stash_filter, {})
+
+vim.keymap.set("n", "<C-h>", OpenFileInFileBrowser)
 
 telescope.load_extension("fzf")
 telescope.load_extension("file_browser")
