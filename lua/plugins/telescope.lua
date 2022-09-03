@@ -16,21 +16,28 @@ local telescope = require("telescope")
 local builtin = require("telescope.builtin")
 
 -- Utility functions for file_browser extension
-local function FbOpen(entry)
+local function FbOpen(entry, open_file)
 	local entry_path = u.dirname(entry)
 	require("telescope").extensions.file_browser.file_browser({ path = entry_path })
-	vim.api.nvim_input(u.basename(entry))
+	if open_file then
+		vim.api.nvim_input(u.basename(entry))
+	end
 end
 
 local function OpenInFileBrowser(prompt_bufnr)
 	actions._close(prompt_bufnr, true)
 	local entry = state.get_selected_entry()[1]
-	FbOpen(entry)
+	FbOpen(entry, true)
 end
 
 local function OpenFileInFileBrowser()
 	local file_path = vim.fn.expand("%")
-	FbOpen(file_path)
+	FbOpen(file_path, true)
+end
+
+local function OpenFolderInFileBrowser()
+	local file_path = vim.fn.expand("%")
+	FbOpen(file_path, false)
 end
 
 -- Functions for telescope
@@ -292,6 +299,7 @@ vim.keymap.set("v", "<leader>tF", grep_string_visual, {})
 vim.keymap.set("n", "<leader>tgs", stash_filter, {})
 
 vim.keymap.set("n", "<C-h>", OpenFileInFileBrowser)
+vim.keymap.set("n", "<leader>;;", OpenFolderInFileBrowser)
 
 telescope.load_extension("fzf")
 telescope.load_extension("file_browser")

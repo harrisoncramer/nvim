@@ -12,8 +12,10 @@ vim.keymap.set("n", "sp", "<C-w><C-p>")
 
 -- Buffers
 vim.keymap.set("n", "<leader>-", ":bd<CR>")
-vim.keymap.set("n", "<C-n>", ":bnext<CR>")
-vim.keymap.set("n", "<C-p>", ":bprev<CR>")
+
+-- Using a simple plugin to provide better forward/backward surfing
+vim.keymap.set("n", "<C-n>", ":BufSurfBack<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<C-p>", ":BufSurfForward<CR>", { silent = true, noremap = true })
 vim.keymap.set("n", "<C-t>", "<C-^>")
 vim.keymap.set("n", "<C-x>", ":bp <bar> bd#<CR>")
 
