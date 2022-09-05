@@ -9,6 +9,7 @@ end
 -- Setup completion engine
 if cmp_status_ok then
 	cmp.setup({
+		preselect = cmp.PreselectMode.None, -- Don't automatically chose from a list
 		snippet = {
 			expand = function(args)
 				vim.fn["UltiSnips#Anon"](args.body)
