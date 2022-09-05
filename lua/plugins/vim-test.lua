@@ -6,20 +6,54 @@ vim.cmd([[
 
 local map_opts = { noremap = true, silent = true, nowait = true }
 
-vim.keymap.set("n", "<localleader>tr", function()
-	vim.cmd("let g:test#neovim#start_normal = 0")
-	vim.cmd(":TestNearest")
-end, map_opts)
+local with_flags = function(fn)
+	return function()
+		local ft = vim.bo.ft
 
-vim.keymap.set("n", "<localleader>tw", function()
-	vim.cmd("let g:test#neovim#start_normal = 1")
-	vim.cmd(":TestNearest --watch")
-end, map_opts)
+		local flags = ""
+		if ft == "go" then
+			flags = "--v"
+		else
+		end
 
-vim.keymap.set("n", "<localleader>tfr", function()
-	vim.cmd(":TestFile")
-end, map_opts)
+		fn(flags)
+	end
+end
 
-vim.keymap.set("n", "<localleader>tfw", function()
-	vim.cmd(":TestFile --watch")
-end, map_opts)
+vim.keymap.set(
+	"n",
+	"<localleader>tr",
+	with_flags(function(flags)
+		vim.cmd("let g:test#neovim#start_normal = 0")
+		vim.cmd(":TestNearest" .. flags)
+	end),
+	map_opts
+)
+
+vim.keymap.set(
+	"n",
+	"<localleader>tw",
+	with_flags(function(flags)
+		vim.cmd("let g:test#neovim#start_normal = 1")
+		vim.cmd(":TestNearest --watch " .. flags)
+	end),
+	map_opts
+)
+
+vim.keymap.set(
+	"n",
+	"<localleader>tfr",
+	with_flags(function(flags)
+		vim.cmd(":TestFile " .. flags)
+	end),
+	map_opts
+)
+
+vim.keymap.set(
+	"n",
+	"<localleader>tfw",
+	with_flags(function(flags)
+		vim.cmd(":TestFile --watch " .. flags)
+	end),
+	map_opts
+)
