@@ -75,7 +75,6 @@ local servers = {
 	"vue-language-server",
 	"vscode-eslint-language-server",
 	"gopls",
-	"sqls",
 }
 
 -- Setup Mason + LSPs + CMP
