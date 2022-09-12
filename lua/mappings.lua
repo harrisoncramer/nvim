@@ -21,7 +21,8 @@ vim.keymap.set("n", "<C-x>", ":bp <bar> bd#<CR>")
 
 -- Shortcuts
 vim.keymap.set("n", "R", require("functions").start_replace, {})
-vim.keymap.set("n", "<leader>y", function()
+
+vim.keymap.set("n", "<leader>y", function() -- Copy to system clipboard
 	vim.api.nvim_feedkeys("^vg_y", "n", false)
 end)
 
@@ -43,11 +44,11 @@ vim.keymap.set("n", "&", function()
 	vim.api.nvim_feedkeys(":%s//", "n", false)
 end)
 vim.keymap.set("v", "<Leader>y", '"+y') -- Copy to clipboard
-vim.keymap.set("n", "<Leader>p", '"*p') -- Paste from system clipboard
 vim.keymap.set("n", "H", ":w<CR>") -- Quick save
 vim.keymap.set("n", "Y", "y$") -- Copy until end of line
 vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
 vim.keymap.set("n", "<leader>lf", ":luafile %<cr>")
+vim.keymap.set("x", "<leader>p", '"_dP') -- Keep paste register after paste
 
 -- Open Links
 local opener = u.get_os() == "Linux" and "xdg-open" or "open"

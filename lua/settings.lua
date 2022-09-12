@@ -1,4 +1,6 @@
 -- set.leader to comma/space key
+-- nnoremap <Space> <NOP>
+vim.cmd([[ nnoremap <Space> <NOP>]])
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
