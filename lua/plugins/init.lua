@@ -30,16 +30,6 @@ local no_setup = function(mod)
 	end
 end
 
-local ft_setup = function(mod, remote, ft)
-	vim.api.nvim_create_autocmd("BufEnter", {
-		pattern = "*." .. ft,
-		callback = function()
-			setup(mod, remote)
-		end,
-		desc = "Loads the configuration only after opening the given filetype",
-	})
-end
-
 local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -49,9 +39,16 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 local packer = require("packer")
+
+local packer_options = {
+	snapshot_path = vim.fn.stdpath("config") .. "/packer_snapshots",
+}
+
 if u.get_os() == "Darwin" then
-	packer.init({ max_jobs = 4 })
+	packer_options.max_jobs = 4
 end
+
+packer.init(packer_options)
 
 packer.startup(function(use)
 	use("wbthomason/packer.nvim")
