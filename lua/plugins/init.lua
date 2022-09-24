@@ -72,7 +72,11 @@ packer.startup(function(use)
 		config = setup("plugins.ultisnips"),
 	})
 	use({ "Olical/conjure", config = setup("plugins.conjure") })
-	use({ "jose-elias-alvarez/null-ls.nvim", config = setup("plugins.null", "null-ls") })
+	use({
+		"jose-elias-alvarez/null-ls.nvim",
+		config = setup("plugins.null", "null-ls"),
+		commit = "76d0573fc159839a9c4e62a0ac4f1046845cdd50",
+	})
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = { { "nvim-lua/plenary.nvim" } },
@@ -158,4 +162,5 @@ packer.startup(function(use)
 	use({ "kazhala/close-buffers.nvim", config = no_setup("close_buffers") })
 	use({ "rcarriga/nvim-notify", config = no_setup("notify") })
 	use("ton/vim-bufsurf")
+	use({ "AckslD/messages.nvim", config = no_setup("messages") })
 end)
