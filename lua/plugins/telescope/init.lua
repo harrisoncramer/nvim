@@ -172,6 +172,7 @@ telescope.setup({
 			},
 		},
 		git_files = {
+			show_untracked = true,
 			mappings = {
 				i = {
 					["<C-h>"] = OpenInFileBrowser,
