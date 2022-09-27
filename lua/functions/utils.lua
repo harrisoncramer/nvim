@@ -194,4 +194,7 @@ return {
 		local name = string.gsub(str, "(.*/)(.*)", "%1")
 		return name
 	end,
+	string_starts = function(String, Start)
+		return string.sub(String, 1, string.len(Start)) == Start
+	end,
 }

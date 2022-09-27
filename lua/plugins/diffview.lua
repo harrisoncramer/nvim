@@ -17,7 +17,19 @@ return {
 			return ':lua require("plugins.diffview").copy_hash_and_open()<CR>'
 		end
 
-		vim.keymap.set("n", "<leader>df", ":DiffviewFileHistory<CR>")
+		vim.keymap.set("n", "<leader>df", function()
+			local isDiff = vim.fn.getwinvar(nil, "&diff")
+			local bufName = vim.api.nvim_buf_get_name(0)
+			if isDiff ~= 0 or u.string_starts(bufName, "diff") then
+				vim.cmd("tabclose")
+				vim.cmd("tabprev")
+			else
+				vim.api.nvim_feedkeys(":DiffviewFileHistory " .. vim.fn.expand("%"), "n", false)
+				u.press_enter()
+			end
+		end)
+
+		-- getwinvar(winnr, '&diff')
 
 		diffview.setup({
 			diff_binaries = false,

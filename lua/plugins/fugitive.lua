@@ -57,6 +57,27 @@ vim.cmd([[
     augroup END
 ]])
 
+vim.cmd([[
+
+" Open diff of current file in new tab
+function! GStatusGetFilenameUnderCursor()
+    return matchstr(getline('.'), '^[A-Z?] \zs.*')
+endfunction
+
+command! GdiffsplitTab call GdiffsplitTab(expand("%"))
+function! GdiffsplitTab(filename)
+    exe 'tabedit ' . a:filename
+    Gdiffsplit
+endfunction
+
+" custom mapping in fugitive window (:Git)
+augroup custom_fugitive_mappings
+    au!
+    au User FugitiveIndex nnoremap <buffer> <leader>df :call GdiffsplitTab(GStatusGetFilenameUnderCursor())<cr>
+augroup END
+
+]])
+
 vim.api.nvim_create_autocmd("BufWritePost", {
 	pattern = "COMMIT_EDITMSG",
 	callback = function()
