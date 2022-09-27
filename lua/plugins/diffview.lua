@@ -29,7 +29,17 @@ return {
 			end
 		end)
 
-		-- getwinvar(winnr, '&diff')
+		vim.keymap.set("n", "<leader>do", function()
+			local isDiff = vim.fn.getwinvar(nil, "&diff")
+			local bufName = vim.api.nvim_buf_get_name(0)
+			if isDiff ~= 0 or u.string_starts(bufName, "diff") then
+				vim.cmd("tabclose")
+				vim.cmd("tabprev")
+			else
+				vim.cmd("DiffviewOpen")
+				u.press_enter()
+			end
+		end)
 
 		diffview.setup({
 			diff_binaries = false,
