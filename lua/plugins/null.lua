@@ -18,8 +18,11 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local format = function(payload)
 	vim.lsp.buf.format({
 		filter = function(clients)
+			-- Not sure if this is correct...
 			return vim.tbl_filter(function(client)
-				return client.name ~= "volar"
+				if type(client) == "string" then
+					return client ~= "volar"
+				end
 			end, clients)
 		end,
 	})
