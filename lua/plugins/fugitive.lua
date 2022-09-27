@@ -76,6 +76,7 @@ augroup custom_fugitive_mappings
     au User FugitiveIndex nnoremap <buffer> <leader>df :call GdiffsplitTab(GStatusGetFilenameUnderCursor())<cr>
     au User FugitiveIndex nnoremap <buffer> <C-n> :lua require("plugins.fugitive").jump_next()<CR>
     au User FugitiveIndex nnoremap <buffer> <C-p> :lua require("plugins.fugitive").jump_prev()<CR>
+    au User FugitiveIndex nnoremap <buffer> sj <C-w>j
 augroup END
 
 ]])
@@ -90,7 +91,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 
 return {
 	jump_next = function()
-		vim.api.nvim_feedkeys("/^[?,M ,A,D] ", "n", false)
+		vim.api.nvim_feedkeys("/^[?,M,A,D] ", "n", false)
 		u.press_enter()
 		vim.api.nvim_feedkeys(":noh", "n", false)
 		u.press_enter()
