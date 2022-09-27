@@ -3,7 +3,6 @@
 -- user.
 
 -- Validates number + function for debounce, see https://gist.github.com/runiq/31aa5c4bf00f8e0843cd267880117201
-local path = require("plenary.path")
 local function td_validate(fn, ms)
 	vim.validate({
 		fn = { fn, "f" },
@@ -171,6 +170,12 @@ return {
 	end,
 	-- TODO: Open file in telescope file_browser
 	open_file_in_file_browser = function(entry, bufnr)
+		local path_ok, path = pcall(require, "cmp_nvim_lsp")
+		if not path_ok then
+			print("Plenary is not installed")
+			return
+		end
+
 		local entry_path = path:new(entry):parent():absolute()
 		entry_path = path:new(entry):parent():absolute()
 		entry_path = entry_path:gsub("\\", "\\\\")
