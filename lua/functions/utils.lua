@@ -221,7 +221,7 @@ return {
   end,
   packer_sync = function()
     async.run(function()
-      require("notify")('Syncing packer.')
+      require("notify")('Syncing packer and updating nvim lockfile.')
     end)
 
     run_script("update-nvim-lockfile")
