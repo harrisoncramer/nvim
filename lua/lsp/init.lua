@@ -8,6 +8,22 @@ if not (mason_status_ok and mason_lspconfig_ok and cmp_nvim_lsp_status_ok and ls
   return
 end
 
+-- These servers are automatically installed by Mason.
+-- We then iterate over their names and load their relevant
+-- configuration files, which are stored in lua/lsp/servers,
+-- passing along the global on_attach and capabilities functions
+local servers = {
+  "lua-language-server",
+  "typescript-language-server",
+  "tailwindcss-language-server",
+  "clojure-lsp",
+  "vue-language-server",
+  "vscode-eslint-language-server",
+  "gopls",
+}
+
+lsp_format.setup({ order = servers })
+
 -- Map keys after LSP attaches (utility function)
 local on_attach = function(client, bufnr)
   local function buf_set_option(...)
@@ -58,20 +74,6 @@ normal_capabilities.textDocument.foldingRange = {
 }
 
 local capabilities = cmp_nvim_lsp.update_capabilities(normal_capabilities)
-
--- These servers are automatically installed by Mason.
--- We then iterate over their names and load their relevant
--- configuration files, which are stored in lua/lsp/servers,
--- passing along the global on_attach and capabilities functions
-local servers = {
-  "lua-language-server",
-  "typescript-language-server",
-  "tailwindcss-language-server",
-  "clojure-lsp",
-  "vue-language-server",
-  "vscode-eslint-language-server",
-  "gopls",
-}
 
 -- Setup Mason + LSPs + CMP
 require("lsp.cmp")
