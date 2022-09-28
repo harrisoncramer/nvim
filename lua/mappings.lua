@@ -50,6 +50,8 @@ vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
 vim.keymap.set("n", "<leader>lf", ":luafile %<cr>")
 vim.keymap.set("x", "<leader>p", '"_dP') -- Keep paste register after paste
 
+vim.keymap.set("n", "<localleader>ps", ":lua require('functions.utils').packer_sync()<CR>")
+
 -- Open Links
 local opener = u.get_os() == "Linux" and "xdg-open" or "open"
 vim.keymap.set("n", "gx", string.format('yiW:! %1s <cWORD><CR> <C-r>" & <CR><CR>', opener))

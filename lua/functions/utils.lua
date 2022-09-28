@@ -1,4 +1,8 @@
+local async = require("plenary.async")
+-- local f = require("functions")
+
 -- These are functions that are used within the Lua
+--
 -- configuration and are not meant for export to the end
 -- user.
 
@@ -14,6 +18,19 @@ local function td_validate(fn, ms)
       "number > 0",
     },
   })
+end
+
+local function run_script(script_name, args)
+  local nvim_scripts_dir = "~/.config/nvim/scripts"
+  local f = nil
+  if args == nil then
+    f = io.popen(string.format("/bin/bash %1s/%2s", nvim_scripts_dir, script_name))
+  else
+    f = io.popen(string.format("/bin/bash %1s/%2s %3s", nvim_scripts_dir, script_name, args))
+  end
+  local output = f:read("*a")
+  f:close()
+  return output
 end
 
 return {
@@ -202,4 +219,15 @@ return {
   string_starts = function(String, Start)
     return string.sub(String, 1, string.len(Start)) == Start
   end,
+  packer_sync = function()
+    async.run(function()
+      require("notify")('Syncing packer.')
+    end)
+
+    run_script("update-nvim-lockfile")
+
+    local snap_shot_time = os.date("!%Y-%m-%dT%TZ")
+    vim.cmd('PackerSnapshot ' .. snap_shot_time)
+    vim.cmd('PackerSync')
+  end
 }

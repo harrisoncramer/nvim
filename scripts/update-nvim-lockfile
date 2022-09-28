@@ -1,0 +1,3 @@
+#!/bin/bash
+neovim --version > nvim.lock
+
