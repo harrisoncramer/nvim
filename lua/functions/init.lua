@@ -79,6 +79,12 @@ return {
 		u.open_url("https://calendar.google.com/")
 	end,
 	create_or_source_obsession = function()
+    local has_obsession = vim.fn.exists(":Obsession")
+    if has_obsession == 0 then
+      print("Obsesssion is not installed")
+      return
+    end
+
 		local args = vim.v.argv
 		if #args ~= 1 then
 			return nil

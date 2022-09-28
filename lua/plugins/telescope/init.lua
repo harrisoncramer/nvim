@@ -229,7 +229,7 @@ vim.keymap.set("v", "<leader>tF", grep_string_visual, {})
 vim.keymap.set("n", "<C-h>", OpenFileInFileBrowser)
 vim.keymap.set("n", "<leader>;;", OpenFolderInFileBrowser)
 
-telescope.load_extension("fzf")
+-- telescope.load_extension("fzf")
 telescope.load_extension("file_browser")
 
 -- Custom Pickers
