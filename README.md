@@ -1,5 +1,7 @@
 # Neovim Configuration
 
+Version: NVIM v0.8.0-dev-1152-g14610332b
+
 ![The editor](https://hjc-public.s3.amazonaws.com/nvim3.png)
 ![Terminal integration](https://hjc-public.s3.amazonaws.com/nvim2.png)
 ![Diffing](https://hjc-public.s3.amazonaws.com/nvim1.png)
@@ -10,7 +12,8 @@
 2. Install this Repo: `git clone https://github.com/harrisoncramer/neovim-settings.git ~/.config/nvim`
 3. Open Neovim, and install the dependencies with `:PackerSync`
 4. Restart Neovim.
-5. Profit.
+
+You may run into some transitory errors during the install process. Try closing and reopeing the editor, and rerunning PackerSync. They should resolve.
 
 # About
 
@@ -25,7 +28,7 @@ This repository contains my configurations, including key mappings, plugins, and
 - <a href="https://github.com/sindrets/diffview.nvim">diffview</a> git branch/commit/diff viewing
 - <a href="https://github.com/tpope/vim-fugitive">fugitive</a> for git commits and pushes
 - <a href="https://github.com/nvim-lualine/lualine.nvim">lualine</a> for status bar
-- <a href="https://github.com/jose-elias-alvarez/null-ls.nvim">null-ls</a> for formatting
+- <a href="https://github.com/lukas-reineke/lsp-format.nvim">lsp-format</a> for formatting
 - <a href="https://github.com/rebelot/kanagawa.nvim">kanagawa</a> colorscheme
 
 # Dependencies
