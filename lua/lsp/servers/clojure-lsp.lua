@@ -1,21 +1,40 @@
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "conjure-log*",
+  callback = function()
+    -- Detach all LSP clients from Conjure log files
+    -- and disable diagnostics if they're on
+    local clients = vim.lsp.buf_get_clients()
+    for _, c in ipairs(clients) do
+      vim.lsp.buf_detach_client(0, c.id)
+    end
+  end,
+  desc = "Turns off LSP for Conjure's buffer",
+})
+
+local job = require('plenary.job')
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*.clj",
+  callback = function()
+    local file = vim.fn.expand("%")
+    job:new({
+      command = 'zprint',
+      args = { "-w", file },
+      on_exit = function(_, exit_code)
+        if exit_code ~= 0 then
+          print("Error, could not format!")
+          return
+        end
+        print("Formatted!")
+      end,
+    }):start()
+  end
+})
+
 return {
   setup = function(on_attach, capabilities)
     require("lspconfig").clojure_lsp.setup({
-      on_attach = function(client, bufnr)
-        vim.api.nvim_create_autocmd("BufEnter", {
-          pattern = "*.cljc",
-          callback = function()
-            -- Detach all LSP clients from Conjure log files
-            local clients = vim.lsp.buf_get_clients()
-            for _, c in ipairs(clients) do
-              vim.lsp.buf_detach_client(0, c.id)
-            end
-            vim.diagnostic.disable()
-          end,
-          desc = "Turns off LSP for Conjure's buffer",
-        })
-        on_attach(client, bufnr)
-      end,
+      on_attach = on_attach,
       capabilities = capabilities,
     })
   end,

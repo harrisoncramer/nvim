@@ -31,8 +31,9 @@ local on_attach = function(client, bufnr)
   -- This will set up formatting for the attached LSPs
   client.server_capabilities.documentFormattingProvider = true
 
-  -- Formatting
-  if (client.name ~= "volar" and client.name ~= "tsserver") then
+  -- Formatting for typescript/javascript handled by Eslint Server
+  -- Formatting for Clojure handled by zprint
+  if (client.name ~= "volar" and client.name ~= "tsserver" and client.name ~= "clojure_lsp") then
     lsp_format.on_attach(client)
   end
 

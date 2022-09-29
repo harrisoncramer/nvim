@@ -1,18 +1,16 @@
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.go",
+  callback = function()
+    require("lsp.servers.gopls").goimports()
+  end,
+  desc = "Run goimports on save in Golang files",
+})
+
 return {
   setup = function(on_attach, capabilities)
     require("lspconfig").gopls.setup({
-      on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-      end,
+      on_attach = on_attach,
       capabilities = capabilities,
-    })
-
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = "*.go",
-      callback = function()
-        require("lsp.servers.gopls").goimports()
-      end,
-      desc = "Run goimports on save in Golang files",
     })
   end,
   goimports = function(timeout_ms)
