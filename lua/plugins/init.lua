@@ -133,7 +133,6 @@ packer.startup(function(use)
   })
   use({ "petertriho/nvim-scrollbar", config = setup("plugins.scrollbar", "scrollbar") })
   use({ "karb94/neoscroll.nvim", config = setup("plugins.neoscroll", "neoscroll") })
-  use("itchyny/vim-gitbranch")
   use({ "harrisoncramer/jump-tag", config = setup("plugins.jump-tag", "jump-tag") })
   use({
     "nvim-treesitter/nvim-treesitter",
