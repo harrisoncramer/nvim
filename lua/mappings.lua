@@ -23,7 +23,7 @@ vim.keymap.set("n", "<C-x>", ":bp <bar> bd#<CR>")
 vim.keymap.set("n", "R", require("functions").start_replace, {})
 
 vim.keymap.set("n", "<leader>y", function() -- Copy to system clipboard
-	vim.api.nvim_feedkeys("^vg_y", "n", false)
+  vim.api.nvim_feedkeys("^vg_y", "n", false)
 end)
 
 -- Luafile
@@ -39,9 +39,9 @@ vim.keymap.set("n", "<leader>vv", ":e $MYVIMRC<cr>")
 vim.keymap.set("n", "<C-a>", "<esc>ggVG<CR>") -- Select all
 vim.keymap.set("n", "*", ":keepjumps normal! mi*`i<CR>") -- " Use * to add w/out jumping
 vim.keymap.set("n", "&", function()
-	vim.api.nvim_feedkeys(":keepjumps normal! mi*`i<CR>", "n", false)
-	u.press_enter()
-	vim.api.nvim_feedkeys(":%s//", "n", false)
+  vim.api.nvim_feedkeys(":keepjumps normal! mi*`i<CR>", "n", false)
+  u.press_enter()
+  vim.api.nvim_feedkeys(":%s//", "n", false)
 end)
 vim.keymap.set("v", "<Leader>y", '"+y') -- Copy to clipboard
 vim.keymap.set("n", "H", ":w<CR>") -- Quick save
@@ -50,7 +50,7 @@ vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
 vim.keymap.set("n", "<leader>lf", ":luafile %<cr>")
 vim.keymap.set("x", "<leader>p", '"_dP') -- Keep paste register after paste
 
-vim.keymap.set("n", "<localleader>ps", ":lua require('functions.utils').packer_sync()<CR>")
+vim.keymap.set("n", "<localleader>ps", require('functions.utils').packer_sync)
 
 -- Open Links
 local opener = u.get_os() == "Linux" and "xdg-open" or "open"
