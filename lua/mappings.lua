@@ -53,7 +53,8 @@ vim.keymap.set("x", "<leader>p", '"_dP') -- Keep paste register after paste
 vim.keymap.set("n", "<localleader>ps", require('functions.utils').packer_sync)
 
 -- Copy current path to clipboard
-vim.keymap.set("n", "<leader>y", u.copy_file_path_to_clipboard)
+vim.keymap.set("n", "<leader>yd", u.copy_dir_to_clipboard)
+vim.keymap.set("n", "<leader>yf", u.copy_file_to_clipboard)
 
 -- Open Links
 local opener = u.get_os() == "Linux" and "xdg-open" or "open"

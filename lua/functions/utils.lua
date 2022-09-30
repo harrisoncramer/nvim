@@ -233,9 +233,14 @@ return {
     vim.cmd('PackerSnapshot ' .. snap_shot_time)
     vim.cmd('PackerSync')
   end,
-  copy_file_path_to_clipboard = function()
+  copy_file_to_clipboard = function()
+    vim.api.nvim_feedkeys(":let @+=expand('%:p')", "n", false)
+    press_enter()
+    require("notify")('Copied filepath.')
+  end,
+  copy_dir_to_clipboard = function()
     vim.api.nvim_feedkeys(":let @+=expand('%:h')", "n", false)
     press_enter()
-    require("notify")('Copied file path to clipboard!')
+    require("notify")('Copied directory path.')
   end
 }
