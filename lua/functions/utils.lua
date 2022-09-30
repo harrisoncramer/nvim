@@ -20,6 +20,10 @@ local function td_validate(fn, ms)
   })
 end
 
+local function press_enter()
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", false, true, true), "n", false)
+end
+
 local function run_script(script_name, args)
   local nvim_scripts_dir = "~/.config/nvim/scripts"
   local f = nil
@@ -182,9 +186,7 @@ return {
       end
     end
   end,
-  press_enter = function()
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", false, true, true), "n", false)
-  end,
+  press_enter = press_enter,
   -- TODO: Open file in telescope file_browser
   open_file_in_file_browser = function(entry, bufnr)
     local path_ok, path = pcall(require, "cmp_nvim_lsp")
@@ -214,6 +216,7 @@ return {
   end,
   dirname = function(str)
     local name = string.gsub(str, "(.*/)(.*)", "%1")
+    print(name)
     return name
   end,
   string_starts = function(String, Start)
@@ -229,5 +232,10 @@ return {
     local snap_shot_time = os.date("!%Y-%m-%dT%TZ")
     vim.cmd('PackerSnapshot ' .. snap_shot_time)
     vim.cmd('PackerSync')
+  end,
+  copy_file_path_to_clipboard = function()
+    vim.api.nvim_feedkeys(":let @+=expand('%:h')", "n", false)
+    press_enter()
+    require("notify")('Copied file path to clipboard!')
   end
 }
