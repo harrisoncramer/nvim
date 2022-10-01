@@ -35,6 +35,7 @@ This repository contains my configurations, including key mappings, plugins, and
 
 - <a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>
 - <a href="https://github.com/junegunn/fzf">fzf</a>
+- make or cmake (for <a href="https://github.com/nvim-telescope/telescope-fzf-native.nvim">fzf native</a>)
 - <a href="https://github.com/neovim/pynvim">pynvim</a>
 - Node (I'd recommend using <a href="https://github.com/Schniz/fnm">fnm</a>)
 - Golang (Because of the delve install script at `scripts/install_delve` for Go's debugger)

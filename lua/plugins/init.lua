@@ -72,14 +72,16 @@ packer.startup(function(use)
   use({ "lukas-reineke/lsp-format.nvim" })
   use({
     "nvim-telescope/telescope.nvim",
-    requires = { { "nvim-lua/plenary.nvim" } },
+    requires = { "nvim-lua/plenary.nvim", "junegunn/fzf" },
     config = setup("plugins.telescope", "telescope"),
   })
   use({
     "nvim-telescope/telescope-file-browser.nvim",
     requires = "nvim-telescope/telescope.nvim",
   })
-  use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make", requires = "nvim-telescope/telescope.nvim" })
+  use({ 'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+    requires = "nvim-telescope/telescope.nvim" })
   use("tpope/vim-dispatch")
   use("tpope/vim-repeat")
   use("tpope/vim-surround")
