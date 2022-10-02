@@ -1,3 +1,7 @@
 #!/bin/bash
-nvim --version > nvim.lock
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  nvim --version > nvim.mac.lock
+else
+  nvim --version > nvim.linux.lock
+fi
