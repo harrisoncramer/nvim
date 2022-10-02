@@ -1,4 +1,5 @@
 local u = require("functions.utils")
+local async_ok, async = pcall(require, "plenary.async")
 
 local toggle_status = function()
   local ft = vim.bo.filetype
@@ -12,19 +13,21 @@ local toggle_status = function()
 end
 
 local git_push = function()
-  local isSubmodule = vim.fn.trim(vim.fn.system("git rev-parse --show-superproject-working-tree"))
-  if isSubmodule == "" then
-    if u.get_os() == "Linux" then
-      vim.api.nvim_command("Git push")
+  async.run(function()
+    local isSubmodule = vim.fn.trim(vim.fn.system("git rev-parse --show-superproject-working-tree"))
+    if isSubmodule == "" then
+      if u.get_os() == "Linux" then
+        vim.api.nvim_command("Git push")
+      else
+        vim.api.nvim_command("! git push")
+      end
     else
-      vim.api.nvim_command("! git push")
+      vim.fn.confirm("Push to origin/main branch for submodule?")
+      vim.api.nvim_command("silent ! git push origin HEAD:main")
     end
-  else
-    vim.fn.confirm("Push to origin/main branch for submodule?")
-    vim.api.nvim_command("silent ! git push origin HEAD:main")
-  end
-  local branch = u.get_branch_name()
-  require("notify")("Pushed to '" .. branch .. "' branch")
+    local branch = u.get_branch_name()
+    require("notify")("Pushed to '" .. branch .. "' branch")
+  end)
 end
 
 local git_open = function()
@@ -49,39 +52,25 @@ vim.keymap.set("n", "<leader>goo", git_open, {})
 vim.keymap.set("n", "<leader>gom", git_mr_open, {})
 
 vim.cmd([[
-  function! s:ftplugin_fugitive() abort
-      nnoremap <buffer> <silent> cc :Git commit --quiet<CR>
-      nnoremap <buffer> <silent> ca :Git commit --quiet --amend<CR>
-      nnoremap <buffer> <silent> ce :Git commit --quiet --amend --no-edit<CR>
-    endfunction
-    augroup nhooyr_fugitive
-      autocmd!
-      autocmd FileType fugitive call s:ftplugin_fugitive()
-    augroup END
-]])
+  " Open diff of current file in new tab
+  function! GStatusGetFilenameUnderCursor()
+      return matchstr(getline('.'), '^[A-Z?] \zs.*')
+  endfunction
 
-vim.cmd([[
+  command! GdiffsplitTab call GdiffsplitTab(expand("%"))
+  function! GdiffsplitTab(filename)
+      exe 'tabedit ' . a:filename
+      Gdiffsplit
+  endfunction
 
-" Open diff of current file in new tab
-function! GStatusGetFilenameUnderCursor()
-    return matchstr(getline('.'), '^[A-Z?] \zs.*')
-endfunction
-
-command! GdiffsplitTab call GdiffsplitTab(expand("%"))
-function! GdiffsplitTab(filename)
-    exe 'tabedit ' . a:filename
-    Gdiffsplit
-endfunction
-
-" custom mapping in fugitive window (:Git)
-augroup custom_fugitive_mappings
-    au!
-    au User FugitiveIndex nnoremap <buffer> <leader>df :call GdiffsplitTab(GStatusGetFilenameUnderCursor())<cr>
-    au User FugitiveIndex nnoremap <buffer> <C-n> :lua require("plugins.fugitive").jump_next()<CR>
-    au User FugitiveIndex nnoremap <buffer> <C-p> :lua require("plugins.fugitive").jump_prev()<CR>
-    au User FugitiveIndex nnoremap <buffer> sj <C-w>j
-augroup END
-
+  " custom mapping in fugitive window (:Git)
+  augroup custom_fugitive_mappings
+      au!
+      au User FugitiveIndex nnoremap <buffer> <leader>df :call GdiffsplitTab(GStatusGetFilenameUnderCursor())<cr>
+      au User FugitiveIndex nnoremap <buffer> <C-n> :lua require("plugins.fugitive").jump_next()<CR>
+      au User FugitiveIndex nnoremap <buffer> <C-p> :lua require("plugins.fugitive").jump_prev()<CR>
+      au User FugitiveIndex nnoremap <buffer> sj <C-w>j
+  augroup END
 ]])
 
 vim.api.nvim_create_autocmd("BufWritePost", {
