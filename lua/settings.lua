@@ -63,3 +63,6 @@ vim.g.matchup_matchparen_offscreen = { method = "popup" }
 -- Diffs (no whitespace and vertical by default)
 vim.opt.diffopt = "vertical,iwhite"
 vim.opt.diffexpr = ""
+
+vim.o.ls = 0
+vim.o.ch = 0
