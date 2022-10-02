@@ -1,4 +1,5 @@
 local u = require("functions.utils")
+local async_job, job = pcall(require, 'plenary.job')
 local async_ok, async = pcall(require, "plenary.async")
 
 local toggle_status = function()
@@ -13,21 +14,25 @@ local toggle_status = function()
 end
 
 local git_push = function()
-  async.run(function()
-    local isSubmodule = vim.fn.trim(vim.fn.system("git rev-parse --show-superproject-working-tree"))
-    if isSubmodule == "" then
-      if u.get_os() == "Linux" then
-        vim.api.nvim_command("Git push")
-      else
-        vim.api.nvim_command("! git push")
+  local push_job = job:new({
+    command = 'git',
+    args = { 'push' },
+    on_exit = function(_, exit_code)
+      if exit_code ~= 0 then
+        require("notify")("Could not push!")
+        return
       end
-    else
-      vim.fn.confirm("Push to origin/main branch for submodule?")
-      vim.api.nvim_command("silent ! git push origin HEAD:main")
-    end
-    local branch = u.get_branch_name()
-    require("notify")("Pushed to '" .. branch .. "' branch")
-  end)
+      require("notify")("Pushed.")
+    end,
+  })
+
+  local isSubmodule = vim.fn.trim(vim.fn.system("git rev-parse --show-superproject-working-tree"))
+  if isSubmodule == "" then
+    push_job:start()
+  else
+    vim.fn.confirm("Push to origin/main branch for submodule?")
+    push_job:start()
+  end
 end
 
 local git_open = function()
