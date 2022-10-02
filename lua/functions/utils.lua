@@ -1,8 +1,6 @@
-local async = require("plenary.async")
--- local f = require("functions")
+local async_ok, async = pcall(require, "plenary.async")
 
 -- These are functions that are used within the Lua
---
 -- configuration and are not meant for export to the end
 -- user.
 
