@@ -94,13 +94,13 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 
 return {
   jump_next = function()
-    vim.api.nvim_feedkeys("/^[?,M,A,D,U] ", "n", false)
+    vim.api.nvim_feedkeys(":silent! /^[?,M,A,D,U] ", "n", false)
     u.press_enter()
     vim.api.nvim_feedkeys(":noh", "n", false)
     u.press_enter()
   end,
   jump_prev = function()
-    vim.api.nvim_feedkeys("?^[?,M,A,D,U] ", "n", false)
+    vim.api.nvim_feedkeys(":silent! ?^[?,M,A,D,U] ", "n", false)
     u.press_enter()
     vim.api.nvim_feedkeys(":noh", "n", false)
     u.press_enter()
