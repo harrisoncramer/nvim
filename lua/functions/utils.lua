@@ -242,7 +242,7 @@ return {
     press_enter()
     require("notify")('Copied directory path.')
   end,
-  find_buffer_by_name = function(name)
+  get_buf_by_name = function(name)
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
       local buf_name = vim.api.nvim_buf_get_name(buf)
       local base_name = basename(buf_name)
@@ -252,4 +252,21 @@ return {
     end
     return -1
   end,
+  get_win_by_buf_name = function(name)
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      local buf = vim.api.nvim_win_get_buf(win)
+      local buf_name = vim.api.nvim_buf_get_name(buf)
+      local base_name = basename(buf_name)
+      if base_name == name then
+        return win
+      end
+    end
+    return -1
+  end,
+  get_current_buf_name = function()
+    local buf_name = vim.api.nvim_buf_get_name(0)
+    local base_name = basename(buf_name)
+    return base_name
+  end
+
 }

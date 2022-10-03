@@ -96,12 +96,12 @@ return {
     }
 
     vim.keymap.set("n", "<localleader>ds", function()
-      require("dapui").open()
+      require("dapui").toggle()
       dap.continue()
     end)
 
     vim.keymap.set("n", "<localleader>dr", function()
-      require("dapui").open()
+      require("dapui").toggle()
       require("dap").run({
         type = "go",
         name = "Debug",
@@ -122,8 +122,23 @@ return {
     vim.keymap.set("n", "<localleader>do", dap.step_out)
     vim.keymap.set("n", "<localleader>dcb", dap.clear_breakpoints)
     vim.keymap.set("n", "<localleader>de", function()
-      require("dapui").close()
+      require("dapui").toggle()
       require("dap").close()
+    end)
+    vim.keymap.set("n", "<localleader>dl", function()
+      local buf_name = u.get_current_buf_name()
+      if buf_name == "DAP Scopes" then
+        vim.api.nvim_feedkeys(
+          vim.api.nvim_replace_termcodes("<C-w><C-p>", false, true, true),
+          "n",
+          false
+        )
+      end
+      local win = u.get_win_by_buf_name("DAP Scopes")
+      if win == -1 then
+        return
+      end
+      vim.api.nvim_set_current_win(win)
     end)
 
     -- nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
@@ -155,24 +170,24 @@ return {
       layouts = {
         {
           elements = {
-            "breakpoints",
+            "scopes",
           },
-          size = 40,
+          size = 0.3,
           position = "right"
         },
         {
           elements = {
+            "breakpoints",
             "stacks",
-            "watches",
           },
-          size = 40, -- 40 columns
+          size = 0.3, -- 40 columns
           position = "right",
         },
         {
           elements = {
             "repl",
           },
-          size = 0.25, -- 25% of total lines
+          size = 0.15, -- 25% of total lines
           position = "bottom",
         },
       },
