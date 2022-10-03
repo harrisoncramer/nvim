@@ -1,3 +1,5 @@
+local map_opts = { noremap = true, silent = true, nowait = true, buffer = false }
+
 local u = require("functions.utils")
 local async_job, job = pcall(require, 'plenary.job')
 
@@ -10,7 +12,7 @@ local toggle_status = function()
     if fugitive_tab ~= -1 then
       vim.api.nvim_set_current_tabpage(fugitive_tab)
     end
-    vim.api.nvim_command(":Git")
+    vim.api.nvim_command("silent! :Git")
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>T", false, true, true), "n", false)
     require("plugins.fugitive").jump_next()
   end
@@ -44,7 +46,7 @@ local git_push = function()
 end
 
 local git_open = function()
-  vim.api.nvim_command("! git open")
+  vim.api.nvim_command("silent! ! git open")
 end
 
 local git_mr_open = function()
@@ -59,37 +61,20 @@ local git_mr_open = function()
   end
 end
 
-vim.keymap.set("n", "<leader>gs", toggle_status, {})
-vim.keymap.set("n", "<leader>gP", git_push, {})
-vim.keymap.set("n", "<leader>goo", git_open, {})
-vim.keymap.set("n", "<leader>gom", git_mr_open, {})
-
-vim.cmd([[
-  " Open diff of current file in new tab
-  function! GStatusGetFilenameUnderCursor()
-      return matchstr(getline('.'), '^[A-Z?] \zs.*')
-  endfunction
-
-  command! GdiffsplitTab call GdiffsplitTab(expand("%"))
-  function! GdiffsplitTab(filename)
-      exe 'tabedit ' . a:filename
-      Gdiffsplit
-  endfunction
-
-  " custom mapping in fugitive window (:Git)
-  augroup custom_fugitive_mappings
-      au!
-      au User FugitiveIndex nnoremap <buffer> <leader>df :call GdiffsplitTab(GStatusGetFilenameUnderCursor())<cr>
-      au User FugitiveIndex nnoremap <buffer> <C-n> :lua require("plugins.fugitive").jump_next()<CR>
-      au User FugitiveIndex nnoremap <buffer> <C-p> :lua require("plugins.fugitive").jump_prev()<CR>
-      au User FugitiveIndex nnoremap <buffer> sj <C-w>j
-  augroup END
-]])
+vim.keymap.set("n", "<leader>gs", toggle_status, map_opts)
+vim.keymap.set("n", "<leader>gP", git_push, map_opts)
+vim.keymap.set("n", "<leader>goo", git_open, map_opts)
+vim.keymap.set("n", "<leader>gom", git_mr_open, map_opts)
 
 vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = "COMMIT_EDITMSG",
   callback = function()
-    require("close_buffers").delete({ regex = "^fugitive*" })
+    local close_buffers_ok, close_buffers = pcall(require, "close_buffers")
+    if not close_buffers_ok then
+      require("notify")("Close buffers is not installed!", "error")
+    else
+      close_buffers.delete({ regex = "^fugitive*" })
+    end
   end,
 })
 
@@ -106,4 +91,7 @@ return {
     vim.api.nvim_feedkeys(":noh", "n", false)
     u.press_enter()
   end,
+  get_status_under_cursor = function()
+    vim.cmd("call GdiffsplitTab(GStatusGetFilenameUnderCursor())<cr>")
+  end
 }
