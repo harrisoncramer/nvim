@@ -8,10 +8,6 @@ vim.keymap.set("n", "sj", "<C-w>j")
 vim.keymap.set("n", "sk", "<C-w>k")
 vim.keymap.set("n", "sl", "<C-w>l")
 vim.keymap.set("n", "sq", "<C-w>q")
-vim.keymap.set("n", "sp", "<C-w><C-p>")
-
--- Buffers
-vim.keymap.set("n", "<leader>-", ":bd<CR>")
 
 -- Using a simple plugin to provide better forward/backward surfing
 vim.keymap.set("n", "<C-n>", ":BufSurfBack<CR>", { silent = true, noremap = true })
@@ -21,10 +17,6 @@ vim.keymap.set("n", "<C-x>", ":bp <bar> bd#<CR>")
 
 -- Shortcuts
 vim.keymap.set("n", "R", require("functions").start_replace, {})
-
-vim.keymap.set("n", "<leader>y", function() -- Copy to system clipboard
-  vim.api.nvim_feedkeys("^vg_y", "n", false)
-end)
 
 -- Luafile
 vim.keymap.set("n", "<leader>lf", ":luafile %<CR>")
@@ -38,18 +30,19 @@ vim.keymap.set("n", "<leader>vv", ":e $MYVIMRC<cr>")
 -- Miscellaneous
 vim.keymap.set("n", "<C-a>", "<esc>ggVG<CR>") -- Select all
 vim.keymap.set("n", "*", ":keepjumps normal! mi*`i<CR>") -- " Use * to add w/out jumping
-vim.keymap.set("n", "&", function()
+vim.keymap.set("n", "&", function() -- Rename word under cursor
   vim.api.nvim_feedkeys(":keepjumps normal! mi*`i<CR>", "n", false)
   u.press_enter()
   vim.api.nvim_feedkeys(":%s//", "n", false)
 end)
 vim.keymap.set("v", "<leader>y", '"+y') -- Copy to clipboard
 vim.keymap.set("n", "H", ":w<CR>") -- Quick save
-vim.keymap.set("n", "Y", "y$") -- Copy until end of line
+vim.keymap.set("i", "<C-h>", "<Lseft>") -- Move left in insert
 vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
-vim.keymap.set("n", "<leader>lf", ":luafile %<cr>")
+vim.keymap.set("n", "<leader>lf", ":luafile %<cr>") -- Re-source luafile
 vim.keymap.set("x", "<leader>p", '"_dP') -- Keep paste register after paste
 
+-- Packer
 vim.keymap.set("n", "<localleader>ps", require('functions.utils').packer_sync)
 
 -- Copy current path to clipboard
