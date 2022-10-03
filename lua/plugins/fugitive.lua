@@ -1,12 +1,15 @@
 local u = require("functions.utils")
 local async_job, job = pcall(require, 'plenary.job')
-local async_ok, async = pcall(require, "plenary.async")
 
 local toggle_status = function()
   local ft = vim.bo.filetype
   if ft == "fugitive" then
     vim.api.nvim_command("bd")
   else
+    local fugitive_tab = u.get_tab_by_buf_name("fugitive", true)
+    if fugitive_tab ~= -1 then
+      vim.api.nvim_set_current_tabpage(fugitive_tab)
+    end
     vim.api.nvim_command(":Git")
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>T", false, true, true), "n", false)
     require("plugins.fugitive").jump_next()
@@ -14,12 +17,17 @@ local toggle_status = function()
 end
 
 local git_push = function()
+
+  if not async_job then
+    require("notify")("Plenary is not installed!", "error")
+  end
+
   local push_job = job:new({
     command = 'git',
     args = { 'push' },
     on_exit = function(_, exit_code)
       if exit_code ~= 0 then
-        require("notify")("Could not push!")
+        require("notify")("Could not push!", "error")
         return
       end
       require("notify")("Pushed.")
@@ -82,7 +90,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = "COMMIT_EDITMSG",
   callback = function()
     require("close_buffers").delete({ regex = "^fugitive*" })
-    require("notify")("Commit saved!")
   end,
 })
 

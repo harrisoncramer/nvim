@@ -18,6 +18,10 @@ local function td_validate(fn, ms)
   })
 end
 
+local function string_starts(String, Start)
+  return string.sub(String, 1, string.len(Start)) == Start
+end
+
 local function press_enter()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", false, true, true), "n", false)
 end
@@ -218,9 +222,7 @@ return {
     local name = string.gsub(str, "(.*/)(.*)", "%1")
     return name
   end,
-  string_starts = function(String, Start)
-    return string.sub(String, 1, string.len(Start)) == Start
-  end,
+  string_starts = string_starts,
   packer_sync = function()
     async.run(function()
       require("notify")('Syncing packer and updating nvim lockfile.')
@@ -259,6 +261,24 @@ return {
       local base_name = basename(buf_name)
       if base_name == name then
         return win
+      end
+    end
+    return -1
+  end,
+  get_tab_by_buf_name = function(name, starts_with)
+    for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
+      local win = vim.api.nvim_tabpage_get_win(tab)
+      local buf = vim.api.nvim_win_get_buf(win)
+      local buf_name = vim.api.nvim_buf_get_name(buf)
+      if starts_with then
+        if string_starts(buf_name, name) then
+          return tab
+        end
+      else
+        local base_name = basename(buf_name)
+        if base_name == name then
+          return tab
+        end
       end
     end
     return -1
