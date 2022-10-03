@@ -35,6 +35,11 @@ local function run_script(script_name, args)
   return output
 end
 
+local basename = function(str)
+  local name = string.gsub(str, "(.*/)(.*)", "%2")
+  return name
+end
+
 return {
   get_os = function()
     return vim.loop.os_uname().sysname
@@ -208,13 +213,9 @@ return {
     vim.api.nvim_feedkeys("i" .. file_name, "i", false)
     actions.select(bufnr)
   end,
-  basename = function(str)
-    local name = string.gsub(str, "(.*/)(.*)", "%2")
-    return name
-  end,
+  basename = basename,
   dirname = function(str)
     local name = string.gsub(str, "(.*/)(.*)", "%1")
-    print(name)
     return name
   end,
   string_starts = function(String, Start)
@@ -240,5 +241,15 @@ return {
     vim.api.nvim_feedkeys(":let @+=expand('%:h')", "n", false)
     press_enter()
     require("notify")('Copied directory path.')
-  end
+  end,
+  find_buffer_by_name = function(name)
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      local buf_name = vim.api.nvim_buf_get_name(buf)
+      local base_name = basename(buf_name)
+      if base_name == name then
+        return buf
+      end
+    end
+    return -1
+  end,
 }
