@@ -1,6 +1,5 @@
-local map_opts = { noremap = true, silent = true, nowait = true, buffer = true }
-
-require("gitsigns").setup({
+local gitsigns = require("gitsigns")
+gitsigns.setup({
   signs = {
     add = {
       hl = "GitSignsAdd",
@@ -59,9 +58,9 @@ require("gitsigns").setup({
 })
 
 -- Gitsigns w/ hunks and blames.
-vim.keymap.set("n", "<leader>ga", ":Gitsigns stage_hunk<CR>", map_opts)
-vim.keymap.set("n", "<leader>gb", ":Gitsigns blame_line<CR>", map_opts)
-vim.keymap.set("n", "<leader>gp", ":Gitsigns prev_hunk<CR>", map_opts)
-vim.keymap.set("n", "<leader>gn", ":silent! Gitsigns next_hunk<CR>", map_opts)
-vim.keymap.set("n", "<leader>gr", ":Gitsigns reset_hunk<CR>", map_opts)
-vim.keymap.set("n", "<leader>gd", ":Gitsigns preview_hunk<CR>", map_opts)
+vim.keymap.set("n", "<leader>ga", gitsigns.stage_hunk)
+vim.keymap.set("n", "<leader>gb", gitsigns.blame_line)
+vim.keymap.set("n", "<leader>gp", gitsigns.prev_hunk)
+vim.keymap.set("n", "<leader>gn", gitsigns.next_hunk)
+vim.keymap.set("n", "<leader>gr", gitsigns.reset_hunk)
+vim.keymap.set("n", "<leader>gd", gitsigns.preview_hunk)
