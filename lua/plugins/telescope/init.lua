@@ -62,33 +62,14 @@ local function grep_string()
   vim.api.nvim_feedkeys(word, "i", false)
 end
 
-local function git_files_string()
-  local word = vim.fn.expand("<cword>")
-  builtin.git_files()
-  vim.api.nvim_feedkeys(word, "i", false)
-end
-
-local function git_files_string_visual()
-  local text = u.get_visual_selection()
-  vim.api.nvim_input("<esc>")
-  if text[1] == nil then
-    print("No appropriate visual selection found")
-  else
-    builtin.git_files()
-    vim.api.nvim_input(text[1])
-  end
-end
-
 local function grep_string_visual()
   local text = u.get_visual_selection()
-  vim.api.nvim_input("<esc>")
-  if text[1] == nil then
-    print("No appropriate visual selection found")
-  else
-    builtin.grep_string()
-    vim.api.nvim_input(text[1])
-    vim.api.nvim_feedkeys(text, "i", false)
+  if text[1] == "" or text[1] == nil then
+    require("notify")("No visual selection found", "error")
+    return
   end
+
+  builtin.grep_string({ search = text[1] })
 end
 
 local function current_buffer_fuzzy_find()
@@ -208,7 +189,7 @@ telescope.setup({
         i = {
           ["<C-y>"] = CopyCommitHash,
           ["<C-o>"] = SeeCommitChangesInDiffview,
-          ["<C-c>"] = CompareWithCurrentBranchInDiffview,
+          ["<C-d><C-f>"] = CompareWithCurrentBranchInDiffview,
         },
       },
     },
@@ -223,9 +204,7 @@ vim.keymap.set("n", "<leader>tr", oldfiles, {})
 vim.keymap.set("n", "<leader>tgc", git_commits, {})
 vim.keymap.set("n", "<leader>tgb", git_branches, {})
 vim.keymap.set("n", "<leader>tF", grep_string, {})
-vim.keymap.set("n", "<leader>tf", git_files_string, {})
-vim.keymap.set("v", "<leader>tf", git_files_string_visual, {})
-vim.keymap.set("v", "<leader>tF", grep_string_visual, {})
+vim.keymap.set("v", "<leader>tf", grep_string_visual, {})
 vim.keymap.set("n", "<C-h>", OpenFileInFileBrowser)
 vim.keymap.set("n", "<leader>;;", OpenFolderInFileBrowser)
 
