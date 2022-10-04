@@ -40,8 +40,9 @@ end
 
 local packer = require("packer")
 
+local os = u.get_os() == "Darwin" and "mac" or "linux"
 local packer_options = {
-  snapshot_path = vim.fn.stdpath("config") .. "/packer_snapshots",
+  snapshot_path = vim.fn.stdpath("config") .. "/lockfiles/" .. os .. "/packer_snapshots",
 }
 
 if u.get_os() == "Darwin" then
