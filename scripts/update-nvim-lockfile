@@ -1,9 +1,10 @@
 #!/bin/bash
 
 snapshot_time="${1}"
+config_path="${2}"
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  nvim --version > "./lockfiles/mac/nvim_snapshots/$snapshot_time"
+if [[ $(uname) == "Darwin" ]]; then
+  nvim --version > "$config_path/lockfiles/mac/nvim_snapshots/$snapshot_time"
 else
-  nvim --version > "./lockfiles/linux/nvim_snapshots/$snapshot_time"
+  nvim --version > "$config_path/lockfiles/linux/nvim_snapshots/$snapshot_time"
 fi

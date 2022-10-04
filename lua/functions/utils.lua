@@ -228,9 +228,10 @@ return {
       require("notify")('Syncing packer and updating nvim lockfile.')
     end)
 
+    local config_path = vim.fn.stdpath("config")
     local snap_shot_time = os.date("!%Y-%m-%dT%TZ")
     async.run(function()
-      run_script("update-nvim-lockfile", snap_shot_time)
+      run_script("update-nvim-lockfile", snap_shot_time .. " " .. config_path)
     end)
 
     vim.cmd('PackerSnapshot ' .. snap_shot_time)
