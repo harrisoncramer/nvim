@@ -1,10 +1,7 @@
--- Utility function for plugin settings
 local u = require("functions.utils")
 
--- Utility settings loader
 local setup = function(mod, remote)
   if remote == nil then
-    -- If plugin does not need "require" setup, then just set it up.
     require(mod)
   else
     local status = pcall(require, remote)

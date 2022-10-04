@@ -1,6 +1,8 @@
 local f = require("functions")
 local u = require("functions.utils")
 
+vim.keymap.set("n", "<localleader>dl", require("dap.ui.widgets").hover)
+
 return {
   setup = function()
     local dap = require("dap")
@@ -125,26 +127,24 @@ return {
       require("dapui").toggle()
       require("dap").close()
     end)
-    vim.keymap.set("n", "<localleader>dl", function()
-      local buf_name = u.get_current_buf_name()
-      if buf_name == "DAP Scopes" then
-        vim.api.nvim_feedkeys(
-          vim.api.nvim_replace_termcodes("<C-w><C-p>", false, true, true),
-          "n",
-          false
-        )
-      end
-      local win = u.get_win_by_buf_name("DAP Scopes")
-      if win == -1 then
-        return
-      end
-      vim.api.nvim_set_current_win(win)
-    end)
 
-    -- nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-    -- nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-    -- nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
-    -- nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR>
+    -- Could be used to jump back/forth to a window with a specific name...
+
+    -- vim.keymap.set("n", "<localleader>dl", function()
+    --   local buf_name = u.get_current_buf_name()
+    --   if buf_name == "DAP Scopes" then
+    --     vim.api.nvim_feedkeys(
+    --       vim.api.nvim_replace_termcodes("<C-w><C-p>", false, true, true),
+    --       "n",
+    --       false
+    --     )
+    --   end
+    --   local win = u.get_win_by_buf_name("DAP Scopes")
+    --   if win == -1 then
+    --     return
+    --   end
+    --   vim.api.nvim_set_current_win(win)
+    -- end)
 
     require("dapui").setup({
       icons = { expanded = "▾", collapsed = "▸" },
