@@ -44,10 +44,6 @@ local function git_files()
   end
 end
 
-local function oldfiles()
-  builtin.oldfiles()
-end
-
 local function git_commits()
   builtin.git_commits()
 end
@@ -169,12 +165,6 @@ telescope.setup({
         },
       },
     },
-    oldfiles = {
-      prompt_prefix = " ",
-    },
-    grep_string = {
-      prompt_prefix = " ",
-    },
     current_buffer_fuzzy_find = {
       previewer = false,
       sorting_strategy = "ascending",
@@ -200,10 +190,9 @@ vim.keymap.set("n", "<C-f>", live_grep, {})
 vim.keymap.set("n", "<C-c>", current_buffer_fuzzy_find, {})
 vim.keymap.set("n", "<C-j>", git_files, {})
 vim.keymap.set("n", "<C-m>", telescope.extensions.file_browser.file_browser, { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>tr", oldfiles, {})
 vim.keymap.set("n", "<leader>tgc", git_commits, {})
 vim.keymap.set("n", "<leader>tgb", git_branches, {})
-vim.keymap.set("n", "<leader>tF", grep_string, {})
+vim.keymap.set("n", "<leader>tf", grep_string, {})
 vim.keymap.set("v", "<leader>tf", grep_string_visual, {})
 vim.keymap.set("n", "<C-h>", OpenFileInFileBrowser)
 vim.keymap.set("n", "<leader>;;", OpenFolderInFileBrowser)
