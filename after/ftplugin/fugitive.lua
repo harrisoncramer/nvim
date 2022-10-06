@@ -24,6 +24,6 @@ vim.cmd([[
 
 vim.keymap.set("n", "df", ":call GdiffsplitTab(GStatusGetFilenameUnderCursor())<cr>", map_opts)
 vim.keymap.set("n", "cc", ":silent! Git commit --quiet<CR>", map_opts)
+vim.keymap.set("n", "ca", ":silent! Git commit --amend --quiet<CR>", map_opts)
 vim.keymap.set("n", "<C-n>", require("plugins.fugitive").jump_next, map_opts)
 vim.keymap.set("n", "<C-p>", require("plugins.fugitive").jump_prev, map_opts)
-
