@@ -17,6 +17,69 @@ return {
       os.execute("go install github.com/go-delve/delve/cmd/dlv@latest")
     end
 
+    dap.set_log_level("TRACE")
+    vim.fn.sign_define('DapBreakpoint', { text = '🐞' })
+
+    -- ╭──────────────────────────────────────────────────────────╮
+    -- │ Javascript                                               │
+    -- ╰──────────────────────────────────────────────────────────╯
+
+    -- Node
+    dap.adapters.node2 = {
+      type = 'executable';
+      command = 'node',
+      args = { vim.fn.stdpath "data" .. '/mason/packages/node-debug2-adapter/out/src/nodeDebug.js' };
+    }
+
+    -- Chrome
+    dap.adapters.chrome = {
+      type = 'executable',
+      command = 'node',
+      args = { vim.fn.stdpath "data" .. '/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js' };
+    }
+
+    dap.configurations.javascript = {
+      {
+        type = 'node2';
+        name = 'Node',
+        request = 'launch';
+        program = '${file}';
+        cwd = vim.fn.getcwd();
+        sourceMaps = true;
+        protocol = 'inspector';
+        console = 'integratedTerminal';
+      },
+      {
+        type = 'chrome',
+        name = 'Debug (Chrome)',
+        request = 'attach',
+        program = '${file}',
+        cwd = vim.fn.getcwd(),
+        sourceMaps = true,
+        protocol = 'inspector',
+        port = 9222,
+        webRoot = '${workspaceFolder}'
+      }
+    }
+
+    dap.configurations.vue = {
+      {
+        type = 'chrome',
+        name = 'Debug (Chrome)',
+        request = 'attach',
+        program = 'app.js',
+        cwd = vim.fn.getcwd(),
+        sourceMaps = true,
+        protocol = 'inspector',
+        port = 9222,
+        webRoot = "${worspaceFolder}",
+      }
+    }
+
+    -- ╭──────────────────────────────────────────────────────────╮
+    -- │ Golang                                                   │
+    -- ╰──────────────────────────────────────────────────────────╯
+
     dap.adapters.go = function(callback, config)
       local stdout = vim.loop.new_pipe(false)
       local handle
@@ -57,43 +120,10 @@ return {
       },
       {
         type = "go",
-        name = "Debug test",
-        request = "launch",
-        mode = "test",
-        program = "${file}",
-      },
-      {
-        type = "go",
         name = "Debug test (go.mod)",
         request = "launch",
         mode = "test",
         program = "./${relativeFileDirname}",
-      },
-    }
-
-    dap.adapters.node2 = {
-      type = "executable",
-      command = "node",
-      args = { os.getenv("HOME") .. "/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js" },
-    }
-
-    dap.configurations.javascript = {
-      {
-        name = "Launch",
-        type = "node2",
-        request = "launch",
-        program = "${file}",
-        cwd = vim.fn.getcwd(),
-        sourceMaps = true,
-        protocol = "inspector",
-        console = "integratedTerminal",
-      },
-      {
-        -- For this to work you need to make sure the node process is started with the `--inspect` flag.
-        name = "Attach to process",
-        type = "node2",
-        request = "attach",
-        processId = require("dap.utils").pick_process,
       },
     }
 
@@ -122,7 +152,7 @@ return {
     vim.keymap.set("n", "<localleader>dn", dap.step_over)
     vim.keymap.set("n", "<localleader>di", dap.step_into)
     vim.keymap.set("n", "<localleader>do", dap.step_out)
-    vim.keymap.set("n", "<localleader>dcb", dap.clear_breakpoints)
+    vim.keymap.set("n", "<localleader>dC", dap.clear_breakpoints)
     vim.keymap.set("n", "<localleader>de", function()
       require("dapui").toggle()
       require("dap").close()
@@ -149,7 +179,6 @@ return {
     require("dapui").setup({
       icons = { expanded = "▾", collapsed = "▸" },
       mappings = {
-        -- Use a table to apply multiple mappings
         expand = { "<CR>", "<2-LeftMouse>" },
         open = "o",
         remove = "d",
@@ -157,16 +186,7 @@ return {
         repl = "r",
         toggle = "t",
       },
-      -- Expand lines larger than the window
-      -- Requires >= 0.7
       expand_lines = vim.fn.has("nvim-0.7"),
-      -- Layouts define sections of the screen to place windows.
-      -- The position can be "left", "right", "top" or "bottom".
-      -- The size specifies the height/width depending on position. It can be an Int
-      -- or a Float. Integer specifies height/width directly (i.e. 20 lines/columns) while
-      -- Float value specifies percentage (i.e. 0.3 - 30% of available lines/columns)
-      -- Elements are the elements shown in the layout (in order).
-      -- Layouts are opened in order so that earlier layouts take priority in window sizing.
       layouts = {
         {
           elements = {
@@ -180,14 +200,14 @@ return {
             "breakpoints",
             "stacks",
           },
-          size = 0.3, -- 40 columns
+          size = 0.3,
           position = "right",
         },
         {
           elements = {
             "repl",
           },
-          size = 0.15, -- 25% of total lines
+          size = 0.15,
           position = "bottom",
         },
       },
@@ -201,7 +221,7 @@ return {
       },
       windows = { indent = 1 },
       render = {
-        max_type_length = nil, -- Can be integer or nil.
+        max_type_length = nil,
       },
     })
   end,
