@@ -290,6 +290,8 @@ return {
     local buf_name = vim.api.nvim_buf_get_name(0)
     local base_name = basename(buf_name)
     return base_name
+  end,
+  get_word_under_cursor = function()
+    return vim.fn.expand("<cword>")
   end
-
 }

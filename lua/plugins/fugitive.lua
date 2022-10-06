@@ -93,5 +93,9 @@ return {
   end,
   get_status_under_cursor = function()
     vim.cmd("call GdiffsplitTab(GStatusGetFilenameUnderCursor())<cr>")
+  end,
+  reset_to_commit = function()
+    local commit = u.get_word_under_cursor()
+    vim.cmd("Git reset --soft " .. commit)
   end
 }
