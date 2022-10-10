@@ -103,11 +103,11 @@ packer.startup(function(use)
   use("SirVer/ultisnips")
   use({ "tpope/vim-fugitive", config = setup("plugins.fugitive") })
   use({ "windwp/nvim-autopairs", config = setup("plugins.autopairs", "nvim-autopairs") })
-  -- use({
-  --   "nvim-lualine/lualine.nvim",
-  --   requires = { "kyazdani42/nvim-web-devicons", opt = true },
-  --   config = setup("plugins.lualine", "lualine"),
-  -- })
+  use({
+    "nvim-lualine/lualine.nvim",
+    requires = { "kyazdani42/nvim-web-devicons", opt = true },
+    config = setup("plugins.lualine", "lualine"),
+  })
   use({
     "alvarosevilla95/luatab.nvim",
     config = setup("plugins/luatab", "luatab"),
