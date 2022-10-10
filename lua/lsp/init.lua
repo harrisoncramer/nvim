@@ -31,7 +31,6 @@ local on_attach = function(client, bufnr)
 
   -- Formatting for Vue handled by Eslint
   -- Formatting for Clojure handled by custom ZPrint function, see lua/lsp/servers/clojure-lsp.lua
-  print(client.name)
   if (client.name ~= "volar" and client.name ~= "clojure_lsp") then
     lsp_format.on_attach(client)
   end
