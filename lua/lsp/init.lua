@@ -8,14 +8,12 @@ if not (mason_status_ok and mason_lspconfig_ok and cmp_nvim_lsp_status_ok and ls
   return
 end
 
--- This isn't working, just removing volar and tsserver down below
--- Ensure eslint called after tsserver
--- lsp_format.setup({
---   order = {
---     "tsserver",
---     "eslint",
---   }
--- })
+lsp_format.setup({
+  order = {
+    "tsserver",
+    "eslint",
+  }
+})
 
 -- Map keys after LSP attaches (utility function)
 local on_attach = function(client, bufnr)
@@ -31,9 +29,9 @@ local on_attach = function(client, bufnr)
   -- This will set up formatting for the attached LSPs
   client.server_capabilities.documentFormattingProvider = true
 
-  -- Formatting for typescript/javascript handled by Eslint Server
-  -- Formatting for Clojure handled by zprint
-  if (client.name ~= "volar" and client.name ~= "tsserver" and client.name ~= "clojure_lsp") then
+  -- Formatting for Vue handled by Eslint
+  -- Formatting for Clojure handled by custom ZPrint function, see lua/lsp/servers/clojure-lsp.lua
+  if (client.name ~= "volar" and client.name ~= "clojure_lsp") then
     lsp_format.on_attach(client)
   end
 
@@ -51,6 +49,10 @@ local on_attach = function(client, bufnr)
 
   vim.keymap.set("n", "<leader>w", function()
     vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARNING })
+  end)
+
+  vim.keymap.set("n", "<leader>W", function()
+    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARNING })
   end)
 
   -- This is ripped off from https://github.com/kabouzeid/dotfiles, it's for tailwind preview support

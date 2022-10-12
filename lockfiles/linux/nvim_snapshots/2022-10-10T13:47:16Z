@@ -1,0 +1,12 @@
+NVIM v0.8.0-1210-gd367ed9b2
+Build type: Release
+LuaJIT 2.1.0-beta3
+Compiled by runner@fv-az505-656
+
+Features: +acl +iconv +tui
+See ":help feature-compile"
+
+   system vimrc file: "$VIM/sysinit.vim"
+  fall-back for $VIM: "/share/nvim"
+
+Run :checkhealth for more info
