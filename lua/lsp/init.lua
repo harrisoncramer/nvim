@@ -69,20 +69,21 @@ normal_capabilities.textDocument.foldingRange = {
   lineFoldingOnly = true,
 }
 
-local capabilities = cmp_nvim_lsp.update_capabilities(normal_capabilities)
+-- cmp_nvim_lsp.update_capabilities is deprecated, use cmp_nvim_lsp.default_capabilities
+local capabilities = cmp_nvim_lsp.default_capabilities(normal_capabilities)
 
 -- These servers are automatically installed by Mason.
 -- We then iterate over their names and load their relevant
 -- configuration files, which are stored in lua/lsp/servers,
 -- passing along the global on_attach and capabilities functions
 local servers = {
-  "lua-language-server",
-  "typescript-language-server",
-  "tailwindcss-language-server",
-  "clojure-lsp",
-  "vue-language-server",
-  "vscode-eslint-language-server",
+  "sumneko_lua",
+  "clojure_lsp",
+  "tailwindcss",
+  "tsserver",
+  "eslint",
   "gopls",
+  "volar",
 }
 
 -- Setup Mason + LSPs + CMP
