@@ -159,9 +159,12 @@ return {
     if not async_job then
       require("notify")("Plenary is not installed!", "error")
     end
+
+    local language = vim.bo.filetype
+    local line_number = vim.api.nvim_win_get_cursor(0)[1]
     local create_screenshot = job:new({
       command = 'silicon',
-      args = { '--from-clipboard', '-l', 'rs', '--to-clipboard' },
+      args = { '--from-clipboard', '-l', language, '--to-clipboard', '--line-offset', line_number },
       on_exit = function(_, exit_code)
         if exit_code ~= 0 then
           require("notify")("Could not create screenshot! Do you have silicon installed?", "error")
