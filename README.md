@@ -39,3 +39,4 @@ This repository contains my configurations, including key mappings, plugins, and
 - <a href="https://github.com/neovim/pynvim">pynvim</a>
 - Node (I'd recommend using <a href="https://github.com/Schniz/fnm">fnm</a>)
 - Golang (Because of the delve install script at `scripts/install_delve` for Go's debugger)
+- Silicon (For the `:SCREENSHOT` command to work)
