@@ -1,4 +1,5 @@
 local u = require("functions.utils")
+local async_job, job = pcall(require, 'plenary.job')
 
 -- Globals
 function _G.P(...)
@@ -154,4 +155,22 @@ return {
 
     print("BufOnly: " .. deleted .. " deleted buffer(s), " .. modified .. " modified buffer(s)")
   end,
+  screenshot = function()
+    if not async_job then
+      require("notify")("Plenary is not installed!", "error")
+    end
+    local create_screenshot = job:new({
+      command = 'silicon',
+      args = { '--from-clipboard', '-l', 'rs', '--to-clipboard' },
+      on_exit = function(_, exit_code)
+        if exit_code ~= 0 then
+          require("notify")("Could not create screenshot! Do you have silicon installed?", "error")
+          return
+        end
+        require("notify")("Screenshot copied to clipboard")
+      end,
+    })
+
+    create_screenshot:start()
+  end
 }

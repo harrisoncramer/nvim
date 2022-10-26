@@ -19,7 +19,7 @@ vim.opt.number = true
 -- Turn on clipboard across panes for tmux
 vim.opt.regexpengine = 1
 -- Let treesitter handle styling
--- vim.opt.clipboard += 'unnamedplus'
+vim.opt.clipboard = 'unnamedplus'
 -- set substitute/replace command to automatically use global flag
 vim.opt.gdefault = true
 -- Do not allow line wraping
