@@ -42,4 +42,5 @@ endtry
 
 -- Custom overrides of treesitter capture groups (:TSHighlightCapturesUnderCursor) for Kanagawa theme
 vim.api.nvim_set_hl(0, "@tag", { fg = "#A3D4D5" })
+vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = "#A3D4D5" })
 vim.api.nvim_set_hl(0, "@tag.attribute", { fg = "#D27E99" })
