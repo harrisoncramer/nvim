@@ -18,9 +18,6 @@ vim.keymap.set("n", "<C-x>", ":bp <bar> bd#<CR>")
 -- Shortcuts
 vim.keymap.set("n", "R", require("functions").start_replace, {})
 
--- Luafile
-vim.keymap.set("n", "<leader>lf", ":luafile %<CR>")
-
 -- LSP
 vim.keymap.set("n", "<leader>F", vim.lsp.buf.formatting, {})
 
@@ -39,7 +36,6 @@ vim.keymap.set("v", "<leader>y", '"+y') -- Copy to clipboard
 vim.keymap.set("n", "H", ":w<CR>") -- Quick save
 vim.keymap.set("i", "<C-h>", "<Lseft>") -- Move left in insert
 vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
-vim.keymap.set("n", "<leader>lf", ":luafile %<cr>") -- Re-source luafile
 vim.keymap.set("x", "<leader>p", '"_dP') -- Keep paste register after paste
 
 -- Packer

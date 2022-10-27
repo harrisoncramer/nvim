@@ -114,9 +114,13 @@ vim.diagnostic.config({
   },
 })
 
+-- Removing errors from gutter for now, trying inline errors instead
+
 -- Change Error Signs in Gutter
-local signs = { Error = "✘", Warn = " ", Hint = "", Info = " " }
+-- local signs = { Error = "✘", Warn = " ", Hint = "", Info = " " }
+local signs = { Error = "", Warn = "", Hint = "", Info = " " }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+  vim.fn.sign_define(hl, { text = icon })
+  -- vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
