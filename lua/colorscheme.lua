@@ -1,5 +1,3 @@
-vim.cmd("set termguicolors")
-vim.cmd([[ :set signcolumn=yes ]])
 vim.cmd([[ :hi NonText guifg=bg ]])
 
 local kanagawa_ok, kanagawa = pcall(require, "kanagawa")
@@ -28,17 +26,8 @@ kanagawa.setup({
   colors = {},
   overrides = {},
 })
-vim.api.nvim_exec(
-  [[
-try
-  colorscheme kanagawa
-catch /^Vim\%((\a\+)\)\=:E185/
-  colorscheme default
-  set background=dark
-endtry
-]] ,
-  true
-)
+
+vim.cmd('colorscheme kanagawa')
 
 -- Custom overrides of treesitter capture groups (:TSHighlightCapturesUnderCursor) for Kanagawa theme
 vim.api.nvim_set_hl(0, "@tag", { fg = "#A3D4D5" })

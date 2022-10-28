@@ -1,15 +1,15 @@
--- Basic Settings
+-- Neovim Core Settings
 require("settings")
 
--- Language Server
+-- Language Servers
 require("lsp")
 
--- Other Mappings and Settings
-require("colors")
+-- Settings, Mappings, Keybindings
+require("colorscheme")
 require("mappings")
 require("functions")
 require("autocommands")
 require("commands")
 
--- Packer plugins
+-- Plugins
 require("plugins")

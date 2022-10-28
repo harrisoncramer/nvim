@@ -46,6 +46,9 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.backspace = "indent,eol,start"
 
+-- Colors
+vim.opt.termguicolors = true
+
 -- Indenting
 vim.opt.shiftwidth = 2
 vim.opt.autoindent = true
