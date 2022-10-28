@@ -3,14 +3,20 @@ local enabled_list = { "clojure" }
 local parsers = require("nvim-treesitter.parsers")
 
 local disable_function = function(lang, bufnr)
+
   if not bufnr then
     bufnr = 0
+  end
+
+  if lang == "help" then
+    return true
   end
 
   local buf_name = vim.fn.expand("%")
   if lang == "clojure" and string.find(buf_name, "conjure%-") then
     return true
   end
+
 
   local line_count = vim.api.nvim_buf_line_count(bufnr)
   if line_count > 20000 or (line_count == 1 and lang == "json") then
