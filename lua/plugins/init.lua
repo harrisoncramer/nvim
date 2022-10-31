@@ -119,7 +119,13 @@ packer.startup(function(use)
     config = setup("plugins.gitsigns", "gitsigns"),
   })
   use({ "gelguy/wilder.nvim", config = setup("plugins.wilder", "wilder") })
+  use({
+    "nvim-treesitter/nvim-treesitter",
+    config = setup("plugins.treesitter", "nvim-treesitter"),
+  })
+  use({ "nvim-treesitter/playground", requires = "nvim-treesitter/nvim-treesitter" })
   use({ "p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter" })
+  use("andymass/vim-matchup")
   use({
     "nvim-treesitter/nvim-treesitter-context",
     requires = "nvim-treesitter/nvim-treesitter",
@@ -134,14 +140,8 @@ packer.startup(function(use)
   use({ "petertriho/nvim-scrollbar", config = setup("plugins.scrollbar", "scrollbar") })
   use({ "karb94/neoscroll.nvim", config = setup("plugins.neoscroll", "neoscroll") })
   use({ "harrisoncramer/jump-tag", config = setup("plugins.jump-tag", "jump-tag") })
-  use({
-    "nvim-treesitter/nvim-treesitter",
-    config = setup("plugins.treesitter", "nvim-treesitter"),
-  })
-  use({ "nvim-treesitter/playground", requires = "nvim-treesitter/nvim-treesitter" })
   use("lambdalisue/glyph-palette.vim")
   use({ "posva/vim-vue", ft = { "vue" } })
-  use("andymass/vim-matchup")
   use({ "mattn/emmet-vim", ft = { "html", "vue", "javascript", "javascriptreact", "typescriptreact" } })
   use("AndrewRadev/tagalong.vim")
   use("alvan/vim-closetag")
