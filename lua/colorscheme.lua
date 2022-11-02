@@ -29,12 +29,8 @@ kanagawa.setup({
 
 vim.cmd('colorscheme kanagawa')
 
--- Custom overrides of treesitter capture groups (:TSHighlightCapturesUnderCursor) for Kanagawa theme
-vim.api.nvim_set_hl(0, "@tag", { fg = "#A3D4D5" })
-vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = "#A3D4D5" })
-vim.api.nvim_set_hl(0, "@tag.attribute", { fg = "#D27E99" })
-
-return {
+-- Map to lua variables for use elsewhere in the config
+local colorMap = {
   sumiInk3      = "#363646",
   sumiInk4      = "#54546D",
   waveBlue1     = "#223249",
@@ -67,3 +63,10 @@ return {
   peachRed      = "#FF5D62",
   surimiOrange  = "#FFA066",
 }
+
+-- Custom overrides of treesitter capture groups (:TSHighlightCapturesUnderCursor) for Kanagawa theme
+vim.api.nvim_set_hl(0, "@tag", { fg = colorMap.lightBlue })
+vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = colorMap.lightBlue, })
+vim.api.nvim_set_hl(0, "@tag.attribute", { fg = colorMap.sakuraPink })
+
+return colorMap
