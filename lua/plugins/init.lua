@@ -120,6 +120,7 @@ packer.startup(function(use)
   })
   use({ "gelguy/wilder.nvim", config = setup("plugins.wilder", "wilder") })
   use({
+    branch = "v0.8.0",
     "nvim-treesitter/nvim-treesitter",
     config = setup("plugins.treesitter", "nvim-treesitter"),
   })
@@ -155,4 +156,15 @@ packer.startup(function(use)
   use({ 'djoshea/vim-autoread' })
   use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" }, config = setup("plugins.dap", "dap") })
   use({ 'leoluz/nvim-dap-go', no_setup('dap-go') })
+  use {
+    "nvim-neotest/neotest",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      "marilari88/neotest-vitest",
+      "nvim-neotest/neotest-go",
+    },
+    setup("plugins.neotest", "neotest")
+  }
 end)
