@@ -1,6 +1,5 @@
 local u = require("functions.utils")
-local async_job
-job = pcall(require, 'plenary.job')
+local async_job_ok, job = pcall(require, 'plenary.job')
 
 -- Globals
 function _G.P(...)
@@ -157,7 +156,7 @@ return {
     print("BufOnly: " .. deleted .. " deleted buffer(s), " .. modified .. " modified buffer(s)")
   end,
   screenshot = function()
-    if not async_job then
+    if not async_job_ok then
       require("notify")("Plenary is not installed!", vim.log.levels.ERROR)
     end
 

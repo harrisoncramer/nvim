@@ -60,7 +60,6 @@ vim.api.nvim_set_hl(0, 'NeotestIndent', { fg = colors.fujiGray })
 vim.api.nvim_set_hl(0, 'NeotestExpandMarker', { fg = colors.fujiGray })
 vim.api.nvim_set_hl(0, 'NeotestDir', { fg = colors.fujiGray })
 vim.api.nvim_set_hl(0, 'NeotestFile', { fg = colors.fujiGray })
-
 vim.api.nvim_set_hl(0, 'NeotestFailed', { fg = colors.samuraiRed })
 vim.api.nvim_set_hl(0, 'NeotestPassed', { fg = colors.springGreen })
 vim.api.nvim_set_hl(0, 'NeotestSkipped', { fg = colors.carpYellow })
