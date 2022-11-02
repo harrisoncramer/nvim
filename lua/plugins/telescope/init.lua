@@ -61,7 +61,7 @@ end
 local function grep_string_visual()
   local text = u.get_visual_selection()
   if text[1] == "" or text[1] == nil then
-    require("notify")("No visual selection found", "error")
+    require("notify")("No visual selection found", vim.log.levels.ERROR)
     return
   end
 

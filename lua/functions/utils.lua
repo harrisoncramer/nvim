@@ -225,7 +225,7 @@ return {
   string_starts = string_starts,
   packer_sync = function()
     async.run(function()
-      require("notify")('Syncing packer and updating nvim lockfile.')
+      require("notify")('Syncing packer and updating nvim lockfile.', vim.log.levels.INFO)
     end)
 
     local config_path = vim.fn.stdpath("config")
@@ -240,12 +240,12 @@ return {
   copy_file_to_clipboard = function()
     vim.api.nvim_feedkeys(":let @+=expand('%:p')", "n", false)
     press_enter()
-    require("notify")('Copied filepath.')
+    require("notify")('Copied filepath.', vim.log.levels.INFO)
   end,
   copy_dir_to_clipboard = function()
     vim.api.nvim_feedkeys(":let @+=expand('%:h')", "n", false)
     press_enter()
-    require("notify")('Copied directory path.')
+    require("notify")('Copied directory path.', vim.log.levels.INFO)
   end,
   get_buf_by_name = function(name)
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do

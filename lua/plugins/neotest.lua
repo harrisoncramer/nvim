@@ -24,7 +24,7 @@ require("neotest").setup({
     final_child_indent = " ",
     final_child_prefix = "╰",
     non_collapsible = "─",
-    passed = " ✓",
+    passed = "✓",
     running = "◐",
     running_animated = { "/", "|", "\\", "-", "/", "|", "\\", "-" },
     skipped = "○",
@@ -86,4 +86,10 @@ vim.keymap.set(
     neotest.summary.open()
   end,
   map_opts
+)
+
+vim.keymap.set(
+  "n",
+  "<localleader>to",
+  neotest.output.open
 )

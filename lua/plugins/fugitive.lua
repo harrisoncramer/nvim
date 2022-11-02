@@ -21,7 +21,7 @@ end
 local git_push = function()
 
   if not async_job then
-    require("notify")("Plenary is not installed!", "error")
+    require("notify")("Plenary is not installed!", vim.log.levels.ERROR)
   end
 
   local push_job = job:new({
@@ -29,10 +29,10 @@ local git_push = function()
     args = { 'push' },
     on_exit = function(_, exit_code)
       if exit_code ~= 0 then
-        require("notify")("Could not push!", "error")
+        require("notify")("Could not push!", vim.log.levels.ERROR)
         return
       end
-      require("notify")("Pushed.")
+      require("notify")("Pushed.", vim.log.levels.INFO)
     end,
   })
 
@@ -71,7 +71,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   callback = function()
     local close_buffers_ok, close_buffers = pcall(require, "close_buffers")
     if not close_buffers_ok then
-      require("notify")("Close buffers is not installed!", "error")
+      require("notify")("Close buffers is not installed!", vim.log.levels.ERROR)
     else
       close_buffers.delete({ regex = "^fugitive*" })
     end

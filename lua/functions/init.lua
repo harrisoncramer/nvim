@@ -1,5 +1,6 @@
 local u = require("functions.utils")
-local async_job, job = pcall(require, 'plenary.job')
+local async_job
+job = pcall(require, 'plenary.job')
 
 -- Globals
 function _G.P(...)
@@ -105,7 +106,7 @@ return {
         vim.cmd(string.format("silent Obsession %s", session_path))
       end
     else
-      print("There is no .sessions folder in this project yet!")
+      require("notify")("There is no .sessions folder in this project yet!", vim.log.levels.WARN)
     end
   end,
   run_script = function(script_name, args)
@@ -157,7 +158,7 @@ return {
   end,
   screenshot = function()
     if not async_job then
-      require("notify")("Plenary is not installed!", "error")
+      require("notify")("Plenary is not installed!", vim.log.levels.ERROR)
     end
 
     local language = vim.bo.filetype
@@ -167,10 +168,10 @@ return {
       args = { '--from-clipboard', '-l', language, '--to-clipboard', '--line-offset', line_number },
       on_exit = function(_, exit_code)
         if exit_code ~= 0 then
-          require("notify")("Could not create screenshot! Do you have silicon installed?", "error")
+          require("notify")("Could not create screenshot! Do you have silicon installed?", vim.log.levels.ERROR)
           return
         end
-        require("notify")("Screenshot copied to clipboard")
+        require("notify")("Screenshot copied to clipboard", vim.log.levels.INFO)
       end,
     })
 
