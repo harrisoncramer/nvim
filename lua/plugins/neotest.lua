@@ -92,3 +92,13 @@ vim.keymap.set(
   "<localleader>to",
   neotest.output.open
 )
+
+
+vim.keymap.set(
+  "n",
+  "<localleader>tt",
+  function()
+    neotest.summary.toggle()
+  end,
+  map_opts
+)
