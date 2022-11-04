@@ -62,6 +62,7 @@ local colorMap = {
   waveRed       = "#E46876",
   peachRed      = "#FF5D62",
   surimiOrange  = "#FFA066",
+  katanaGray    = "#717C7C"
 }
 
 -- Custom overrides of treesitter capture groups (:TSHighlightCapturesUnderCursor) for Kanagawa theme

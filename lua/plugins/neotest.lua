@@ -15,6 +15,11 @@ vim.diagnostic.config({
 }, neotest_ns)
 
 require("neotest").setup({
+  status = {
+    enabled = true,
+    signs = true, -- Sign after function signature
+    virtual_text = false
+  },
   icons = {
     child_indent = "│",
     child_prefix = "├",
@@ -25,10 +30,16 @@ require("neotest").setup({
     final_child_prefix = "╰",
     non_collapsible = "─",
     passed = "✓",
-    running = "◐",
+    running = "",
     running_animated = { "/", "|", "\\", "-", "/", "|", "\\", "-" },
-    skipped = "○",
+    skipped = "↓",
     unknown = ""
+  },
+  floating = {
+    border = "rounded",
+    max_height = 0.9,
+    max_width = 0.9,
+    options = {}
   },
   highlights = {
     adapter_name = "NeotestAdapterName",
@@ -62,7 +73,7 @@ vim.api.nvim_set_hl(0, 'NeotestDir', { fg = colors.fujiGray })
 vim.api.nvim_set_hl(0, 'NeotestFile', { fg = colors.fujiGray })
 vim.api.nvim_set_hl(0, 'NeotestFailed', { fg = colors.samuraiRed })
 vim.api.nvim_set_hl(0, 'NeotestPassed', { fg = colors.springGreen })
-vim.api.nvim_set_hl(0, 'NeotestSkipped', { fg = colors.carpYellow })
+vim.api.nvim_set_hl(0, 'NeotestSkipped', { fg = colors.fujiGray })
 vim.api.nvim_set_hl(0, 'NeotestRunning', { fg = colors.carpYellow })
 vim.api.nvim_set_hl(0, 'NeotestNamespace', { fg = colors.crystalBlue })
 vim.api.nvim_set_hl(0, 'NeotestAdapterName', { fg = colors.oniViolet })

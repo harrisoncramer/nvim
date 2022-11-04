@@ -59,7 +59,7 @@ return {
         protocol = 'inspector',
         port = 9222,
         webRoot = '${workspaceFolder}'
-      }
+      },
     }
 
     dap.configurations.vue = {
@@ -80,7 +80,7 @@ return {
     -- │ Golang                                                   │
     -- ╰──────────────────────────────────────────────────────────╯
 
-    -- Using nvim-dap-go 
+    -- Using nvim-dap-go
 
     vim.keymap.set("n", "<localleader>ds", function()
       require("dapui").toggle()

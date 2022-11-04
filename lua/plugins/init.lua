@@ -120,7 +120,6 @@ packer.startup(function(use)
   })
   use({ "gelguy/wilder.nvim", config = setup("plugins.wilder", "wilder") })
   use({
-    branch = "v0.8.0",
     "nvim-treesitter/nvim-treesitter",
     config = setup("plugins.treesitter", "nvim-treesitter"),
   })
@@ -147,7 +146,6 @@ packer.startup(function(use)
   use("AndrewRadev/tagalong.vim")
   use("alvan/vim-closetag")
   use({ "harrisoncramer/psql", config = no_setup("psql") })
-  use({ "harrisoncramer/vim-test", config = setup("plugins.vim-test") })
   use({ "kazhala/close-buffers.nvim", config = no_setup("close_buffers") })
   use({ "rcarriga/nvim-notify", config = setup("notify", "plugins.notify") })
   use("ton/vim-bufsurf")
