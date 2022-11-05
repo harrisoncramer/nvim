@@ -105,7 +105,16 @@ return {
         vim.cmd(string.format("silent Obsession %s", session_path))
       end
     else
-      require("notify")("There is no .sessions folder in this project yet!", vim.log.levels.WARN)
+      require("notify")("Making new sessions folder...", vim.log.levels.WARN)
+      job:new({
+        command = "mkdir",
+        args = { ".sessions" },
+        on_exit = function(_, exit_code)
+          if exit_code ~= 0 then
+            require("notify")("Could not make sessions folder", vim.log.levels.ERROR)
+          end
+        end,
+      }):start()
     end
   end,
   run_script = function(script_name, args)
