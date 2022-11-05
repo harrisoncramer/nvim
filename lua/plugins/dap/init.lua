@@ -1,4 +1,3 @@
-local u = require("functions.utils")
 local debugger_installs = require("plugins.dap.debugger_installs")
 local adapters = require("plugins.dap.adapters")
 local configurations = require("plugins.dap.configs")
@@ -43,21 +42,6 @@ return {
       dap.continue()
     end)
 
-    vim.keymap.set("n", "<localleader>dr", function()
-      require("dapui").toggle()
-      require("dap").run({
-        type = "go",
-        name = "Debug",
-        request = "launch",
-        program = "${file}",
-        cwd = vim.fn.getcwd(),
-        args = function()
-          local argument_string = vim.fn.input("Arguments: ")
-          return vim.fn.split(argument_string, " ", true)
-        end,
-      })
-    end)
-
     vim.keymap.set("n", "<localleader>dl", require("dap.ui.widgets").hover)
     vim.keymap.set("n", "<localleader>dc", dap.continue)
     vim.keymap.set("n", "<localleader>db", dap.toggle_breakpoint)
@@ -69,23 +53,6 @@ return {
       require("dapui").toggle()
       require("dap").close()
     end)
-
-    -- Could be used to jump back/forth to a window with a specific name...
-    -- vim.keymap.set("n", "<localleader>dl", function()
-    --   local buf_name = u.get_current_buf_name()
-    --   if buf_name == "DAP Scopes" then
-    --     vim.api.nvim_feedkeys(
-    --       vim.api.nvim_replace_termcodes("<C-w><C-p>", false, true, true),
-    --       "n",
-    --       false
-    --     )
-    --   end
-    --   local win = u.get_win_by_buf_name("DAP Scopes")
-    --   if win == -1 then
-    --     return
-    --   end
-    --   vim.api.nvim_set_current_win(win)
-    -- end)
 
     require("dapui").setup({
       icons = { expanded = "▾", collapsed = "▸" },

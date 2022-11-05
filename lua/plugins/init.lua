@@ -152,7 +152,6 @@ packer.startup(function(use)
   use({ "AckslD/messages.nvim", config = setup("plugins.messages", "messages") })
   use({ 'djoshea/vim-autoread' })
   use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" }, config = setup("plugins.dap", "dap") })
-  use({ 'leoluz/nvim-dap-go', no_setup('dap-go') })
   use {
     "nvim-neotest/neotest",
     requires = {
