@@ -12,7 +12,7 @@ local delve = function()
     end
 
     async.run(function()
-      require("notify")("Installing NodeJS debugger", "info")
+      require("notify")("Installing Delve...", "info")
     end)
 
     local delve_install = job:new({
