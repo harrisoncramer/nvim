@@ -1,136 +1,42 @@
 local u = require("functions.utils")
-local async_ok, async = pcall(require, "plenary.async")
-local job_okay, job = pcall(require, 'plenary.job')
-
-vim.keymap.set("n", "<localleader>dl", require("dap.ui.widgets").hover)
+local debugger_installs = require("plugins.dap.debugger_installs")
+local adapters = require("plugins.dap.adapters")
+local configurations = require("plugins.dap.configs")
 
 return {
   setup = function()
     local dap = require("dap")
 
-    -- Install NodeJS Debugger if it doesn't exist
-    local node_debug_folder = u.get_home() .. "/dev/microsoft/vscode-node-debug2"
-    if vim.fn.isdirectory(node_debug_folder) == 0 then
-      if not async_ok or not job_okay then
-        require("notify")("Plenary not installed, cannot install NodeJS Debugger", "error")
-        return
-      end
+    -- Install debuggers if they don't exist
+    debugger_installs.delve()
+    debugger_installs.node()
 
-      async.run(function()
-        require("notify")("Installing NodeJS debugger", "info")
-      end)
-
-      local config_path = vim.fn.stdpath("config")
-      local node_debugger_install = job:new({
-        command = config_path .. "/scripts" .. "/install_node_debugger",
-        args = {},
-        on_exit = function(_, exit_code)
-          if exit_code ~= 0 then
-            require("notify")("Could not install node debugger", vim.log.levels.ERROR)
-            return
-          end
-          require("notify")("Node debugger installed", vim.log.levels.INFO)
-        end,
-      })
-      node_debugger_install:start()
-    end
-
-    -- Install Golang Debugger if it doesn't exist
-    local delve = u.get_home() .. "/go/bin/dlv"
-    if vim.fn.filereadable(delve) == 0 then
-      if not async_ok or not job_okay then
-        require("notify")("Plenary not installed, cannot install Delve", "error")
-        return
-      end
-
-      async.run(function()
-        require("notify")("Installing NodeJS debugger", "info")
-      end)
-
-      local delve_install = job:new({
-        command = "go",
-        args = { "install", "github.com/go-delve/delve/cmd/dlv@latest" },
-        on_exit = function(_, exit_code)
-          if exit_code ~= 0 then
-            require("notify")("Could not install delve", vim.log.levels.ERROR)
-            return
-          end
-          require("notify")("Delve installed", vim.log.levels.INFO)
-        end,
-      })
-
-      delve_install:start()
-    end
 
     -- Global DAP Settings
     dap.set_log_level("TRACE")
     vim.fn.sign_define('DapBreakpoint', { text = '🐞' })
 
     -- ╭──────────────────────────────────────────────────────────╮
-    -- │ Javascript                                               │
+    -- │ Adapters                                                 │
     -- ╰──────────────────────────────────────────────────────────╯
+    -- Neovim needs a debug adapter with which it can communicate. Neovim can either
+    -- launch the debug adapter itself, or it can attach to an existing one.
+    -- To tell Neovim if it should launch a debug adapter or connect to one, and if
+    -- so, how, you need to configure them via the `dap.adapters` table.
 
-    -- In addition to launching (possibly) and connecting to a debug adapter, Neovim
-    -- needs to instruct the debug adapter itself how to launch and connect to the
-    -- debugee. The debugee is the application you want to debug.
-
-    -- Node
-    dap.adapters.node2 = {
-      type = 'executable';
-      command = 'node',
-      args = { vim.fn.stdpath "data" .. '/mason/packages/node-debug2-adapter/out/src/nodeDebug.js' };
-    }
-
-    -- Chrome
-    dap.adapters.chrome = {
-      type = 'executable',
-      command = 'node',
-      args = { vim.fn.stdpath "data" .. '/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js' };
-    }
-
-    dap.configurations.javascript = {
-      {
-        type = 'node2';
-        name = 'Node',
-        request = 'launch';
-        program = '${file}';
-        cwd = vim.fn.getcwd();
-        sourceMaps = true;
-        protocol = 'inspector';
-        console = 'integratedTerminal';
-      },
-      {
-        type = 'chrome',
-        name = 'Debug (Chrome)',
-        request = 'attach',
-        program = '${file}',
-        cwd = vim.fn.getcwd(),
-        sourceMaps = true,
-        protocol = 'inspector',
-        port = 9222,
-        webRoot = '${workspaceFolder}'
-      },
-    }
-
-    dap.configurations.vue = {
-      {
-        type = 'chrome',
-        name = 'Debug (Chrome)',
-        request = 'attach',
-        program = 'app.js',
-        cwd = vim.fn.getcwd(),
-        sourceMaps = true,
-        protocol = 'inspector',
-        port = 9222,
-        webRoot = "${worspaceFolder}",
-      }
-    }
+    adapters.go(dap)
+    adapters.chrome(dap)
+    adapters.node2(dap)
 
     -- ╭──────────────────────────────────────────────────────────╮
-    -- │ Golang                                                   │
+    -- │ Configuration                                            │
     -- ╰──────────────────────────────────────────────────────────╯
+    -- In addition to launching (possibly) and connecting to a debug adapter, Neovim
+    -- needs to instruct the adapter itself how to launch and connect to the program
+    -- that you are trying to debug (the debugee).
 
-    -- Using nvim-dap-go
+    configurations.javascript(dap)
+    configurations.vue(dap)
 
     vim.keymap.set("n", "<localleader>ds", function()
       require("dapui").toggle()
@@ -152,6 +58,7 @@ return {
       })
     end)
 
+    vim.keymap.set("n", "<localleader>dl", require("dap.ui.widgets").hover)
     vim.keymap.set("n", "<localleader>dc", dap.continue)
     vim.keymap.set("n", "<localleader>db", dap.toggle_breakpoint)
     vim.keymap.set("n", "<localleader>dn", dap.step_over)
@@ -164,7 +71,6 @@ return {
     end)
 
     -- Could be used to jump back/forth to a window with a specific name...
-
     -- vim.keymap.set("n", "<localleader>dl", function()
     --   local buf_name = u.get_current_buf_name()
     --   if buf_name == "DAP Scopes" then
