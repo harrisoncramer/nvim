@@ -50,37 +50,29 @@ local function go(dap)
     },
     {
       type = "go",
-      name = "Debug Package",
+      name = "Debug test (go.mod)",
       request = "launch",
-      program = "${fileDirname}",
+      mode = "test",
+      program = "./${relativeFileDirname}",
     },
+    -- To attach to a running Go process:
+    -- 1. Build the binary: go build -gcflags=all="-N -l"
+    -- 2. Run it
+    -- 3. Get the process id of the process: ps aux | grep my-binary
+    -- 4. Add the PID to this file
     {
       type = "go",
       name = "Attach",
       mode = "local",
       request = "attach",
-      processId = require('dap.utils').pick_process,
+      processId = 60642,
     },
-    {
-      type = "go",
-      name = "Attach remote",
-      mode = "remote",
-      request = "attach",
-    },
-    {
-      type = "go",
-      name = "Debug test",
-      request = "launch",
-      mode = "test",
-      program = "${file}",
-    },
-    {
-      type = "go",
-      name = "Debug test (go.mod)",
-      request = "launch",
-      mode = "test",
-      program = "./${relativeFileDirname}",
-    }
+    -- {
+    --   type = "go",
+    --   name = "Attach remote",
+    --   mode = "remote",
+    --   request = "attach",
+    -- },
   }
 end
 

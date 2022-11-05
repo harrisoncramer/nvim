@@ -113,3 +113,12 @@ vim.keymap.set(
   end,
   map_opts
 )
+
+vim.keymap.set(
+  "n",
+  "<localleader>tc",
+  function()
+    neotest.summary.close()
+  end,
+  map_opts
+)

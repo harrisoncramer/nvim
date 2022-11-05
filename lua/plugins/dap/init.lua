@@ -36,10 +36,11 @@ return {
 
     configurations.javascript(dap)
     configurations.vue(dap)
+    configurations.go(dap)
 
     vim.keymap.set("n", "<localleader>ds", function()
-      require("dapui").toggle()
       dap.continue()
+      require("dapui").toggle()
     end)
 
     vim.keymap.set("n", "<localleader>dl", require("dap.ui.widgets").hover)
