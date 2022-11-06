@@ -1,16 +1,24 @@
-local debugger_installs = require("plugins.dap.debugger_installs")
+-- local debugger_installs = require("plugins.dap.debugger_installs")
 local adapters = require("plugins.dap.adapters")
 local configurations = require("plugins.dap.configs")
+local mason_dap_ok, mason_dap = pcall(require, "mason-nvim-dap")
 
 return {
   setup = function()
     local dap = require("dap")
     local ui = require("dapui")
 
-    -- Install debuggers if they don't exist
-    debugger_installs.delve()
-    debugger_installs.node()
+    -- Debuggers are installed via https://github.com/jayp0521/mason-nvim-dap.nvim
+    -- debugger_installs.delve()
+    -- debugger_installs.node()
+    if not mason_dap_ok then
+      require("Notify")("Mason DAP not installed!", "error")
+      return
+    end
 
+    mason_dap.setup({
+      ensure_installed = { "delve", "node2" }
+    })
 
     -- Global DAP Settings
     dap.set_log_level("TRACE")

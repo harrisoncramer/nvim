@@ -89,7 +89,6 @@ local servers = {
 -- Setup Mason + LSPs + CMP
 require("lsp.cmp")
 mason_lspconfig.setup({ ensure_installed = servers, automatic_installation = true })
-mason.setup({})
 
 -- Setup each server
 for _, s in pairs(servers) do

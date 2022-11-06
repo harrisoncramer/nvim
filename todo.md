@@ -1,4 +1,4 @@
 # TODO
 
-- Figure out why register is filling up with garbage
-- Prevent gofmt from filling zero values in empty structs
+- Autocreate .sessions folder in git project root
+- Configure DAP for Javascript correctly
