@@ -5,6 +5,7 @@ local configurations = require("plugins.dap.configs")
 return {
   setup = function()
     local dap = require("dap")
+    local ui = require("dapui")
 
     -- Install debuggers if they don't exist
     debugger_installs.delve()
@@ -49,13 +50,18 @@ return {
     vim.keymap.set("n", "<localleader>dn", dap.step_over)
     vim.keymap.set("n", "<localleader>di", dap.step_into)
     vim.keymap.set("n", "<localleader>do", dap.step_out)
-    vim.keymap.set("n", "<localleader>dC", dap.clear_breakpoints)
+    vim.keymap.set("n", "<localleader>dC", function()
+      dap.clear_breakpoints()
+      require("notify")("Breakpoints cleared", "warn")
+    end)
     vim.keymap.set("n", "<localleader>de", function()
-      require("dapui").toggle()
-      require("dap").close()
+      ui.toggle()
+      dap.close()
+      dap.clear_breakpoints()
+      require("notify")("Debugger session ended", "warn")
     end)
 
-    require("dapui").setup({
+    ui.setup({
       icons = { expanded = "▾", collapsed = "▸" },
       mappings = {
         expand = { "<CR>", "<2-LeftMouse>" },
@@ -71,7 +77,7 @@ return {
           elements = {
             "scopes",
           },
-          size = 0.3,
+          size = 0.2,
           position = "right"
         },
         {
@@ -79,7 +85,7 @@ return {
             "breakpoints",
             "stacks",
           },
-          size = 0.3,
+          size = 0.2,
           position = "right",
         },
         {

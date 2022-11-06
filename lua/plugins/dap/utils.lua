@@ -73,15 +73,12 @@ function M.pick_process()
   end
   local co = coroutine.running()
   if co then
-    local res = coroutine.create(function()
+    return coroutine.create(function()
       local procs = M.get_processes()
       require('dap.ui').pick_one(procs, "Select process", label_fn, function(choice)
         coroutine.resume(co, choice and choice.pid or nil)
       end)
     end)
-
-    P(res)
-    return res
   else
     local procs = M.get_processes()
     local result = require('dap.ui').pick_one_sync(procs, "Select process", label_fn)
