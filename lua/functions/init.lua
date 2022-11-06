@@ -97,6 +97,7 @@ return {
       branch = branch:gsub("%W", "")
     end
     if vim.fn.isdirectory(".sessions") == 1 then
+      -- TODO: Check for sessions folder at root
       local session_path = ".sessions/session." .. branch .. ".vim"
       if u.file_exists(session_path) then
         vim.cmd(string.format("silent source %s", session_path))
@@ -105,16 +106,17 @@ return {
         vim.cmd(string.format("silent Obsession %s", session_path))
       end
     else
-      require("notify")("Making new sessions folder...", vim.log.levels.WARN)
-      job:new({
-        command = "mkdir",
-        args = { ".sessions" },
-        on_exit = function(_, exit_code)
-          if exit_code ~= 0 then
-            require("notify")("Could not make sessions folder", vim.log.levels.ERROR)
-          end
-        end,
-      }):start()
+      -- TODO: Make new session folder at root
+      -- require("notify")("Making new sessions folder...", vim.log.levels.WARN)
+      -- job:new({
+      --   command = "mkdir",
+      --   args = { ".sessions" },
+      --   on_exit = function(_, exit_code)
+      --     if exit_code ~= 0 then
+      --       require("notify")("Could not make sessions folder", vim.log.levels.ERROR)
+      --     end
+      --   end,
+      -- }):start()
     end
   end,
   run_script = function(script_name, args)

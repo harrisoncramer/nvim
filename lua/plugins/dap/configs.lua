@@ -1,3 +1,5 @@
+local pick_process = require("plugins.dap.utils")
+
 local function javascript(dap)
   dap.configurations.javascript = {
     {
@@ -58,14 +60,14 @@ local function go(dap)
     -- To attach to a running Go process:
     -- 1. Build the binary: go build -gcflags=all="-N -l"
     -- 2. Run it
-    -- 3. Get the process id of the process: ps aux | grep my-binary
-    -- 4. Add the PID to this file
+    -- 3. Use the pick_process function to see the PIDs of all processes
+    -- and choose the one of the running process
     {
       type = "go",
       name = "Attach",
       mode = "local",
       request = "attach",
-      processId = 60642,
+      processId = require('plugins.dap.utils').pick_process,
     },
     -- {
     --   type = "go",
