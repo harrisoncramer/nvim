@@ -4,7 +4,7 @@ local function javascript(dap)
   dap.configurations.javascript = {
     {
       type = 'node2';
-      name = 'Node',
+      name = 'Launch',
       request = 'launch';
       program = '${file}';
       cwd = vim.fn.getcwd();
@@ -12,17 +12,27 @@ local function javascript(dap)
       protocol = 'inspector';
       console = 'integratedTerminal';
     },
-    {
-      type = 'chrome',
-      name = 'Debug (Chrome)',
-      request = 'attach',
-      program = '${file}',
-      cwd = vim.fn.getcwd(),
-      sourceMaps = true,
-      protocol = 'inspector',
-      port = 9222,
-      webRoot = '${workspaceFolder}'
-    },
+    -- {
+    --   type = 'node2';
+    --   name = 'Attach',
+    --   request = 'attach';
+    --   program = '${file}';
+    --   cwd = vim.fn.getcwd();
+    --   sourceMaps = true;
+    --   protocol = 'inspector';
+    --   console = 'integratedTerminal';
+    -- },
+    -- {
+    --   type = 'chrome',
+    --   name = 'Debug (Chrome)',
+    --   request = 'attach',
+    --   program = '${file}',
+    --   cwd = vim.fn.getcwd(),
+    --   sourceMaps = true,
+    --   protocol = 'inspector',
+    --   port = 9222,
+    --   webRoot = '${workspaceFolder}'
+    -- },
   }
 end
 

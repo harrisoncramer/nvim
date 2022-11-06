@@ -17,7 +17,7 @@ return {
     end
 
     mason_dap.setup({
-      ensure_installed = { "delve", "node2" }
+      ensure_installed = { "delve", "node2", "firefox" }
     })
 
     -- Global DAP Settings
