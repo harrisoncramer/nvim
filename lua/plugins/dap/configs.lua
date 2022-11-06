@@ -1,5 +1,3 @@
-local pick_process = require("plugins.dap.utils")
-
 local function javascript(dap)
   dap.configurations.javascript = {
     {
@@ -12,16 +10,16 @@ local function javascript(dap)
       protocol = 'inspector';
       console = 'integratedTerminal';
     },
-    -- {
-    --   type = 'node2';
-    --   name = 'Attach',
-    --   request = 'attach';
-    --   program = '${file}';
-    --   cwd = vim.fn.getcwd();
-    --   sourceMaps = true;
-    --   protocol = 'inspector';
-    --   console = 'integratedTerminal';
-    -- },
+    {
+      type = 'node2';
+      name = 'Attach',
+      request = 'attach';
+      program = '${file}';
+      cwd = vim.fn.getcwd();
+      sourceMaps = true;
+      protocol = 'inspector';
+      console = 'integratedTerminal';
+    },
     -- {
     --   type = 'chrome',
     --   name = 'Debug (Chrome)',
