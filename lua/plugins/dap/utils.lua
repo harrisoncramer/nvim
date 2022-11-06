@@ -37,8 +37,7 @@ function M.get_processes()
   local unwanted_processes = {
     '-zsh',
     '/opt/homebrew/bin/nvim',
-    '/Users/harrisoncramer/.cache/gitstatus/gitstatusd-darwin-arm',
-    '/opt/homebrew/bin/nvim',
+    u.get_home() .. "/.cache/gitstatus/gitstatusd-darwin-arm64",
     'tmux'
   }
 
