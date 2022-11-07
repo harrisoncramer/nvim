@@ -32,9 +32,7 @@ return {
     -- To tell Neovim if it should launch a debug adapter or connect to one, and if
     -- so, how, you need to configure them via the `dap.adapters` table.
 
-    adapters.go(dap)
-    adapters.chrome(dap)
-    adapters.node2(dap)
+    adapters.setup(dap)
 
     -- ╭──────────────────────────────────────────────────────────╮
     -- │ Configuration                                            │

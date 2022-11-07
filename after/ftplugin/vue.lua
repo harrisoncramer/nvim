@@ -1,6 +1,5 @@
 vim.keymap.set("n", "<localleader>m", ":/methods: {<CR>")
 vim.keymap.set("n", "<localleader>c", ":/computed: {<CR>")
-vim.keymap.set("n", "<localleader>d", ":/data () {<CR>")
 vim.keymap.set("n", "<localleader>i", ":/import <CR>")
 vim.keymap.set("n", "<localleader>p", ":/props: {<CR>")
 vim.keymap.set("n", "<localleader>s", ":/<style <CR>")

@@ -1,21 +1,22 @@
-local function node2(dap)
+local function setup(dap)
   dap.adapters.node2 = {
     type = 'executable';
     command = 'node',
     args = { vim.fn.stdpath "data" .. '/mason/packages/node-debug2-adapter/out/src/nodeDebug.js' };
   }
-end
 
-local function chrome(dap)
   dap.adapters.chrome = {
     type = 'executable',
     command = 'node',
     args = { vim.fn.stdpath "data" .. '/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js' };
   }
-end
 
--- This is taken from https://github.com/leoluz/nvim-dap-go/blob/main/lua/dap-go.lua
-local function go(dap)
+  dap.adapters.firefox = {
+    type = 'executable',
+    command = 'node',
+    args = { vim.fn.stdpath "data" .. '/mason/packages/firefox-debug-adapter/dist/adapter.bundle.js' };
+  }
+
   dap.adapters.go = function(callback, config)
     local stdout = vim.loop.new_pipe(false)
     local stderr = vim.loop.new_pipe(false)
@@ -74,10 +75,9 @@ local function go(dap)
       end,
       100)
   end
+
 end
 
 return {
-  go = go,
-  node2 = node2,
-  chrome = chrome
+  setup = setup
 }
