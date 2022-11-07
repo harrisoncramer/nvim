@@ -1,3 +1,4 @@
+-- Launch or attach to a running Javascript process
 local function javascript(dap)
   dap.configurations.javascript = {
     {
@@ -20,49 +21,31 @@ local function javascript(dap)
       protocol = 'inspector';
       console = 'integratedTerminal';
     },
-    {
-      type = 'chrome',
-      name = 'Debug (Chrome)',
-      request = 'attach',
-      program = '${file}',
-      cwd = vim.fn.getcwd(),
-      sourceMaps = true,
-      protocol = 'inspector',
-      port = 9222,
-      webRoot = '${workspaceFolder}'
-    },
   }
 end
 
+-- Attach to a Chrome browser running in debug mode
+local chrome = {
+  type = 'chrome',
+  name = 'Debug (Chrome)',
+  request = 'attach',
+  program = 'app.js',
+  cwd = vim.fn.getcwd(),
+  sourceMaps = true,
+  protocol = 'inspector',
+  port = 9222,
+  webRoot = "${worspaceFolder}",
+}
+
 local function vue(dap)
   dap.configurations.vue = {
-    {
-      type = 'chrome',
-      name = 'Debug (Chrome)',
-      request = 'attach',
-      program = 'app.js',
-      cwd = vim.fn.getcwd(),
-      sourceMaps = true,
-      protocol = 'inspector',
-      port = 9222,
-      webRoot = "${worspaceFolder}",
-    }
+    chrome,
   }
 end
 
 local function javascriptreact(dap)
   dap.configurations.javascriptreact = {
-    {
-      type = 'chrome',
-      name = 'Debug (Chrome)',
-      request = 'attach',
-      program = 'app.js',
-      cwd = vim.fn.getcwd(),
-      sourceMaps = true,
-      protocol = 'inspector',
-      port = 9222,
-      webRoot = "${worspaceFolder}",
-    }
+    chrome,
   }
 end
 
@@ -81,11 +64,7 @@ local function go(dap)
       mode = "test",
       program = "./${relativeFileDirname}",
     },
-    -- To attach to a running Go process:
-    -- 1. Build the binary: go build -gcflags=all="-N -l"
-    -- 2. Run it
-    -- 3. Use the pick_process function to see the PIDs of all processes
-    -- and choose the one of the running process
+    -- Build the binary (go build -gcflags=all="-N -l") and run it + pick it
     {
       type = "go",
       name = "Attach",
@@ -93,12 +72,6 @@ local function go(dap)
       request = "attach",
       processId = require('plugins.dap.utils').pick_process,
     },
-    -- {
-    --   type = "go",
-    --   name = "Attach remote",
-    --   mode = "remote",
-    --   request = "attach",
-    -- },
   }
 end
 
