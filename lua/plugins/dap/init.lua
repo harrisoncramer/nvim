@@ -64,9 +64,9 @@ return {
       require("notify")("Breakpoints cleared", "warn")
     end)
     vim.keymap.set("n", "<localleader>de", function()
+      dap.clear_breakpoints()
       ui.toggle()
       dap.close()
-      dap.clear_breakpoints()
       require("notify")("Debugger session ended", "warn")
     end)
 
