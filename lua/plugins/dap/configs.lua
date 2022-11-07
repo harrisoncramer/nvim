@@ -20,22 +20,38 @@ local function javascript(dap)
       protocol = 'inspector';
       console = 'integratedTerminal';
     },
-    -- {
-    --   type = 'chrome',
-    --   name = 'Debug (Chrome)',
-    --   request = 'attach',
-    --   program = '${file}',
-    --   cwd = vim.fn.getcwd(),
-    --   sourceMaps = true,
-    --   protocol = 'inspector',
-    --   port = 9222,
-    --   webRoot = '${workspaceFolder}'
-    -- },
+    {
+      type = 'chrome',
+      name = 'Debug (Chrome)',
+      request = 'attach',
+      program = '${file}',
+      cwd = vim.fn.getcwd(),
+      sourceMaps = true,
+      protocol = 'inspector',
+      port = 9222,
+      webRoot = '${workspaceFolder}'
+    },
   }
 end
 
 local function vue(dap)
   dap.configurations.vue = {
+    {
+      type = 'chrome',
+      name = 'Debug (Chrome)',
+      request = 'attach',
+      program = 'app.js',
+      cwd = vim.fn.getcwd(),
+      sourceMaps = true,
+      protocol = 'inspector',
+      port = 9222,
+      webRoot = "${worspaceFolder}",
+    }
+  }
+end
+
+local function javascriptreact(dap)
+  dap.configurations.javascriptreact = {
     {
       type = 'chrome',
       name = 'Debug (Chrome)',
@@ -88,6 +104,7 @@ end
 
 return {
   javascript = javascript,
+  javascriptreact = javascriptreact,
   vue = vue,
   go = go
 }

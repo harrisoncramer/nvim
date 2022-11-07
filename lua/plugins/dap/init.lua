@@ -45,6 +45,7 @@ return {
 
     configurations.javascript(dap)
     configurations.vue(dap)
+    configurations.javascriptreact(dap)
     configurations.go(dap)
 
     vim.keymap.set("n", "<localleader>ds", function()
