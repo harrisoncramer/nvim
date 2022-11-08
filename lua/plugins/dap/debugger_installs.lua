@@ -31,8 +31,8 @@ local delve = function()
   end
 end
 
--- Install NodeJS Debugger if it doesn't exist
-local node = function()
+-- Install VSCode Debugger if it doesn't exist
+local vscode = function()
   local node_debug_folder = u.get_home() .. "/dev/microsoft/vscode-node-debug2"
   if vim.fn.isdirectory(node_debug_folder) == 0 then
     if not async_ok or not job_okay then
@@ -62,5 +62,5 @@ end
 
 return {
   delve = delve,
-  node = node,
+  vscode = vscode
 }

@@ -2,27 +2,25 @@
 local adapters = require("plugins.dap.adapters")
 local configurations = require("plugins.dap.configs")
 local mason_dap_ok, mason_dap = pcall(require, "mason-nvim-dap")
+local dap_vscode_ok, dap_vscode = pcall(require, "dap-vscode-js")
 
 return {
   setup = function()
     local dap = require("dap")
     local ui = require("dapui")
 
-    -- Debuggers are installed via https://github.com/jayp0521/mason-nvim-dap.nvim
-    -- debugger_installs.delve()
-    -- debugger_installs.node()
-    if not mason_dap_ok then
-      require("Notify")("Mason DAP not installed!", "error")
+    if not (mason_dap_ok and dap_vscode_ok) then
       return
     end
 
+    -- ╭──────────────────────────────────────────────────────────╮
+    -- │ Debuggers                                                │
+    -- ╰──────────────────────────────────────────────────────────╯
+    -- We need the actual programs to connect to running instances of our code.
+    -- Debuggers are installed via https://github.com/jayp0521/mason-nvim-dap.nvim
     mason_dap.setup({
-      ensure_installed = { "delve", "node2", "firefox" }
+      ensure_installed = { "delve", "node2", "js" }
     })
-
-    -- Global DAP Settings
-    dap.set_log_level("TRACE")
-    vim.fn.sign_define('DapBreakpoint', { text = '🐞' })
 
     -- ╭──────────────────────────────────────────────────────────╮
     -- │ Adapters                                                 │
@@ -33,6 +31,14 @@ return {
     -- so, how, you need to configure them via the `dap.adapters` table.
 
     adapters.setup(dap)
+
+    -- The VSCode Debugger requires a special setup
+    dap_vscode.setup({
+      adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+      debugger_path = vim.fn.stdpath("data") .. "/mason/bin/js-debug-adapter", -- Path to VSCode Debugger
+      debugger_cmd = { "js-debug-adapter" }
+    })
+
 
     -- ╭──────────────────────────────────────────────────────────╮
     -- │ Configuration                                            │
@@ -46,6 +52,9 @@ return {
     configurations.javascriptreact(dap)
     configurations.go(dap)
 
+    -- Global DAP Settings
+    dap.set_log_level("TRACE")
+    vim.fn.sign_define('DapBreakpoint', { text = '🐞' })
     vim.keymap.set("n", "<localleader>ds", function()
       dap.continue()
       require("dapui").toggle()
@@ -68,6 +77,7 @@ return {
       require("notify")("Debugger session ended", "warn")
     end)
 
+    -- UI Settings
     ui.setup({
       icons = { expanded = "▾", collapsed = "▸" },
       mappings = {

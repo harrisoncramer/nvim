@@ -21,58 +21,25 @@ local function javascript(dap)
       protocol = 'inspector';
       console = 'integratedTerminal';
     },
-    -- {
-    --   type = "node2",
-    --   request = "attach",
-    --   name = "Debug Test (Vitest)",
-    --   cwd = vim.fn.getcwd(),
-    --   autoAttachChildProcesses = true,
-    --   skipFiles = { "<node_internals>/**", "**/node_modules/**" },
-    --   program = "${workspaceFolder}/node_modules/vitest/vitest.mjs",
-    --   args = { "run", "${relativeFile}" },
-    --   -- smartStep = true,
-    --   console = "integratedTerminal"
-    -- }
   }
 end
 
--- Attach to a Chrome browser running in debug mode
-local chrome = {
-  name = 'Chrome',
-  type = 'chrome',
-  request = 'attach',
-  program = 'app.js',
-  cwd = vim.fn.getcwd(),
-  sourceMaps = true,
-  protocol = 'inspector',
-  port = 9222,
-  outDir = "${workspaceRoot}/dist",
+local chrome_debugger = {
+  type = "pwa-chrome",
+  request = "launch",
+  name = "Chrome",
   webRoot = "${workspaceFolder}",
-}
-
-local firefox = {
-  name = 'Firefox',
-  type = 'firefox',
-  request = 'attach',
-  reAttach = true,
-  sourceMaps = true,
-  port = 9222,
-  url = "https://app.crossbeam-dev.com",
-  webRoot = '${workspaceFolder}/src',
-  firefoxExecutable = '/usr/bin/firefox'
 }
 
 local function vue(dap)
   dap.configurations.vue = {
-    chrome,
-    firefox
+    chrome_debugger
   }
 end
 
 local function javascriptreact(dap)
   dap.configurations.javascriptreact = {
-    chrome,
-    firefox,
+    chrome_debugger
   }
 end
 

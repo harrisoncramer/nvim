@@ -5,18 +5,6 @@ local function setup(dap)
     args = { vim.fn.stdpath "data" .. '/mason/packages/node-debug2-adapter/out/src/nodeDebug.js' };
   }
 
-  dap.adapters.chrome = {
-    type = 'executable',
-    command = 'node',
-    args = { vim.fn.stdpath "data" .. '/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js' };
-  }
-
-  dap.adapters.firefox = {
-    type = 'executable',
-    command = 'node',
-    args = { vim.fn.stdpath "data" .. '/mason/packages/firefox-debug-adapter/dist/adapter.bundle.js' };
-  }
-
   dap.adapters.go = function(callback, config)
     local stdout = vim.loop.new_pipe(false)
     local stderr = vim.loop.new_pipe(false)
