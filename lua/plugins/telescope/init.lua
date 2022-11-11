@@ -27,7 +27,7 @@ local function OpenFileInFileBrowser()
   FbOpen(file_path, true)
 end
 
-local function OpenFolderInFileBrowser()
+local function OpenDirectoryInFileBrowser()
   local file_path = vim.fn.expand("%")
   FbOpen(file_path, false)
 end
@@ -195,7 +195,7 @@ vim.keymap.set("n", "<leader>tgb", git_branches, {})
 vim.keymap.set("n", "<leader>tf", grep_string, {})
 vim.keymap.set("v", "<leader>tf", grep_string_visual, {})
 vim.keymap.set("n", "<C-h>", OpenFileInFileBrowser)
-vim.keymap.set("n", "<leader>;;", OpenFolderInFileBrowser)
+vim.keymap.set("n", "<leader>;;", OpenDirectoryInFileBrowser)
 
 -- telescope.load_extension("fzf")
 telescope.load_extension("file_browser")

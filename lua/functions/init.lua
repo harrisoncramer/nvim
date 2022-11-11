@@ -15,7 +15,7 @@ end
 
 -- These are functions that could theoretically be called by the user
 -- although they are generally used by other commands (in the commands.lua file)
--- or are used by mappings (in the mappings folder)
+-- or are used by mappings (in the mappings directory)
 
 return {
   capture = function(cmd, raw)
@@ -97,7 +97,7 @@ return {
       branch = branch:gsub("%W", "")
     end
     if vim.fn.isdirectory(".sessions") == 1 then
-      -- TODO: Check for sessions folder at root
+      -- TODO: Check for sessions directory at root
       local session_path = ".sessions/session." .. branch .. ".vim"
       if u.file_exists(session_path) then
         vim.cmd(string.format("silent source %s", session_path))
@@ -106,14 +106,14 @@ return {
         vim.cmd(string.format("silent Obsession %s", session_path))
       end
     else
-      -- TODO: Make new session folder at root
-      -- require("notify")("Making new sessions folder...", vim.log.levels.WARN)
+      -- TODO: Make new session directory at root
+      -- require("notify")("Making new sessions directory...", vim.log.levels.WARN)
       -- job:new({
       --   command = "mkdir",
       --   args = { ".sessions" },
       --   on_exit = function(_, exit_code)
       --     if exit_code ~= 0 then
-      --       require("notify")("Could not make sessions folder", vim.log.levels.ERROR)
+      --       require("notify")("Could not make sessions directory", vim.log.levels.ERROR)
       --     end
       --   end,
       -- }):start()

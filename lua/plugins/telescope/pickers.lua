@@ -30,7 +30,7 @@ local stash_filter = function()
 	}):find()
 end
 
-local live_grep_in_folder = function(opts)
+local live_grep_in_directory = function(opts)
 	opts = opts or {}
 	local data = {}
 	scan.scan_dir(vim.loop.cwd(), {
@@ -43,7 +43,7 @@ local live_grep_in_folder = function(opts)
 	})
 	table.insert(data, 1, "." .. os_sep)
 	pickers.new(opts, {
-		prompt_title = "Folders for Live Grep",
+		prompt_title = "Directories for Live Grep",
 		finder = finders.new_table({ results = data, entry_maker = make_entry.gen_from_file(opts) }),
 		previewer = conf.file_previewer(opts),
 		sorter = conf.file_sorter(opts),
@@ -113,5 +113,5 @@ function make_entry.gen_from_git_stash(opts)
 	end
 end
 
-vim.keymap.set("n", "<C-g>", live_grep_in_folder, {})
+vim.keymap.set("n", "<C-g>", live_grep_in_directory, {})
 vim.keymap.set("n", "<leader>tgs", stash_filter, {})

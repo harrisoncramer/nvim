@@ -33,8 +33,8 @@ end
 
 -- Install VSCode Debugger if it doesn't exist
 local vscode = function()
-  local node_debug_folder = u.get_home() .. "/dev/microsoft/vscode-node-debug2"
-  if vim.fn.isdirectory(node_debug_folder) == 0 then
+  local node_debug_dir = u.get_home() .. "/dev/microsoft/vscode-node-debug2"
+  if vim.fn.isdirectory(node_debug_dir) == 0 then
     if not async_ok or not job_okay then
       require("notify")("Plenary not installed, cannot install NodeJS Debugger", "error")
       return
