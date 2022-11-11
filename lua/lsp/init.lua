@@ -63,12 +63,6 @@ end
 
 local normal_capabilities = vim.lsp.protocol.make_client_capabilities()
 
--- From nvim-ufo
-normal_capabilities.textDocument.foldingRange = {
-  dynamicRegistration = false,
-  lineFoldingOnly = true,
-}
-
 -- cmp_nvim_lsp.update_capabilities is deprecated, use cmp_nvim_lsp.default_capabilities
 local capabilities = cmp_nvim_lsp.default_capabilities(normal_capabilities)
 
