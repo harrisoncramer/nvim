@@ -60,7 +60,6 @@ packer.startup(function(use)
   use("hrsh7th/cmp-nvim-lsp")
   use("hrsh7th/cmp-buffer")
   use("hrsh7th/cmp-path")
-  use("hrsh7th/cmp-cmdline")
   use("nvim-lua/plenary.nvim")
   use("rebelot/kanagawa.nvim") -- In colors.lua file
   use({
@@ -165,4 +164,5 @@ packer.startup(function(use)
     },
     setup("plugins.neotest", "neotest")
   }
+  use { 'ggandor/leap.nvim', setup("plugins.leap", "leap") }
 end)
