@@ -11,6 +11,13 @@ return {
     require("lspconfig").gopls.setup({
       on_attach = on_attach,
       capabilities = capabilities,
+      settings = {
+        gopls = {
+          analyses = {
+            fillstruct = false
+          }
+        }
+      }
     })
   end,
   goimports = function(timeout_ms)
@@ -27,6 +34,9 @@ return {
     end
 
     for _, val in pairs(result) do
+      if val.result == nil then
+        goto continue
+      end
       local action = val.result[1]
       if action == nil then
         goto continue
