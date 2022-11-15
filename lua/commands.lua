@@ -60,7 +60,7 @@ vim.api.nvim_create_user_command("Diff", function(opts)
   vim.api.nvim_feedkeys("sh", "n", false)
 end, { nargs = "*" })
 
--- Load quickfix lists! They can be saved with :w to .qf folder, which is globally gitignored
+-- Load quickfix lists! They can be saved with :w to .qf directory, which is globally gitignored
 vim.cmd([[
   if exists('g:loaded_hqf')
       finish

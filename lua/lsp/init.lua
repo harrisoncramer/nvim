@@ -38,6 +38,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
   vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
   vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
+  vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, {})
   vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
   vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, {})
   vim.keymap.set("n", "<leader>]", function()
@@ -62,12 +63,6 @@ local on_attach = function(client, bufnr)
 end
 
 local normal_capabilities = vim.lsp.protocol.make_client_capabilities()
-
--- From nvim-ufo
-normal_capabilities.textDocument.foldingRange = {
-  dynamicRegistration = false,
-  lineFoldingOnly = true,
-}
 
 -- cmp_nvim_lsp.update_capabilities is deprecated, use cmp_nvim_lsp.default_capabilities
 local capabilities = cmp_nvim_lsp.default_capabilities(normal_capabilities)
