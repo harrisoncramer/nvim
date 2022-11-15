@@ -18,9 +18,6 @@ vim.keymap.set("n", "<C-x>", ":bp <bar> bd#<CR>")
 -- Shortcuts
 vim.keymap.set("n", "R", require("functions").start_replace, {})
 
--- LSP
-vim.keymap.set("n", "<leader>F", vim.lsp.buf.formatting, {})
-
 -- Neovim
 vim.keymap.set("n", "<leader>vv", ":e $MYVIMRC<cr>")
 
