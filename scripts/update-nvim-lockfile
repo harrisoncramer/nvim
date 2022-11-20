@@ -4,7 +4,7 @@ snapshot_time="${1}"
 config_path="${2}"
 
 if [[ $(uname) == "Darwin" ]]; then
-  nvim --version > "$config_path/lockfiles/mac/nvim_snapshots/$snapshot_time"
+  $NVIM --version > "$config_path/lockfiles/mac/nvim_snapshots/$snapshot_time"
 else
-  nvim --version > "$config_path/lockfiles/linux/nvim_snapshots/$snapshot_time"
+  $NVIM --version > "$config_path/lockfiles/linux/nvim_snapshots/$snapshot_time"
 fi
