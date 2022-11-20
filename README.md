@@ -1,6 +1,6 @@
 # Neovim Configuration
 
-Version: NVIM v0.8.0-dev-1152-g14610332b
+Versions: See `lockfiles` for current NVIM + plugin dependencies
 
 ![The editor](https://hjc-public.s3.amazonaws.com/nvim3.png)
 ![Terminal integration](https://hjc-public.s3.amazonaws.com/nvim2.png)
