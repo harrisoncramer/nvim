@@ -74,10 +74,17 @@ local function go(dap)
     -- Build the binary (go build -gcflags=all="-N -l") and run it + pick it
     {
       type = "go",
-      name = "Attach",
+      name = "Attach (Pick Process)",
       mode = "local",
       request = "attach",
       processId = require('plugins.dap.utils').pick_process,
+    },
+    {
+      type = "go",
+      name = "Attach (127.0.0.1:9080)",
+      mode = "remote",
+      request = "attach",
+      port = "9080"
     },
   }
 end
