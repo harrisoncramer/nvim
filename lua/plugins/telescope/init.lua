@@ -11,9 +11,9 @@ local builtin = require("telescope.builtin")
 local function FbOpen(entry, open_file)
   local entry_path = u.dirname(entry)
   require("telescope").extensions.file_browser.file_browser({ path = entry_path })
-  if open_file then
-    vim.api.nvim_input(u.basename(entry))
-  end
+  -- if open_file then
+  --   vim.api.nvim_input(u.basename(entry))
+  -- end
 end
 
 local function OpenInFileBrowser(prompt_bufnr)
