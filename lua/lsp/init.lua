@@ -1,5 +1,5 @@
 local cmp_nvim_lsp_status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-local mason_status_ok, mason = pcall(require, "mason")
+local mason_status_ok, _ = pcall(require, "mason")
 local mason_lspconfig_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
 local lsp_format_ok, lsp_format = pcall(require, "lsp-format")
 
@@ -118,3 +118,8 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon })
   -- vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+
+-- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "solid",
+})
