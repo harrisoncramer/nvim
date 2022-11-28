@@ -60,6 +60,15 @@ local on_attach = function(client, bufnr)
   if client.server_capabilities.colorProvider then
     require("lsp/colorizer").buf_attach(bufnr, { single_column = false, debounce = 500 })
   end
+
+  -- https://github.com/ray-x/lsp_signature.nvim
+  -- signature_help.on_attach({
+  --   bind = true,
+  --   hint_enable = false,
+  --   handler_opts = {
+  --     border = "solid",
+  --   }
+  -- }, bufnr)
 end
 
 local normal_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -121,5 +130,10 @@ end
 
 -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "solid",
+})
+
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+  vim.lsp.handlers.signature_help, {
   border = "solid",
 })
