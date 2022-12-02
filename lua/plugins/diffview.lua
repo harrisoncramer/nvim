@@ -76,6 +76,7 @@ return {
           folder_statuses = "only_folded", -- One of 'never', 'only_folded' or 'always'.
         },
       },
+      enhanced_diff_hl = true, -- See |diffview-config-enhanced_diff_hl|
       default_args = { -- Default args prepended to the arg-list for the listed commands
         DiffviewOpen = {},
         DiffviewFileHistory = {
