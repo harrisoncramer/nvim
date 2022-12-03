@@ -48,14 +48,14 @@ return {
     vim.keymap.set("n", "<leader>gR", function()
       local isDiff = vim.fn.getwinvar(nil, "&diff")
       local bufName = vim.api.nvim_buf_get_name(0)
-      -- local has_develop = u.has_branch("develop") -- TODO: Write this function
-      -- if not has_develop then
-      --   require("notify")('No develop branch, cannot review!', vim.log.levels.ERROR)
-      --   return
-      -- end
+      local has_develop = u.branch_exists("develop") -- TODO: Write this function
+      if not has_develop then
+        require("notify")('No develop branch, cannot review!', "error")
+        return
+      end
       if isDiff ~= 0 or u.string_starts(bufName, "diff") then
-        -- vim.cmd("tabclose")
-        -- vim.cmd("tabprev")
+        vim.cmd("tabclose")
+        vim.cmd("tabprev")
       else
         vim.cmd("DiffviewOpen develop")
         u.press_enter()

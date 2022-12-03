@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
       args = { "-w", file },
       on_exit = function(_, exit_code)
         if exit_code ~= 0 then
-          require("notify")('Could not format file!', vim.log.levels.ERROR)
+          require("notify")('Could not format file!', "error")
           return
         end
       end,

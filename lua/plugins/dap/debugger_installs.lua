@@ -20,7 +20,7 @@ local delve = function()
       args = { "install", "github.com/go-delve/delve/cmd/dlv@latest" },
       on_exit = function(_, exit_code)
         if exit_code ~= 0 then
-          require("notify")("Could not install delve", vim.log.levels.ERROR)
+          require("notify")("Could not install delve", "error")
           return
         end
         require("notify")("Delve installed", vim.log.levels.INFO)
@@ -50,7 +50,7 @@ local vscode = function()
       args = {},
       on_exit = function(_, exit_code)
         if exit_code ~= 0 then
-          require("notify")("Could not install node debugger", vim.log.levels.ERROR)
+          require("notify")("Could not install node debugger", "error")
           return
         end
         require("notify")("Node debugger installed", vim.log.levels.INFO)

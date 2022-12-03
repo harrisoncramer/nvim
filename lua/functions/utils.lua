@@ -137,12 +137,24 @@ return {
     local is_git_branch = io.popen("git rev-parse --is-inside-work-tree 2>/dev/null"):read("*a")
     if is_git_branch == "true\n" then
       for line in io.popen("git branch 2>/dev/null"):lines() do
-        local m = line:match("%* (.+)$")
-        if m then
-          return m
+        local current_branch = line:match("%* (.+)$")
+        if current_branch then
+          return current_branch
         end
       end
     end
+  end,
+  branch_exists = function(b)
+    local is_git_branch = io.popen("git rev-parse --is-inside-work-tree 2>/dev/null"):read("*a")
+    if is_git_branch == "true\n" then
+      for line in io.popen("git branch 2>/dev/null"):lines() do
+        line = line:gsub("%s+", "")
+        if line == b then
+          return true
+        end
+      end
+    end
+    return false
   end,
   file_exists = function(name)
     local f = io.open(name, "r")

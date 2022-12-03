@@ -21,18 +21,30 @@ local function javascript(dap)
       protocol = 'inspector';
       console = 'integratedTerminal';
     },
+    {
+      name = "Vitest Debug",
+      type = "pwa-node",
+      request = "launch",
+      autoAttachChildProcesses = true,
+      runtimeArgs = { "${workspaceFolder}/node_modules/.bin/vitest", "--no-threads", "--inspect-brk", "${file}" },
+      skipFiles = { "<node_internals>/**", "**/node_modules/**" },
+      console = "integratedTerminal",
+      integratedTerminalOptions = "neverOpen",
+      rootPath = "${workspaceFolder}",
+      cwd = "${workspaceFolder}",
+    }
     -- {
+    --   name = "Vitest Debug (Breakpoints Not Respected)",
     --   type = "pwa-node",
     --   request = "launch",
-    --   name = "Vitest Debug (Breakpoints not Respected)",
     --   autoAttachChildProcesses = true,
     --   runtimeExecutable = "node",
     --   runtimeArgs = { "${workspaceFolder}/node_modules/vitest/vitest.mjs", "--inspect-brk", "${file}" },
     --   skipFiles = { "<node_internals>/**", "**/node_modules/**" },
+    --   console = "integratedTerminal",
+    --   integratedTerminalOptions = "neverOpen",
     --   rootPath = "${workspaceFolder}",
     --   cwd = "${workspaceFolder}",
-    --   smartStep = true,
-    --   console = "integratedTerminal"
     -- }
   }
 end

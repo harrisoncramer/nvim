@@ -113,7 +113,7 @@ return {
       --   args = { ".sessions" },
       --   on_exit = function(_, exit_code)
       --     if exit_code ~= 0 then
-      --       require("notify")("Could not make sessions directory", vim.log.levels.ERROR)
+      --       require("notify")("Could not make sessions directory", "error")
       --     end
       --   end,
       -- }):start()
@@ -168,7 +168,7 @@ return {
   end,
   screenshot = function()
     if not async_job_ok then
-      require("notify")("Plenary is not installed!", vim.log.levels.ERROR)
+      require("notify")("Plenary is not installed!", "error")
     end
 
     local language = vim.bo.filetype
@@ -178,7 +178,7 @@ return {
       args = { '--from-clipboard', '-l', language, '--to-clipboard', '--line-offset', line_number },
       on_exit = function(_, exit_code)
         if exit_code ~= 0 then
-          require("notify")("Could not create screenshot! Do you have silicon installed?", vim.log.levels.ERROR)
+          require("notify")("Could not create screenshot! Do you have silicon installed?", "error")
           return
         end
         require("notify")("Screenshot copied to clipboard", vim.log.levels.INFO)
