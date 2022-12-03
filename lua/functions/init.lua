@@ -80,6 +80,11 @@ return {
     u.open_url("https://calendar.google.com/")
   end,
   create_or_source_obsession = function()
+    local is_git = u.file_exists(".git")
+    if not is_git then
+      return
+    end
+
     local has_obsession = vim.fn.exists(":Obsession")
     if has_obsession == 0 then
       require("notify")("Obsesssion is not installed", "warn")
