@@ -1,3 +1,4 @@
+local actions = require("diffview.actions")
 local u = require("functions.utils")
 local diffview = require("diffview")
 
@@ -43,8 +44,8 @@ return {
       end
     end)
 
-    -- Toggle viewing changes against develop (will break if no develop branch present)
-    vim.keymap.set("n", "<leader>gr", function()
+    -- Review changes against develop (will break if no develop branch present)
+    vim.keymap.set("n", "<leader>gR", function()
       local isDiff = vim.fn.getwinvar(nil, "&diff")
       local bufName = vim.api.nvim_buf_get_name(0)
       -- local has_develop = u.has_branch("develop") -- TODO: Write this function
@@ -53,8 +54,8 @@ return {
       --   return
       -- end
       if isDiff ~= 0 or u.string_starts(bufName, "diff") then
-        vim.cmd("tabclose")
-        vim.cmd("tabprev")
+        -- vim.cmd("tabclose")
+        -- vim.cmd("tabprev")
       else
         vim.cmd("DiffviewOpen develop")
         u.press_enter()
@@ -92,7 +93,7 @@ return {
       },
       hooks = {}, -- See ':h diffview-config-hooks'
       key_bindings = {
-        disable_defaults = false, -- Disable the default key bindings
+        disable_defaults = true, -- Disable the default key bindings
         -- The `view` bindings are active in the diff buffers, only when the current
         -- tabpage is a Diffview.
         view = {
@@ -109,7 +110,6 @@ return {
           ["<down>"] = cb("next_entry"),
           ["k"] = cb("prev_entry"), -- Bring the cursor to the previous file entry.
           ["<up>"] = cb("prev_entry"),
-          ["<cr>"] = cb("select_entry"), -- Open the diff for the selected entry.
           ["o"] = cb("select_entry"),
           ["<2-LeftMouse>"] = cb("select_entry"),
           ["-"] = cb("toggle_stage_entry"), -- Stage / unstage the selected entry.
@@ -117,16 +117,15 @@ return {
           ["U"] = cb("unstage_all"), -- Unstage all entries.
           ["X"] = cb("restore_entry"), -- Restore entry to the state on the left side.
           ["R"] = cb("refresh_files"), -- Update stats and entries in the file list.
+          ["<C-u>"] = actions.scroll_view(-20),
+          ["<C-d>"] = actions.scroll_view(20),
           ["<C-n>"] = cb("select_next_entry"),
           ["<C-p>"] = cb("select_prev_entry"),
           ["gf"] = cb("goto_file"),
-          ["<CR>"] = cb("goto_file_edit"),
-          ["<C-w><C-f>"] = cb("goto_file_split"),
-          ["<C-w>gf"] = cb("goto_file_tab"),
+          ["<cr>"] = cb("goto_file_tab"),
           ["i"] = cb("listing_style"), -- Toggle between 'list' and 'tree' views
           ["f"] = cb("toggle_flatten_dirs"), -- Flatten empty subdirectories in tree listing style.
           ["<leader>e"] = cb("focus_files"),
-          ["<leader>b"] = cb("toggle_files"),
         },
         file_history_panel = {
           ["g!"] = cb("options"), -- Open the option panel
