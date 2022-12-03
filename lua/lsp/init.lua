@@ -98,7 +98,7 @@ mason_lspconfig.setup({ ensure_installed = servers, automatic_installation = tru
 for _, s in pairs(servers) do
   local server_config_ok, mod = pcall(require, "lsp.servers." .. s)
   if not server_config_ok then
-    print("The LSP '" .. s .. "' does not have a config.")
+    require("notify")("The LSP '" .. s .. "' does not have a config.", "warn")
   else
     mod.setup(on_attach, capabilities)
   end

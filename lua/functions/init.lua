@@ -39,7 +39,7 @@ return {
       package.loaded[value] = nil
       local status = pcall(require, value)
       if not status then
-        print(value .. " is not available.")
+        require("notify")(value .. " is not available.", "warn")
       end
     end
   end,
@@ -53,7 +53,7 @@ return {
     package.loaded[module_name] = nil
     local status = pcall(require, module_name)
     if not status then
-      print(module_name .. " is not available.")
+      require("notify")(module_name .. " is not available.", "error")
     end
   end,
   shortcut = function()
@@ -62,7 +62,7 @@ return {
     branch = u.get_branch_name() .. "/"
 
     if not string.find(branch, "sc%-") then
-      print("Not a shortcut branch")
+      require("notify")("Not a shortcut branch", "error")
       return
     end
 
@@ -82,7 +82,7 @@ return {
   create_or_source_obsession = function()
     local has_obsession = vim.fn.exists(":Obsession")
     if has_obsession == 0 then
-      print("Obsesssion is not installed")
+      require("notify")("Obsesssion is not installed", "warn")
       return
     end
 
@@ -106,17 +106,16 @@ return {
         vim.cmd(string.format("silent Obsession %s", session_path))
       end
     else
-      -- TODO: Make new session directory at root
-      -- require("notify")("Making new sessions directory...", vim.log.levels.WARN)
-      -- job:new({
-      --   command = "mkdir",
-      --   args = { ".sessions" },
-      --   on_exit = function(_, exit_code)
-      --     if exit_code ~= 0 then
-      --       require("notify")("Could not make sessions directory", "error")
-      --     end
-      --   end,
-      -- }):start()
+      require("notify")("Creating sessions directory...", "warn")
+      job:new({
+        command = "mkdir",
+        args = { vim.fn.getcwd() .. "/" .. ".sessions" },
+        on_exit = function(_, exit_code)
+          if exit_code ~= 0 then
+            require("notify")("Could not make sessions directory", "error")
+          end
+        end,
+      }):start()
     end
   end,
   run_script = function(script_name, args)
@@ -164,7 +163,7 @@ return {
       end
     end
 
-    print("BufOnly: " .. deleted .. " deleted buffer(s), " .. modified .. " modified buffer(s)")
+    require("notify")("BufOnly: " .. deleted .. " deleted buffer(s), " .. modified .. " modified buffer(s)")
   end,
   screenshot = function()
     if not async_job_ok then

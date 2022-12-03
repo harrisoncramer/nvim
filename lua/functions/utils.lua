@@ -210,7 +210,7 @@ return {
   open_file_in_file_browser = function(entry, bufnr)
     local path_ok, path = pcall(require, "cmp_nvim_lsp")
     if not path_ok then
-      print("Plenary is not installed")
+      require("notify")("Plenary is not installed", "error")
       return
     end
 

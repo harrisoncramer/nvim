@@ -22,7 +22,7 @@ local function setup(dap)
       -- dlv debug -l 127.0.0.1:38697 --headless ./cmd/main.go
       --
       local msg = string.format("connecting to server at '%s'...", addr)
-      print(msg)
+      require("notify")(msg)
     else
       local opts = {
         stdio = { nil, stdout, stderr },
@@ -34,7 +34,7 @@ local function setup(dap)
         stderr:close()
         handle:close()
         if code ~= 0 then
-          print('dlv exited with code', code)
+          require("notify")('dlv exited with code: ' .. code, "error")
         end
       end)
       assert(handle, 'Error running dlv: ' .. tostring(pid_or_err))
