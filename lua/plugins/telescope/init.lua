@@ -134,6 +134,7 @@ telescope.setup({
   },
   pickers = {
     live_grep = {
+      use_regex = false,
       only_sort_text = true,
       prompt_prefix = " ",
       mappings = {
@@ -191,7 +192,7 @@ vim.keymap.set("n", "<leader>tf", grep_string, {})
 vim.keymap.set("v", "<leader>tf", grep_string_visual, {})
 vim.keymap.set("n", "<C-h>", OpenFileInFileBrowser)
 
--- telescope.load_extension("fzf")
+telescope.load_extension("fzf")
 telescope.load_extension("file_browser")
 
 -- Custom Pickers
