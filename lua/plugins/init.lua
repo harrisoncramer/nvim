@@ -61,6 +61,13 @@ packer.startup(function(use)
   use("hrsh7th/cmp-nvim-lsp")
   use("hrsh7th/cmp-buffer")
   use("hrsh7th/cmp-path")
+  -- Visual Studio Code Debugger Requires Special Installation
+  use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
+  use {
+    "microsoft/vscode-js-debug",
+    opt = true,
+    run = "npm install --legacy-peer-deps && npm run compile"
+  }
   use("nvim-lua/plenary.nvim")
   use("rebelot/kanagawa.nvim") -- In colors.lua file
   use({
@@ -153,7 +160,6 @@ packer.startup(function(use)
   use({ "AckslD/messages.nvim", config = setup("plugins.messages", "messages") })
   use({ 'djoshea/vim-autoread' })
   use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" }, config = setup("plugins.dap", "dap") })
-  use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
   use {
     "nvim-neotest/neotest",
     requires = {
