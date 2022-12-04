@@ -59,6 +59,7 @@ return {
     vim.keymap.set("n", "<localleader>ds", function()
       dap.continue()
       require("dapui").toggle()
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
     end)
 
     vim.keymap.set("n", "<localleader>dl", require("dap.ui.widgets").hover)
@@ -75,6 +76,7 @@ return {
       dap.clear_breakpoints()
       ui.toggle()
       dap.terminate()
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
       require("notify")("Debugger session ended", "warn")
     end)
 
@@ -91,20 +93,20 @@ return {
       },
       expand_lines = vim.fn.has("nvim-0.7"),
       layouts = {
+        -- {
+        --   elements = {
+        --     "breakpoints",
+        --     "stacks",
+        --   },
+        --   size = 0.2,
+        --   position = "right",
+        -- },
         {
           elements = {
             "scopes",
           },
-          size = 0.2,
+          size = 0.3,
           position = "right"
-        },
-        {
-          elements = {
-            "breakpoints",
-            "stacks",
-          },
-          size = 0.2,
-          position = "right",
         },
         {
           elements = {
