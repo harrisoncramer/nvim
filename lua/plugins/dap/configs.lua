@@ -1,52 +1,45 @@
--- Launch or attach to a running Javascript process
+-- Launch or attach to a running Javascript/Typescript process
+local jsOrTs = {
+  {
+    type = 'node2';
+    name = 'Launch',
+    request = 'launch';
+    program = '${file}';
+    cwd = vim.fn.getcwd();
+    sourceMaps = true;
+    protocol = 'inspector';
+    console = 'integratedTerminal';
+  },
+  {
+    type = 'node2';
+    name = 'Attach',
+    request = 'attach';
+    program = '${file}';
+    cwd = vim.fn.getcwd();
+    sourceMaps = true;
+    protocol = 'inspector';
+    console = 'integratedTerminal';
+  },
+  {
+    name = "Vitest Debug",
+    type = "pwa-node",
+    request = "launch",
+    cwd = vim.fn.getcwd(),
+    program = "${workspaceFolder}/node_modules/vitest/vitest.mjs",
+    args = { "--inspect-brk", "--threads", "false", "run", "${file}" },
+    autoAttachChildProcesses = true,
+    smartStep = true,
+    console = "integratedTerminal",
+    skipFiles = { "<node_internals>/**", "node_modules/**" },
+  },
+}
+
 local function javascript(dap)
-  dap.configurations.javascript = {
-    {
-      type = 'node2';
-      name = 'Launch',
-      request = 'launch';
-      program = '${file}';
-      cwd = vim.fn.getcwd();
-      sourceMaps = true;
-      protocol = 'inspector';
-      console = 'integratedTerminal';
-    },
-    {
-      type = 'node2';
-      name = 'Attach',
-      request = 'attach';
-      program = '${file}';
-      cwd = vim.fn.getcwd();
-      sourceMaps = true;
-      protocol = 'inspector';
-      console = 'integratedTerminal';
-    },
-    {
-      name = "Vitest Debug",
-      type = "pwa-node",
-      request = "launch",
-      cwd = vim.fn.getcwd(),
-      program = "${workspaceFolder}/node_modules/vitest/vitest.mjs",
-      args = { "--inspect-brk", "--threads", "false", "run", "${file}" },
-      autoAttachChildProcesses = true,
-      smartStep = true,
-      console = "integratedTerminal",
-      skipFiles = { "<node_internals>/**", "node_modules/**" },
-    },
-    -- {
-    --   name = "Vitest Debug (Breakpoints Not Respected)",
-    --   type = "pwa-node",
-    --   request = "launch",
-    --   autoAttachChildProcesses = true,
-    --   runtimeExecutable = "node",
-    --   runtimeArgs = { "${workspaceFolder}/node_modules/vitest/vitest.mjs", "--inspect-brk", "${file}" },
-    --   skipFiles = { "<node_internals>/**", "**/node_modules/**" },
-    --   console = "integratedTerminal",
-    --   integratedTerminalOptions = "neverOpen",
-    --   rootPath = "${workspaceFolder}",
-    --   cwd = "${workspaceFolder}",
-    -- }
-  }
+  dap.configurations.javascript = jsOrTs
+end
+
+local function typescript(dap)
+  dap.configurations.typescript = jsOrTs
 end
 
 local chrome_debugger = {
@@ -104,6 +97,7 @@ end
 return {
   javascript = javascript,
   javascriptreact = javascriptreact,
+  typescript = typescript,
   vue = vue,
   go = go
 }

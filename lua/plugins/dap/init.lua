@@ -50,6 +50,7 @@ return {
     configurations.javascript(dap)
     configurations.vue(dap)
     configurations.javascriptreact(dap)
+    configurations.typescript(dap)
     configurations.go(dap)
 
     -- Global DAP Settings
