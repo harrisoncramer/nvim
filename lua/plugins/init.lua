@@ -66,7 +66,6 @@ packer.startup(function(use)
   use {
     "microsoft/vscode-js-debug",
     opt = true,
-    commit = '59abbf9',
     run = "npm install --legacy-peer-deps && npm run compile"
   }
   use("nvim-lua/plenary.nvim")
