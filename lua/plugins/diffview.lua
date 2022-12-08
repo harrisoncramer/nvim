@@ -62,6 +62,10 @@ return {
       end
     end)
 
+    vim.keymap.set("n", "<leader>go", function()
+      vim.cmd(":DiffviewOpen")
+    end)
+
     diffview.setup({
       diff_binaries = false,
       use_icons = true, -- Requires nvim-web-devicons
@@ -78,6 +82,11 @@ return {
         },
       },
       enhanced_diff_hl = true, -- See |diffview-config-enhanced_diff_hl|
+      view = {
+        merge_tool = {
+          layout = "diff3_mixed"
+        }
+      },
       default_args = { -- Default args prepended to the arg-list for the listed commands
         DiffviewOpen = {},
         DiffviewFileHistory = {

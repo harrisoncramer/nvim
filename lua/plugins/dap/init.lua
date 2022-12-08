@@ -111,8 +111,9 @@ return {
         {
           elements = {
             "repl",
+            "breakpoints"
           },
-          size = 0.15,
+          size = 0.3,
           position = "bottom",
         },
       },

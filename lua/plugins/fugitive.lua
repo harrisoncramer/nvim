@@ -45,26 +45,8 @@ local git_push = function()
   end
 end
 
-local git_open = function()
-  vim.api.nvim_command("silent! ! git open")
-end
-
-local git_mr_open = function()
-  if u.get_os() == "Linux" then
-    os.execute(
-      string.format(
-        "firefox --new-tab 'https://gitlab.com/crossbeam/%s/-/merge_requests?scope=all&state=opened&author_username=hcramer1'"
-        ,
-        u.current_dir()
-      )
-    )
-  end
-end
-
 vim.keymap.set("n", "<leader>gs", toggle_status, map_opts)
 vim.keymap.set("n", "<leader>gP", git_push, map_opts)
-vim.keymap.set("n", "<leader>goo", git_open, map_opts)
-vim.keymap.set("n", "<leader>gom", git_mr_open, map_opts)
 
 vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = "COMMIT_EDITMSG",
