@@ -41,6 +41,9 @@ require("neotest").setup({
     max_width = 0.9,
     options = {}
   },
+  summary = {
+    open = "botright vsplit | vertical resize 60"
+  },
   highlights = {
     adapter_name = "NeotestAdapterName",
     border = "NeotestBorder",
