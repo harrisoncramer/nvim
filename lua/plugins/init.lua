@@ -3,9 +3,12 @@ local u = require("functions.utils")
 -- Require the plugin, and instead of calling it's setup method,
 -- require another module at the given path and call THAT module's
 -- setup function. Used to customize the plugin.
-local custom = function(config, remote)
+local custom = function(remote, config)
   if remote == nil then
-    require(config) -- If not required to load plugin, just call my config
+    local local_config_ok = pcall(require, config)
+    if not local_config_ok then
+      print(config .. " configuration file not found.")
+    end
   else
     local status = pcall(require, remote)
     if not status then
@@ -19,14 +22,16 @@ local custom = function(config, remote)
   end
 end
 
--- Simply requires the module and calls it's setup method.
+-- Simply requires the module and calls it's setup method, if it exists
 local default = function(mod)
   local status = pcall(require, mod)
   if not status then
     print(mod .. " is not downloaded.")
     return
   else
-    require(mod).setup({})
+    if type(mod.setup) == "function" then
+      mod.setup()
+    end
   end
 end
 
@@ -52,66 +57,52 @@ end
 packer.init(packer_options)
 
 packer.startup(function(use)
-  use("wbthomason/packer.nvim")
-  use("neovim/nvim-lspconfig")
+  use({ "wbthomason/packer.nvim" })
+  use({ "neovim/nvim-lspconfig" })
   use({ "williamboman/mason-lspconfig.nvim" })
   use({ "jayp0521/mason-nvim-dap.nvim" })
   use({ "williamboman/mason.nvim", default("mason") })
-  use("onsails/lspkind-nvim")
-  use("hrsh7th/nvim-cmp")
-  use("hrsh7th/cmp-nvim-lsp-signature-help")
+  use({ "onsails/lspkind-nvim" })
+  use({ "hrsh7th/nvim-cmp" })
+  use({ "hrsh7th/cmp-nvim-lsp-signature-help" })
   use({ "hrsh7th/cmp-nvim-lua", ft = { "lua" } })
-  use("hrsh7th/cmp-nvim-lsp")
-  use("hrsh7th/cmp-buffer")
-  use("hrsh7th/cmp-path")
-  -- Visual Studio Code Debugger Requires Special Installation
-  use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
-  use {
-    "microsoft/vscode-js-debug",
-    opt = true,
-    run = "npm install --legacy-peer-deps && npm run compile"
-  }
-  use("nvim-lua/plenary.nvim")
-  use("rebelot/kanagawa.nvim") -- In colors.lua file
-  use({
-    "quangnguyen30192/cmp-nvim-ultisnips",
-    config = custom("plugins.ultisnips"),
-  })
-  use({ "Olical/conjure", config = custom("plugins.conjure") })
+  use({ "hrsh7th/cmp-nvim-lsp" })
+  use({ "hrsh7th/cmp-buffer" })
+  use({ "hrsh7th/cmp-path" })
+  use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }) -- Visual Studio Code Debugger Requires Special Installation
+  use({ "microsoft/vscode-js-debug", opt = true, run = "npm install --legacy-peer-deps && npm run compile" })
+  use({ "nvim-lua/plenary.nvim" })
+  use({ "rebelot/kanagawa.nvim" }) -- In colors.lua file
+  use({ "quangnguyen30192/cmp-nvim-ultisnips", config = custom(nil, "plugins.ultisnips") })
+  use({ "Olical/conjure", config = custom(nil, "plugins.conjure") })
   use({ "lukas-reineke/lsp-format.nvim" })
   use({
     "nvim-telescope/telescope.nvim",
     requires = { "nvim-lua/plenary.nvim", "junegunn/fzf" },
     config = custom("telescope", "plugins.telescope"),
   })
+  use({ "nvim-telescope/telescope-file-browser.nvim", requires = "nvim-telescope/telescope.nvim" })
   use({
-    "nvim-telescope/telescope-file-browser.nvim",
-    requires = "nvim-telescope/telescope.nvim",
-  })
-  use({ 'nvim-telescope/telescope-fzf-native.nvim',
+    'nvim-telescope/telescope-fzf-native.nvim',
     run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
-    requires = "nvim-telescope/telescope.nvim" })
-  use({
-    "junegunn/fzf",
-    run = function()
-      vim.fn["fzf#install"]()
-    end,
+    requires = "nvim-telescope/telescope.nvim"
   })
+  use({ "junegunn/fzf", run = function() vim.fn["fzf#install"]() end })
   use({ "kevinhwang91/nvim-bqf", requires = "junegunn/fzf.vim", config = custom("bqf", "plugins.bqf") })
-  use("tpope/vim-dispatch")
-  use("tpope/vim-repeat")
-  use("tpope/vim-surround")
-  use("tpope/vim-unimpaired")
-  use("tpope/vim-rhubarb")
-  use("tpope/vim-eunuch")
-  use("tpope/vim-obsession")
+  use({ "tpope/vim-dispatch" })
+  use({ "tpope/vim-repeat" })
+  use({ "tpope/vim-surround" })
+  use({ "tpope/vim-unimpaired" })
+  use({ "tpope/vim-rhubarb" })
+  use({ "tpope/vim-eunuch" })
+  use({ "tpope/vim-obsession" })
   use({ "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } })
   use({ "guns/vim-sexp", ft = { "clojure" } })
   use({ "numToStr/Comment.nvim", config = default("Comment") })
   use({ "numToStr/FTerm.nvim", config = custom("FTerm", "plugins.fterm") })
-  use("romainl/vim-cool")
-  use("SirVer/ultisnips")
-  use({ "tpope/vim-fugitive", config = custom("fugitive", "plugins.fugitive") })
+  use({ "romainl/vim-cool" })
+  use({ "SirVer/ultisnips" })
+  use({ "tpope/vim-fugitive", config = custom(nil, "plugins.fugitive") })
   use({ "windwp/nvim-autopairs", config = custom("nvim-autopairs", "plugins.autopairs") })
   use({
     "nvim-lualine/lualine.nvim",
@@ -150,20 +141,20 @@ packer.startup(function(use)
   use({ "petertriho/nvim-scrollbar", config = custom("scrollbar", "plugins.scrollbar") })
   use({ "karb94/neoscroll.nvim", config = custom("neoscroll", "plugins.neoscroll") })
   use({ "harrisoncramer/jump-tag", config = custom("jump-tag", "plugins.jump-tag") })
-  use("lambdalisue/glyph-palette.vim")
+  use({ "lambdalisue/glyph-palette.vim" })
   use({ "posva/vim-vue", ft = { "vue" } })
   use({ "mattn/emmet-vim", ft = { "html", "vue", "javascript", "javascriptreact", "typescriptreact" } })
-  use("AndrewRadev/tagalong.vim")
-  use("alvan/vim-closetag")
+  use({ "AndrewRadev/tagalong.vim" })
+  use({ "alvan/vim-closetag" })
   use({ "harrisoncramer/psql", config = default("psql") })
   use({ "kazhala/close-buffers.nvim", config = default("close_buffers") })
   use({ "rcarriga/nvim-notify", config = custom("notify", "plugins.notify") })
-  use("ton/vim-bufsurf")
+  use({ "ton/vim-bufsurf" })
   use({ "AckslD/messages.nvim", config = custom("messages", "plugins.messages") })
   use({ 'djoshea/vim-autoread' })
   use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" }, config = custom("dap", "plugins.dap") })
-  use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
-  use {
+  use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } })
+  use({
     "nvim-neotest/neotest",
     requires = {
       "nvim-lua/plenary.nvim",
@@ -173,6 +164,6 @@ packer.startup(function(use)
       "nvim-neotest/neotest-go",
     },
     custom("neotest", "plugins.neotest")
-  }
-  use { 'ggandor/leap.nvim', custom("leap", "plugins.leap") }
+  })
+  use({ 'ggandor/leap.nvim', custom("leap", "plugins.leap") })
 end)
