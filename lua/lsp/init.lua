@@ -60,15 +60,6 @@ local on_attach = function(client, bufnr)
   if client.server_capabilities.colorProvider then
     require("lsp/colorizer").buf_attach(bufnr, { single_column = false, debounce = 500 })
   end
-
-  -- https://github.com/ray-x/lsp_signature.nvim
-  -- signature_help.on_attach({
-  --   bind = true,
-  --   hint_enable = false,
-  --   handler_opts = {
-  --     border = "solid",
-  --   }
-  -- }, bufnr)
 end
 
 local normal_capabilities = vim.lsp.protocol.make_client_capabilities()

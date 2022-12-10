@@ -24,13 +24,13 @@ end
 
 -- Simply requires the module and calls it's setup method, if it exists
 local default = function(mod)
-  local status = pcall(require, mod)
+  local status, m = pcall(require, mod)
   if not status then
     print(mod .. " is not downloaded.")
     return
   else
-    if type(mod.setup) == "function" then
-      mod.setup()
+    if type(m.setup) == "function" then
+      m.setup()
     end
   end
 end
@@ -69,7 +69,6 @@ packer.startup(function(use)
   use({ "hrsh7th/cmp-nvim-lsp" })
   use({ "hrsh7th/cmp-buffer" })
   use({ "hrsh7th/cmp-path" })
-  use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }) -- Visual Studio Code Debugger Requires Special Installation
   use({ "microsoft/vscode-js-debug", opt = true, run = "npm install --legacy-peer-deps && npm run compile" })
   use({ "nvim-lua/plenary.nvim" })
   use({ "rebelot/kanagawa.nvim" }) -- In colors.lua file
@@ -152,7 +151,7 @@ packer.startup(function(use)
   use({ "ton/vim-bufsurf" })
   use({ "AckslD/messages.nvim", config = custom("messages", "plugins.messages") })
   use({ 'djoshea/vim-autoread' })
-  use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" }, config = custom("dap", "plugins.dap") })
+  use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" }, config = custom("dap", "plugins.dap") }) -- Visual Studio Code Debugger Requires Special Installation
   use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } })
   use({
     "nvim-neotest/neotest",

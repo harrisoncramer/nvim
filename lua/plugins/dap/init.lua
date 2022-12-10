@@ -1,4 +1,3 @@
--- local debugger_installs = require("plugins.dap.debugger_installs")
 local adapters = require("plugins.dap.adapters")
 local configurations = require("plugins.dap.configs")
 local mason_dap_ok, mason_dap = pcall(require, "mason-nvim-dap")
