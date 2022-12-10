@@ -3,19 +3,18 @@ local u = require("functions.utils")
 -- Require the plugin, and instead of calling it's setup method,
 -- require another module at the given path and call THAT module's
 -- setup function. Used to customize the plugin.
-local custom = function(mod, remote)
+local custom = function(config, remote)
   if remote == nil then
-    require(mod)
+    require(config) -- If not required to load plugin, just call my config
   else
     local status = pcall(require, remote)
     if not status then
       print(remote .. " is not downloaded.")
       return
-    else
-      local local_config_ok = pcall(require, mod)
-      if not local_config_ok then
-        print(remote .. " is not configured.")
-      end
+    end
+    local local_config_ok = pcall(require, config)
+    if not local_config_ok then
+      print(remote .. " is not configured.")
     end
   end
 end
@@ -83,7 +82,7 @@ packer.startup(function(use)
   use({
     "nvim-telescope/telescope.nvim",
     requires = { "nvim-lua/plenary.nvim", "junegunn/fzf" },
-    config = custom("plugins.telescope", "telescope"),
+    config = custom("telescope", "plugins.telescope"),
   })
   use({
     "nvim-telescope/telescope-file-browser.nvim",
@@ -98,7 +97,7 @@ packer.startup(function(use)
       vim.fn["fzf#install"]()
     end,
   })
-  use({ "kevinhwang91/nvim-bqf", requires = "junegunn/fzf.vim", config = custom("plugins.bqf", "bqf") })
+  use({ "kevinhwang91/nvim-bqf", requires = "junegunn/fzf.vim", config = custom("bqf", "plugins.bqf") })
   use("tpope/vim-dispatch")
   use("tpope/vim-repeat")
   use("tpope/vim-surround")
@@ -109,15 +108,15 @@ packer.startup(function(use)
   use({ "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } })
   use({ "guns/vim-sexp", ft = { "clojure" } })
   use({ "numToStr/Comment.nvim", config = default("Comment") })
-  use({ "numToStr/FTerm.nvim", config = custom("plugins.fterm", "FTerm") })
+  use({ "numToStr/FTerm.nvim", config = custom("FTerm", "plugins.fterm") })
   use("romainl/vim-cool")
   use("SirVer/ultisnips")
-  use({ "tpope/vim-fugitive", config = custom("plugins.fugitive") })
-  use({ "windwp/nvim-autopairs", config = custom("plugins.autopairs", "nvim-autopairs") })
+  use({ "tpope/vim-fugitive", config = custom("fugitive", "plugins.fugitive") })
+  use({ "windwp/nvim-autopairs", config = custom("nvim-autopairs", "plugins.autopairs") })
   use({
     "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
-    config = custom("plugins.lualine", "lualine"),
+    config = custom("lualine", "plugins.lualine"),
   })
   use({
     "alvarosevilla95/luatab.nvim",
@@ -127,9 +126,9 @@ packer.startup(function(use)
   use({
     "lewis6991/gitsigns.nvim",
     requires = { "nvim-lua/plenary.nvim" },
-    config = custom("plugins.gitsigns", "gitsigns"),
+    config = custom("gitsigns", "plugins.gitsigns"),
   })
-  use({ "gelguy/wilder.nvim", config = custom("plugins.wilder", "wilder") })
+  use({ "gelguy/wilder.nvim", config = custom("wilder", "plugins.wilder") })
   use({
     "nvim-treesitter/nvim-treesitter",
     config = custom("plugins.treesitter", "nvim-treesitter"),
@@ -140,17 +139,17 @@ packer.startup(function(use)
   use({
     "nvim-treesitter/nvim-treesitter-context",
     requires = "nvim-treesitter/nvim-treesitter",
-    confg = custom("plugins.treesitter-context", "treesitter-context"),
+    confg = custom("treesitter-context", "plugins.treesitter-context"),
   })
   use({ "kyazdani42/nvim-web-devicons", default("nvim-web-devicons") })
   use({
     "sindrets/diffview.nvim",
     requires = "nvim-lua/plenary.nvim",
-    config = custom("plugins.diffview", "diffview"),
+    config = custom("diffview", "plugins.diffview"),
   })
-  use({ "petertriho/nvim-scrollbar", config = custom("plugins.scrollbar", "scrollbar") })
-  use({ "karb94/neoscroll.nvim", config = custom("plugins.neoscroll", "neoscroll") })
-  use({ "harrisoncramer/jump-tag", config = custom("plugins.jump-tag", "jump-tag") })
+  use({ "petertriho/nvim-scrollbar", config = custom("scrollbar", "plugins.scrollbar") })
+  use({ "karb94/neoscroll.nvim", config = custom("neoscroll", "plugins.neoscroll") })
+  use({ "harrisoncramer/jump-tag", config = custom("jump-tag", "plugins.jump-tag") })
   use("lambdalisue/glyph-palette.vim")
   use({ "posva/vim-vue", ft = { "vue" } })
   use({ "mattn/emmet-vim", ft = { "html", "vue", "javascript", "javascriptreact", "typescriptreact" } })
@@ -160,9 +159,9 @@ packer.startup(function(use)
   use({ "kazhala/close-buffers.nvim", config = default("close_buffers") })
   use({ "rcarriga/nvim-notify", config = custom("notify", "plugins.notify") })
   use("ton/vim-bufsurf")
-  use({ "AckslD/messages.nvim", config = custom("plugins.messages", "messages") })
+  use({ "AckslD/messages.nvim", config = custom("messages", "plugins.messages") })
   use({ 'djoshea/vim-autoread' })
-  use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" }, config = custom("plugins.dap", "dap") })
+  use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" }, config = custom("dap", "plugins.dap") })
   use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
   use {
     "nvim-neotest/neotest",
@@ -173,7 +172,7 @@ packer.startup(function(use)
       "marilari88/neotest-vitest",
       "nvim-neotest/neotest-go",
     },
-    custom("plugins.neotest", "neotest")
+    custom("neotest", "plugins.neotest")
   }
-  use { 'ggandor/leap.nvim', custom("plugins.leap", "leap") }
+  use { 'ggandor/leap.nvim', custom("leap", "plugins.leap") }
 end)
