@@ -44,16 +44,20 @@ local basename = function(str)
   return name
 end
 
+local get_register = function(char)
+  return vim.api.nvim_exec([[echo getreg(']] .. char .. [[')]], true):gsub("[\n\r]", "^J")
+end
+
+local get_os = function()
+  return vim.loop.os_uname().sysname
+end
+
 return {
-  get_os = function()
-    return vim.loop.os_uname().sysname
-  end,
+  get_os = get_os,
   get_home = function()
     return os.getenv("HOME")
   end,
-  get_register = function(char)
-    return vim.api.nvim_exec([[echo getreg(']] .. char .. [[')]], true):gsub("[\n\r]", "^J")
-  end,
+  get_register = get_register,
   get_date_time = function()
     local date_table = os.date("*t")
     local hour, minute = date_table.hour, date_table.min
@@ -305,5 +309,25 @@ return {
   end,
   get_word_under_cursor = function()
     return vim.fn.expand("<cword>")
+  end,
+  copy_hash_and_open = function()
+    local diffview_ok, diffview = pcall(require, "diffview")
+    if not diffview_ok then
+      require("notify")("Diffview is not installed", "error")
+      return
+    end
+    P(diffview)
+    diffview.trigger_event("copy_hash")
+    print("hi2")
+    local global_register = get_register(get_os() == "Linux" and "+" or "*")
+    print("hi3")
+    diffview.trigger_event("goto_file_tab")
+    print("hi4")
+    local file_name = vim.fn.expand("%")
+    print("hi5")
+    vim.cmd(":Gedit " .. global_register .. ":%")
+    print("hi6")
+    vim.cmd(":vert diffsplit " .. file_name)
+    print("hi7")
   end
 }

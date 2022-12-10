@@ -88,13 +88,23 @@ end
 local function CopyTextFromPreview(prompt_bufnr)
   local selection = require("telescope.actions.state").get_selected_entry()
   local text = vim.fn.trim(selection["text"])
-  vim.fn.setreg('"', text)
+  local os = u.get_os() == "Darwin" and "mac" or "linux"
+  if os == "mac" then
+    vim.fn.setreg('*', text)
+  else
+    vim.fn.setreg('"', text)
+  end
   actions.close(prompt_bufnr)
 end
 
 local function CopyCommitHash(prompt_bufnr)
   local selection = require("telescope.actions.state").get_selected_entry()
-  vim.fn.setreg('"', selection.value)
+  local os = u.get_os() == "Darwin" and "mac" or "linux"
+  if os == "mac" then
+    vim.fn.setreg('*', selection.value)
+  else
+    vim.fn.setreg('"', selection.value)
+  end
   actions.close(prompt_bufnr)
 end
 
@@ -113,7 +123,7 @@ telescope.setup({
         i = {
           [","] = fb_actions.goto_parent_dir,
           ["<C-e>"] = fb_actions.create,
-          ["<C-d>"] = fb_actions.remove,
+          ["<C-k>"] = fb_actions.remove,
           ["<C-r>"] = function(bufnr)
             fb_actions.rename(bufnr)
           end,
