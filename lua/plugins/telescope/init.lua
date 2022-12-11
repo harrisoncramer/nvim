@@ -10,7 +10,7 @@ local builtin = require("telescope.builtin")
 -- Utility functions for file_browser extension
 local function FbOpen(entry, open_file)
   local entry_path = u.dirname(entry)
-  require("telescope").extensions.file_browser.file_browser({ path = entry_path })
+  require("telescope").extensions.file_browser.file_browser({ path = entry_path, quiet = true })
   -- if open_file then
   --   vim.api.nvim_input(u.basename(entry))
   -- end
@@ -117,6 +117,7 @@ telescope.setup({
       case_mode = "smart_case",
     },
     file_browser = {
+      quiet = true,
       hijack_netrw = true,
       hide_parent_dir = true,
       mappings = {

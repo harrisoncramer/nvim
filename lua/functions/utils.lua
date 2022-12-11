@@ -222,7 +222,7 @@ return {
     entry_path = path:new(entry):parent():absolute()
     entry_path = entry_path:gsub("\\", "\\\\")
 
-    require("telescope").extensions.file_browser.file_browser({ path = entry_path })
+    require("telescope").extensions.file_browser.file_browser({ path = entry_path, quiet = true })
 
     local file_name = nil
     for s in string.gmatch(entry, "[^/]+") do
