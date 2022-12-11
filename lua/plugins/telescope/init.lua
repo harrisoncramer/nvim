@@ -8,8 +8,8 @@ local telescope = require("telescope")
 local builtin = require("telescope.builtin")
 
 -- Utility functions for file_browser extension
-local function FbOpen(entry, open_file)
-  local entry_path = u.dirname(entry)
+local function FbOpen(file_path, open_file)
+  local entry_path = u.dirname(file_path)
   require("telescope").extensions.file_browser.file_browser({ path = entry_path, quiet = true })
   -- if open_file then
   --   vim.api.nvim_input(u.basename(entry))
@@ -19,7 +19,9 @@ end
 local function OpenInFileBrowser(prompt_bufnr)
   actions._close(prompt_bufnr, true)
   local entry = state.get_selected_entry()[1]
-  FbOpen(entry, true)
+  local split = u.split(entry, ":")
+  local file_path = split[1]
+  FbOpen(file_path, true)
 end
 
 local function OpenFileInFileBrowser()
