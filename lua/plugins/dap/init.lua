@@ -1,12 +1,12 @@
 local adapters = require("plugins.dap.adapters")
 local configurations = require("plugins.dap.configs")
 local mason_dap_ok, mason_dap = pcall(require, "mason-nvim-dap")
-local dap_vscode_ok, dap_vscode = pcall(require, "dap-vscode-js")
 
 local dap = require("dap")
 local ui = require("dapui")
 
-if not (mason_dap_ok and dap_vscode_ok) then
+if not (mason_dap_ok) then
+  require("notify")("nvim-dap not installed!", "warning")
   return
 end
 
@@ -26,16 +26,7 @@ mason_dap.setup({
 -- launch the debug adapter itself, or it can attach to an existing one.
 -- To tell Neovim if it should launch a debug adapter or connect to one, and if
 -- so, how, you need to configure them via the `dap.adapters` table.
-
 adapters.setup(dap)
-
--- The VSCode Debugger requires a special setup
-dap_vscode.setup({
-  adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
-  debugger_path = vim.fn.stdpath("data") .. "/mason/bin/js-debug-adapter", -- Path to VSCode Debugger
-  debugger_cmd = { "js-debug-adapter" }
-})
-
 
 -- ╭──────────────────────────────────────────────────────────╮
 -- │ Configuration                                            │
@@ -43,15 +34,9 @@ dap_vscode.setup({
 -- In addition to launching (possibly) and connecting to a debug adapter, Neovim
 -- needs to instruct the adapter itself how to launch and connect to the program
 -- that you are trying to debug (the debugee).
-
-configurations.javascript(dap)
-configurations.vue(dap)
-configurations.javascriptreact(dap)
-configurations.typescript(dap)
-configurations.go(dap)
+configurations.setup(dap)
 
 -- Global DAP Settings
-dap.set_log_level("TRACE")
 vim.fn.sign_define('DapBreakpoint', { text = '🐞' })
 vim.keymap.set("n", "<localleader>ds", function()
   dap.continue()
