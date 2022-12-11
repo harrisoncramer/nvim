@@ -2,11 +2,11 @@ local adapters = require("plugins.dap.adapters")
 local configurations = require("plugins.dap.configs")
 local mason_dap_ok, mason_dap = pcall(require, "mason-nvim-dap")
 
-local dap = require("dap")
-local ui = require("dapui")
+local dap_ok, dap = pcall(require, "dap")
+local dap_ui_ok, ui = pcall(require, "dapui")
 
-if not (mason_dap_ok) then
-  require("notify")("nvim-dap not installed!", "warning")
+if not (dap_ok and dap_ui_ok and mason_dap_ok) then
+  require("notify")("nvim-dap, mason-nvim-dap, or dap-ui not installed!", "warning")
   return
 end
 
@@ -36,11 +36,14 @@ adapters.setup(dap)
 -- that you are trying to debug (the debugee).
 configurations.setup(dap)
 
--- Global DAP Settings
+
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ Keybindings + UI                                         │
+-- ╰──────────────────────────────────────────────────────────╯
 vim.fn.sign_define('DapBreakpoint', { text = '🐞' })
 vim.keymap.set("n", "<localleader>ds", function()
   dap.continue()
-  require("dapui").toggle()
+  ui.toggle()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
 end)
 
@@ -75,14 +78,6 @@ ui.setup({
   },
   expand_lines = vim.fn.has("nvim-0.7"),
   layouts = {
-    -- {
-    --   elements = {
-    --     "breakpoints",
-    --     "stacks",
-    --   },
-    --   size = 0.2,
-    --   position = "right",
-    -- },
     {
       elements = {
         "scopes",
@@ -100,9 +95,9 @@ ui.setup({
     },
   },
   floating = {
-    max_height = nil, -- These can be integers or a float between 0 and 1.
-    max_width = nil, -- Floats will be treated as percentage of your screen.
-    border = "single", -- Border style. Can be "single", "double" or "rounded"
+    max_height = nil,
+    max_width = nil,
+    border = "single",
     mappings = {
       close = { "q", "<Esc>" },
     },
