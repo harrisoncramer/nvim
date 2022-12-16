@@ -51,12 +51,14 @@ vim.keymap.set("n", "<leader>gP", git_push, map_opts)
 vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = "COMMIT_EDITMSG",
   callback = function()
-    local close_buffers_ok, close_buffers = pcall(require, "close_buffers")
-    if not close_buffers_ok then
-      require("notify")("Close buffers is not installed!", "error")
-    else
-      close_buffers.delete({ regex = "^fugitive*" })
-    end
+    require("notify")("Commit written")
+    -- vim.api.nvim_command(":tabclose")
+    -- local close_buffers_ok, close_buffers = pcall(require, "close_buffers")
+    -- if not close_buffers_ok then
+    --   require("notify")("Close buffers is not installed!", "error")
+    -- else
+    --   close_buffers.delete({ regex = "^fugitive*" })
+    -- end
   end,
 })
 
