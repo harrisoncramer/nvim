@@ -34,6 +34,7 @@ vim.keymap.set("n", "H", ":w<CR>") -- Quick save
 vim.keymap.set("i", "<C-h>", "<Lseft>") -- Move left in insert
 vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
 vim.keymap.set("x", "<leader>p", '"_dP') -- Keep paste register after paste
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
 -- Packer
 vim.keymap.set("n", "<localleader>ps", require('functions.utils').packer_sync)

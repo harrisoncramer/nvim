@@ -30,6 +30,9 @@ end
 require("nvim-treesitter.configs").setup({
   ensure_installed = "all",
   sync_install = false,
+  autotag = {
+    enable = true
+  },
   ignore_install = { "haskell", "phpdoc" },
   highlight = {
     enable = true,

@@ -1,6 +1,6 @@
 local dap_vscode_ok, dap_vscode = pcall(require, "dap-vscode-js")
 if not (dap_vscode_ok) then
-  require("notify")("nvim-dap not installed!", "warning")
+  require("notify")("dap-vscode-js not installed!", "warning")
   return
 end
 

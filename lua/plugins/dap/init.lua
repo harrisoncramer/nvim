@@ -16,7 +16,7 @@ end
 -- We need the actual programs to connect to running instances of our code.
 -- Debuggers are installed via https://github.com/jayp0521/mason-nvim-dap.nvim
 mason_dap.setup({
-  ensure_installed = { "delve", "node2", "js" }
+  ensure_installed = { "delve", "node2" }
 })
 
 -- ╭──────────────────────────────────────────────────────────╮
@@ -43,7 +43,7 @@ configurations.setup(dap)
 vim.fn.sign_define('DapBreakpoint', { text = '🐞' })
 vim.keymap.set("n", "<localleader>ds", function()
   dap.continue()
-  ui.toggle()
+  ui.toggle({})
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
 end)
 
@@ -59,7 +59,7 @@ vim.keymap.set("n", "<localleader>dC", function()
 end)
 vim.keymap.set("n", "<localleader>de", function()
   dap.clear_breakpoints()
-  ui.toggle()
+  ui.toggle({})
   dap.terminate()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
   require("notify")("Debugger session ended", "warn")
