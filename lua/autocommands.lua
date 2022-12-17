@@ -6,8 +6,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
   desc = "Highlights the yanked text",
 })
-
--- Position the (global) quickfix window at the very bottom of the window https://github.com/fatih/vim-go/issues/1757
--- vim.cmd([[
---   autocmd FileType qf if (getwininfo(win_getid())[0].loclist != 1) | wincmd J | endif
--- ]])

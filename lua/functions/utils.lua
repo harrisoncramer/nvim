@@ -240,18 +240,16 @@ return {
   end,
   string_starts = string_starts,
   packer_sync = function()
-    async.run(function()
-      require("notify")('Syncing packer and updating nvim lockfile.', vim.log.levels.INFO)
-    end)
-
     local config_path = vim.fn.stdpath("config")
     local snap_shot_time = os.date("!%Y-%m-%dT%TZ")
     async.run(function()
       run_script("update-nvim-lockfile", snap_shot_time .. " " .. config_path)
+    end, function()
+      require("notify")("Updating lockfiles")
     end)
 
-    vim.cmd('PackerSnapshot ' .. snap_shot_time)
-    vim.cmd('PackerSync')
+    vim.cmd.PackerSnapshot(snap_shot_time)
+    vim.cmd.PackerSync()
   end,
   copy_file_to_clipboard = function()
     vim.api.nvim_feedkeys(":let @+=expand('%:p')", "n", false)
@@ -310,24 +308,4 @@ return {
   get_word_under_cursor = function()
     return vim.fn.expand("<cword>")
   end,
-  copy_hash_and_open = function()
-    local diffview_ok, diffview = pcall(require, "diffview")
-    if not diffview_ok then
-      require("notify")("Diffview is not installed", "error")
-      return
-    end
-    P(diffview)
-    diffview.trigger_event("copy_hash")
-    print("hi2")
-    local global_register = get_register(get_os() == "Linux" and "+" or "*")
-    print("hi3")
-    diffview.trigger_event("goto_file_tab")
-    print("hi4")
-    local file_name = vim.fn.expand("%")
-    print("hi5")
-    vim.cmd(":Gedit " .. global_register .. ":%")
-    print("hi6")
-    vim.cmd(":vert diffsplit " .. file_name)
-    print("hi7")
-  end
 }

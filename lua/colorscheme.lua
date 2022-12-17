@@ -27,7 +27,7 @@ kanagawa.setup({
   overrides = {},
 })
 
-vim.cmd('colorscheme kanagawa')
+vim.cmd.colorscheme('kanagawa')
 
 -- Map to lua variables for use elsewhere in the config
 local colorMap = {

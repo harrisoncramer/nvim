@@ -66,19 +66,6 @@ vim.cmd([[
   command -nargs=? -bar ReviewChanges call setqflist(map(systemlist("git diff --name-only <args>"), '{"filename": v:val, "lnum": 1}'))
 ]])
 
--- Loads up all files changed since develop into the quickfix list
-vim.api.nvim_create_user_command("Review", function(opts)
-  local branch = opts.args ~= "" and opts.args or "develop"
-  local current_branch = u.get_branch_name()
-  local arg = current_branch .. '..' .. branch
-  if async_ok then
-    async.run(function()
-      require("notify")('Loading review for ' .. branch .. ' into quickfix list...', vim.log.levels.INFO)
-    end)
-  end
-  vim.cmd(":ReviewChanges " .. arg)
-end, { nargs = "*" })
-
 -- Load quickfix lists! They can be saved with :w to .qf directory, which is globally gitignored
 vim.cmd([[
   if exists('g:loaded_hqf')

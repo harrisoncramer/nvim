@@ -26,7 +26,7 @@ vim.keymap.set("n", "<leader>gc", function()
     vim.cmd("tabclose")
     vim.cmd("tabprev")
   else
-    vim.cmd("DiffviewOpen")
+    vim.cmd.DiffviewOpen()
     u.press_enter()
   end
 end)
@@ -41,10 +41,10 @@ vim.keymap.set("n", "<leader>gR", function()
     return
   end
   if isDiff ~= 0 or u.string_starts(bufName, "diff") then
-    vim.cmd("tabclose")
-    vim.cmd("tabprev")
+    vim.cmd.tabclose()
+    vim.cmd.tabprev()
   else
-    vim.cmd("DiffviewOpen develop")
+    vim.cmd.DiffviewOpen("develop")
     u.press_enter()
   end
 end)
@@ -53,10 +53,10 @@ vim.keymap.set("n", "<leader>go", function()
   local isDiff = vim.fn.getwinvar(nil, "&diff")
   local bufName = vim.api.nvim_buf_get_name(0)
   if isDiff ~= 0 or u.string_starts(bufName, "diff") then
-    vim.cmd("tabclose")
-    vim.cmd("tabprev")
+    vim.cmd.tabclose()
+    vim.cmd.tabprev()
   else
-    vim.cmd(":DiffviewOpen")
+    vim.cmd.DiffviewOpen()
   end
 end)
 

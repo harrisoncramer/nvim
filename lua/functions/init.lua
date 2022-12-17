@@ -31,7 +31,7 @@ return {
     return s
   end,
   start_replace = function()
-    vim.cmd("startreplace")
+    vim.cmd.startreplace()
   end,
   reload = function(package_name)
     local t = u.split(package_name, " ")
@@ -134,15 +134,6 @@ return {
     local output = f:read("*a")
     f:close()
     return output
-  end,
-  share_screen = function(is_sharing)
-    vim.cmd("set relativenumber!")
-    if is_sharing then
-      vim.cmd("colorscheme kanagawa")
-    else
-      vim.cmd("colorscheme codedark")
-    end
-    require("functions").run_script("share_screen", is_sharing)
   end,
   stash = function(name)
     vim.fn.system("git stash -u -m " .. name)

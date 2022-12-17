@@ -123,7 +123,6 @@ packer.startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     config = custom("plugins.treesitter", "nvim-treesitter"),
   })
-  use({ "nvim-treesitter/playground", requires = "nvim-treesitter/nvim-treesitter" })
   use({ "p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter" })
   use("andymass/vim-matchup")
   use({
@@ -143,9 +142,7 @@ packer.startup(function(use)
   use({ "posva/vim-vue", ft = { "vue" } })
   use({ "AndrewRadev/tagalong.vim" })
   use({ "windwp/nvim-ts-autotag" })
-  -- use({ "kazhala/close-buffers.nvim", config = default("close_buffers") })
   use({ "rcarriga/nvim-notify", config = custom("notify", "plugins.notify") })
-  use({ "ton/vim-bufsurf" })
   use({ "AckslD/messages.nvim", config = custom("messages", "plugins.messages") })
   use({ 'djoshea/vim-autoread' })
   use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" }, config = custom("dap", "plugins.dap") }) -- Visual Studio Code Debugger Requires Special Installation

@@ -48,20 +48,6 @@ end
 vim.keymap.set("n", "<leader>gs", toggle_status, map_opts)
 vim.keymap.set("n", "<leader>gP", git_push, map_opts)
 
-vim.api.nvim_create_autocmd("BufWritePost", {
-  pattern = "COMMIT_EDITMSG",
-  callback = function()
-    require("notify")("Commit written")
-    -- vim.api.nvim_command(":tabclose")
-    -- local close_buffers_ok, close_buffers = pcall(require, "close_buffers")
-    -- if not close_buffers_ok then
-    --   require("notify")("Close buffers is not installed!", "error")
-    -- else
-    --   close_buffers.delete({ regex = "^fugitive*" })
-    -- end
-  end,
-})
-
 return {
   jump_next = function()
     vim.api.nvim_feedkeys(":silent! /^[?,M,A,D,U] ", "n", false)
@@ -75,11 +61,4 @@ return {
     vim.api.nvim_feedkeys(":noh", "n", false)
     u.press_enter()
   end,
-  get_status_under_cursor = function()
-    vim.cmd("call GdiffsplitTab(GStatusGetFilenameUnderCursor())<cr>")
-  end,
-  reset_to_commit = function()
-    local commit = u.get_word_under_cursor()
-    vim.cmd("Git reset --soft " .. commit)
-  end
 }

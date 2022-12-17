@@ -76,7 +76,7 @@ local function SeeCommitChangesInDiffview(prompt_bufnr)
 end
 
 local function CheckoutAndRestore(prompt_bufnr)
-  vim.cmd("Obsession")
+  vim.cmd.Obsession()
   actions.git_checkout(prompt_bufnr)
   f.create_or_source_obsession()
 end
