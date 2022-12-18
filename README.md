@@ -22,7 +22,7 @@ This repository contains my configurations, including key mappings, plugins, and
 # Features
 
 - Native LSP w/ <a href="https://github.com/nvim-treesitter/nvim-treesitter">treesitter</a>
-- LSPs via <a href="https://github.com/williamboman/nvim-lsp-installer">lsp-installer</a> and configured w/ <a href="https://github.com/neovim/nvim-lspconfig">lspconfig</a>
+- LSPs installed via <a href="https://github.com/williamboman/mason.nvim">Mason</a> and configured via <a href="https://github.com/neovim/nvim-lspconfig">lspconfig</a>
 - <a href="https://github.com/numToStr/FTerm.nvim">fterm</a> for terminal integration
 - <a href="https://github.com/nvim-telescope/telescope.nvim/issues">telescope</a> for search
 - <a href="https://github.com/sindrets/diffview.nvim">diffview</a> git branch/commit/diff viewing
@@ -37,6 +37,5 @@ This repository contains my configurations, including key mappings, plugins, and
 - <a href="https://github.com/junegunn/fzf">fzf</a>
 - make or cmake (for <a href="https://github.com/nvim-telescope/telescope-fzf-native.nvim">fzf native</a>)
 - <a href="https://github.com/neovim/pynvim">pynvim</a>
-- Node (I'd recommend using <a href="https://github.com/Schniz/fnm">fnm</a>)
-- Golang (Because of the delve install script at `scripts/install_delve` for Go's debugger)
+- Node
 - <a href="https://github.com/Aloxaf/silicon">Silicon</a> (For the `:SCREENSHOT` command to work)
