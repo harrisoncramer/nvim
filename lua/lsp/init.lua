@@ -57,7 +57,7 @@ local on_attach = function(client, bufnr)
   end)
 
   -- This is ripped off from https://github.com/kabouzeid/dotfiles, it's for tailwind preview support
-  if client.server_capabilities.colorProvider then
+  if client.name == "tailwindcss" then
     require("lsp/colorizer").buf_attach(bufnr, { single_column = false, debounce = 500 })
   end
 end
