@@ -10,6 +10,8 @@ if not (dap_ok and dap_ui_ok and mason_dap_ok) then
   return
 end
 
+dap.set_log_level("TRACE")
+
 -- ╭──────────────────────────────────────────────────────────╮
 -- │ Debuggers                                                │
 -- ╰──────────────────────────────────────────────────────────╯
@@ -57,6 +59,17 @@ vim.keymap.set("n", "<localleader>dC", function()
   dap.clear_breakpoints()
   require("notify")("Breakpoints cleared", "warn")
 end)
+
+-- How to get current adapter config? Could restart with current arguments
+vim.keymap.set("n", "<localleader>dr", function()
+  dap.terminate()
+  vim.defer_fn(
+    function()
+      dap.continue()
+    end,
+    300)
+end)
+
 vim.keymap.set("n", "<localleader>de", function()
   dap.clear_breakpoints()
   ui.toggle({})
