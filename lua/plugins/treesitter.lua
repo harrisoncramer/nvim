@@ -28,12 +28,12 @@ local disable_function = function(lang, bufnr)
 end
 
 require("nvim-treesitter.configs").setup({
-  ensure_installed = "all",
+  ensure_installed = { "javascript", "typescript", "go", "vue", "clojure", "lua", "css", "bash", "json", "sql",
+    "dockerfile", "html", "python", "scss", "rust", "markdown" },
   sync_install = false,
   autotag = {
     enable = true
   },
-  ignore_install = { "haskell", "phpdoc" },
   highlight = {
     enable = true,
     disable = disable_function,

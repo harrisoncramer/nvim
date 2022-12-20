@@ -16,9 +16,12 @@ dap.set_log_level("TRACE")
 -- │ Debuggers                                                │
 -- ╰──────────────────────────────────────────────────────────╯
 -- We need the actual programs to connect to running instances of our code.
--- Debuggers are installed via https://github.com/jayp0521/mason-nvim-dap.nvim
+-- Debuggers are installed via https://github.com/jayp0521/mason-nvim-dap.nvim,
+-- however that repo removed the VSCode debugger because Mason doesn't directly support
+-- it, so I forked it and added it back myself. The debugger requires a
+-- special adapter, seen in /lua/plugins/dap/adapters.lua
 mason_dap.setup({
-  ensure_installed = { "delve", "node2" }
+  ensure_installed = { "delve", "node2", "js" }
 })
 
 -- ╭──────────────────────────────────────────────────────────╮
