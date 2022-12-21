@@ -37,7 +37,7 @@ nvm install 16.0.0
 2. The Treesitter CLI, which is required for syntax highlighting
 
 ```bash
-npm install -g tree-sitter-cli`
+npm install -g tree-sitter-cli
 ```
 
 3. Golang (required for Golang Debugger + LSP). On Ubuntu:
