@@ -35,119 +35,111 @@ local default = function(mod)
   end
 end
 
-local fn = vim.fn
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-  print("Packer installed, please exit NVIM and re-open, then run :PackerInstall")
-  return
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "--single-branch",
+    "https://github.com/folke/lazy.nvim.git",
+    lazypath,
+  })
 end
+vim.opt.runtimepath:prepend(lazypath)
 
-local packer = require("packer")
 
-local os = u.get_os() == "Darwin" and "mac" or "linux"
-local packer_options = {
-  snapshot_path = vim.fn.stdpath("config") .. "/lockfiles/" .. os .. "/packer_snapshots",
-}
-
-if u.get_os() == "Darwin" then
-  packer_options.max_jobs = 4
-end
-
-packer.init(packer_options)
-
-packer.startup(function(use)
-  use({ "wbthomason/packer.nvim" })
-  use({ "neovim/nvim-lspconfig" })
-  use({ "williamboman/mason-lspconfig.nvim" })
-  use({ "harrisoncramer/mason-nvim-dap.nvim" })
-  use({ "williamboman/mason.nvim", default("mason") })
-  use({ "onsails/lspkind-nvim" })
-  use({ "hrsh7th/nvim-cmp" })
-  use({ "hrsh7th/cmp-nvim-lsp-signature-help" })
-  use({ "hrsh7th/cmp-nvim-lua", ft = { "lua" } })
-  use({ "hrsh7th/cmp-nvim-lsp" })
-  use({ "folke/neodev.nvim" })
-  use({ "hrsh7th/cmp-buffer" })
-  use({ "hrsh7th/cmp-path" })
-  use({ "nvim-lua/plenary.nvim" })
-  use({ "rebelot/kanagawa.nvim" }) -- In colors.lua file
-  use({ "quangnguyen30192/cmp-nvim-ultisnips", config = custom(nil, "plugins.ultisnips") })
-  use({ "Olical/conjure", config = custom(nil, "plugins.conjure") })
-  use({ "lukas-reineke/lsp-format.nvim" })
-  use({
+local plugins = {
+  { "rcarriga/nvim-notify", config = custom("notify", "plugins.notify") },
+  { "neovim/nvim-lspconfig" },
+  { "williamboman/mason-lspconfig.nvim" },
+  { "harrisoncramer/mason-nvim-dap.nvim" },
+  { "williamboman/mason.nvim", default("mason") },
+  { "onsails/lspkind-nvim" },
+  { "hrsh7th/nvim-cmp" },
+  { "hrsh7th/cmp-nvim-lsp-signature-help" },
+  { "hrsh7th/cmp-nvim-lua", ft = { "lua" } },
+  { "hrsh7th/cmp-nvim-lsp" },
+  { "folke/neodev.nvim" },
+  { "hrsh7th/cmp-buffer" },
+  { "hrsh7th/cmp-path" },
+  { "nvim-lua/plenary.nvim" },
+  { "rebelot/kanagawa.nvim" }, -- In colors.lua file
+  { "quangnguyen30192/cmp-nvim-ultisnips", config = custom(nil, "plugins.ultisnips") },
+  { "Olical/conjure", config = custom(nil, "plugins.conjure") },
+  { "lukas-reineke/lsp-format.nvim" },
+  {
     "nvim-telescope/telescope.nvim",
     requires = { "nvim-lua/plenary.nvim", "junegunn/fzf" },
     config = custom("telescope", "plugins.telescope"),
-  })
-  use({ "nvim-telescope/telescope-file-browser.nvim", requires = "nvim-telescope/telescope.nvim" })
-  use({
+  },
+  { "nvim-telescope/telescope-file-browser.nvim", requires = "nvim-telescope/telescope.nvim" },
+  {
     'nvim-telescope/telescope-fzf-native.nvim',
     run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
     requires = "nvim-telescope/telescope.nvim"
-  })
-  use({ "junegunn/fzf", run = function() vim.fn["fzf#install"]() end })
-  use({ "kevinhwang91/nvim-bqf", requires = "junegunn/fzf.vim", config = custom("bqf", "plugins.bqf") })
-  use({ "tpope/vim-dispatch" })
-  use({ "tpope/vim-repeat" })
-  use({ "tpope/vim-surround" })
-  use({ "tpope/vim-unimpaired" })
-  use({ "tpope/vim-rhubarb" })
-  use({ "tpope/vim-eunuch" })
-  use({ "tpope/vim-obsession" })
-  use({ "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } })
-  use({ "guns/vim-sexp", ft = { "clojure" } })
-  use({ "numToStr/Comment.nvim", config = default("Comment") })
-  use({ "numToStr/FTerm.nvim", config = custom("FTerm", "plugins.fterm") })
-  use({ "romainl/vim-cool" })
-  use({ "SirVer/ultisnips" })
-  use({ "tpope/vim-fugitive", config = custom(nil, "plugins.fugitive") })
-  use({ "windwp/nvim-autopairs", config = custom("nvim-autopairs", "plugins.autopairs") })
-  use({
+  },
+  { "junegunn/fzf", run = function() vim.fn["fzf#install"]() end },
+  { "kevinhwang91/nvim-bqf", requires = "junegunn/fzf.vim", config = custom("bqf", "plugins.bqf") },
+  { "tpope/vim-dispatch" },
+  { "tpope/vim-repeat" },
+  { "tpope/vim-surround" },
+  { "tpope/vim-unimpaired" },
+  { "tpope/vim-rhubarb" },
+  { "tpope/vim-eunuch" },
+  { "tpope/vim-obsession" },
+  { "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } },
+  { "guns/vim-sexp", ft = { "clojure" } },
+  { "numToStr/Comment.nvim", config = default("Comment") },
+  { "numToStr/FTerm.nvim", config = custom("FTerm", "plugins.fterm") },
+  { "romainl/vim-cool" },
+  { "SirVer/ultisnips" },
+  { "tpope/vim-fugitive", config = custom(nil, "plugins.fugitive") },
+  { "windwp/nvim-autopairs", config = custom("nvim-autopairs", "plugins.autopairs") },
+  {
     "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
-    config = custom("lualine", "plugins.lualine"),
-  })
-  use({
+    config = custom("lualine", "plugins.lualine")
+  },
+  {
     "alvarosevilla95/luatab.nvim",
     config = custom("plugins/luatab", "luatab"),
     requires = "kyazdani42/nvim-web-devicons",
-  })
-  use({
+  },
+  {
     "lewis6991/gitsigns.nvim",
     requires = { "nvim-lua/plenary.nvim" },
     config = custom("gitsigns", "plugins.gitsigns"),
-  })
-  use({ "gelguy/wilder.nvim", config = custom("wilder", "plugins.wilder") })
-  use({
+  },
+  { "gelguy/wilder.nvim", config = custom("wilder", "plugins.wilder") },
+  {
     "nvim-treesitter/nvim-treesitter",
     config = custom("plugins.treesitter", "nvim-treesitter"),
-  })
-  use({ "p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter" })
-  use("andymass/vim-matchup")
-  use({
+  },
+  { "p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter" },
+  {
     "nvim-treesitter/nvim-treesitter-context",
     requires = "nvim-treesitter/nvim-treesitter",
     confg = custom("treesitter-context", "plugins.treesitter-context"),
-  })
-  use({ "kyazdani42/nvim-web-devicons", default("nvim-web-devicons") })
-  use({
+  },
+  { "kyazdani42/nvim-web-devicons", default("nvim-web-devicons") },
+  {
     "sindrets/diffview.nvim",
     requires = "nvim-lua/plenary.nvim",
     config = custom("diffview", "plugins.diffview"),
-  })
-  use({ "petertriho/nvim-scrollbar", config = custom("scrollbar", "plugins.scrollbar") })
-  use({ "harrisoncramer/jump-tag", config = custom("jump-tag", "plugins.jump-tag") })
-  use({ "lambdalisue/glyph-palette.vim" })
-  use({ "posva/vim-vue", ft = { "vue" } })
-  use({ "AndrewRadev/tagalong.vim" })
-  use({ "windwp/nvim-ts-autotag" })
-  use({ "rcarriga/nvim-notify", config = custom("notify", "plugins.notify") })
-  use({ "AckslD/messages.nvim", config = custom("messages", "plugins.messages") })
-  use({ 'djoshea/vim-autoread' })
-  use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" }, config = custom("dap", "plugins.dap") }) -- Visual Studio Code Debugger Requires Special Installation
-  use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } })
-  use({
+  },
+  { "petertriho/nvim-scrollbar", config = custom("scrollbar", "plugins.scrollbar") },
+  { "harrisoncramer/jump-tag", config = custom("jump-tag", "plugins.jump-tag") },
+  { "lambdalisue/glyph-palette.vim" },
+  { "posva/vim-vue", ft = { "vue" } },
+  { "AndrewRadev/tagalong.vim" },
+  { "windwp/nvim-ts-autotag" },
+  { "rcarriga/nvim-notify", config = custom("notify", "plugins.notify") },
+  { "AckslD/messages.nvim", config = custom("messages", "plugins.messages") },
+  { 'djoshea/vim-autoread' },
+  { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" }, config = custom("dap", "plugins.dap") }, -- Visual Studio Code Debugger Requires Special Installation
+  { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } },
+  {
     "nvim-neotest/neotest",
     requires = {
       "nvim-lua/plenary.nvim",
@@ -157,6 +149,8 @@ packer.startup(function(use)
       "nvim-neotest/neotest-go",
     },
     custom("neotest", "plugins.neotest")
-  })
-  use({ 'ggandor/leap.nvim', custom("leap", "plugins.leap") })
-end)
+  },
+  { 'ggandor/leap.nvim', custom("leap", "plugins.leap") },
+}
+
+require("lazy").setup(plugins)
