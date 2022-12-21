@@ -1,4 +1,3 @@
-local async_job, job = pcall(require, 'plenary.job')
 local u = require("functions.utils")
 
 local function jump_next()
@@ -17,6 +16,7 @@ end
 
 local git_push = function()
 
+  local async_job, job = pcall(require, 'plenary.job')
   if not async_job then
     require("notify")("Plenary is not installed!", "error")
   end
@@ -63,6 +63,7 @@ return { "tpope/vim-fugitive",
     vim.keymap.set("n", "<leader>gs", toggle_status, map_opts)
     vim.keymap.set("n", "<leader>gP", git_push, map_opts)
   end,
+  dependencies = { "nvim-lua/plenary.nvim" },
   jump_next = jump_next,
   jump_prev = jump_prev,
 }
