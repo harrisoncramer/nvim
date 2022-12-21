@@ -9,36 +9,42 @@ local function get_git_head()
   return " " .. head
 end
 
-require("lualine").setup({
-  options = {
-    component_separators = { right = "" },
-    section_separators = { left = "", right = "" },
-    theme = "kanagawa",
-  },
-  sections = {
-    lualine_a = { get_git_head },
-    lualine_b = { "diff", "diagnostics" },
-    lualine_c = {
-      {
-        "filetype",
-        colored = true, -- Displays filetype icon in color if set to true
-        icon_only = true, -- Display only an icon for filetype
+return {
+  "nvim-lualine/lualine.nvim",
+  requires = { "kyazdani42/nvim-web-devicons", opt = true },
+  config = function()
+    require("lualine").setup({
+      options = {
+        component_separators = { right = "" },
+        section_separators = { left = "", right = "" },
+        theme = "kanagawa",
       },
-      {
-        "filename",
-        file_status = true,
-        path = 1,
-        symbols = {
-          modified = "  ", -- Text to show when the file is modified.
-          readonly = "[-]", -- Text to show when the file is non-modifiable or readonly.
-          unnamed = "[No Name]", -- Text to show for unnamed buffers.
+      sections = {
+        lualine_a = { get_git_head },
+        lualine_b = { "diff", "diagnostics" },
+        lualine_c = {
+          {
+            "filetype",
+            colored = true, -- Displays filetype icon in color if set to true
+            icon_only = true, -- Display only an icon for filetype
+          },
+          {
+            "filename",
+            file_status = true,
+            path = 1,
+            symbols = {
+              modified = "  ", -- Text to show when the file is modified.
+              readonly = "[-]", -- Text to show when the file is non-modifiable or readonly.
+              unnamed = "[No Name]", -- Text to show for unnamed buffers.
+            },
+          },
         },
+        lualine_d = {},
+        lualine_w = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {},
       },
-    },
-    lualine_d = {},
-    lualine_w = {},
-    lualine_x = {},
-    lualine_y = {},
-    lualine_z = {},
-  },
-})
+    })
+  end
+}

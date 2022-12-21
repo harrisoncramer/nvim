@@ -1,36 +1,6 @@
-vim.cmd([[ :hi NonText guifg=bg ]])
-
-local kanagawa_ok, kanagawa = pcall(require, "kanagawa")
-if not kanagawa_ok then
-  print("Kanagawa is not installed.")
-  return
-end
-
-kanagawa.setup({
-  undercurl = true, -- enable undercurls
-  commentStyle = {
-    italic = true,
-  },
-  functionStyle = {},
-  keywordStyle = {
-    italic = true,
-  },
-  statementStyle = {},
-  typeStyle = {},
-  variablebuiltinStyle = {
-    italic = true,
-  },
-  specialReturn = true, -- special highlight for the return keyword
-  specialException = true, -- special highlight for exception handling keywords
-  transparent = false, -- do not set background color
-  colors = {},
-  overrides = {},
-})
-
-vim.cmd.colorscheme('kanagawa')
-
--- Map to lua variables for use elsewhere in the config
+-- Kanagawa colors
 local colorMap = {
+  sumiInk1      = "#1F1F28",
   sumiInk3      = "#363646",
   sumiInk4      = "#54546D",
   waveBlue1     = "#223249",
@@ -65,9 +35,10 @@ local colorMap = {
   katanaGray    = "#717C7C"
 }
 
+vim.cmd([[ :hi NonText guifg=bg ]])
+
 -- Custom overrides of treesitter capture groups (:TSHighlightCapturesUnderCursor) for Kanagawa theme
 vim.api.nvim_set_hl(0, "@tag", { fg = colorMap.lightBlue })
 vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = colorMap.lightBlue, })
 vim.api.nvim_set_hl(0, "@tag.attribute", { fg = colorMap.sakuraPink })
-
 return colorMap

@@ -1,5 +1,8 @@
-require("leap").add_default_mappings()
+return { 'ggandor/leap.nvim', setup = function()
+  require("leap").add_default_mappings()
 
--- Unbind these keymappings for visual mode
-vim.keymap.del("x", "X")
-vim.keymap.del("v", "x")
+  -- Unbind these keymappings for visual mode
+  vim.keymap.del("x", "X")
+  vim.keymap.del("v", "x")
+end
+}
