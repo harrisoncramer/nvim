@@ -49,6 +49,10 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 
+vim.keymap.set("n", "<leader>vp", function()
+  vim.cmd.Lazy()
+end)
+
 local plugins = {
   { "rcarriga/nvim-notify", config = custom("notify", "plugins.notify") },
   { "neovim/nvim-lspconfig" },
@@ -66,7 +70,6 @@ local plugins = {
   { "nvim-lua/plenary.nvim" },
   { "rebelot/kanagawa.nvim" }, -- In colors.lua file
   { "quangnguyen30192/cmp-nvim-ultisnips", config = custom(nil, "plugins.ultisnips") },
-  { "Olical/conjure", config = custom(nil, "plugins.conjure") },
   { "lukas-reineke/lsp-format.nvim" },
   {
     "nvim-telescope/telescope.nvim",
@@ -90,6 +93,7 @@ local plugins = {
   { "tpope/vim-obsession" },
   { "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } },
   { "guns/vim-sexp", ft = { "clojure" } },
+  { "Olical/conjure", ft = { "clojure" }, config = custom(nil, "plugins.conjure") },
   { "numToStr/Comment.nvim", config = default("Comment") },
   { "numToStr/FTerm.nvim", config = custom("FTerm", "plugins.fterm") },
   { "romainl/vim-cool" },
