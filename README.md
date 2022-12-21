@@ -3,8 +3,11 @@
 ![The editor](https://hjc-public.s3.amazonaws.com/nvim3.png)
 ![Terminal integration](https://hjc-public.s3.amazonaws.com/nvim2.png)
 ![Diffing](https://hjc-public.s3.amazonaws.com/nvim1.png)
+![Debugging](https://harrisoncramer.me/static/6e0f346fac366e6835391c95b69aa43a/d61c2/nvim-dap-ui-go.png)
 
-This configuration is my primary editor. I'm working day to day primarily in VueJS, React, Typescript, Golang, Lua, and Clojure.
+# About
+
+This repository contains my configurations, including key mappings, plugins, and other settings for Neovim. I'm primarily working day-to-day in VueJS, React, Typescript, Golang, Lua, and Clojure.
 
 # Dependencies
 
@@ -54,9 +57,6 @@ Please be patient when you first open up Neovim, it is installing many depndenci
 
 You can see the status of the plugin installation with the `:Lazy` command. This will open automatically. You can see the status of the LSP and Debugger installations with the `:Mason` command.
 
-# About
-
-This repository contains my configurations, including key mappings, plugins, and other settings for Neovim. I'm primarily working day-to-day with Javascript, Typescript, React, Vue, Clojure, and Lua.
 
 # Features
 
