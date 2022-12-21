@@ -239,18 +239,6 @@ return {
     return name
   end,
   string_starts = string_starts,
-  packer_sync = function()
-    local config_path = vim.fn.stdpath("config")
-    local snap_shot_time = os.date("!%Y-%m-%dT%TZ")
-    async.run(function()
-      run_script("update-nvim-lockfile", snap_shot_time .. " " .. config_path)
-    end, function()
-      require("notify")("Updating lockfiles")
-    end)
-
-    vim.cmd.PackerSnapshot(snap_shot_time)
-    vim.cmd.PackerSync()
-  end,
   copy_file_to_clipboard = function()
     vim.api.nvim_feedkeys(":let @+=expand('%:p')", "n", false)
     press_enter()
