@@ -30,9 +30,9 @@ There are a few dependencies for this editor configuration that cannot be instal
 1. Git version 2.36 or greater
 
 ```bash
-sudo add-apt-repository ppa:git-core/ppa
-sudo apt-get update
-sudo apt install git
+sudo add-apt-repository ppa:git-core/ppa -y
+sudo apt-get update -y
+sudo apt install git -y
 ```
 
 2. `npm` and `node`, which are used to install some of the LSPs and Debuggers. I recommend installing node via NVM (node version manager). You may need to resource your `.bashrc`/`.zshrc` after installing NVM for the command to be available in your path.
@@ -51,8 +51,8 @@ npm install -g tree-sitter-cli
 4. Golang (required for Golang Debugger + LSP). On Ubuntu:
 
 ```bash
-sudo add-apt-repository ppa:longsleep/golang-backports
-sudo apt update
+sudo add-apt-repository ppa:longsleep/golang-backports -y
+sudo apt update -y
 sudo apt install golang-go -y
 ```
 
@@ -65,7 +65,7 @@ sudo apt install zip -y
 6. The compiler `gcc`
 
 ```bash
-sudo apt update
+sudo apt update -y
 sudo apt install build-essential -y
 ```
 
@@ -78,9 +78,10 @@ sudo dpkg -i ripgrep_13.0.0_amd64.deb
 
 8. python3 and pynvim for wilder
 ```bash
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt update
-sudo apt install python3.11
+sudo add-apt-repository ppa:deadsnakes/ppa -y
+sudo apt update -y
+sudo apt install python3.11 -y
+sudo apt install python3-pip -y
 pip3 install --upgrade pynvim
 ```
 
@@ -89,6 +90,7 @@ pip3 install --upgrade pynvim
 1. Install the required dependencies listed above.
 2. Clone this repository to your Neovim configuration path: `cit clone https://github.com/harrisoncramer/nvim.git ~/.config/nvim`
 3. Open Neovim. The plugin installation should start automatically; so should the LSP and Debugger installations.
+4. Run `:UpdateRemotePlugins` to update Wilder
 
 Please be patient when you first open up Neovim, it is installing many depndencies the first time it starts! I'd recommend going and getting a cup of coffee, the process can take ~5 minutes to install all of the debuggers, LSPs, and treesitter language parsers.
 
