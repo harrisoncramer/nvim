@@ -7,7 +7,7 @@ return {
     "marilari88/neotest-vitest",
     "nvim-neotest/neotest-go",
   },
-  setup = function()
+  config = function()
     local neotest = require("neotest")
     local map_opts = { noremap = true, silent = true, nowait = true }
     local colors = require("colorscheme")
