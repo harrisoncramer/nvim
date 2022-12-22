@@ -1,6 +1,7 @@
 return {
   'gelguy/wilder.nvim',
   dependencies = 'romgrk/fzy-lua-native',
+  build = ':UpdateRemotePlugins',
   config = function()
     local wilder = require('wilder')
     wilder.setup({ modes = { ':', '/', '?' } })

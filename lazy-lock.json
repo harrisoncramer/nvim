@@ -10,6 +10,7 @@
   "conjure": { "branch": "master", "commit": "0be93ef60f075a247bb5de9e29d447dc8a888ff0" },
   "diffview.nvim": { "branch": "main", "commit": "3812e296d3977a24db62f7c18025755b40968d3a" },
   "fzf": { "branch": "master", "commit": "fd1f7665a77f3bd062586f0f3b54d4ff9863dd4b" },
+  "fzy-lua-native": { "branch": "master", "commit": "085c7d262aa35cc55a8523e8c1618d398bf717a7" },
   "gitsigns.nvim": { "branch": "main", "commit": "2ab3bdf0a40bab53033048c6be75bda86316b55d" },
   "glyph-palette.vim": { "branch": "master", "commit": "c9b21e745b4fc11c410afbf4aa9dbe938c3d09c0" },
   "jump-tag": { "branch": "main", "commit": "494bc3ef2a511fbd3d0ba8060f0411746099114b" },

@@ -45,20 +45,35 @@ npm install -g tree-sitter-cli
 ```bash
 sudo add-apt-repository ppa:longsleep/golang-backports
 sudo apt update
-sudo apt install golang-go
+sudo apt install golang-go -y
 ```
 
 4. Zip/Unzip commands (required to unpack Typescript Debugger)
 
 ```bash
-sudo apt install zip
+sudo apt install zip -y
 ```
 
 5. The compiler `gcc`
 
 ```bash
 sudo apt update
-sudo apt install build-essential
+sudo apt install build-essential -y
+```
+
+6. ripgrep for fuzzy finding
+
+```bash
+curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
+sudo dpkg -i ripgrep_13.0.0_amd64.deb
+```
+
+7. python3 and pynvim for wilder
+```bash
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.11
+pip3 install --upgrade pynvim
 ```
 
 # Quickstart
