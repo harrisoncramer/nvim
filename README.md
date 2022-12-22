@@ -25,22 +25,30 @@ This repository contains my configurations, including key mappings, plugins, and
 
 # Dependencies
 
-There are a few dependenceis for this editor configuration that cannot be installed within Neovim. I've detailed them below, installation instructions _assume an Ubuntu OS_, although installation on other operating systems should be straightforward. Most of them are required for LSPs or Debuggers to work.
+There are a few dependencies for this editor configuration that cannot be installed within Neovim. I've detailed them below, installation instructions _assume an Ubuntu OS_, although installation on other operating systems should be straightforward. Most of them are required for LSPs or Debuggers to work.
 
-1. `npm` and `node`, which are used to install some of the LSPs and Debuggers. I recommend installing node via NVM (node version manager). You may need to resource your `.bashrc`/`.zshrc` after installing NVM for the command to be available in your path.
+1. Git version 2.36 or greater
+
+```bash
+sudo add-apt-repository ppa:git-core/ppa
+sudo apt-get update
+sudo apt install git
+```
+
+2. `npm` and `node`, which are used to install some of the LSPs and Debuggers. I recommend installing node via NVM (node version manager). You may need to resource your `.bashrc`/`.zshrc` after installing NVM for the command to be available in your path.
 
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 nvm install 16.0.0
 ```
 
-2. The Treesitter CLI, which is required for syntax highlighting
+3. The Treesitter CLI, which is required for syntax highlighting
 
 ```bash
 npm install -g tree-sitter-cli
 ```
 
-3. Golang (required for Golang Debugger + LSP). On Ubuntu:
+4. Golang (required for Golang Debugger + LSP). On Ubuntu:
 
 ```bash
 sudo add-apt-repository ppa:longsleep/golang-backports
@@ -48,27 +56,27 @@ sudo apt update
 sudo apt install golang-go -y
 ```
 
-4. Zip/Unzip commands (required to unpack Typescript Debugger)
+5. Zip/Unzip commands (required to unpack Typescript Debugger)
 
 ```bash
 sudo apt install zip -y
 ```
 
-5. The compiler `gcc`
+6. The compiler `gcc`
 
 ```bash
 sudo apt update
 sudo apt install build-essential -y
 ```
 
-6. ripgrep for fuzzy finding
+7. ripgrep for fuzzy finding
 
 ```bash
 curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
 sudo dpkg -i ripgrep_13.0.0_amd64.deb
 ```
 
-7. python3 and pynvim for wilder
+8. python3 and pynvim for wilder
 ```bash
 sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt update
