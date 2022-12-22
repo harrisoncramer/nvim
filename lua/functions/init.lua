@@ -1,5 +1,4 @@
 local u = require("functions.utils")
-local async_job_ok, job = pcall(require, 'plenary.job')
 
 -- Globals
 function _G.P(...)
@@ -80,6 +79,7 @@ return {
     u.open_url("https://calendar.google.com/")
   end,
   create_or_source_obsession = function()
+    local async_job_ok, job = pcall(require, 'plenary.job')
     local is_git = u.file_exists(".git")
     if not is_git then
       return
@@ -88,6 +88,11 @@ return {
     local has_obsession = vim.fn.exists(":Obsession")
     if has_obsession == 0 then
       require("notify")("Obsesssion is not installed", "warn")
+      return
+    end
+
+    if not async_job_ok then
+      require("notify")("Plenary is not yet installed", "warn")
       return
     end
 
