@@ -49,40 +49,47 @@ return {
     -- │ Keybindings + UI                                         │
     -- ╰──────────────────────────────────────────────────────────╯
     vim.fn.sign_define('DapBreakpoint', { text = '🐞' })
-    vim.keymap.set("n", "<localleader>ds", function()
+
+    local function dap_start_debugging ()
       dap.continue()
       ui.toggle({})
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
-    end)
+    end
 
+    vim.keymap.set("n", "<localleader>ds", dap_start_debugging)
     vim.keymap.set("n", "<localleader>dl", require("dap.ui.widgets").hover)
     vim.keymap.set("n", "<localleader>dc", dap.continue)
     vim.keymap.set("n", "<localleader>db", dap.toggle_breakpoint)
     vim.keymap.set("n", "<localleader>dn", dap.step_over)
     vim.keymap.set("n", "<localleader>di", dap.step_into)
     vim.keymap.set("n", "<localleader>do", dap.step_out)
-    vim.keymap.set("n", "<localleader>dC", function()
+
+    local function dap_clear_breakpoints ()
       dap.clear_breakpoints()
       require("notify")("Breakpoints cleared", "warn")
-    end)
+    end
+    vim.keymap.set("n", "<localleader>dC", dap_clear_breakpoints)
 
-    -- How to get current adapter config? Could restart with current arguments
-    vim.keymap.set("n", "<localleader>dr", function()
+    -- TODO: How to get current adapter config? Could restart with current arguments
+    local function dap_restart_current_session ()
       dap.terminate()
       vim.defer_fn(
         function()
           dap.continue()
         end,
         300)
-    end)
+    end
+    vim.keymap.set("n", "<localleader>dr", dap_restart_current_session)
 
-    vim.keymap.set("n", "<localleader>de", function()
+    local function dap_end_debug()
       dap.clear_breakpoints()
       ui.toggle({})
       dap.terminate()
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
       require("notify")("Debugger session ended", "warn")
-    end)
+    end
+
+    vim.keymap.set("n", "<localleader>de", dap_end_debug)
 
     -- UI Settings
     ui.setup({
@@ -114,8 +121,8 @@ return {
         },
       },
       floating = {
-        max_height = nil,
-        max_width = nil,
+        -- max_height = nil,
+        -- max_width = nil,
         border = "single",
         mappings = {
           close = { "q", "<Esc>" },

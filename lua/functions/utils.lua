@@ -296,4 +296,16 @@ return {
   get_word_under_cursor = function()
     return vim.fn.expand("<cword>")
   end,
+  blank_line_below = function()
+    vim.fn.append(vim.fn.line("."), "")
+  end,
+  blank_line_above = function()
+    vim.fn.append(vim.fn.line(".") - 1, "")
+  end,
+  move_line_down = function () 
+    vim.api.nvim_feedkeys("ddp", "n", false)
+  end,
+  move_line_up = function ()
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("dd<Up>P", false, true, true), "n", false)
+  end
 }

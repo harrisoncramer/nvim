@@ -15,9 +15,6 @@ vim.keymap.set("n", "<C-p>", ":BufSurfBack<CR>", { silent = true, noremap = true
 vim.keymap.set("n", "<C-t>", "<C-^>")
 vim.keymap.set("n", "<C-x>", ":bp <bar> bd#<CR>")
 
--- Shortcuts
-vim.keymap.set("n", "R", require("functions").start_replace, {})
-
 -- Neovim
 vim.keymap.set("n", "<leader>vv", ":e $MYVIMRC<cr>")
 
@@ -35,6 +32,10 @@ vim.keymap.set("i", "<C-h>", "<Lseft>") -- Move left in insert
 vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
 vim.keymap.set("x", "<leader>p", '"_dP') -- Keep paste register after paste
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "[<space>", u.blank_line_above)
+vim.keymap.set("n", "]<space>", u.blank_line_below)
+vim.keymap.set("n", "[e", u.move_line_up)
+vim.keymap.set("n", "]e", u.move_line_down)
 
 -- Copy current path to clipboard
 vim.keymap.set("n", "<leader>yd", u.copy_dir_to_clipboard)

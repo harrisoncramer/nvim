@@ -22,7 +22,6 @@ return {
   { "tpope/vim-dispatch" },
   { "tpope/vim-repeat" },
   { "tpope/vim-surround" },
-  { "tpope/vim-unimpaired" },
   { "tpope/vim-rhubarb" },
   { "tpope/vim-eunuch" },
   { "tpope/vim-obsession" },
