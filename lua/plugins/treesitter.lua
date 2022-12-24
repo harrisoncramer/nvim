@@ -35,6 +35,9 @@ return {
       ensure_installed = { "javascript", "typescript", "go", "vue", "clojure", "lua", "css", "bash", "json", "sql",
         "dockerfile", "html", "python", "scss", "rust", "markdown", "hcl" },
       sync_install = false,
+      indent = {
+        enable = true
+      },
       autotag = {
         enable = true
       },
