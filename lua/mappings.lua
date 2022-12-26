@@ -10,8 +10,6 @@ vim.keymap.set("n", "sl", "<C-w>l")
 vim.keymap.set("n", "sq", "<C-w>q")
 
 -- Using a simple plugin to provide better forward/backward surfing
-vim.keymap.set("n", "<C-n>", ":BufSurfForward<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<C-p>", ":BufSurfBack<CR>", { silent = true, noremap = true })
 vim.keymap.set("n", "<C-t>", "<C-^>")
 vim.keymap.set("n", "<C-x>", ":bp <bar> bd#<CR>")
 
