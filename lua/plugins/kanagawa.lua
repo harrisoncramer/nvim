@@ -1,5 +1,6 @@
 local function setup()
   local kanagawa = require("kanagawa")
+  local colorMap = require("colorscheme")
 
   kanagawa.setup({
     undercurl = true, -- enable undercurls
@@ -23,6 +24,11 @@ local function setup()
   })
 
   vim.cmd.colorscheme('kanagawa')
+
+  vim.cmd.hi("NonText guifg=bg")
+  vim.cmd.hi("IncSearch guifg=White guibg=" .. colorMap.samuraiRed)
+  vim.cmd.hi("Search guifg=White guibg=" .. colorMap.autumnRed)
+
 end
 
 return { "rebelot/kanagawa.nvim", config = setup }

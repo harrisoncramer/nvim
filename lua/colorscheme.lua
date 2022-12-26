@@ -35,8 +35,6 @@ local colorMap = {
   katanaGray    = "#717C7C"
 }
 
-vim.cmd([[ :hi NonText guifg=bg ]])
-
 -- Custom overrides of treesitter capture groups (:TSHighlightCapturesUnderCursor) for Kanagawa theme
 vim.api.nvim_set_hl(0, "@tag", { fg = colorMap.lightBlue })
 vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = colorMap.lightBlue, })
