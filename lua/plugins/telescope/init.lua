@@ -124,6 +124,10 @@ return {
           case_mode = "smart_case",
         },
         file_browser = {
+          layout_strategy = "horizontal",
+          layout_config = {
+            preview_width = .60,
+          },
           quiet = true,
           hijack_netrw = true,
           hide_parent_dir = true,
@@ -141,6 +145,7 @@ return {
         },
       },
       defaults = {
+        layout_strategy = "horizontal",
         file_ignore_patterns = { "node_modules", "package%-lock.json" },
         mappings = {
           i = {
@@ -152,6 +157,10 @@ return {
       },
       pickers = {
         live_grep = {
+          layout_strategy = "vertical",
+          layout_config = {
+            preview_height = .35,
+          },
           use_regex = false,
           only_sort_text = true,
           prompt_prefix = " ",
@@ -163,6 +172,10 @@ return {
           },
         },
         git_files = {
+          layout_strategy = "horizontal",
+          layout_config = {
+            preview_width = .60,
+          },
           show_untracked = true,
           mappings = {
             i = {
