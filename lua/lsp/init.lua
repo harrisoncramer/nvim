@@ -44,20 +44,23 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, {})
   vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
   vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, {})
-  vim.keymap.set("n", "<leader>]", function()
-    vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
-  end)
-  vim.keymap.set("n", "<leader>[", function()
+
+  vim.keymap.set("n", "]W", function()
     vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
   end)
 
-  vim.keymap.set("n", "<leader>w", function()
+  vim.keymap.set("n", "[W", function()
+    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+  end)
+
+  vim.keymap.set("n", "]w", function()
     vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARNING })
   end)
 
-  vim.keymap.set("n", "<leader>W", function()
+  vim.keymap.set("n", "[w", function()
     vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARNING })
   end)
+
 
   vim.keymap.set("n", "<leader>d", function()
     vim.diagnostic.setqflist({})

@@ -9,6 +9,9 @@ local function setup()
   end
 
   vim.keymap.set("n", "<leader>q", toggleQf, {})
+  vim.keymap.set("n", "]q", ":cnext<CR>", {})
+  vim.keymap.set("n", "[q", ":cprev<CR>", {})
+
   require("bqf").setup({
     preview = {
       border_chars = { "│", "│", "─", "─", "╭", "╮", "╰", "╯", "│" },
