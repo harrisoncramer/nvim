@@ -15,6 +15,9 @@ return {
     -- Utility functions for file_browser extension
     local function FbOpen(file_path, open_file)
       local entry_path = u.dirname(file_path)
+      if string.sub(entry_path, -1, -1) == "/" then
+        entry_path = string.sub(entry_path, 1, -2)
+      end
       require("telescope").extensions.file_browser.file_browser({ path = entry_path, quiet = true })
       -- if open_file then
       --   vim.api.nvim_input(u.basename(entry))
@@ -184,6 +187,10 @@ return {
           },
         },
         git_branches = {
+          layout_strategy = "vertical",
+          -- layout_config = {
+          --   preview_width = .60,
+          -- },
           prompt_prefix = " ",
           mappings = {
             i = {
@@ -201,6 +208,10 @@ return {
           hidden = true,
         },
         git_commits = {
+          layout_strategy = "horizontal",
+          layout_config = {
+            preview_width = .60,
+          },
           prompt_prefix = " ",
           mappings = {
             i = {
