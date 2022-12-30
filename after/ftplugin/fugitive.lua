@@ -15,7 +15,6 @@ vim.cmd([[
   " custom mapping in fugitive window (:Git)
   augroup custom_fugitive_mappings
       au!
-      au User FugitiveIndex nnoremap <buffer> <leader>df :call GdiffsplitTab(GStatusGetFilenameUnderCursor())<cr>
       au User FugitiveIndex nnoremap <buffer> <C-n> :lua require("plugins.fugitive").jump_next()<CR>
       au User FugitiveIndex nnoremap <buffer> <C-p> :lua require("plugins.fugitive").jump_prev()<CR>
       au User FugitiveIndex nnoremap <buffer> sj <C-w>j

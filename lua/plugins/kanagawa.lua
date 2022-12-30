@@ -26,8 +26,8 @@ local function setup()
   vim.cmd.colorscheme('kanagawa')
 
   vim.cmd.hi("NonText guifg=bg")
-  vim.cmd.hi("IncSearch guifg=White guibg=" .. colorMap.samuraiRed)
-  vim.cmd.hi("Search guifg=White guibg=" .. colorMap.autumnRed)
+  vim.cmd.hi("IncSearch guifg=White guibg=" .. colorMap.autumnRed)
+  vim.cmd.hi("Search guifg=Black guibg=" .. colorMap.surimiOrange)
 
 end
 

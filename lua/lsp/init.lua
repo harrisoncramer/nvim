@@ -37,6 +37,7 @@ local on_attach = function(client, bufnr)
     lsp_format.on_attach(client)
   end
 
+  -- Keymaps
   vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
   vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
   vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
@@ -56,6 +57,10 @@ local on_attach = function(client, bufnr)
 
   vim.keymap.set("n", "<leader>W", function()
     vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARNING })
+  end)
+
+  vim.keymap.set("n", "<leader>d", function()
+    vim.diagnostic.setqflist({})
   end)
 
   -- This is ripped off from https://github.com/kabouzeid/dotfiles, it's for tailwind preview support
