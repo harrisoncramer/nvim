@@ -1,6 +1,8 @@
 local function setup()
+  local default_colors = require("kanagawa.colors").setup()
   local kanagawa = require("kanagawa")
-  local colorMap = require("colorscheme")
+
+  local strongHighlight =  "#fa7af6"
 
   kanagawa.setup({
     undercurl = true, -- enable undercurls
@@ -20,14 +22,18 @@ local function setup()
     specialException = true, -- special highlight for exception handling keywords
     transparent = false, -- do not set background color
     colors = {},
-    overrides = {},
+    overrides = {
+      IncSearch = { fg = "black", bg = strongHighlight, underline = true, bold = true },
+      Search = { fg = "black", bg = default_colors.oniViolet },
+      Substitute = { fg = "black", fg = strongHighlight },
+    },
   })
 
   vim.cmd.colorscheme('kanagawa')
-
+  vim.api.nvim_set_hl(0, "@tag", { fg = default_colors.lightBlue })
+  vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = default_colors.lightBlue, })
+  vim.api.nvim_set_hl(0, "@tag.attribute", { fg = default_colors.sakuraPink })
   vim.cmd.hi("NonText guifg=bg")
-  vim.cmd.hi("IncSearch guifg=White guibg=" .. colorMap.autumnRed)
-  vim.cmd.hi("Search guifg=Black guibg=" .. colorMap.surimiOrange)
 
 end
 

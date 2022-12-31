@@ -1,4 +1,5 @@
 -- Kanagawa colors
+-- These are used by other plugins, duplicated from Kanagawa repository
 local colorMap = {
   sumiInk1      = "#1F1F28",
   sumiInk3      = "#363646",
@@ -35,8 +36,4 @@ local colorMap = {
   katanaGray    = "#717C7C"
 }
 
--- Custom overrides of treesitter capture groups (:TSHighlightCapturesUnderCursor) for Kanagawa theme
-vim.api.nvim_set_hl(0, "@tag", { fg = colorMap.lightBlue })
-vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = colorMap.lightBlue, })
-vim.api.nvim_set_hl(0, "@tag.attribute", { fg = colorMap.sakuraPink })
 return colorMap

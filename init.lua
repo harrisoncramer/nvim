@@ -2,7 +2,6 @@
 require("settings")
 
 -- Settings, Mappings, Keybindings
-require("colorscheme")
 require("functions")
 require("autocommands")
 require("commands")
