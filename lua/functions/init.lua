@@ -167,6 +167,7 @@ return {
     require("notify")("BufOnly: " .. deleted .. " deleted buffer(s), " .. modified .. " modified buffer(s)")
   end,
   screenshot = function()
+    local async_job_ok, job = pcall(require, 'plenary.job')
     if not async_job_ok then
       require("notify")("Plenary is not installed!", "error")
     end
