@@ -1,7 +1,7 @@
 -- Neovim Core Settings
 require("settings")
 
--- Settings, Mappings, Keybindings
+-- Helper functions and autocommands
 require("functions")
 require("autocommands")
 require("commands")
