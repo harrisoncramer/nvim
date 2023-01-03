@@ -1,6 +1,10 @@
 return {
   "nvim-treesitter/nvim-treesitter",
-  dependencies = { "p00f/nvim-ts-rainbow", "nvim-treesitter/nvim-treesitter-context" },
+  dependencies = {
+    "p00f/nvim-ts-rainbow",
+    "nvim-treesitter/nvim-treesitter-context",
+    "nvim-treesitter/playground",
+  },
   config = function()
     -- For rainbow brackets
     local enabled_list = { "clojure" }
