@@ -2,7 +2,7 @@ local function setup()
   local default_colors = require("kanagawa.colors").setup()
   local kanagawa = require("kanagawa")
 
-  local strongHighlight =  "#fa7af6"
+  local strongHighlight = "#fa7af6"
 
   kanagawa.setup({
     undercurl = true, -- enable undercurls
@@ -25,7 +25,8 @@ local function setup()
     overrides = {
       IncSearch = { fg = "black", bg = strongHighlight, underline = true, bold = true },
       Search = { fg = "black", bg = default_colors.oniViolet },
-      Substitute = { fg = "black", fg = strongHighlight },
+      Substitute = { fg = "black", bg = strongHighlight },
+      MatchParen = { fg = strongHighlight, bg = default_colors.sumiInk1 },
     },
   })
 

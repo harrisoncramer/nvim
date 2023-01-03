@@ -39,6 +39,7 @@ return {
   { "lambdalisue/glyph-palette.vim" },
   { "posva/vim-vue", ft = { "vue" } },
   { "AndrewRadev/tagalong.vim" },
+  { "tpope/vim-abolish" },
   { "windwp/nvim-ts-autotag" },
   { 'djoshea/vim-autoread' },
 }
