@@ -29,7 +29,6 @@ vim.keymap.set("n", "H", ":w<CR>") -- Quick save
 vim.keymap.set("i", "<C-h>", "<Lseft>") -- Move left in insert
 vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
 vim.keymap.set("x", "<leader>p", '"_dP') -- Keep paste register after paste
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "[<space>", u.blank_line_above)
 vim.keymap.set("n", "]<space>", u.blank_line_below)
 vim.keymap.set("n", "[e", u.move_line_up)
@@ -38,6 +37,10 @@ vim.keymap.set("n", "]e", u.move_line_down)
 -- Copy current path to clipboard
 vim.keymap.set("n", "<leader>yd", u.copy_dir_to_clipboard)
 vim.keymap.set("n", "<leader>yf", u.copy_file_to_clipboard)
+
+-- Center the view after jumping up/down
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
 -- Open Links
 local opener = u.get_os() == "Linux" and "xdg-open" or "open"
