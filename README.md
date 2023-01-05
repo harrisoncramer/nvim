@@ -88,7 +88,7 @@ pip3 install --upgrade pynvim
 # Quickstart
 
 1. Install the required dependencies listed above.
-2. Clone this repository to your Neovim configuration path: `cit clone https://github.com/harrisoncramer/nvim.git ~/.config/nvim`
+2. Clone this repository to your Neovim configuration path: `git clone https://github.com/harrisoncramer/nvim.git ~/.config/nvim`
 3. Open Neovim. The plugin installation should start automatically; so should the LSP and Debugger installations.
 4. Run `:UpdateRemotePlugins` to update Wilder
 
