@@ -134,6 +134,7 @@ return {
           quiet = true,
           hijack_netrw = true,
           hide_parent_dir = true,
+          hidden = true,
           mappings = {
             i = {
               [","] = fb_actions.goto_parent_dir,
