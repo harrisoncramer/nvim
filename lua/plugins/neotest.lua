@@ -25,6 +25,9 @@ return {
     }, neotest_ns)
 
     require("neotest").setup({
+      quickfix = {
+        open = false,
+      },
       status = {
         enabled = true,
         signs = true, -- Sign after function signature
