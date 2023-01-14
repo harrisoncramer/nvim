@@ -1,5 +1,4 @@
--- set.leader to comma/space key
--- nnoremap <Space> <NOP>
+-- set.leaders
 vim.cmd([[ nnoremap <Space> <NOP>]])
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
@@ -8,19 +7,17 @@ vim.g.wildmenu = true
 vim.g.wildignore = "**/node_modules/**"
 -- update time for plugins (speed when they act)
 vim.opt.updatetime = 300
---Mouse support active. Alt click
-vim.opt.mouse = "a"
 -- set.relative line numbers for jumping
 vim.opt.relativenumber = true
 -- Number of current line
 vim.opt.number = true
--- Turn on clipboard across panes for tmux
+-- Set regular expression engine
 vim.opt.regexpengine = 1
--- Let treesitter handle styling
+-- Turn on clipboard across panes for tmux
 vim.opt.clipboard = 'unnamedplus'
 -- set substitute/replace command to automatically use global flag
 vim.opt.gdefault = true
--- Do not allow line wraping
+-- Do not allow line wrapping
 vim.opt.wrap = false
 -- Start scrolling when you're 15 away from bottom (and side)
 vim.opt.scrolloff = 15
@@ -58,7 +55,6 @@ vim.opt.expandtab = true
 -- Plugins
 vim.g.closetag_filenames = "*.html,*.jsx,*.js,*.tsx,*.vue"
 vim.g.vimwiki_map_prefix = "<Leader><F13>"
--- vim.g.user_emmet_leader_key = "<C-e>"
 vim.g.matchup_matchparen_offscreen = { method = "popup" }
 
 -- Diffs (no whitespace and vertical by default)
