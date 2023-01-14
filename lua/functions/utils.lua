@@ -1,5 +1,3 @@
-local async_ok, async = pcall(require, "plenary.async")
-
 -- These are functions that are used within the Lua
 -- configuration and are not meant for export to the end
 -- user.
@@ -194,13 +192,6 @@ return {
     end
     return wrapped_fn, timer
   end,
-  split_on = function(s, delimiter)
-    local result = {}
-    for match in (s .. delimiter):gmatch("(.-)" .. delimiter) do
-      table.insert(result, match)
-    end
-    return result
-  end,
   reload_plugin = function(plugin)
     for k in pairs(package.loaded) do
       if k:match(plugin) then
@@ -302,10 +293,10 @@ return {
   blank_line_above = function()
     vim.fn.append(vim.fn.line(".") - 1, "")
   end,
-  move_line_down = function () 
+  move_line_down = function()
     vim.api.nvim_feedkeys("ddp", "n", false)
   end,
-  move_line_up = function ()
+  move_line_up = function()
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("dd<Up>P", false, true, true), "n", false)
   end
 }

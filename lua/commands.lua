@@ -17,10 +17,6 @@ vim.api.nvim_create_user_command("SC", function()
   require("functions").shortcut()
 end, { nargs = 0 })
 
-vim.api.nvim_create_user_command("CAL", function()
-  require("functions").calendar()
-end, { nargs = 0 })
-
 vim.api.nvim_create_user_command("Stash", function(opts)
   local name = opts.args ~= "" and opts.args or u.get_date_time()
   name = string.gsub(name, "%s+", "_")
@@ -41,12 +37,6 @@ end, { nargs = 0 })
 
 vim.api.nvim_create_user_command("Filesystem", function()
   require("functions").run_script("open_filesystem")
-end, { nargs = 0 })
-
-local is_sharing = false
-vim.api.nvim_create_user_command("Share", function()
-  require("functions").share_screen(is_sharing)
-  is_sharing = not is_sharing
 end, { nargs = 0 })
 
 vim.api.nvim_create_user_command("BufOnly", function()
