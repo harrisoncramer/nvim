@@ -41,4 +41,5 @@ return {
   { "AndrewRadev/tagalong.vim" },
   { "tpope/vim-abolish" },
   { 'djoshea/vim-autoread' },
+  { 'sago35/tinygo.vim' }
 }
