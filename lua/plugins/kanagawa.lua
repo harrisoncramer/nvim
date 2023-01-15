@@ -30,6 +30,14 @@ local function setup()
     },
   })
 
+  -- Make background transparent. I like semi-transparent background in the terminal.
+  vim.cmd([[
+    augroup user_colors
+      autocmd!
+      autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE
+    augroup END
+  ]])
+
   vim.cmd.colorscheme('kanagawa')
   vim.api.nvim_set_hl(0, "@tag", { fg = default_colors.lightBlue })
   vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = default_colors.lightBlue, })
