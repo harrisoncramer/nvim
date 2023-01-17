@@ -133,7 +133,8 @@ return {
     return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
   end,
   open_url = function(url)
-    vim.cmd("exec \"!xdg-open '" .. url .. "'\"")
+    local opener = get_os() == "Linux" and "xdg-open" or "open"
+    vim.cmd("exec \"!" .. opener .. " '" .. url .. "'\"")
   end,
   get_branch_name = function()
     local is_git_branch = io.popen("git rev-parse --is-inside-work-tree 2>/dev/null"):read("*a")
