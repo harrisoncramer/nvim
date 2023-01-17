@@ -1,9 +1,9 @@
 # Neovim Configuration
 
-![The editor](https://hjc-public.s3.amazonaws.com/nvim3.png)
-![Terminal integration](https://hjc-public.s3.amazonaws.com/nvim2.png)
-![Diffing](https://hjc-public.s3.amazonaws.com/nvim1.png)
-![Debugging](https://harrisoncramer.me/static/6e0f346fac366e6835391c95b69aa43a/d61c2/nvim-dap-ui-go.png)
+![The editor](https://hjc-public.s3.amazonaws.com/nvim3.png?)
+![Terminal integration](https://hjc-public.s3.amazonaws.com/nvim2.png?)
+![Diffing](https://hjc-public.s3.amazonaws.com/nvim1.png?)
+![Debugging](https://harrisoncramer.me/static/6e0f346fac366e6835391c95b69aa43a/d61c2/nvim-dap-ui-go.png?)
 
 # About
 
