@@ -44,6 +44,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, {})
   vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
   vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, {})
+  vim.keymap.set("n", "<leader>lq", vim.diagnostic.setqflist, {})
 
   vim.keymap.set("n", "]W", function()
     vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
