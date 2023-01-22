@@ -90,6 +90,7 @@ local servers = {
   "eslint",
   "gopls",
   "volar",
+  "astro"
 }
 
 -- Setup Mason + LSPs + CMP
