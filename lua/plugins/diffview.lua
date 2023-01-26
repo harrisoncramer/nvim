@@ -21,6 +21,17 @@ return {
       end
     end)
 
+    vim.keymap.set("n", "<leader>gh", function()
+      local isDiff = vim.fn.getwinvar(nil, "&diff")
+      local bufName = vim.api.nvim_buf_get_name(0)
+      if isDiff ~= 0 or u.string_starts(bufName, "diff") then
+        vim.cmd("tabclose")
+        vim.cmd("tabprev")
+      else
+        vim.cmd.DiffviewFileHistory()
+      end
+    end)
+
     -- Toggle viewing all current changes
     vim.keymap.set("n", "<leader>gc", function()
       local isDiff = vim.fn.getwinvar(nil, "&diff")
