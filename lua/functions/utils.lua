@@ -244,14 +244,14 @@ return {
   get_buf_by_name = function(name, starts_with)
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
       local buf_name = vim.api.nvim_buf_get_name(buf)
+      if starts_with then
+        if string_starts(buf_name, name) then
+          return buf
+        end
+      end
       local base_name = basename(buf_name)
       if base_name == name then
         return buf
-      end
-      if starts_with then
-        if string_starts(base_name, name) then
-          return buf
-        end
       end
     end
     return -1
