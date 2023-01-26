@@ -14,8 +14,9 @@ local function jump_prev()
   u.press_enter()
 end
 
-local git_push = function()
+local fugitive_reload = vim.fn["fugitive#ReloadStatus"]
 
+local git_push = function()
   local async_job, job = pcall(require, 'plenary.job')
   if not async_job then
     require("notify")("Plenary is not installed!", "error")
@@ -30,10 +31,8 @@ local git_push = function()
         return
       end
       require("notify")("Pushed.", vim.log.levels.INFO)
-      vim.schedule_wrap(function()
-        print("Calling reload status")
-        vim.fn["fugitive#ReloadStatus"]()
-      end)
+      print("Reloading")
+      fugitive_reload()
     end,
   })
 
