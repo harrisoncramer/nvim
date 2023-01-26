@@ -105,7 +105,6 @@ for _, s in pairs(servers) do
     require("notify")("The LSP '" .. s .. "' does not have a config.", "warn")
   else
     mod.setup(on_attach, capabilities)
-    vim.cmd(":silent! bufdo e")
   end
 end
 
