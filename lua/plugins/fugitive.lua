@@ -31,6 +31,7 @@ local git_push = function()
       end
       require("notify")("Pushed.", vim.log.levels.INFO)
       vim.schedule_wrap(function()
+        print("Calling reload status")
         vim.fn["fugitive#ReloadStatus"]()
       end)
     end,
