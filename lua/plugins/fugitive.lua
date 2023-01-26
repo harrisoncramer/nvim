@@ -30,6 +30,7 @@ local git_push = function()
         return
       end
       require("notify")("Pushed.", vim.log.levels.INFO)
+      vim.fn["fugitive#ReloadStatus"]()
     end,
   })
 
