@@ -36,6 +36,7 @@ local git_push = function()
           return
         end
         vim.api.nvim_feedkeys(":e " .. bufName, "n", false)
+        u.press_enter()
       end)
     end,
   })
