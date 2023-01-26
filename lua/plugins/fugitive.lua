@@ -29,12 +29,14 @@ local git_push = function()
         return
       end
       require("notify")("Pushed.", vim.log.levels.INFO)
-      local bufnr = u.get_buf_by_name("fugitive", true)
-      local bufName = vim.api.nvim_buf_get_name(bufnr)
-      if not bufName then
-        return
-      end
-      vim.api.nvim_feedkeys(":e " .. bufName, "n", false)
+      vim.schedule(function()
+        local bufnr = u.get_buf_by_name("fugitive", true)
+        local bufName = vim.api.nvim_buf_get_name(bufnr)
+        if not bufName then
+          return
+        end
+        vim.api.nvim_feedkeys(":e " .. bufName, "n", false)
+      end)
     end,
   })
 
