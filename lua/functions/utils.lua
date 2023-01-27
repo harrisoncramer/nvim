@@ -24,6 +24,10 @@ local function press_enter()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", false, true, true), "n", false)
 end
 
+local function get_line_number()
+  return vim.api.nvim_win_get_cursor(0)[1]
+end
+
 local function run_script(script_name, args)
   local nvim_scripts_dir = "~/.config/nvim/scripts"
   local f = nil
@@ -131,6 +135,15 @@ return {
   end,
   current_dir = function()
     return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+  end,
+  get_line_number = get_line_number,
+  get_line_content = function()
+    return vim.api.nvim_buf_get_lines(0, get_line_number() - 1, get_line_number(), false)[1]
+  end,
+  make_words_from_string = function(s)
+    local words = {}
+    for word in s:gmatch("%w+") do table.insert(words, word) end
+    return words
   end,
   open_url = function(url)
     local opener = get_os() == "Linux" and "xdg-open" or "open"

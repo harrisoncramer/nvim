@@ -12,7 +12,9 @@ return {
     vim.keymap.set("n", "<leader>gfh", function()
       local isDiff = vim.fn.getwinvar(nil, "&diff")
       local bufName = vim.api.nvim_buf_get_name(0)
+      diffview.FOCUSED_HISTORY_FILE = bufName
       if isDiff ~= 0 or u.string_starts(bufName, "diff") then
+        diffview.FOCUSED_HISTORY_FILE = nil
         vim.cmd("tabclose")
         vim.cmd("tabprev")
       else
