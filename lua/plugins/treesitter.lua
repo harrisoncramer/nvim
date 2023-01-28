@@ -38,7 +38,7 @@ return {
 
     require("nvim-treesitter.configs").setup({
       ensure_installed = { "javascript", "typescript", "go", "vue", "clojure", "lua", "css", "bash", "json", "sql",
-        "dockerfile", "html", "python", "scss", "rust", "markdown", "hcl", "astro" },
+        "dockerfile", "html", "python", "scss", "rust", "markdown", "hcl", "astro", "tsx" },
       sync_install = false,
       indent = {
         enable = true
