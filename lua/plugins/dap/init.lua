@@ -87,10 +87,11 @@ return {
     local function dap_end_debug()
       dap.clear_breakpoints()
       ui.toggle({})
-      dap.terminate()
-      vim.cmd.tabclose()
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
-      require("notify")("Debugger session ended", "warn")
+      dap.terminate({}, { terminateDebuggee = true }, function()
+        vim.cmd.tabclose()
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
+        require("notify")("Debugger session ended", "warn")
+      end)
     end
 
     vim.keymap.set("n", "<localleader>de", dap_end_debug)
@@ -106,7 +107,6 @@ return {
         repl = "r",
         toggle = "t",
       },
-      expand_lines = vim.fn.has("nvim-0.7"),
       layouts = {
         {
           elements = {
