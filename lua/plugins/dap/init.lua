@@ -50,10 +50,11 @@ return {
     -- ╰──────────────────────────────────────────────────────────╯
     vim.fn.sign_define('DapBreakpoint', { text = '🐞' })
 
-    local function dap_start_debugging ()
+    local function dap_start_debugging()
       dap.continue()
+      vim.cmd("tabedit %")
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-o>", false, true, true), "n", false)
       ui.toggle({})
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
     end
 
     vim.keymap.set("n", "<localleader>ds", dap_start_debugging)
@@ -64,14 +65,15 @@ return {
     vim.keymap.set("n", "<localleader>di", dap.step_into)
     vim.keymap.set("n", "<localleader>do", dap.step_out)
 
-    local function dap_clear_breakpoints ()
+    local function dap_clear_breakpoints()
       dap.clear_breakpoints()
       require("notify")("Breakpoints cleared", "warn")
     end
+
     vim.keymap.set("n", "<localleader>dC", dap_clear_breakpoints)
 
     -- TODO: How to get current adapter config? Could restart with current arguments
-    local function dap_restart_current_session ()
+    local function dap_restart_current_session()
       dap.terminate()
       vim.defer_fn(
         function()
@@ -79,12 +81,14 @@ return {
         end,
         300)
     end
+
     vim.keymap.set("n", "<localleader>dr", dap_restart_current_session)
 
     local function dap_end_debug()
       dap.clear_breakpoints()
       ui.toggle({})
       dap.terminate()
+      vim.cmd.tabclose()
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
       require("notify")("Debugger session ended", "warn")
     end
