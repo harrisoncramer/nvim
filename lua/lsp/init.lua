@@ -83,7 +83,7 @@ local capabilities = cmp_nvim_lsp.default_capabilities(normal_capabilities)
 -- configuration files, which are stored in lua/lsp/servers,
 -- passing along the global on_attach and capabilities functions
 local servers = {
-  "sumneko_lua",
+  "lua_ls",
   "clojure_lsp",
   "tailwindcss",
   "tsserver",
