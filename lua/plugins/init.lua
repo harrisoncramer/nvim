@@ -41,5 +41,15 @@ return {
   { "AndrewRadev/tagalong.vim" },
   { "tpope/vim-abolish" },
   { 'djoshea/vim-autoread' },
-  { 'sago35/tinygo.vim' }
+  { 'sago35/tinygo.vim' },
+  {
+    "ziontee113/icon-picker.nvim",
+    dependencies = { "stevearc/dressing.nvim" },
+    config = function()
+      require("icon-picker").setup({
+        disable_legacy_commands = true
+      })
+      vim.keymap.set("n", "<leader>e", ":IconPickerNormal<cr>", opts)
+    end,
+  }
 }
