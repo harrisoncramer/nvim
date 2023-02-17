@@ -1,3 +1,4 @@
+local map_opts = { noremap = true, silent = true, nowait = true, buffer = true }
 return {
   "nvim-telescope/telescope.nvim",
   requires = { "nvim-lua/plenary.nvim", "junegunn/fzf", },
@@ -241,5 +242,8 @@ return {
     -- Custom Pickers
     require("plugins.telescope.pickers")
 
+    vim.keymap.set("n", "HOH", ":neat", map_opts)
+    -- Custom mappings per use-case
+    require("plugins.telescope.vue")
   end
 }
