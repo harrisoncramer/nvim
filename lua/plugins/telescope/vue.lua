@@ -11,6 +11,6 @@ M.get_component_references = function()
   builtin.grep_string({ search = componentStart })
 end
 
--- Gets component references
-vim.keymap.set("n", "<localleader>cr", function() M.get_component_references() end)
+-- Gets vue "reference" to current component (searches for <ComponentName) in telescope
+vim.keymap.set("n", "<localleader>vr", function() M.get_component_references() end)
 return M
