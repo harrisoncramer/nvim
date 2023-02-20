@@ -1,7 +1,7 @@
 return {
   "rcarriga/nvim-dap-ui",
   dependencies = {
-    "harrisoncramer/mason-nvim-dap.nvim",
+    "jay-babu/mason-nvim-dap.nvim",
     "mfussenegger/nvim-dap",
     "mxsdev/nvim-dap-vscode-js",
   },
@@ -24,7 +24,8 @@ return {
     -- it, so I forked it and added it back myself. The debugger requires a
     -- special adapter, seen in /lua/plugins/dap/adapters.lua
     mason_dap.setup({
-      ensure_installed = { "delve", "node2", "js" }
+      ensure_installed = { "delve", "node2", "js" },
+      automatic_installation = true
     })
 
     -- ╭──────────────────────────────────────────────────────────╮
@@ -51,7 +52,7 @@ return {
     vim.fn.sign_define('DapBreakpoint', { text = '🐞' })
 
     local function dap_start_debugging()
-      dap.continue()
+      dap.continue({})
       vim.cmd("tabedit %")
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-o>", false, true, true), "n", false)
       ui.toggle({})
@@ -137,6 +138,5 @@ return {
         max_type_length = nil,
       },
     })
-
   end
 }
