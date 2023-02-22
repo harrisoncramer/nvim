@@ -10,7 +10,7 @@ return {
   { "onsails/lspkind-nvim" },
   { "hrsh7th/nvim-cmp" },
   { "hrsh7th/cmp-nvim-lsp-signature-help" },
-  { "hrsh7th/cmp-nvim-lua", ft = { "lua" } },
+  { "hrsh7th/cmp-nvim-lua",                       ft = { "lua" } },
   { "hrsh7th/cmp-nvim-lsp" },
   { "folke/neodev.nvim" },
   { "hrsh7th/cmp-buffer" },
@@ -18,7 +18,7 @@ return {
   { "nvim-lua/plenary.nvim" },
   { "rebelot/kanagawa.nvim" }, -- In colors.lua file
   { "lukas-reineke/lsp-format.nvim" },
-  { "junegunn/fzf", build = function() vim.fn["fzf#install"]() end },
+  { "junegunn/fzf",                               build = function() vim.fn["fzf#install"]() end },
   { "tpope/vim-dispatch" },
   { "tpope/vim-repeat" },
   { "tpope/vim-surround" },
@@ -26,7 +26,7 @@ return {
   { "tpope/vim-eunuch" },
   { "tpope/vim-obsession" },
   { "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } },
-  { "guns/vim-sexp", ft = { "clojure" } },
+  { "guns/vim-sexp",                              ft = { "clojure" } },
   { "numToStr/Comment.nvim", config = function()
     require("Comment").setup({})
   end,
@@ -37,7 +37,7 @@ return {
   end
   },
   { "lambdalisue/glyph-palette.vim" },
-  { "posva/vim-vue", ft = { "vue" } },
+  { "posva/vim-vue",                ft = { "vue" } },
   { "AndrewRadev/tagalong.vim" },
   { "tpope/vim-abolish" },
   { 'djoshea/vim-autoread' },
