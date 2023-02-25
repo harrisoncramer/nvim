@@ -51,5 +51,9 @@ return {
       })
       vim.keymap.set("n", "<leader>e", ":IconPickerNormal<cr>", opts)
     end,
+  },
+  { "ellisonleao/glow.nvim", cmd = "Glow", config = function()
+    vim.keymap.set("n", "<localleader>g", require("functions").glow, {})
+  end
   }
 }

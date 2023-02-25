@@ -187,5 +187,5 @@ return {
     })
 
     create_screenshot:start()
-  end
+  end,
 }
