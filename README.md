@@ -84,6 +84,11 @@ sudo apt install python3-pip -y
 pip3 install --upgrade pynvim
 ```
 
+9. bun for faster language servers (tailwindcss and tsserver)
+```bash
+curl -fsSL https://bun.sh/install | bash
+```
+
 # Quickstart
 
 1. Install the required dependencies listed above.
