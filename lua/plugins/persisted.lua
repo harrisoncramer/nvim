@@ -19,5 +19,24 @@ return {
       },
     })
     require("telescope").load_extension("persisted")
+    local group = vim.api.nvim_create_augroup("PersistedHooks", {})
+
+    local branch = ''
+    vim.api.nvim_create_autocmd({ "User" }, {
+      pattern = "PersistedTelescopeLoadPre",
+      group = group,
+      callback = function(session)
+        branch = session.data.branch
+      end,
+    })
+    vim.api.nvim_create_autocmd({ "User" }, {
+      pattern = "PersistedLoadPost",
+      group = group,
+      callback = function()
+        if branch ~= '' then
+          vim.cmd(":!git checkout " .. branch)
+        end
+      end,
+    })
   end
 }
