@@ -24,7 +24,6 @@ return {
   { "tpope/vim-surround" },
   { "tpope/vim-rhubarb" },
   { "tpope/vim-eunuch" },
-  { "tpope/vim-obsession" },
   { "tpope/vim-sexp-mappings-for-regular-people", ft = { "clojure" } },
   { "guns/vim-sexp",                              ft = { "clojure" } },
   { "numToStr/Comment.nvim", config = function()

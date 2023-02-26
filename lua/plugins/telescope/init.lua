@@ -84,12 +84,6 @@ return {
       vim.cmd("DiffviewOpen " .. value .. "~1.." .. value)
     end
 
-    local function CheckoutAndRestore(prompt_bufnr)
-      vim.cmd.Obsession()
-      actions.git_checkout(prompt_bufnr)
-      f.create_or_source_obsession()
-    end
-
     local function CompareWithCurrentBranchInDiffview(prompt_bufnr)
       actions.close(prompt_bufnr)
       local value = state.get_selected_entry(prompt_bufnr).value
