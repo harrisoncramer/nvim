@@ -19,39 +19,17 @@
   "icon-picker.nvim": { "branch": "master", "commit": "66d37ceae84099ca76235de44466829eb37118c2" },
   "jump-tag": { "branch": "main", "commit": "494bc3ef2a511fbd3d0ba8060f0411746099114b" },
   "kanagawa.nvim": { "branch": "master", "commit": "4c8d48726621a7f3998c7ed35b2c2535abc22def" },
-<<<<<<< HEAD
-  "lazy.nvim": { "branch": "main", "commit": "26d121ea13bee96b079403cee6598f04969d4983" },
-  "leap.nvim": { "branch": "main", "commit": "9a69febb2e5a4f5f5a55dd2d7173098fde917bc5" },
-||||||| parent of b773ba8 (Updated plugins)
-  "lazy.nvim": { "branch": "main", "commit": "8077428e63feb0f3bf795d53b23ba1695b28ab0e" },
-  "leap.nvim": { "branch": "main", "commit": "9a69febb2e5a4f5f5a55dd2d7173098fde917bc5" },
-=======
   "lazy.nvim": { "branch": "main", "commit": "26d121ea13bee96b079403cee6598f04969d4983" },
   "leap.nvim": { "branch": "main", "commit": "b4d15d9cccffbc0773d92c5d8c8aad888800cb5e" },
->>>>>>> b773ba8 (Updated plugins)
   "lsp-format.nvim": { "branch": "master", "commit": "ca0df5c8544e51517209ea7b86ecc522c98d4f0a" },
   "lspkind-nvim": { "branch": "master", "commit": "c68b3a003483cf382428a43035079f78474cd11e" },
   "lualine.nvim": { "branch": "master", "commit": "e99d733e0213ceb8f548ae6551b04ae32e590c80" },
   "luatab.nvim": { "branch": "master", "commit": "79d53c11bd77274b49b50f1d6fdb10529d7354b7" },
   "mason-lspconfig.nvim": { "branch": "main", "commit": "3f9c0ea157e88b08e2d11ec65002eeb6e421f0da" },
   "mason-nvim-dap.nvim": { "branch": "main", "commit": "6b5b5fc42176e0ca1d3634a516cc9b4e5fcc8117" },
-<<<<<<< HEAD
-  "mason.nvim": { "branch": "main", "commit": "4a514a382b242578dd5971447a5e08f52bee7a8a" },
-||||||| parent of b773ba8 (Updated plugins)
-  "mason.nvim": { "branch": "main", "commit": "01dfdfd36be77cb1195b60d580315bf4e2d8e62c" },
-=======
   "mason.nvim": { "branch": "main", "commit": "1c23135467af667c61aef72a7c08b9a032c50a52" },
->>>>>>> b773ba8 (Updated plugins)
   "messages.nvim": { "branch": "main", "commit": "e4b2a570c97bb94dd6f25808e9379ae98499d12f" },
-<<<<<<< HEAD
-  "neodev.nvim": { "branch": "main", "commit": "f081eb96d6a8dcc1835cdad1e5a46a254093cfc4" },
-||||||| parent of b773ba8 (Updated plugins)
-  "mini.nvim": { "branch": "main", "commit": "50533ab8adc951515541ec10a6fa6ddfdde9adaf" },
-  "mini.sessions": { "branch": "main", "commit": "fef5b6ae3493b9bca6be33b2c8aa30f555c0a88e" },
-  "neodev.nvim": { "branch": "main", "commit": "3c6e485bb3ff819c33e8f24847ba7d421d658569" },
-=======
   "neodev.nvim": { "branch": "main", "commit": "718e45ea13e9cea575d8fdf18f4e46274748bbc6" },
->>>>>>> b773ba8 (Updated plugins)
   "neotest": { "branch": "master", "commit": "b06b0ccbddc61acfe781689da969d2e0117b3dfe" },
   "neotest-go": { "branch": "main", "commit": "49151e258088bd94895e48c977f8c51e3b956178" },
   "neotest-vitest": { "branch": "main", "commit": "643d1fb7a3e874b82f51693bf6d37c427ab54c75" },
@@ -60,37 +38,16 @@
   "nvim-cmp": { "branch": "main", "commit": "01f697a68905f9dcae70960a9eb013695a17f9a2" },
   "nvim-dap": { "branch": "master", "commit": "5b986edc95cf7b37da1db91a5c149daa3ac008d2" },
   "nvim-dap-ui": { "branch": "master", "commit": "bdb94e3853d11b5ce98ec182e5a3719d5c0ef6fd" },
-<<<<<<< HEAD
-  "nvim-dap-vscode-js": { "branch": "main", "commit": "baff224af20c6632861a59aa742c9740c68030de" },
-  "nvim-lspconfig": { "branch": "master", "commit": "62856b20751b748841b0f3ec5a10b1e2f6a6dbc9" },
-||||||| parent of b773ba8 (Updated plugins)
-  "nvim-dap-vscode-js": { "branch": "main", "commit": "e7c05495934a658c8aa10afd995dacd796f76091" },
-  "nvim-lspconfig": { "branch": "master", "commit": "62856b20751b748841b0f3ec5a10b1e2f6a6dbc9" },
-=======
   "nvim-dap-vscode-js": { "branch": "main", "commit": "baff224af20c6632861a59aa742c9740c68030de" },
   "nvim-lspconfig": { "branch": "master", "commit": "3b08f2edc461314b9051edf26348f8af3fe33e63" },
->>>>>>> b773ba8 (Updated plugins)
   "nvim-notify": { "branch": "master", "commit": "9c987081390753b625e2d94e749e80e9b4a3e082" },
   "nvim-scrollbar": { "branch": "main", "commit": "75210c554e935740448cfb532d8a671ae544bb1b" },
-<<<<<<< HEAD
-  "nvim-treesitter": { "branch": "master", "commit": "934113c913c773d8b60225c0f570f5f8ce88eb68" },
-||||||| parent of b773ba8 (Updated plugins)
-  "nvim-treesitter": { "branch": "master", "commit": "b401b7423d18c78371c5ff1a5f8d3c14292b2047" },
-=======
   "nvim-treesitter": { "branch": "master", "commit": "3fe80dbecdf1fa88cf81a4d7b30ab0714f8c443a" },
->>>>>>> b773ba8 (Updated plugins)
   "nvim-treesitter-context": { "branch": "master", "commit": "895ec44f5c89bc67ba5440aef3d1f2efa3d59a41" },
   "nvim-ts-autotag": { "branch": "main", "commit": "fdefe46c6807441460f11f11a167a2baf8e4534b" },
   "nvim-ts-rainbow": { "branch": "master", "commit": "ef95c15a935f97c65a80e48e12fe72d49aacf9b9" },
-<<<<<<< HEAD
-  "nvim-web-devicons": { "branch": "master", "commit": "c2c2317f356c8b7da0252f5da758f71bb60bb6b2" },
-  "persisted.nvim": { "branch": "main", "commit": "fb8b3b4f112314be5ddd1d926af722fbe8840918" },
-||||||| parent of b773ba8 (Updated plugins)
-  "nvim-web-devicons": { "branch": "master", "commit": "4709a504d2cd2680fb511675e64ef2790d491d36" },
-=======
   "nvim-web-devicons": { "branch": "master", "commit": "c2c2317f356c8b7da0252f5da758f71bb60bb6b2" },
   "persisted.nvim": { "branch": "main", "commit": "88f27dcab289b338eed5c3c8119481d9c9e7428f" },
->>>>>>> b773ba8 (Updated plugins)
   "playground": { "branch": "master", "commit": "4044b53c4d4fcd7a78eae20b8627f78ce7dc6f56" },
   "plenary.nvim": { "branch": "master", "commit": "253d34830709d690f013daf2853a9d21ad7accab" },
   "tagalong.vim": { "branch": "main", "commit": "7b8cf57d8b5cbf5ece29e8198e72e8db39d9fe26" },
