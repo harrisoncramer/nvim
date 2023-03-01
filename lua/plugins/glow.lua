@@ -1,10 +1,10 @@
+vim.keymap.set("n", "<localleader>gl", function()
+  vim.cmd.Glow()
+end, {})
+
 return {
   "ellisonleao/glow.nvim",
   config = function()
-    vim.keymap.set("n", "<localleader>gl", function()
-      vim.cmd.Glow()
-    end, {})
-
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "glowpreview",
       callback = function()
