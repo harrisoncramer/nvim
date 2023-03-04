@@ -66,6 +66,12 @@ return {
 
     local function grep_string_visual()
       local text = u.get_visual_selection()
+      if text == nil then
+        require("notify")("No visual selection found", "error")
+        return
+      end
+
+
       if text[1] == "" or text[1] == nil then
         require("notify")("No visual selection found", "error")
         return
@@ -80,13 +86,13 @@ return {
 
     local function SeeCommitChangesInDiffview(prompt_bufnr)
       actions.close(prompt_bufnr)
-      local value = state.get_selected_entry(prompt_bufnr).value
+      local value = state.get_selected_entry().value
       vim.cmd("DiffviewOpen " .. value .. "~1.." .. value)
     end
 
     local function CompareWithCurrentBranchInDiffview(prompt_bufnr)
       actions.close(prompt_bufnr)
-      local value = state.get_selected_entry(prompt_bufnr).value
+      local value = state.get_selected_entry().value
       vim.cmd("DiffviewOpen " .. value)
     end
 
@@ -134,6 +140,7 @@ return {
             i = {
               [","] = fb_actions.goto_parent_dir,
               ["<C-e>"] = fb_actions.create,
+              ["<C-y>"] = fb_actions.copy,
               ["<C-k>"] = fb_actions.remove,
               ["<C-r>"] = function(bufnr)
                 fb_actions.rename(bufnr)
@@ -188,12 +195,6 @@ return {
           --   preview_width = .60,
           -- },
           prompt_prefix = " ",
-          mappings = {
-            i = {
-              ["<C-o>"] = CheckoutAndRestore,
-              ["<Enter>"] = CheckoutAndRestore,
-            },
-          },
         },
         current_buffer_fuzzy_find = {
           previewer = false,
