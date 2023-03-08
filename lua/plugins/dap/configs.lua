@@ -1,24 +1,24 @@
 -- Launch or attach to a running Javascript/Typescript process
 local jsOrTs = {
   {
-    type = 'node2';
+    type = 'node2',
     name = 'Launch',
-    request = 'launch';
-    program = '${file}';
-    cwd = vim.fn.getcwd();
-    sourceMaps = true;
-    protocol = 'inspector';
-    console = 'integratedTerminal';
+    request = 'launch',
+    program = '${file}',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    console = 'integratedTerminal',
   },
   {
-    type = 'node2';
+    type = 'node2',
     name = 'Attach',
-    request = 'attach';
-    program = '${file}';
-    cwd = vim.fn.getcwd();
-    sourceMaps = true;
-    protocol = 'inspector';
-    console = 'integratedTerminal';
+    request = 'attach',
+    program = '${file}',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    console = 'integratedTerminal',
   },
   {
     name = "Vitest Debug",
@@ -79,7 +79,7 @@ local go = {
     name = "Debug test (go.mod)",
     request = "launch",
     mode = "test",
-    program = "./${relativeFileDirname}",
+    program = "${relativeFileDirname}",
   },
   -- Build the binary (go build -gcflags=all="-N -l") and run it + pick it
   {
