@@ -317,5 +317,14 @@ return {
   end,
   move_line_up = function()
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("dd<Up>P", false, true, true), "n", false)
-  end
+  end,
+  has_value = function(table, val)
+    for _, value in ipairs(table) do
+      if value == val then
+        return true
+      end
+    end
+
+    return false
+  end,
 }

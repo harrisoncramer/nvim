@@ -3,6 +3,7 @@ local mason_status_ok, mason = pcall(require, "mason")
 local mason_lspconfig_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
 local lsp_format_ok, lsp_format = pcall(require, "lsp-format")
 local add_bun_prefix = require("lsp.bun").add_bun_prefix
+local u = require("functions.utils")
 
 if not (mason_status_ok and mason_lspconfig_ok and cmp_nvim_lsp_status_ok and lsp_format_ok) then
   print("Mason, Mason LSP Config, Completion, or LSP Format not installed!")
@@ -34,7 +35,7 @@ local on_attach = function(client, bufnr)
 
   -- Formatting for Vue handled by Eslint
   -- Formatting for Clojure handled by custom ZPrint function, see lua/lsp/servers/clojure-lsp.lua
-  if (client.name ~= "volar" and client.name ~= "tsserver" and client.name ~= "clojure_lsp") then
+  if (u.has_value({ "lua_ls", "eslint", "gopls", "astro", }, client.name)) then
     lsp_format.on_attach(client)
   end
 
@@ -152,5 +153,5 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 
 vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
   vim.lsp.handlers.signature_help, {
-  border = "solid",
-})
+    border = "solid",
+  })

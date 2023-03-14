@@ -40,9 +40,9 @@ return {
           PmenuThumb = { bg = theme.ui.bg_p2 },
         }
       end,
-      specialReturn = true, -- special highlight for the return keyword
+      specialReturn = true,    -- special highlight for the return keyword
       specialException = true, -- special highlight for exception handling keywords
-      transparent = false, -- do not set background color
+      transparent = false,     -- do not set background color
     })
 
     -- Make background transparent. I like semi-transparent background in the terminal.
