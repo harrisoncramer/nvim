@@ -15,10 +15,14 @@ if cmp_status_ok then
         vim.fn["UltiSnips#Anon"](args.body)
       end,
     },
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
     formatting = {
       format = lspkind.cmp_format({
         with_text = false, -- do not show text alongside icons
-        maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+        maxwidth = 50,     -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
       }),
     },
     mapping = {
@@ -30,10 +34,10 @@ if cmp_status_ok then
       ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     },
     sources = cmp.config.sources({
-      { name = "nvim_lsp", max_item_count = 5 },
-      { name = "nvim_lua", max_item_count = 5 },
-      { name = "ultisnips", max_item_count = 5 },
-      { name = "buffer", max_item_count = 5 },
+      { name = "nvim_lsp",               max_item_count = 5 },
+      { name = "nvim_lua",               max_item_count = 5 },
+      { name = "ultisnips",              max_item_count = 5 },
+      { name = "buffer",                 max_item_count = 5 },
       { name = "nvim_lsp_signature_help" },
     }),
   })
