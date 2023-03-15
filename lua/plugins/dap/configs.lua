@@ -76,22 +76,29 @@ local go = {
   },
   {
     type = "go",
-    name = "Debug test (go.mod)",
+    name = "Debug Test (main)",
     request = "launch",
     mode = "test",
-    program = "${relativeFileDirname}",
+    program = "${file}",
+  },
+  {
+    type = "go",
+    name = "Debug Test (package)",
+    request = "launch",
+    mode = "test",
+    program = "./${relativeFileDirname}",
   },
   -- Build the binary (go build -gcflags=all="-N -l") and run it + pick it
   {
     type = "go",
-    name = "Attach (Pick Process)",
+    name = "Attach To PID",
     mode = "local",
     request = "attach",
     processId = require('plugins.dap.utils').pick_process,
   },
   {
     type = "go",
-    name = "Attach (127.0.0.1:9080)",
+    name = "Attach To Port (:9080)",
     mode = "remote",
     request = "attach",
     port = "9080"
