@@ -1,10 +1,11 @@
-return { "petertriho/nvim-scrollbar", config = function()
-  local colors = require("colorscheme")
-  require("scrollbar").setup({
-    show = true,
+local colors = require("colorscheme")
+return {
+  "petertriho/nvim-scrollbar",
+  opts = {
+    show_in_active_only = true,
     handle = {
       text = " ",
-      color = colors.waveBlue1,
+      color = colors.sumiInk4,
       hide_if_all_visible = true, -- Hides handle if all lines are visible
     },
     marks = {
@@ -36,7 +37,5 @@ return { "petertriho/nvim-scrollbar", config = function()
       diagnostic = false,
       search = false,
     },
-  })
-
-end
+  }
 }

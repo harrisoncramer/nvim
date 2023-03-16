@@ -1,10 +1,8 @@
+vim.keymap.set("n", "<leader>e", ":IconPickerNormal<cr>")
 return {
   "ziontee113/icon-picker.nvim",
   dependencies = { "stevearc/dressing.nvim" },
-  config = function()
-    require("icon-picker").setup({
-      disable_legacy_commands = true
-    })
-    vim.keymap.set("n", "<leader>e", ":IconPickerNormal<cr>")
-  end,
+  opts = {
+    disable_legacy_commands = true
+  },
 }

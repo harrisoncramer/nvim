@@ -18,7 +18,7 @@ return {
       virtual_text = {
         format = function(diagnostic)
           local message =
-          diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+              diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
           return message
         end,
       },
@@ -138,6 +138,5 @@ return {
       end,
       map_opts
     )
-
   end
 }
