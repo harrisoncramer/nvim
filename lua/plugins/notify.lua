@@ -1,10 +1,8 @@
-local colors = require("colorscheme")
 return {
   "rcarriga/nvim-notify",
-  opts = {
-    background_colour = colors.sumiInk1
-  },
   config = function()
+    local colors = require("colorscheme")
+
     vim.api.nvim_set_hl(0, 'NotifyERRORBorder', { fg = colors.samuraiRed })
     vim.api.nvim_set_hl(0, 'NotifyERRORTitle', { fg = colors.samuraiRed })
     vim.api.nvim_set_hl(0, 'NotifyERRORIcon', { fg = colors.samuraiRed })
@@ -20,5 +18,9 @@ return {
     vim.api.nvim_set_hl(0, 'NotifyTRACEBorder', { fg = colors.fujiGray })
     vim.api.nvim_set_hl(0, 'NotifyTRACETitle', { fg = colors.fujiGray })
     vim.api.nvim_set_hl(0, 'NotifyTRACEIcon', { fg = colors.fujiGray })
+
+    require("notify").setup({
+      background_colour = colors.sumiInk1
+    })
   end
 }
