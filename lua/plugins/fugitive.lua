@@ -30,10 +30,9 @@ local git_push = function()
       end
       vim.schedule(function()
         local bufnr = u.get_buf_by_name("fugitive", true)
+        if bufnr == -1 then return end
         local bufName = vim.api.nvim_buf_get_name(bufnr)
-        if not bufName then
-          return
-        end
+        if not bufName then return end
         vim.api.nvim_feedkeys(":e " .. bufName, "n", false)
         u.press_enter()
       end)
