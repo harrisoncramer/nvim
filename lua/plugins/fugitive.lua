@@ -28,7 +28,6 @@ local git_push = function()
         require("notify")("Could not push!", "error")
         return
       end
-      require("notify")("Pushed.", vim.log.levels.INFO)
       vim.schedule(function()
         local bufnr = u.get_buf_by_name("fugitive", true)
         local bufName = vim.api.nvim_buf_get_name(bufnr)
@@ -37,6 +36,7 @@ local git_push = function()
         end
         vim.api.nvim_feedkeys(":e " .. bufName, "n", false)
         u.press_enter()
+        require("notify")("Pushed.", vim.log.levels.INFO)
       end)
     end,
   })
