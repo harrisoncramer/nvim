@@ -52,7 +52,5 @@ return {
       next_key = '<C-n>',
       previous_key = '<C-p>',
     })
-
-
   end,
 }
