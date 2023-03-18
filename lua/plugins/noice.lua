@@ -19,65 +19,6 @@ return {
     "rcarriga/nvim-notify",
   },
   opts = {
-    -- Hide "file written" messages and other garbage notifications
-    routes = {
-      {
-        filter = {
-          event = "msg_show",
-          kind = "",
-          find = "written",
-        },
-        opts = { skip = true },
-      },
-      {
-        filter = {
-          event = "msg_show",
-          kind = "",
-          find = "seconds ago",
-        },
-        opts = { skip = true },
-      },
-      {
-        filter = {
-          event = "msg_show",
-          kind = "",
-          find = "Already at newest change",
-        },
-        opts = { skip = true },
-      },
-      {
-        filter = {
-          event = "msg_show",
-          kind = "",
-          find = "Already at oldest change",
-        },
-        opts = { skip = true },
-      },
-      {
-        filter = {
-          event = "msg_show",
-          kind = "",
-          find = "lines yanked",
-        },
-        opts = { skip = true },
-      },
-      {
-        filter = {
-          event = "msg_show",
-          kind = "",
-          find = "more lines",
-        },
-        opts = { skip = true },
-      },
-      {
-        filter = {
-          event = "msg_show",
-          Hind = "",
-          find = "fewer lines",
-        },
-        opts = { skip = true },
-      }
-    },
     format = {
       conceal = true,
     },
@@ -91,9 +32,19 @@ return {
         ["cmp.entry.get_documentation"] = true,
       },
     },
+    messages = {
+      enabled = false
+    },
     -- Show normal command line
     cmdline = {
-      view = "cmdline"
+      view = "cmdline",
+      format = {
+        cmdline = { icon = ">" },
+        search_up = { icon = "?" },
+        search_down = { icon = "/" },
+        lua = { icon = "lua" },
+        help = { icon = "help:" },
+      }
     },
   },
 }
