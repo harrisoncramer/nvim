@@ -61,3 +61,34 @@ vim.cmd([[
   endfunction
   vnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>
 ]])
+
+-- Delete surrounding function call (taken from https://github.com/faceleg/delete-surrounding-function-call.vim/blob/master/plugin/delete-surrounding-function-call.vim)
+vim.api.nvim_exec([[
+  function! s:DeleteSurroundingFunctionCall()
+    let [success, opening_bracket] = s:FindFunctionCallStart('b')
+    if !success
+      return
+    endif
+    exe 'normal! dt'.opening_bracket
+    exe 'normal ds'.opening_bracket
+    silent! call repeat#set('dsf')
+  endfunction
+
+function! s:FindFunctionCallStart(flags)
+  if search('\k\+\zs[([]', a:flags, line('.')) <= 0
+    return [0, '']
+  endif
+  let opener = getline('.')[col('.') - 1]
+  normal! b
+  let prefix = strpart(getline('.'), 0, col('.') - 1)
+  while prefix =~ '\k\(\.\|::\|:\|#\)$'
+    if search('\k\+', 'b', line('.')) <= 0
+      break
+    endif
+    let prefix = strpart(getline('.'), 0, col('.') - 1)
+  endwhile
+
+  return [1, opener]
+endfunction
+nnoremap <silent> dsf :call <SID>DeleteSurroundingFunctionCall()<cr>
+]], false)
