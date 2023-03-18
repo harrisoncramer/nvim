@@ -20,6 +20,7 @@ return {
       "",
       "prompt",
       "TelescopePrompt",
+      "noice",
     },
     autocmd = {
       render = {
