@@ -298,6 +298,9 @@ return {
     end
     return -1
   end,
+  resize_vertical_splits = function()
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
+  end,
   get_current_buf_name = function()
     local buf_name = vim.api.nvim_buf_get_name(0)
     local base_name = basename(buf_name)

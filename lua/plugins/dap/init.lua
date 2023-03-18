@@ -1,3 +1,4 @@
+local u = require("functions.utils")
 return {
   "rcarriga/nvim-dap-ui",
   dependencies = {
@@ -91,7 +92,7 @@ return {
       ui.toggle({})
       dap.terminate({}, { terminateDebuggee = true }, function()
         vim.cmd.tabclose()
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
+        u.resize_vertical_splits()
         require("notify")("Debugger session ended", "warn")
       end)
     end
