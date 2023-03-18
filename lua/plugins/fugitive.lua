@@ -36,7 +36,6 @@ local git_push = function()
         end
         vim.api.nvim_feedkeys(":e " .. bufName, "n", false)
         u.press_enter()
-        require("notify")("Pushed.", vim.log.levels.INFO)
       end)
     end,
   })
