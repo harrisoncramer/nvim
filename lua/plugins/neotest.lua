@@ -1,3 +1,4 @@
+local u = require("functions.utils")
 return {
   "nvim-neotest/neotest",
   dependencies = {
@@ -99,7 +100,7 @@ return {
       "<localleader>tfr",
       function()
         neotest.run.run(vim.fn.expand("%"))
-        neotest.summary.open()
+        neotest.output.open({ last_run = true, enter = true })
       end,
       map_opts
     )
@@ -117,7 +118,9 @@ return {
     vim.keymap.set(
       "n",
       "<localleader>to",
-      neotest.output.open
+      function()
+        neotest.output.open({ last_run = true, enter = true })
+      end
     )
 
 
@@ -126,15 +129,31 @@ return {
       "<localleader>tt",
       function()
         neotest.summary.toggle()
+        u.resize_vertical_splits()
       end,
       map_opts
     )
 
+    -- vim.keymap.set(
+    --   "n",
+    --   "<localleader>tn",
+    --   neotest.jump.next,
+    --   map_opts
+    -- )
+    --
+    -- vim.keymap.set(
+    --   "n",
+    --   "<localleader>tp",
+    --   neotest.jump.prev,
+    --   map_opts
+    -- )
+
     vim.keymap.set(
       "n",
-      "<localleader>tc",
+      "<localleader>tl",
       function()
-        neotest.summary.close()
+        neotest.run.run_last({ enter = true })
+        neotest.output.open({ last_run = true, enter = true })
       end,
       map_opts
     )
