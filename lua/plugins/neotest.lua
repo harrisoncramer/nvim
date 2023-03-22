@@ -28,6 +28,7 @@ return {
     require("neotest").setup({
       quickfix = {
         open = false,
+        enabled = false,
       },
       status = {
         enabled = true,
