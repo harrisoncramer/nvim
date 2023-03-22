@@ -43,6 +43,13 @@ vim.api.nvim_create_user_command("BufOnly", function()
   require("functions").buf_only()
 end, { nargs = 0 })
 
+vim.api.nvim_create_user_command("Learn", function()
+  vim.cmd("LspStop")
+  vim.cmd("Copilot disable")
+  require("cmp").setup({ enabled = false })
+  require("notify")("Editor hints disabled, good luck!", "info")
+end, { nargs = 0 })
+
 vim.api.nvim_create_user_command("Diff", function(opts)
   local branch = opts.args ~= "" and opts.args or "develop"
   vim.api.nvim_feedkeys(":Gvdiffsplit " .. branch .. ":%", "n", false)
