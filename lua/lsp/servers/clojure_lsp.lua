@@ -3,7 +3,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
   callback = function()
     -- Detach all LSP clients from Conjure log files
     -- and disable diagnostics if they're on
-    local clients = vim.lsp.buf_get_clients()
+    local clients = vim.lsp.get_active_clients()
     for _, c in ipairs(clients) do
       vim.lsp.buf_detach_client(0, c.id)
     end

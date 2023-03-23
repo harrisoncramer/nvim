@@ -2,7 +2,7 @@ return {
   setup = function(on_attach, capabilities)
     local neodev_ok, neodev = pcall(require, "neodev")
     if not (neodev_ok) then
-      print("Neodev not installed")
+      vim.api.nvim_err_writeln("Neodev not installed")
       return
     end
 

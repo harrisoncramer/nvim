@@ -3,7 +3,8 @@
 -- do not require any configuration.
 
 return {
-  { "rcarriga/nvim-notify" },
+  { "rcarriga/nvim-notify",                       priority = 1 },
+  { "rebelot/kanagawa.nvim",                      priority = 2 },
   { "williamboman/mason.nvim" },
   { "neovim/nvim-lspconfig" },
   { "williamboman/mason-lspconfig.nvim" },
@@ -16,7 +17,6 @@ return {
   { "hrsh7th/cmp-buffer" },
   { "hrsh7th/cmp-path" },
   { "nvim-lua/plenary.nvim" },
-  { "rebelot/kanagawa.nvim" }, -- In colors.lua file
   { "lukas-reineke/lsp-format.nvim" },
   { "junegunn/fzf",                               build = function() vim.fn["fzf#install"]() end },
   { "tpope/vim-dispatch" },

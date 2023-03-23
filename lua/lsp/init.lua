@@ -6,7 +6,7 @@ local add_bun_prefix = require("lsp.bun").add_bun_prefix
 local u = require("functions.utils")
 
 if not (mason_status_ok and mason_lspconfig_ok and cmp_nvim_lsp_status_ok and lsp_format_ok) then
-  print("Mason, Mason LSP Config, Completion, or LSP Format not installed!")
+  vim.api.nvim_err_writeln("Mason, Mason LSP Config, Completion, or LSP Format not installed!")
   return
 end
 
@@ -153,5 +153,5 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 
 vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
   vim.lsp.handlers.signature_help, {
-  border = "solid",
-})
+    border = "solid",
+  })

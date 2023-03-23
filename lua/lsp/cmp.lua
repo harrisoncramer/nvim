@@ -3,7 +3,7 @@ local cmp_status_ok, cmp = pcall(require, "cmp")
 local lspkind_status_ok, lspkind = pcall(require, "lspkind")
 
 if not (cmp_status_ok and lspkind_status_ok) then
-  print("CMP dependencies not yet installed!")
+  vim.api.nvim_err_writeln("CMP dependencies not yet installed!")
   return
 end
 
@@ -31,7 +31,7 @@ if cmp_status_ok then
     formatting = {
       format = lspkind.cmp_format({
         with_text = false, -- do not show text alongside icons
-        maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+        maxwidth = 50,     -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
       }),
     },
     mapping = {
@@ -40,7 +40,7 @@ if cmp_status_ok then
       ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
       ["<C-Space>"] = cmp.mapping(cmp.mapping.complete({}), { "i", "c" }),
       ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs( -4), { 'i', 'c' }),
+      ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     },
     sources = cmp.config.sources({
       { name = "copilot",                group_index = 2 },
