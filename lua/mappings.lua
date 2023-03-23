@@ -11,23 +11,22 @@ vim.keymap.set("n", "sq", "<C-w>q")
 
 -- Using a simple plugin to provide better forward/backward surfing
 vim.keymap.set("n", "<C-t>", "<C-^>")
-vim.keymap.set("n", "<C-x>", ":bp <bar> bd#<CR>")
 
 -- Neovim
 vim.keymap.set("n", "<leader>vv", ":e $MYVIMRC<cr>")
 
 -- Miscellaneous
-vim.keymap.set("n", "<C-a>", "<esc>ggVG<CR>")            -- Select all
+vim.keymap.set("n", "<leader>a", "<esc>ggVG<CR>") -- Select all
 vim.keymap.set("n", "*", ":keepjumps normal! mi*`i<CR>") -- " Use * to add w/out jumping
-vim.keymap.set("n", "&", function()                      -- Rename word under cursor
+vim.keymap.set("n", "&", function() -- Rename word under cursor
   vim.api.nvim_feedkeys(":keepjumps normal! mi*`i<CR>", "n", false)
   u.press_enter()
   vim.api.nvim_feedkeys(":%s//", "n", false)
 end)
-vim.keymap.set("v", "<leader>y", '"+y')  -- Copy to clipboard
-vim.keymap.set("n", "H", ":w<CR>")       -- Quick save
-vim.keymap.set("i", "<C-h>", "<Lseft>")  -- Move left in insert
-vim.keymap.set("i", "<C-l>", "<Right>")  -- Move right in insert
+vim.keymap.set("v", "<leader>y", '"+y') -- Copy to clipboard
+vim.keymap.set("n", "H", ":w<CR>") -- Quick save
+vim.keymap.set("i", "<C-h>", "<Lseft>") -- Move left in insert
+vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
 vim.keymap.set("x", "<leader>p", '"_dP') -- Keep paste register after paste
 vim.keymap.set("n", "[<space>", u.blank_line_above)
 vim.keymap.set("n", "]<space>", u.blank_line_below)
