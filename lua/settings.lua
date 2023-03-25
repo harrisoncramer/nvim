@@ -63,3 +63,5 @@ vim.opt.diffexpr = ""
 
 vim.o.ls = 0
 vim.o.ch = 0
+
+vim.filetype.add({ extension = { mdx = 'mdx' } })
