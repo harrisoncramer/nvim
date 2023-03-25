@@ -33,6 +33,10 @@ vim.keymap.set("n", "]<space>", u.blank_line_below)
 vim.keymap.set("n", "[e", u.move_line_up)
 vim.keymap.set("n", "]e", u.move_line_down)
 
+-- Lua helpers
+vim.keymap.set("n", "<leader>ll", ":lua ")
+vim.keymap.set("n", "<leader>lp", ":lua print()<Left>")
+
 -- Copy current path to clipboard
 vim.keymap.set("n", "<leader>yd", u.copy_dir_to_clipboard)
 vim.keymap.set("n", "<leader>yf", u.copy_file_to_clipboard)
