@@ -151,6 +151,7 @@ return {
         },
       },
       defaults = {
+        border = true,
         layout_strategy = "horizontal",
         file_ignore_patterns = { "node_modules", "package%-lock.json" },
         mappings = {
