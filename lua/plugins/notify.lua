@@ -132,7 +132,5 @@ return {
         })
       end,
     })
-
-    require("notify")("Hello")
   end
 }
