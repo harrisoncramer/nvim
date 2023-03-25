@@ -35,7 +35,7 @@ local on_attach = function(client, bufnr)
 
   -- Formatting for Vue handled by Eslint
   -- Formatting for Clojure handled by custom ZPrint function, see lua/lsp/servers/clojure-lsp.lua
-  if (u.has_value({ "lua_ls", "eslint", "gopls", "astro", }, client.name)) then
+  if (u.has_value({ "lua_ls", "eslint", "gopls", "astro", "terraformls" }, client.name)) then
     lsp_format.on_attach(client)
   end
 
@@ -102,6 +102,7 @@ local servers = {
   "tsserver",
   "tailwindcss",
   "volar",
+  "terraformls"
 }
 
 local util = require("lspconfig.util")
