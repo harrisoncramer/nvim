@@ -43,11 +43,11 @@ if cmp_status_ok then
       ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     },
     sources = cmp.config.sources({
-      { name = "copilot",                group_index = 2 },
       { name = "nvim_lsp",               max_item_count = 5 },
       { name = "nvim_lua",               max_item_count = 5 },
       { name = "ultisnips",              max_item_count = 5 },
       { name = "buffer",                 max_item_count = 5 },
+      { name = "copilot", },
       { name = "nvim_lsp_signature_help" },
     }),
   })

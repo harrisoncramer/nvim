@@ -3,6 +3,9 @@ return {
   cmd = "Copilot",
   event = "InsertEnter",
   dependencies = "zbirenbaum/copilot-cmp",
+  cond = function()
+    return vim.env.COMPUTER == "personal"
+  end,
   config = function()
     require("copilot").setup({
       panel = {
