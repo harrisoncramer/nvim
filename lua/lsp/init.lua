@@ -98,6 +98,7 @@ local servers = {
   "eslint",
   "gopls",
   "astro",
+  "marksman",
   -- Run via bun, see: lua/lsp/bun.lua --
   "tsserver",
   "tailwindcss",
