@@ -21,6 +21,7 @@ This repository contains my configurations, including key mappings, plugins, and
 - <a href="https://github.com/nvim-lualine/lualine.nvim">lualine</a> for status bar
 - <a href="https://github.com/lukas-reineke/lsp-format.nvim">lsp-format</a> for formatting
 - <a href="https://github.com/rebelot/kanagawa.nvim">kanagawa</a> colorscheme
+- <a href="https://github.com/nvim-pack/nvim-spectre">spectre</a> for project-wide regexes
 
 # Dependencies
 
@@ -88,6 +89,8 @@ pip3 install --upgrade pynvim
 ```bash
 curl -fsSL https://bun.sh/install | bash
 ```
+
+10. gnu-sed (for the <a href="https://github.com/nvim-pack/nvim-spectre">spectre</a> plugin)
 
 # Quickstart
 
