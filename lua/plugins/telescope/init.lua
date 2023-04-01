@@ -6,7 +6,6 @@ return {
   config = function()
     local actions = require("telescope.actions")
     local state = require("telescope.actions.state")
-    local f = require("functions")
     local u = require("functions.utils")
     local fb_actions = require("telescope").extensions.file_browser.actions
     local telescope = require("telescope")
@@ -119,6 +118,11 @@ return {
       actions.close(prompt_bufnr)
     end
 
+    local function SendToQuickfix(bufnr)
+      actions.smart_add_to_qflist(bufnr)
+      actions.open_qflist(bufnr)
+    end
+
     telescope.setup({
       extensions = {
         fzf = {
@@ -175,6 +179,7 @@ return {
             i = {
               ["<C-y>"] = CopyTextFromPreview,
               ["<C-h>"] = OpenInFileBrowser,
+              ['<C-q>'] = SendToQuickfix,
             },
           },
         },
