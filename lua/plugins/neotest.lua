@@ -101,7 +101,6 @@ return {
       "<localleader>tfr",
       function()
         neotest.run.run(vim.fn.expand("%"))
-        neotest.output.open({ last_run = true, enter = true })
       end,
       map_opts
     )
