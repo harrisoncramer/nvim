@@ -91,7 +91,7 @@ return {
       dap.clear_breakpoints()
       ui.toggle({})
       dap.terminate({}, { terminateDebuggee = true }, function()
-        vim.cmd.tabclose()
+        vim.cmd.bd()
         u.resize_vertical_splits()
         require("notify")("Debugger session ended", "warn")
       end)

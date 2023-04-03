@@ -61,7 +61,6 @@
   "ultisnips": { "branch": "master", "commit": "0ad238b1910d447476b2d98f593322c1cdb71285" },
   "vim-abolish": { "branch": "master", "commit": "7a05efb84e6068a0b0801d736b58fc645e5cdfd2" },
   "vim-autoread": { "branch": "master", "commit": "7e83d47a71fdafc271005fc39c89863204278c77" },
-  "vim-bufsurf": { "branch": "master", "commit": "e6dbc7ad66c7e436e5eb20d304464e378bd7f28c" },
   "vim-cool": { "branch": "master", "commit": "80536b9f2e23292708a64f2e7bcf5e596f9faf24" },
   "vim-dispatch": { "branch": "master", "commit": "6cc2691576f97d43f8751664d1a1a908b99927e5" },
   "vim-eunuch": { "branch": "master", "commit": "291ef1f8c8996ca7715df1032a35a27b12d7b5cf" },
