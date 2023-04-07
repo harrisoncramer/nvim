@@ -11,7 +11,7 @@
   "conjure": { "branch": "master", "commit": "51936288d182a677fcb808e660081ad7e9ecd4ec" },
   "copilot-cmp": { "branch": "master", "commit": "99467081478aabe4f1183a19a8ba585e511adc20" },
   "copilot.lua": { "branch": "master", "commit": "f0b41fb89ef2ed7ab4e8cd5208a30755aa638fc4" },
-  "diffview.nvim": { "branch": "main", "commit": "58035354fc79c6ec42fa7b218dab90bd3968615f" },
+  "diffview.nvim": { "branch": "main", "commit": "6bebefbc4c90e6d2b8c65e65b055d284475d89f8" },
   "dressing.nvim": { "branch": "master", "commit": "c705b3890779ea05bd910e9d06af8a209bfb6ad8" },
   "fzf": { "branch": "master", "commit": "f1a96296525975ea7d4c45aebc4fed5117cecb72" },
   "fzy-lua-native": { "branch": "master", "commit": "45148b3f70d244e8b8b5db60df447a2b7ac2de9d" },

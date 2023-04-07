@@ -8,6 +8,10 @@
 
 This repository contains my configurations, including key mappings, plugins, and other settings for Neovim. I'm primarily working day-to-day in VueJS, React, Typescript, Golang, Lua, and Clojure.
 
+# Neovim Version
+
+Important: I'm on the latest Neovim release (0.9) and many of these plugins will break if on an older version.
+
 # Features
 
 - Plugins managed with <a href="https://github.com/folke/lazy.nvim">lazy.nvim</a>
