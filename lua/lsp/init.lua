@@ -33,6 +33,9 @@ local on_attach = function(client, bufnr)
   -- This will set up formatting for the attached LSPs
   client.server_capabilities.documentFormattingProvider = true
 
+  -- Turn off semantic tokens (too slow)
+  client.server_capabilities.semanticTokensProvider = nil
+
   -- Formatting for Vue handled by Eslint
   -- Formatting for Clojure handled by custom ZPrint function, see lua/lsp/servers/clojure-lsp.lua
   if (u.has_value({ "lua_ls", "eslint", "gopls", "astro", "terraformls" }, client.name)) then
@@ -155,5 +158,5 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 
 vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
   vim.lsp.handlers.signature_help, {
-  border = "solid",
-})
+    border = "solid",
+  })
