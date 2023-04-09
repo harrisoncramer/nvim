@@ -29,7 +29,6 @@ return {
   { "romainl/vim-cool" },
   { "kyazdani42/nvim-web-devicons" },
   { "lambdalisue/glyph-palette.vim" },
-  { "posva/vim-vue",                              ft = { "vue" } },
   { "AndrewRadev/tagalong.vim" },
   { "tpope/vim-abolish" },
   { 'djoshea/vim-autoread' },

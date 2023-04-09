@@ -72,7 +72,7 @@ return {
       playground = {
         enable = true,
         disable = {},
-        updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+        updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
         persist_queries = false, -- Whether the query persists across vim sessions
         keybindings = {
           toggle_query_editor = "o",
@@ -91,7 +91,6 @@ return {
         select = {
           enable = true,
           lookahead = true,
-
           keymaps = {
             -- You can use the capture groups defined in textobjects.scm
             ["af"] = { query = "@function.outer", desc = "All of a function definition" },
@@ -108,9 +107,10 @@ return {
       },
       context = {
         enable = true,
-        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+        max_lines = 0,        -- How many lines the window should span. Values <= 0 mean no limit.
         trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-        patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+        patterns = {
+                              -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
           -- For all filetypes
           -- Note that setting an entry here replaces all other patterns for this entry.
           -- By setting the 'default' entry below, you can control which nodes you want to
@@ -161,7 +161,7 @@ return {
           },
         },
         exact_patterns = {},
-        zindex = 20, -- The Z-index of the context window
+        zindex = 20,     -- The Z-index of the context window
         mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
         -- Separator between context and content. Should be a single character string, like '-'.
         -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
@@ -169,7 +169,6 @@ return {
       }
     })
 
-    local ft_to_parser = require("nvim-treesitter.parsers").filetype_to_parsername
-    ft_to_parser.mdx = "markdown"
+    vim.treesitter.language.register("markdown", "mdx")
   end
 }
