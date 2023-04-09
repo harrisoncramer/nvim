@@ -53,6 +53,7 @@
   "nvim-ts-rainbow": { "branch": "master", "commit": "ef95c15a935f97c65a80e48e12fe72d49aacf9b9" },
   "nvim-unception": { "branch": "main", "commit": "e8f068dc94112cca368ab7363583b24678fdf510" },
   "nvim-web-devicons": { "branch": "master", "commit": "0568104bf8d0c3ab16395433fcc5c1638efc25d4" },
+  "octo.nvim": { "branch": "master", "commit": "f37efab489a99b4a104e5ee18c73453d5e828b62" },
   "persisted.nvim": { "branch": "main", "commit": "e053ff33488431dc5bf9239b08650e650ec67292" },
   "playground": { "branch": "master", "commit": "db54848c7d878965bc31237059841f4e91e9de93" },
   "plenary.nvim": { "branch": "master", "commit": "253d34830709d690f013daf2853a9d21ad7accab" },
