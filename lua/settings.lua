@@ -41,6 +41,9 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.backspace = "indent,eol,start"
 
+-- Don't break words in LSP docs
+vim.api.nvim_command('set wrap linebreak nolist')
+
 -- Colors
 vim.opt.termguicolors = true
 
