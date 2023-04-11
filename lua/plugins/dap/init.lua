@@ -26,7 +26,7 @@ return {
     -- The VSCode debugger requires a special adapter, seen in /lua/plugins/dap/adapters.lua
     mason.setup()
     mason_dap.setup({
-      ensure_installed = { "delve", "node2", "js" },
+      ensure_installed = { "delve@v1.20.2", "node2@v1.43.0", "js@v1.77.0" },
       automatic_installation = true
     })
 

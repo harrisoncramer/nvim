@@ -34,7 +34,7 @@ local on_attach = function(client, bufnr)
   client.server_capabilities.documentFormattingProvider = true
 
   -- Turn off semantic tokens (too slow)
-  client.server_capabilities.semanticTokensProvider = nil
+  -- client.server_capabilities.semanticTokensProvider = nil
 
   -- Formatting for Vue handled by Eslint
   -- Formatting for Clojure handled by custom ZPrint function, see lua/lsp/servers/clojure-lsp.lua
@@ -95,18 +95,19 @@ local capabilities = cmp_nvim_lsp.default_capabilities(normal_capabilities)
 -- We then iterate over their names and load their relevant
 -- configuration files, which are stored in lua/lsp/servers,
 -- passing along the global on_attach and capabilities functions
+-- Current: 3.6.11 Updated: 3.6.18
 local servers = {
-  "lua_ls",
-  "clojure_lsp",
-  "eslint",
-  "gopls",
-  "astro",
-  "marksman",
+  "lua_ls@3.6.12",
+  "clojure_lsp@2023.01.26-11.08.16",
+  "eslint@4.6.0",
+  "gopls@v0.11.0",
+  "astro@0.29.6",
+  "marksman@2023-03-04",
   -- Run via bun, see: lua/lsp/bun.lua --
-  "tsserver",
-  "tailwindcss",
-  "volar",
-  "terraformls"
+  "tsserver@3.3.1",
+  "tailwindcss@0.0.13",
+  "volar@1.2.0",
+  "terraformls@v0.30.3"
 }
 
 local util = require("lspconfig.util")
@@ -119,9 +120,10 @@ mason_lspconfig.setup({ ensure_installed = servers, automatic_installation = tru
 
 -- Setup each server
 for _, s in pairs(servers) do
-  local server_config_ok, mod = pcall(require, "lsp.servers." .. s)
+  local server = s:gsub("@.*", "")
+  local server_config_ok, mod = pcall(require, "lsp.servers." .. server)
   if not server_config_ok then
-    require("notify")("The LSP '" .. s .. "' does not have a config.", "warn")
+    require("notify")("The LSP '" .. server .. "' does not have a config.", "warn")
   else
     mod.setup(on_attach, capabilities)
   end
