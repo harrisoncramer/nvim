@@ -16,17 +16,17 @@ vim.keymap.set("n", "<C-t>", "<C-^>")
 vim.keymap.set("n", "<leader>vv", ":e $MYVIMRC<cr>")
 
 -- Miscellaneous
-vim.keymap.set("n", "<leader>a", "<esc>ggVG<CR>") -- Select all
+vim.keymap.set("n", "<leader>a", "<esc>ggVG<CR>")        -- Select all
 vim.keymap.set("n", "*", ":keepjumps normal! mi*`i<CR>") -- " Use * to add w/out jumping
-vim.keymap.set("n", "&", function() -- Rename word under cursor
+vim.keymap.set("n", "&", function()                      -- Rename word under cursor
   vim.api.nvim_feedkeys(":keepjumps normal! mi*`i<CR>", "n", false)
   u.press_enter()
   vim.api.nvim_feedkeys(":%s//", "n", false)
 end)
-vim.keymap.set("v", "<leader>y", '"+y') -- Copy to clipboard
-vim.keymap.set("n", "H", ":w<CR>") -- Quick save
-vim.keymap.set("i", "<C-h>", "<Lseft>") -- Move left in insert
-vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
+vim.keymap.set("v", "<leader>y", '"+y')  -- Copy to clipboard
+vim.keymap.set("n", "H", ":w<CR>")       -- Quick save
+vim.keymap.set("i", "<C-h>", "<Lseft>")  -- Move left in insert
+vim.keymap.set("i", "<C-l>", "<Right>")  -- Move right in insert
 vim.keymap.set("x", "<leader>p", '"_dP') -- Keep paste register after paste
 vim.keymap.set("n", "[<space>", u.blank_line_above)
 vim.keymap.set("n", "]<space>", u.blank_line_below)
@@ -46,8 +46,7 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
 -- Open Links
-local opener = u.get_os() == "Linux" and "xdg-open" or "open"
-vim.keymap.set("n", "gx", string.format('yiW:! %1s <cWORD><CR> <C-r>" & <CR><CR>', opener))
+vim.keymap.set('n', 'gx', ":silent! execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>")
 
 -- Allows numbered jumps to be saved to the jumplist, for use w/ C-o and C-i
 vim.api.nvim_exec("nnoremap <expr> k (v:count > 1 ? \"m'\" . v:count : '') . 'k'", false)
