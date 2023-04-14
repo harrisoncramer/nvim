@@ -3,6 +3,8 @@ vim.cmd([[ nnoremap <Space> <NOP>]])
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+vim.api.nvim_set_option('shm', vim.o.shm .. 'I')
+
 vim.g.wildmenu = true
 vim.g.wildignore = "**/node_modules/**"
 -- update time for plugins (speed when they act)
