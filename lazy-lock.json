@@ -16,7 +16,7 @@
   "dressing.nvim": { "branch": "master", "commit": "0e3e1eba147fee6e638ac1ac28f0495bcde17319" },
   "fzf": { "branch": "master", "commit": "96670d5f16dcf23d590eb1d83d1de351b2e8fb15" },
   "fzy-lua-native": { "branch": "master", "commit": "45148b3f70d244e8b8b5db60df447a2b7ac2de9d" },
-  "gitlab.nvim": { "branch": "main", "commit": "add1fca81c4c5c2acfe261c80be8348a6e0d6950" },
+  "gitlab.nvim": { "branch": "main", "commit": "e4dbb9d4aa6b9ee365ac59338b5b1df2315a1960" },
   "gitsigns.nvim": { "branch": "main", "commit": "372d5cb485f2062ac74abc5b33054abac21d8b58" },
   "glow.nvim": { "branch": "main", "commit": "a3f24fdaa71d2c25a2b88026032b34f5b6a6e215" },
   "glyph-palette.vim": { "branch": "master", "commit": "c9b21e745b4fc11c410afbf4aa9dbe938c3d09c0" },

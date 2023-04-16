@@ -3,3 +3,4 @@
 .undo
 .vim
 lua/.luarc.json
+dev-plugins
