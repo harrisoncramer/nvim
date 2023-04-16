@@ -1,5 +1,5 @@
 return {
-  "harrisoncramer/gitlab.nvim",
+  "harrisoncramer/gitlab",
   dependencies = {
     "sindrets/diffview.nvim",
     "rcarriga/nvim-notify",
