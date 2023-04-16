@@ -1,10 +1,8 @@
 -- Any files inside the lua/plugins directory will also
 -- automatically be sourced. These plugins are those that
 -- do not require any configuration.
-
 return {
-  { "rcarriga/nvim-notify",                       priority = 1 },
-  { "rebelot/kanagawa.nvim",                      priority = 2 },
+  { "rcarriga/nvim-notify" },
   { "williamboman/mason.nvim" },
   { "neovim/nvim-lspconfig" },
   { "williamboman/mason-lspconfig.nvim" },
