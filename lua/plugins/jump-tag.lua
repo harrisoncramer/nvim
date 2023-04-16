@@ -1,4 +1,5 @@
-return { "harrisoncramer/jump-tag",
+return {
+  "harrisoncramer/jump-tag",
   config = function()
     local jump = require("jump-tag")
     vim.keymap.set("n", "<leader>jj", jump.jumpParent, {})
