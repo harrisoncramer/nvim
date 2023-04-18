@@ -30,15 +30,18 @@ if cmp_status_ok then
     },
     formatting = {
       format = lspkind.cmp_format({
-        mode = 'symbol_text', -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
-        maxwidth = 50,        -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-        menu = ({             -- showing type in menu
-          nvim_lsp = "[LSP]",
-          path = "[Path]",
-          buffer = "[Buffer]",
-          luasnip = "[LuaSnip]",
-        }),
+        mode = 'symbol_text',              -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
+        maxwidth = 50,                     -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
         before = function(entry, vim_item) -- for tailwind css autocomplete
+          if entry.source.name == 'nvim_lsp' then
+            -- Display which LSP servers this item came from.
+            local lspserver_name = nil
+            pcall(function()
+              lspserver_name = entry.source.source.client.name
+              vim_item.menu = lspserver_name
+            end)
+          end
+
           if vim_item.kind == 'Color' and entry.completion_item.documentation then
             local _, _, r, g, b = string.find(entry.completion_item.documentation, '^rgb%((%d+), (%d+), (%d+)')
             if r then
