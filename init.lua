@@ -25,11 +25,11 @@ require("lazy").setup("plugins", {
     enabled = true,
     notify = false,
   },
-  dev = {
-    path = vim.fn.stdpath("config") .. "/dev-plugins",
-    patterns = { "harrisoncramer" },
-    fallback = false, -- Fallback to git when local plugin doesn't exist
-  },
+  -- dev = {
+  --   path = vim.fn.stdpath("config") .. "/dev-plugins",
+  --   patterns = { "harrisoncramer" },
+  --   fallback = false, -- Fallback to git when local plugin doesn't exist
+  -- },
 })
 
 -- Mappings
