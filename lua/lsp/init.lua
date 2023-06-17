@@ -111,7 +111,7 @@ local servers = {
 }
 
 local util = require("lspconfig.util")
-util.on_setup = util.add_hook_before(util.on_setup, add_bun_prefix)
+-- util.on_setup = util.add_hook_before(util.on_setup, add_bun_prefix)
 
 -- Setup Mason + LSPs + CMP
 require("lsp.cmp")
