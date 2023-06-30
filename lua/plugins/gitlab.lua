@@ -15,10 +15,6 @@ return {
     vim.keymap.set("n", "<leader>glR", gitlab.revoke)
     vim.keymap.set("n", "<leader>glc", gitlab.create_comment)
     vim.keymap.set("n", "<leader>gld", gitlab.list_discussions)
-    gitlab.setup({
-      project_id = 7092381,
-      base_branch = "main",
-      dev = true,
-    })
+    gitlab.setup()
   end,
 }
