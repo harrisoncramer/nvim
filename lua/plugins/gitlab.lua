@@ -8,6 +8,7 @@ return {
   build = function()
     require("gitlab").build()
   end,
+  dir = "~/.config/nvim/dev-plugins/gitlab",
   config = function()
     local gitlab = require("gitlab")
     vim.keymap.set("n", "<leader>gls", gitlab.summary)
