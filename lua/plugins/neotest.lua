@@ -1,4 +1,10 @@
 local u = require("functions.utils")
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "neotest-summary",
+  callback = function()
+    vim.wo.wrap = false
+  end,
+})
 return {
   "nvim-neotest/neotest",
   dependencies = {

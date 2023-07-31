@@ -25,7 +25,7 @@ return {
         lualine_c = {
           {
             "filetype",
-            colored = true, -- Displays filetype icon in color if set to true
+            colored = true,   -- Displays filetype icon in color if set to true
             icon_only = true, -- Display only an icon for filetype
           },
           {
@@ -33,13 +33,20 @@ return {
             file_status = true,
             path = 1,
             symbols = {
-              modified = "  ", -- Text to show when the file is modified.
-              readonly = "[-]", -- Text to show when the file is non-modifiable or readonly.
+              modified = "  ",    -- Text to show when the file is modified.
+              readonly = "[-]",      -- Text to show when the file is non-modifiable or readonly.
               unnamed = "[No Name]", -- Text to show for unnamed buffers.
             },
           },
+          {
+            require("recorder").recordingStatus
+          },
+          {
+            require("recorder").displaySlots
+          },
         },
-        lualine_d = {},
+        lualine_d = {
+        },
         lualine_w = {},
         lualine_x = {},
         lualine_y = {},
