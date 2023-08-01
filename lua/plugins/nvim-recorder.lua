@@ -31,7 +31,13 @@ function ShowMenu(opts, cb)
     callback = cb,
   })
   local bufnr = vim.api.nvim_win_get_buf(window_id)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "q", "<cmd>lua CloseMenu()<CR>", { silent = false })
+
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "<Esc>", ":lua require('plugins.nvim-recorder').closeMenu()<CR>",
+    { silent = false })
+end
+
+local function closeMenu()
+  vim.api.nvim_win_close(window_id, true)
 end
 
 local function get_multiple_registers_content(registers)
@@ -69,6 +75,7 @@ end
 return {
   "chrisgrieser/nvim-recorder",
   dependencies = "rcarriga/nvim-notify", -- optional
+  closeMenu = closeMenu,
   opts = {
     slots = registers,
     mapping = {
