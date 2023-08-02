@@ -1,6 +1,12 @@
 local popup = require("plenary.popup")
+local u = require("functions.utils")
 
 vim.keymap.set("n", "<leader>qo", function() MyMenu() end, {}) -- Show macros
+
+local function extract_chunk_after_gap(input_string)
+  local chunk = input_string:match("[a-g]%s*(.+)")
+  return chunk
+end
 
 local window_id
 function ShowMenu(opts, cb)
@@ -10,6 +16,8 @@ function ShowMenu(opts, cb)
 
   local content = {}
   local array_length = #opts
+
+  -- Take each macro line and turn into a table
   for i, value in ipairs(opts) do
     if i < array_length then
       local new_string = value:gsub("\n", "")
@@ -30,14 +38,35 @@ function ShowMenu(opts, cb)
     borderchars = borderchars,
     callback = cb,
   })
-  local bufnr = vim.api.nvim_win_get_buf(window_id)
 
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<Esc>", ":lua require('plugins.nvim-recorder').closeMenu()<CR>",
-    { silent = false })
-end
+  local function closeMenu()
+    vim.api.nvim_win_close(window_id, true)
+  end
 
-local function closeMenu()
-  vim.api.nvim_win_close(window_id, true)
+  local function editMacro()
+    local line_content = u.get_line_content()
+    local macro = extract_chunk_after_gap(line_content)
+    local register = line_content:sub(1, 1)
+
+    vim.api.nvim_buf_set_lines(0, 0, -1, false, {})
+    vim.api.nvim_buf_set_lines(0, 0, 1, false, { macro })
+
+    vim.keymap.set('n', '<leader>s', function()
+      local line_content_updated = u.get_line_content()
+      vim.fn.setreg(register, line_content_updated)
+      closeMenu()
+      require("notify")("Macro saved!")
+    end, { silent = true, buffer = 0 })
+  end
+
+
+  vim.keymap.set('n', '<Esc>', function()
+    closeMenu()
+  end, { silent = true, buffer = 0 })
+
+  vim.keymap.set('n', 'e', function()
+    editMacro()
+  end, { silent = true, buffer = 0 })
 end
 
 local function get_multiple_registers_content(registers)
@@ -48,8 +77,16 @@ local function get_multiple_registers_content(registers)
     vim.cmd('redir => reg_content')
     vim.cmd('silent execute "reg ' .. register .. '"')
     vim.cmd('redir END')
-    print('evaling: ' .. register)
-    reg_content_array[i] = vim.fn.eval('reg_content')
+    local reg_content = vim.fn.eval('reg_content')
+
+    -- Remove header
+    if reg_content ~= nil then
+      for s in reg_content:gmatch("[^\r\n]+") do
+        if s ~= 'Type Name Content' then
+          reg_content_array[i] = s
+        end
+      end
+    end
   end
 
   vim.fn.setreg('@', saved_reg_content)
@@ -75,7 +112,6 @@ end
 return {
   "chrisgrieser/nvim-recorder",
   dependencies = "rcarriga/nvim-notify", -- optional
-  closeMenu = closeMenu,
   opts = {
     slots = registers,
     mapping = {
