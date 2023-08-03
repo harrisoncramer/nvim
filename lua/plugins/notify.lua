@@ -1,5 +1,7 @@
 local colors = require("colorscheme")
+vim.keymap.set('', '<Esc>', "<ESC>:noh<CR>:lua require('notify').dismiss()<CR>", { silent = true })
 return {
+  priority = 100,
   "rcarriga/nvim-notify",
   opts = {
     background_colour = colors.sumiInk1,
@@ -21,8 +23,9 @@ return {
     vim.api.nvim_set_hl(0, 'NotifyTRACETitle', { fg = colors.fujiGray })
     vim.api.nvim_set_hl(0, 'NotifyTRACEIcon', { fg = colors.fujiGray })
 
-local stages_util = require("notify.stages.util")
-    require("notify").setup({
+    local notify = require("notify")
+    local stages_util = require("notify.stages.util")
+    notify.setup({
       fps = 60,
       timeout = 2000,
       top_down = true,
