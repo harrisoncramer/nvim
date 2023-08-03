@@ -32,6 +32,7 @@ vim.keymap.set("n", "[<space>", u.blank_line_above)
 vim.keymap.set("n", "]<space>", u.blank_line_below)
 vim.keymap.set("n", "[e", u.move_line_up)
 vim.keymap.set("n", "]e", u.move_line_down)
+vim.keymap.set("n", "<leader>tc", vim.cmd.tabclose)
 
 -- Lua helpers
 vim.keymap.set("n", "<leader>ll", ":lua ")

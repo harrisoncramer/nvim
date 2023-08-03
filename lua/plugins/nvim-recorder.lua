@@ -120,6 +120,7 @@ return {
       editMacro = "<leader>qe",
       switchSlot = "<leader>qt",
     },
+    lessNotifications = true,
     clear = false,
     logLevel = vim.log.levels.INFO,
     dapSharedKeymaps = false,
