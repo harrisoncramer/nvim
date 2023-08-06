@@ -74,18 +74,7 @@ return {
     end
 
     vim.keymap.set("n", "<localleader>dC", dap_clear_breakpoints)
-
-    -- TODO: How to get current adapter config? Could restart with current arguments
-    local function dap_restart_current_session()
-      dap.terminate()
-      vim.defer_fn(
-        function()
-          dap.continue()
-        end,
-        300)
-    end
-
-    vim.keymap.set("n", "<localleader>dr", dap_restart_current_session)
+    vim.keymap.set("n", "<localleader>dr", function() require("dap").run_last() end)
 
     local function dap_end_debug()
       dap.clear_breakpoints()
