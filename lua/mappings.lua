@@ -38,9 +38,10 @@ vim.keymap.set("n", "<leader>tc", vim.cmd.tabclose)
 vim.keymap.set("n", "<leader>ll", ":lua ")
 vim.keymap.set("n", "<leader>lp", ":lua print()<Left>")
 
--- Copy current path to clipboard
-vim.keymap.set("n", "<leader>yd", u.copy_dir_to_clipboard)
-vim.keymap.set("n", "<leader>yf", u.copy_file_to_clipboard)
+-- Copy to clipboasrd
+vim.keymap.set("n", "<leader>yd", u.copy_relative_dir)
+vim.keymap.set("n", "<leader>yf", u.copy_file_name)
+vim.keymap.set("n", "<leader>yF", u.copy_absolute_filepath)
 
 -- Center the view after jumping up/down
 vim.keymap.set("n", "<C-u>", "<C-u>zz")

@@ -54,6 +54,14 @@ local get_os = function()
   return vim.loop.os_uname().sysname
 end
 
+local split = function(str, delimiter)
+  local result = {}
+  for match in (str .. delimiter):gmatch("(.-)" .. delimiter) do
+    table.insert(result, match)
+  end
+  return result
+end
+
 return {
   get_os = get_os,
   get_home = function()
@@ -125,13 +133,6 @@ return {
   end,
   get_buffer_name = function()
     return vim.fn.expand("%")
-  end,
-  split = function(str, delimiter)
-    local result = {}
-    for match in (str .. delimiter):gmatch("(.-)" .. delimiter) do
-      table.insert(result, match)
-    end
-    return result
   end,
   current_dir = function()
     return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
@@ -244,15 +245,29 @@ return {
     return name
   end,
   string_starts = string_starts,
-  copy_file_to_clipboard = function()
+  copy_absolute_filepath = function()
     vim.api.nvim_feedkeys(":let @+=expand('%:p')", "n", false)
     press_enter()
     require("notify")('Copied filepath.', vim.log.levels.INFO)
   end,
-  copy_dir_to_clipboard = function()
+  copy_relative_dir = function()
     vim.api.nvim_feedkeys(":let @+=expand('%:h')", "n", false)
     press_enter()
     require("notify")('Copied directory path.', vim.log.levels.INFO)
+  end,
+  copy_file_name = function()
+    vim.api.nvim_feedkeys(":let @+=expand('%:t')", "n", false)
+    press_enter()
+    require("notify")('Copied file name.', vim.log.levels.INFO)
+  end,
+  return_bare_file_name = function()
+    local full_file_name = vim.fn.expand('%:t')
+    local file_name = ''
+    for part in string.gmatch(full_file_name, "[^.]+") do
+      file_name = part
+      break
+    end
+    return file_name
   end,
   get_buf_by_name = function(name, starts_with)
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do

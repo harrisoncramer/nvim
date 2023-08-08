@@ -37,6 +37,11 @@ return {
       FbOpen(file_path, true)
     end
 
+    local function find_matching_files()
+      local bare_file_name = u.return_bare_file_name()
+      require("telescope.builtin").find_files({ default_text = bare_file_name })
+    end
+
     -- Functions for telescope
     local function live_grep()
       builtin.live_grep()
@@ -236,6 +241,7 @@ return {
     vim.keymap.set("n", "<leader>tgb", git_branches, {})
     vim.keymap.set("n", "<leader>tf", grep_string, {})
     vim.keymap.set("v", "<leader>tf", grep_string_visual, {})
+    vim.keymap.set("n", "<leader>tj", find_matching_files)
     vim.keymap.set("n", "<C-h>", OpenFileInFileBrowser)
 
     -- telescope.load_extension("fzf")
