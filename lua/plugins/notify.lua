@@ -24,6 +24,8 @@ return {
     vim.api.nvim_set_hl(0, 'NotifyTRACEIcon', { fg = colors.fujiGray })
 
     local notify = require("notify")
+    vim.notify = notify
+
     local stages_util = require("notify.stages.util")
     notify.setup({
       fps = 60,
