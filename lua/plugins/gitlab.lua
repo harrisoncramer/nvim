@@ -1,9 +1,8 @@
 return {
   "harrisoncramer/gitlab.nvim",
   dependencies = {
-    "sindrets/diffview.nvim",
-    "rcarriga/nvim-notify",
-    "MunifTanjim/nui.nvim"
+    "MunifTanjim/nui.nvim",
+    "nvim-lua/plenary.nvim"
   },
   build = function()
     require("gitlab").build()
