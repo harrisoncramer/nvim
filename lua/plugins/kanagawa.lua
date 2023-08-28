@@ -55,7 +55,14 @@ return {
     -- vim.api.nvim_set_hl(0, "@tag", { fg = colors.lightBlue })
     -- vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = colors.lightBlue, })
     -- vim.api.nvim_set_hl(0, "@tag.attribute", { fg = colors.sakuraPink })
+
     vim.cmd.hi("NonText guifg=bg")
     vim.cmd("colorscheme kanagawa")
+
+    -- Highlight active line
+    vim.opt.cursorline = true
+    vim.opt.cursorlineopt = 'number'
+    vim.cmd.highlight('CursorLineNr guibg=#1a1a22')
+    vim.cmd.highlight('SignColumnNr guibg=#1a1a22')
   end
 }
