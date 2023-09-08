@@ -250,7 +250,6 @@ return {
     -- Custom Pickers
     require("plugins.telescope.pickers")
 
-    vim.keymap.set("n", "HOH", ":neat", map_opts)
     -- Custom mappings per use-case
     require("plugins.telescope.vue")
   end
