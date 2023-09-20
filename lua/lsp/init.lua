@@ -38,7 +38,7 @@ local on_attach = function(client, bufnr)
 
   -- Formatting for Vue handled by Eslint
   -- Formatting for Clojure handled by custom ZPrint function, see lua/lsp/servers/clojure-lsp.lua
-  if (u.has_value({ "lua_ls", "eslint", "gopls", "astro", "terraformls" }, client.name)) then
+  if (u.has_value({ "eslint", "gopls", "astro", "terraformls" }, client.name)) then
     lsp_format.on_attach(client)
   end
 
@@ -53,11 +53,13 @@ local on_attach = function(client, bufnr)
     vim.lsp.buf.definition()
   end, {})
   vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
-  vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, {})
   vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help)
   vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, {})
   vim.keymap.set("n", "<leader>lq", vim.diagnostic.setqflist, {})
+  vim.keymap.set("n", "<leader>li", vim.lsp.buf.implementation, {})
+  vim.keymap.set("n", "<leader>lt", vim.lsp.buf.type_definition, {})
+  vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references, {})
+  vim.keymap.set("n", "<leader>lc", vim.lsp.buf.incoming_calls, {})
 
   vim.keymap.set("n", "]W", function()
     vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
