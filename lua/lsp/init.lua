@@ -102,13 +102,13 @@ local servers = {
   "lua_ls@3.6.12",
   "clojure_lsp@2023.01.26-11.08.16",
   "eslint@4.6.0",
-  "gopls@v0.11.0",
+  "gopls@v0.13.2",
   "astro@0.29.6",
   "marksman@2023-03-04",
   -- Run via bun, see: lua/lsp/bun.lua --
   "tsserver@3.3.1",
   "tailwindcss@0.0.13",
-  "volar@1.2.0",
+  "volar@1.8.11",
   "terraformls@v0.30.3"
 }
 

@@ -24,7 +24,11 @@ return {
     vim.api.nvim_set_hl(0, 'NotifyTRACEIcon', { fg = colors.fujiGray })
 
     local notify = require("notify")
-    vim.notify = notify
+
+    vim.notify = function (msg, level, opts)
+      if msg == "No information available" then return end
+      notify(msg, level, opts)
+    end
 
     local stages_util = require("notify.stages.util")
     notify.setup({
