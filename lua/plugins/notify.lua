@@ -26,6 +26,7 @@ return {
     local notify = require("notify")
 
     vim.notify = function (msg, level, opts)
+      if msg and type(msg) == 'string' and msg.find("is not attached to client") then return end
       if msg == "No information available" then return end
       notify(msg, level, opts)
     end
