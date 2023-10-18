@@ -7,18 +7,18 @@ return {
     return vim.env.COMPUTER == "personal"
   end,
   config = function()
-    require("copilot").setup({
-      panel = {
-        enabled = false
-      },
-      suggestion = {
-        auto_trigger = false,
-      }
-    })
-    require("copilot_cmp").setup({
-      formatters = {
-        insert_text = require("copilot_cmp.format").remove_existing
-      },
-    })
+    -- require("copilot").setup({
+    --   panel = {
+    --     enabled = false
+    --   },
+    --   suggestion = {
+    --     auto_trigger = false,
+    --   }
+    -- })
+    -- require("copilot_cmp").setup({
+    --   formatters = {
+    --     insert_text = require("copilot_cmp.format").remove_existing
+    --   },
+    -- })
   end
 }
