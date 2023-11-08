@@ -70,11 +70,11 @@ local on_attach = function(client, bufnr)
   end)
 
   vim.keymap.set("n", "]w", function()
-    vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARNING })
+    vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
   end)
 
   vim.keymap.set("n", "[w", function()
-    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARNING })
+    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })
   end)
 
 
@@ -138,7 +138,7 @@ vim.diagnostic.config({
   update_in_insert = false,
   float = {
     header = "",
-    source = "always",
+    source = true,
     border = "solid",
     focusable = true,
   },
