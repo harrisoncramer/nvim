@@ -25,11 +25,10 @@ return {
     vim.keymap.set("n", "<leader>glra", gitlab.add_reviewer)
     vim.keymap.set("n", "<leader>glrd", gitlab.delete_reviewer)
     vim.keymap.set("n", "<leader>glp", gitlab.pipeline)
+    vim.keymap.set("n", "<leader>glm", gitlab.move_to_discussion_tree_from_diagnostic)
 
     gitlab.setup({
-      -- debug = { go_request = true, go_response = true },
       attachment_dir = "/Users/harrisoncramer/Desktop/screenshots",
-      reviewer = "diffview",
       discussion_sign = {
         -- See :h sign_define for details about sign configuration.
         enabled = true,
