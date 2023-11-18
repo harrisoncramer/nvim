@@ -56,6 +56,7 @@ return {
         blacklist = { "project_7092381_bot_a74db8ad297ab0341e5720af7849e36f" },
         resolved = '✓',
         unresolved = '',
+        tree_type = "by_file_name"
       },
       colors = {
         discussion_tree = {
