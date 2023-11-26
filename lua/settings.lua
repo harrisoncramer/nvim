@@ -20,7 +20,7 @@ vim.opt.clipboard = 'unnamedplus'
 -- set substitute/replace command to automatically use global flag
 vim.opt.gdefault = true
 -- Do not allow line wrapping
-vim.opt.wrap = false
+vim.opt.wrap = true
 -- Start scrolling when you're 15 away from bottom (and side)
 vim.opt.scrolloff = 15
 vim.opt.sidescrolloff = 35
@@ -44,7 +44,7 @@ vim.opt.smartcase = true
 vim.opt.backspace = "indent,eol,start"
 
 -- Don't break words in LSP docs
-vim.api.nvim_command('set wrap linebreak nolist')
+-- vim.api.nvim_command('set wrap linebreak nolist')
 
 -- Colors
 vim.opt.termguicolors = true

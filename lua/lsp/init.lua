@@ -110,7 +110,7 @@ local servers = {
   -- Run via bun, see: lua/lsp/bun.lua --
   "tsserver@3.3.1",
   "tailwindcss@0.0.13",
-  "volar@1.8.11",
+  "volar@1.8.22",
   "terraformls@v0.30.3"
 }
 
