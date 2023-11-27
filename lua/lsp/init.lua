@@ -2,7 +2,6 @@ local cmp_nvim_lsp_status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 local mason_status_ok, mason = pcall(require, "mason")
 local mason_lspconfig_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
 local lsp_format_ok, lsp_format = pcall(require, "lsp-format")
-local add_bun_prefix = require("lsp.bun").add_bun_prefix
 local u = require("functions.utils")
 
 if not (mason_status_ok and mason_lspconfig_ok and cmp_nvim_lsp_status_ok and lsp_format_ok) then
@@ -19,7 +18,8 @@ lsp_format.setup({
   }
 })
 
--- Map keys after LSP attaches (utility function)
+-- This is the callback function that runs after LSP attaches which configures the LSP, 
+-- which sets the LSP settings like formatting and keymaps, etc.
 local on_attach = function(client, bufnr)
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
@@ -34,7 +34,7 @@ local on_attach = function(client, bufnr)
   client.server_capabilities.documentFormattingProvider = true
 
   -- Turn off semantic tokens (too slow)
-  -- client.server_capabilities.semanticTokensProvider = nil
+  -- if client.server_capabilities.semanticTokensProvider = nil
 
   -- Formatting for Vue handled by Eslint
   -- Formatting for Clojure handled by custom ZPrint function, see lua/lsp/servers/clojure-lsp.lua
@@ -90,44 +90,34 @@ local on_attach = function(client, bufnr)
   end
 end
 
-local normal_capabilities = vim.lsp.protocol.make_client_capabilities()
-
--- cmp_nvim_lsp.update_capabilities is deprecated, use cmp_nvim_lsp.default_capabilities
-local capabilities = cmp_nvim_lsp.default_capabilities(normal_capabilities)
-
 -- These servers are automatically installed by Mason.
 -- We then iterate over their names and load their relevant
 -- configuration files, which are stored in lua/lsp/servers,
 -- passing along the global on_attach and capabilities functions
--- Current: 3.6.11 Updated: 3.6.18
 local servers = {
-  "lua_ls@3.6.12",
-  "clojure_lsp@2023.01.26-11.08.16",
-  "eslint@4.6.0",
-  "gopls@v0.13.2",
-  "astro@0.29.6",
-  "marksman@2023-03-04",
-  -- Run via bun, see: lua/lsp/bun.lua --
-  "tsserver@3.3.1",
-  "tailwindcss@0.0.13",
-  "volar@1.8.22",
-  "terraformls@v0.30.3"
+  "lua_ls",
+  "clojure_lsp",
+  "eslint",
+  "gopls",
+  "astro",
+  "marksman",
+  "tsserver",
+  "tailwindcss",
+  "volar",
+  "terraformls"
 }
-
-local util = require("lspconfig.util")
--- util.on_setup = util.add_hook_before(util.on_setup, add_bun_prefix)
 
 -- Setup Mason + LSPs + CMP
 require("lsp.cmp")
-
 mason_lspconfig.setup({ ensure_installed = servers, automatic_installation = true })
 
 -- Setup each server
+local normal_capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = cmp_nvim_lsp.default_capabilities(normal_capabilities)
 for _, s in pairs(servers) do
-  local server = s:gsub("@.*", "")
-  local server_config_ok, mod = pcall(require, "lsp.servers." .. server)
+  local server_config_ok, mod = pcall(require, "lsp.servers." .. s)
   if not server_config_ok then
-    require("notify")("The LSP '" .. server .. "' does not have a config.", "warn")
+    require("notify")("The LSP '" .. s .. "' does not have a config.", "warn")
   else
     mod.setup(on_attach, capabilities)
   end
@@ -146,15 +136,11 @@ vim.diagnostic.config({
   },
 })
 
--- Removing errors from gutter for now, trying inline errors instead
-
 -- Change Error Signs in Gutter
--- local signs = { Error = "✘", Warn = " ", Hint = "", Info = " " }
-local signs = { Error = "", Warn = "", Hint = "", Info = " " }
+local signs = { Error = "✘", Warn = " ", Hint = "", Info = " " }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon })
-  -- vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
 -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
