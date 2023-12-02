@@ -18,7 +18,7 @@ lsp_format.setup({
   }
 })
 
--- This is the callback function that runs after LSP attaches which configures the LSP, 
+-- This is the callback function that runs after LSP attaches which configures the LSP,
 -- which sets the LSP settings like formatting and keymaps, etc.
 local on_attach = function(client, bufnr)
   local function buf_set_option(...)
@@ -98,6 +98,7 @@ local servers = {
   "lua_ls",
   "clojure_lsp",
   "eslint",
+  "bashls",
   "gopls",
   "astro",
   "marksman",
