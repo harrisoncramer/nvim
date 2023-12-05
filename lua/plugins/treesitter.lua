@@ -2,7 +2,7 @@ return {
   "nvim-treesitter/nvim-treesitter",
   dependencies = {
     "HiPhish/nvim-ts-rainbow2",
-    "nvim-treesitter/nvim-treesitter-context",
+    -- "nvim-treesitter/nvim-treesitter-context",
     "nvim-treesitter/playground",
     "windwp/nvim-ts-autotag",
     "nvim-treesitter/nvim-treesitter-textobjects",
@@ -118,7 +118,7 @@ return {
             },
           },
           context = {
-            enable = true,
+            enable = false,
             max_lines = 0,        -- How many lines the window should span. Values <= 0 mean no limit.
             trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
             patterns = {

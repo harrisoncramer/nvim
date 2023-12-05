@@ -1,3 +1,14 @@
+local function get_git_head()
+  local head = vim.fn.FugitiveHead()
+  if head == "" or head == nil then
+    return "DETATCHED "
+  end
+  if string.len(head) > 20 then
+    head = ".." .. head:sub(15)
+  end
+  return " " .. head
+end
+
 local filename = {
   {
     "filename",
@@ -30,19 +41,13 @@ return {
         globalstatus = true,
       },
       sections = {
-        lualine_a = {
-          {
-            'branch',
-            use_mode_colors = false,
-          }
-        },
+        lualine_a = { get_git_head },
         lualine_b = {
           require("recorder").recordingStatus
         },
         lualine_c = diagnostics,
         lualine_x = { 'diff' },
         lualine_y = { 'encoding', 'filetype', },
-        lualine_z = {},
       },
       inactive_winbar = {
         lualine_a = filename,
