@@ -58,11 +58,6 @@ return {
         unresolved = '',
         tree_type = "by_file_name"
       },
-      colors = {
-        discussion_tree = {
-          chevron = 'DiagnosticSignWarn'
-        }
-      }
     })
   end,
 }

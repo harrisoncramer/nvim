@@ -29,12 +29,18 @@ local diagnostics = {
   }
 }
 
+local disabled_filetypes = { 'gitlab', 'DiffviewFiles', "oil" }
+
 return {
   "nvim-lualine/lualine.nvim",
   requires = { "kyazdani42/nvim-web-devicons", opt = true },
   config = function()
     require("lualine").setup({
       options = {
+        disabled_filetypes = {
+          winbar = disabled_filetypes,
+          statusline = disabled_filetypes,
+        },
         component_separators = { right = "" },
         section_separators = { left = "", right = "" },
         theme = "kanagawa",
@@ -46,11 +52,13 @@ return {
           require("recorder").recordingStatus
         },
         lualine_c = diagnostics,
+        lualine_d = { 'tabs' },
         lualine_x = { 'diff' },
         lualine_y = { 'encoding', 'filetype', },
       },
       inactive_winbar = {
-        lualine_a = filename,
+        lualine_a = {},
+        lualine_b = filename,
       },
       winbar = {
         lualine_a = filename,

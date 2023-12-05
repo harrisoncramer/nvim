@@ -1,6 +1,6 @@
 local u = require("functions.utils")
 
--- Splits
+-- Splits and tabs
 vim.keymap.set("n", "ss", ":split<Return>")
 vim.keymap.set("n", "sv", ":vsplit<Return><C-w>w")
 vim.keymap.set("n", "sh", "<C-w>h")
@@ -8,6 +8,8 @@ vim.keymap.set("n", "sj", "<C-w>j")
 vim.keymap.set("n", "sk", "<C-w>k")
 vim.keymap.set("n", "sl", "<C-w>l")
 vim.keymap.set("n", "sq", "<C-w>q")
+vim.keymap.set("n", "<leader>tn", ":tabnext<CR>")
+vim.keymap.set("n", "<leader>tp", ":tabprev<CR>")
 
 -- Using a simple plugin to provide better forward/backward surfing
 vim.keymap.set("n", "<C-t>", "<C-^>")

@@ -76,6 +76,14 @@ return {
     end)
 
     diffview.setup({
+      view = {
+        default = {
+          winbar_info = false,
+        },
+        file_history = {
+          winbar_info = false,
+        },
+      },
       diff_binaries = false,
       use_icons = true, -- Requires nvim-web-devicons
       icons = {
