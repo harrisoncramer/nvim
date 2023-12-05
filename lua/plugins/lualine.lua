@@ -1,3 +1,23 @@
+local filename = {
+  {
+    "filename",
+    file_status = true,
+    path = 1,
+    symbols = {
+      modified = "  ",
+      readonly = "[-]",
+      unnamed = "[No Name]",
+    },
+  }
+}
+
+local diagnostics = {
+  {
+    'diagnostics',
+    symbols = { error = "✘ ", warn = " ", hint = " ", info = " " },
+  }
+}
+
 return {
   "nvim-lualine/lualine.nvim",
   requires = { "kyazdani42/nvim-web-devicons", opt = true },
@@ -10,53 +30,27 @@ return {
         globalstatus = true,
       },
       sections = {
-        lualine_a = { 'branch' },
+        lualine_a = {
+          {
+            'branch',
+            use_mode_colors = false,
+          }
+        },
         lualine_b = {
           require("recorder").recordingStatus
         },
-        lualine_c = { 'diagnostics' },
-        lualine_d = {
-          {
-            require("recorder").recordingStatus
-          },
-          {
-            require("recorder").displaySlots
-          },
-          -- lualine_z = {},
-        },
+        lualine_c = diagnostics,
         lualine_x = { 'diff' },
-        lualine_y = { 'encoding', 'filetype' },
+        lualine_y = { 'encoding', 'filetype', },
         lualine_z = {},
       },
       inactive_winbar = {
-        lualine_a = {
-          {
-            "filename",
-            file_status = true,
-            path = 1,
-            symbols = {
-              modified = "  ",
-              readonly = "[-]",
-              unnamed = "[No Name]",
-            },
-          }
-        },
+        lualine_a = filename,
       },
       winbar = {
-        lualine_a = {
-          {
-            "filename",
-            file_status = true,
-            path = 1,
-            symbols = {
-              modified = "  ",
-              readonly = "[-]",
-              unnamed = "[No Name]",
-            },
-          }
-        },
+        lualine_a = filename,
         lualine_b = {},
-        lualine_c = { 'diagnostics' },
+        lualine_c = diagnostics,
         lualine_x = { 'diff' },
         lualine_y = { 'progress', 'location' }
       },
