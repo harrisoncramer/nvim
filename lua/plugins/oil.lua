@@ -6,7 +6,7 @@ local M = {
   'stevearc/oil.nvim',
   config = function()
     vim.keymap.set("n", "<C-h>", function()
-      local path = vim.fn.expand("%")
+      local path = vim.fn.expand("%:p")
       local dir = u.dirname(path)
       file = u.basename(path)
       vim.cmd.tabnew()
@@ -45,6 +45,7 @@ vim.api.nvim_create_autocmd("User", {
     local oil = require("oil")
     if vim.api.nvim_get_current_buf() == args.data.buf and oil.get_cursor_entry() then
       u.jump_to_line(file)
+      oil.select({ preview = true })
     end
   end),
 })
