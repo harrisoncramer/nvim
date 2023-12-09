@@ -45,6 +45,7 @@ vim.opt.backspace = "indent,eol,start"
 
 -- Don't break words in LSP docs
 -- vim.api.nvim_command('set wrap linebreak nolist')
+vim.opt.wrap = false
 
 -- Colors
 vim.opt.termguicolors = true

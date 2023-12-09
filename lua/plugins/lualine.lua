@@ -49,6 +49,7 @@ return {
       sections = {
         lualine_a = { get_git_head },
         lualine_b = {
+          filename[1],
           require("recorder").recordingStatus
         },
         lualine_c = diagnostics,

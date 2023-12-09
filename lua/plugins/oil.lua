@@ -1,25 +1,16 @@
 local u = require("functions.utils")
-local open_dir = function(path)
-  local dir = u.dirname(path)
-  vim.cmd.tabnew()
-  require("oil").open(dir)
-end
 
-vim.api.nvim_create_autocmd("User", {
-  pattern = "OilEnter",
-  callback = vim.schedule_wrap(function(args)
-    local oil = require("oil")
-    if vim.api.nvim_get_current_buf() == args.data.buf and oil.get_cursor_entry() then
-      oil.select({ preview = true })
-    end
-  end),
-})
+local file
+
 local M = {
   'stevearc/oil.nvim',
   config = function()
     vim.keymap.set("n", "<C-h>", function()
-      local current_path = vim.fn.expand("%")
-      open_dir(current_path)
+      local path = vim.fn.expand("%")
+      local dir = u.dirname(path)
+      file = u.basename(path)
+      vim.cmd.tabnew()
+      require("oil").open(dir)
     end, { desc = "Open parent directory" })
     require("oil").setup({
       keymaps = {
@@ -48,7 +39,15 @@ local M = {
   dependencies = { "nvim-tree/nvim-web-devicons" },
 }
 
-M.open_dir = open_dir
-
+vim.api.nvim_create_autocmd("User", {
+  pattern = "OilEnter",
+  callback = vim.schedule_wrap(function(args)
+    local oil = require("oil")
+    if vim.api.nvim_get_current_buf() == args.data.buf and oil.get_cursor_entry() then
+      u.jump_to_line(file)
+      oil.select()
+    end
+  end),
+})
 
 return M
