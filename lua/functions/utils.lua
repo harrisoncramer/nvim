@@ -256,20 +256,37 @@ return {
     return name
   end,
   string_starts = string_starts,
-  copy_absolute_filepath = function()
+  copy_absolute_filepath = function(quiet)
     vim.api.nvim_feedkeys(":let @+=expand('%:p')", "n", false)
     press_enter()
-    require("notify")('Copied filepath.', vim.log.levels.INFO)
+    if not quiet then
+      require("notify")('Copied filepath.', vim.log.levels.INFO)
+    end
   end,
-  copy_relative_dir = function()
+  copy_relative_dir = function(quiet)
     vim.api.nvim_feedkeys(":let @+=expand('%:h')", "n", false)
     press_enter()
-    require("notify")('Copied directory path.', vim.log.levels.INFO)
+    if not quiet then
+      require("notify")('Copied directory path.', vim.log.levels.INFO)
+    end
   end,
-  copy_file_name = function()
-    vim.api.nvim_feedkeys(":let @+=expand('%:t')", "n", false)
-    press_enter()
-    require("notify")('Copied file name.', vim.log.levels.INFO)
+  copy_relative_filepath = function(quiet)
+    local res = vim.fn.fnamemodify(vim.fn.expand('%:h'), ':p:~:.')
+    vim.fn.setreg("+", res)
+    if not quiet then
+      require("notify")('Copied relative path.', vim.log.levels.INFO)
+    end
+
+    return res
+  end,
+  copy_file_name = function(quiet)
+    local buf_name = vim.api.nvim_buf_get_name(0)
+    local base = basename(buf_name)
+    vim.fn.setreg("+", base)
+    if not quiet then
+      require("notify")('Copied file name.', vim.log.levels.INFO)
+    end
+    return base
   end,
   return_bare_file_name = function()
     local full_file_name = vim.fn.expand('%:t')
