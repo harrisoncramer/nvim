@@ -26,6 +26,8 @@ return {
     vim.keymap.set("n", "glrd", gitlab.delete_reviewer)
     vim.keymap.set("n", "glp", gitlab.pipeline)
     vim.keymap.set("n", "glm", gitlab.move_to_discussion_tree_from_diagnostic)
+    vim.keymap.set("n", "glM", gitlab.merge)
+    vim.keymap.set("n", "glO", gitlab.create_mr)
 
     gitlab.setup({
       attachment_dir = "/Users/harrisoncramer/Desktop/screenshots",
@@ -39,8 +41,12 @@ return {
         numhl = nil,
         priority = 20,
         helper_signs = {
-          enabled = false,
+          enabled = true,
         },
+      },
+      create_mr = {
+        target = "main",
+        template_file = "default.md"
       },
       discussion_diagnostic = {
         enabled = true,
