@@ -1,9 +1,3 @@
-local dap_vscode_ok, dap_vscode = pcall(require, "dap-vscode-js")
-if not (dap_vscode_ok) then
-  vim.api.nvim_err_writeln("dap-vscode-js not installed!")
-  return
-end
-
 return {
   setup = function(dap)
     dap.adapters.node2 = {
@@ -21,11 +15,14 @@ return {
       },
     }
 
-    -- The VSCode Debugger requires a special setup
-    dap_vscode.setup({
-      adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
-      debugger_path = vim.fn.stdpath("data") .. "/mason/bin/js-debug-adapter", -- Path to VSCode Debugger
-      debugger_cmd = { "js-debug-adapter" }
-    })
+    dap.adapters["pwa-node"] = {
+      type = "server",
+      host = "localhost",
+      port = "${port}",
+      executable = {
+        command = vim.fn.stdpath("data") .. "/mason/bin/js-debug-adapter", -- Path to VSCode Debugger
+        args = { "${port}" },
+      }
+    }
   end
 }

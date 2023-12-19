@@ -4,7 +4,6 @@ return {
   dependencies = {
     "jay-babu/mason-nvim-dap.nvim",
     "mfussenegger/nvim-dap",
-    "mxsdev/nvim-dap-vscode-js",
     "williamboman/mason.nvim"
   },
   config = function()
@@ -16,14 +15,13 @@ return {
     local dap = require("dap")
     local ui = require("dapui")
 
-    dap.set_log_level("TRACE")
+    -- dap.set_log_level("TRACE")
 
     -- ╭──────────────────────────────────────────────────────────╮
     -- │ Debuggers                                                │
     -- ╰──────────────────────────────────────────────────────────╯
     -- We need the actual programs to connect to running instances of our code.
     -- Debuggers are installed via https://github.com/jayp0521/mason-nvim-dap.nvim
-    -- The VSCode debugger requires a special adapter, seen in /lua/plugins/dap/adapters.lua
     mason.setup()
     mason_dap.setup({
       ensure_installed = { "delve@v1.20.2", "node2@v1.43.0", "js@v1.77.0" },
