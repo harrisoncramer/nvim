@@ -132,15 +132,14 @@ return {
     return selection
   end,
   jump_to_line = function(search_text)
-    local current_line = vim.fn.line('.')
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
     for i, line in ipairs(lines) do
       if string.find(line, search_text, 1, true) then
         vim.fn.cursor({ i, 1 })
-        return
+        return true
       end
     end
-    vim.fn.cursor({ current_line, 1 })
+    return false
   end,
   get_buffer_name = function()
     return vim.fn.expand("%")
