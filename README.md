@@ -43,7 +43,7 @@ sudo apt install git -y
 
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-nvm install 16.0.0
+nvm install 20.5.0
 ```
 
 3. The Treesitter CLI, which is required for syntax highlighting
