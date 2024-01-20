@@ -28,13 +28,13 @@ return {
       end
 
 
-      local line_count = vim.api.nvim_buf_line_count(bufnr)
-      if line_count > 20000 or (line_count == 1 and lang == "json") then
-        vim.g.matchup_matchparen_enabled = 0
-        return true
-      else
-        return false
-      end
+      -- local line_count = vim.api.nvim_buf_line_count(bufnr)
+      -- if line_count > 500 or (line_count == 1 and lang == "json") then
+      --   vim.g.matchup_matchparen_enabled = 0
+      --   return true
+      -- else
+      --   return false
+      -- end
     end
 
     require("nvim-treesitter.configs")

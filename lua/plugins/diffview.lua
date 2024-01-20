@@ -2,6 +2,7 @@ return {
   "sindrets/diffview.nvim",
   requires = "nvim-lua/plenary.nvim",
   config = function()
+    vim.opt.fillchars:append { diff = "╱" }
     local actions = require("diffview.actions")
     local u = require("functions.utils")
     local diffview = require("diffview")
@@ -170,7 +171,7 @@ return {
           ["<leader>e"] = cb("focus_files"),
           ["<leader>b"] = cb("toggle_files"),
         },
-        option_panel = { ["<tab>"] = cb("select"),["q"] = cb("close") },
+        option_panel = { ["<tab>"] = cb("select"), ["q"] = cb("close") },
       },
     })
   end

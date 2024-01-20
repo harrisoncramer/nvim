@@ -28,6 +28,17 @@ local function get_line_number()
   return vim.api.nvim_win_get_cursor(0)[1]
 end
 
+
+local merge = function(...)
+  local res = {}
+  for _, t in ipairs({ ... }) do
+    for _, value in ipairs(t) do
+      table.insert(res, value)
+    end
+  end
+  return res
+end
+
 local function run_script(script_name, args)
   local nvim_scripts_dir = "~/.config/nvim/scripts"
   local f = nil
@@ -363,13 +374,13 @@ return {
   move_line_up = function()
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("dd<Up>P", false, true, true), "n", false)
   end,
+  merge = merge,
   has_value = function(table, val)
     for _, value in ipairs(table) do
       if value == val then
         return true
       end
     end
-
     return false
   end,
 }

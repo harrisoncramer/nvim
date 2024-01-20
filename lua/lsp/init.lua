@@ -1,11 +1,11 @@
 local cmp_nvim_lsp_status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 local mason_status_ok, mason = pcall(require, "mason")
-local mason_lspconfig_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
+local mason_tool_installer_ok, mason_tool_installer = pcall(require, "mason-tool-installer")
 local lsp_format_ok, lsp_format = pcall(require, "lsp-format")
 local u = require("functions.utils")
 
-if not (mason_status_ok and mason_lspconfig_ok and cmp_nvim_lsp_status_ok and lsp_format_ok) then
-  vim.api.nvim_err_writeln("Mason, Mason LSP Config, Completion, or LSP Format not installed!")
+if not (mason_status_ok and mason_tool_installer_ok and cmp_nvim_lsp_status_ok and lsp_format_ok) then
+  vim.api.nvim_err_writeln("Mason, Mason Tool Installer, Completion, or LSP Format not installed!")
   return
 end
 
@@ -90,28 +90,47 @@ local on_attach = function(client, bufnr)
   end
 end
 
--- These servers are automatically installed by Mason.
--- We then iterate over their names and load their relevant
+-- These tools are automatically installed by Mason.
+-- We then iterate over the LSPs (only) and load their relevant
 -- configuration files, which are stored in lua/lsp/servers,
 -- passing along the global on_attach and capabilities functions
+
+-- We could have configurations for the other tools but it's not
+-- been necessary for me thus far
 local servers = {
-  "lua_ls",
-  "clojure_lsp",
-  "eslint",
-  "bashls",
+  "lua-language-server",
+  "clojure-lsp",
+  "eslint-lsp",
+  "bash-language-server",
   "gopls",
-  "astro",
+  "astro-language-server",
   "marksman",
-  "tsserver",
-  "tailwindcss",
-  "volar",
-  "pyright",
-  "terraformls"
+  "typescript-language-server",
+  "tailwindcss-language-server",
+  "vue-language-server",
+  "python-lsp-server",
+  "terraform-ls"
 }
+
+local linters = {
+  "pylint"
+}
+
+local debuggers = {
+  "js-debug-adapter",
+  "delve",
+  "node-debug2-adapter",
+}
+
+local all = u.merge(servers, linters, debuggers)
 
 -- Setup Mason + LSPs + CMP
 require("lsp.cmp")
-mason_lspconfig.setup({ ensure_installed = servers, automatic_installation = true })
+mason_tool_installer.setup({
+  ensure_installed = all,
+  run_on_start = true,
+  automatic_installation = true
+})
 
 -- Setup each server
 local normal_capabilities = vim.lsp.protocol.make_client_capabilities()

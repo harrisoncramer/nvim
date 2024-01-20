@@ -28,9 +28,16 @@ return {
     vim.keymap.set("n", "glm", gitlab.move_to_discussion_tree_from_diagnostic)
     vim.keymap.set("n", "glM", gitlab.merge)
     vim.keymap.set("n", "glO", gitlab.create_mr)
+    vim.keymap.set("n", "glal", gitlab.add_label)
+    vim.keymap.set("n", "gldl", gitlab.delete_label)
 
     gitlab.setup({
       attachment_dir = "/Users/harrisoncramer/Desktop/screenshots",
+      reviewer_settings = {
+        diffview = {
+          imply_local = true, -- If true, will attempt to use --imply_local option when calling |:DiffviewOpen|
+        },
+      },
       discussion_sign = {
         -- See :h sign_define for details about sign configuration.
         enabled = true,
