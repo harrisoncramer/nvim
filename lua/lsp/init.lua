@@ -105,6 +105,7 @@ local servers = {
   "tsserver",
   "tailwindcss",
   "volar",
+  "pyright",
   "terraformls"
 }
 
