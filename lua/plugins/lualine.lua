@@ -33,7 +33,7 @@ local disabled_filetypes = { 'gitlab', 'DiffviewFiles', "oil" }
 
 return {
   "nvim-lualine/lualine.nvim",
-  requires = { "kyazdani42/nvim-web-devicons", opt = true },
+  dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
   config = function()
     require("lualine").setup({
       options = {

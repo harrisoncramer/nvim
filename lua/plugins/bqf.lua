@@ -26,4 +26,8 @@ local function setup()
   })
 end
 
-return { "kevinhwang91/nvim-bqf", requires = "junegunn/fzf.vim", config = setup }
+return {
+  "kevinhwang91/nvim-bqf",
+  dependencies = { "junegunn/fzf.vim" },
+  config = setup,
+}

@@ -1,7 +1,7 @@
 local map_opts = { noremap = true, silent = true, nowait = true, buffer = true }
 return {
   "nvim-telescope/telescope.nvim",
-  requires = { "nvim-lua/plenary.nvim", "junegunn/fzf", },
+  dependencies = { "nvim-lua/plenary.nvim", "junegunn/fzf", },
   config = function()
     local actions = require("telescope.actions")
     local state = require("telescope.actions.state")

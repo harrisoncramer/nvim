@@ -36,7 +36,7 @@ local M = {
       }
     })
   end,
-  dependencies = { "nvim-tree/nvim-web-devicons" },
+  dependencies = { "kyazdani42/nvim-web-devicons" },
 }
 
 vim.api.nvim_create_autocmd("User", {

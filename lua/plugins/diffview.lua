@@ -1,6 +1,6 @@
 return {
   "sindrets/diffview.nvim",
-  requires = "nvim-lua/plenary.nvim",
+  dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
     vim.opt.fillchars:append { diff = "╱" }
     local actions = require("diffview.actions")
