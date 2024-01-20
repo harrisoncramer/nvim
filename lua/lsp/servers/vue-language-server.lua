@@ -8,8 +8,8 @@ return {
       on_attach = on_attach,
       init_options = {
         typescript = {
-          tsdk =
-          '/Users/harrisoncramer/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib',
+          tsdk = vim.fn.expand("$HOME") ..
+              '/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib',
         },
         languageFeatures = {
           references = true,
