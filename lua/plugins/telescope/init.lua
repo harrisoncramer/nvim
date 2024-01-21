@@ -106,6 +106,9 @@ return {
             ["<Up>"] = actions.cycle_history_prev,
           },
         },
+        vimgrep_args = {
+          "--fixed-strings"
+        }
       },
       pickers = {
         live_grep = {
