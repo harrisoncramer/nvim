@@ -51,6 +51,9 @@ return {
           enabled = true,
         },
       },
+      popup = {
+        backup_register = "+",
+      },
       create_mr = {
         target = "main",
         template_file = "default.md"

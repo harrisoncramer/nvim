@@ -2,7 +2,7 @@ local u = require("functions.utils")
 
 local find_matching_files = function()
   local bare_file_name = u.return_bare_file_name()
-  require("fzf-lua").git_files({}, bare_file_name)
+  require("fzf-lua").git_files({ search = bare_file_name, no_esc = true })
 end
 
 return {
@@ -11,13 +11,26 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     local fzfLua = require("fzf-lua")
+    local actions = require("fzf-lua.actions")
     fzfLua.setup({
-      preview = {
-        keymap = {
-          builtin = {
-            ["<C-a>"] = "preview-page-down",
-            ["<C-b>"] = "preview-page-up",
-          }
+      actions = {
+        files = {
+          ["default"] = actions.file_edit_or_qf,
+          ["ctrl-q"]  = actions.file_sel_to_qf,
+        }
+      },
+      fzf_opts = {
+        ["--layout"] = false
+      },
+      git = {
+        files = {
+          prompt = "> "
+        }
+      },
+      keymap = {
+        builtin = {
+          -- ["ctrl-d"] = "preview-page-down",
+          -- ["ctrl-u"] = "preview-page-up",
         }
       }
     })
