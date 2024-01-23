@@ -12,6 +12,13 @@ return {
     local fzfLua = require("fzf-lua")
     local actions = require("fzf-lua.actions")
     fzfLua.setup({
+      winopts = {
+        -- fullscreen = true,
+        preview = {
+          layout   = 'vertical',
+          vertical = 'up:45%', -- up|down:size
+        }
+      },
       actions = {
         files = {
           ["default"] = actions.file_edit_or_qf,
@@ -34,14 +41,18 @@ return {
         }
       },
       keymap = {
-        builtin = {
-          -- ["ctrl-d"] = "preview-page-down",
-          -- ["ctrl-u"] = "preview-page-up",
-        }
+        fzf = {
+          ["ctrl-z"] = "abort",
+          ["ctrl-s"] = "select-all",
+          ["f3"] = "toggle-preview-wrap",
+          ["f4"] = "toggle-preview",
+          ["shift-down"] = "preview-page-down",
+          ["shift-up"] = "preview-page-up",
+        },
       }
     })
     vim.keymap.set("n", "<C-j>", fzfLua.git_files)
-    vim.keymap.set("n", "<C-f>", fzfLua.live_grep)
+    vim.keymap.set("n", "<C-f>", fzfLua.live_grep_native)
     vim.keymap.set("n", "<leader>tgc", fzfLua.git_commits, {})
     vim.keymap.set("n", "<leader>tgb", fzfLua.git_branches, {})
     vim.keymap.set("n", "<leader>tj", find_matching_files)

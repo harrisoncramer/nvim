@@ -141,8 +141,8 @@ return {
           ["U"] = cb("unstage_all"),        -- Unstage all entries.
           ["X"] = cb("restore_entry"),      -- Restore entry to the state on the left side.
           ["R"] = cb("refresh_files"),      -- Update stats and entries in the file list.
-          ["<C-u>"] = actions.scroll_view(-20),
-          ["<C-d>"] = actions.scroll_view(20),
+          ["<S-Up>"] = actions.scroll_view(-20),
+          ["<S-Down>"] = actions.scroll_view(20),
           ["<C-n>"] = cb("select_next_entry"),
           ["<C-p>"] = cb("select_prev_entry"),
           ["gf"] = cb("goto_file"),

@@ -49,6 +49,8 @@ vim.keymap.set("n", "<leader>yf", u.copy_file_name)
 -- Center the view after jumping up/down
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<S-Down>", "<C-d>zz")
+vim.keymap.set("n", "<S-Up>", "<C-u>zz")
 
 -- Open Links
 vim.keymap.set('n', 'gx', ":silent! execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>")
