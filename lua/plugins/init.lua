@@ -16,7 +16,7 @@ return {
   { "hrsh7th/cmp-path" },
   { "nvim-lua/plenary.nvim" },
   { "lukas-reineke/lsp-format.nvim" },
-  { "junegunn/fzf",                             build = function() vim.fn["fzf#install"]() end },
+  -- { "junegunn/fzf",                             build = function() vim.fn["fzf#install"]() end },
   -- { "tpope/vim-dispatch" },
   { "tpope/vim-repeat" },
   { "tpope/vim-surround" },
@@ -30,5 +30,6 @@ return {
   { "AndrewRadev/tagalong.vim" },
   { "tpope/vim-abolish" },
   { 'djoshea/vim-autoread' },
+  { "/dstein64/vim-startuptime" }
   -- { 'sago35/tinygo.vim' },
 }

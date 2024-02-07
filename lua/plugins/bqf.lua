@@ -20,6 +20,10 @@ local function setup()
     filter = {
       fzf = {
         action_for = {
+          ['ctrl-q'] = {
+            description = [[Press ctrl-q to toggle sign for the selected items]],
+            default = 'signtoggle'
+          },
           ['ctrl-t'] = {
             description = [[Press ctrl-t to open up the item in a new tab]],
             default = 'tabedit'
@@ -47,8 +51,16 @@ local function setup()
   })
 end
 
+
 return {
   "kevinhwang91/nvim-bqf",
-  dependencies = { "junegunn/fzf.vim" },
+  dependencies = {
+    {
+      'junegunn/fzf',
+      run = function()
+        vim.fn['fzf#install']()
+      end
+    },
+  },
   config = setup,
 }
