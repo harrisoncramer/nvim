@@ -1,3 +1,4 @@
+local u = require("functions.utils")
 local function get_git_head()
   local head = vim.fn.FugitiveHead()
   if head == "" or head == nil then
@@ -9,11 +10,11 @@ local function get_git_head()
   return " " .. head
 end
 
-local filename = {
+local default_filename = {
   {
     "filename",
     file_status = true,
-    path = 0,
+    path = 2,
     symbols = {
       modified = "  ",
       readonly = "[-]",
@@ -21,6 +22,16 @@ local filename = {
     },
   }
 }
+
+local filename = function()
+  local git_root = u.get_root_git_dir()
+  if git_root == nil then return default_filename end
+  local full_file_path = vim.fn.expand('%:p')
+  local escaped_git_root = git_root:gsub("[%^%$%(%)%%%.%[%]%*%+%-%?]", "%%%1")
+  local res = full_file_path:gsub(escaped_git_root, "", 1)
+  return res
+end
+
 
 local diagnostics = {
   {
@@ -49,7 +60,7 @@ return {
       sections = {
         lualine_a = { get_git_head },
         lualine_b = {
-          filename[1],
+          filename,
           require("recorder").recordingStatus
         },
         lualine_c = diagnostics,
@@ -59,10 +70,10 @@ return {
       },
       inactive_winbar = {
         lualine_a = {},
-        lualine_b = filename,
+        lualine_b = { filename },
       },
       winbar = {
-        lualine_a = filename,
+        lualine_a = { filename },
         lualine_b = {},
         lualine_c = diagnostics,
         lualine_x = { 'diff' },

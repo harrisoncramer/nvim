@@ -182,6 +182,16 @@ return {
       end
     end
   end,
+  get_root_git_dir = function()
+    local cur_path = vim.fn.expand("%:p")
+    local dir = vim.fs.find(".git", {
+      path = cur_path,
+      upward = true,
+      type = "directory"
+    })[1]
+    if dir == nil then return dir end
+    return dir:sub(1, -5)
+  end,
   branch_exists = function(b)
     local is_git_branch = io.popen("git rev-parse --is-inside-work-tree 2>/dev/null"):read("*a")
     if is_git_branch == "true\n" then
@@ -264,6 +274,11 @@ return {
   dirname = function(str)
     local name = string.gsub(str, "(.*/)(.*)", "%1")
     return name
+  end,
+  trim_file_path = function(full_path, dir)
+    local dir_pattern = "^" .. dir:gsub("/", "%%/") .. "/"
+    local trimmedPath = full_path:gsub(dir_pattern, "")
+    return trimmedPath
   end,
   string_starts = string_starts,
   copy_absolute_filepath = function(quiet)
