@@ -10,26 +10,17 @@ local function get_git_head()
   return " " .. head
 end
 
-local default_filename = {
-  {
-    "filename",
-    file_status = true,
-    path = 2,
-    symbols = {
-      modified = "  ",
-      readonly = "[-]",
-      unnamed = "[No Name]",
-    },
-  }
-}
-
 local filename = function()
   local git_root = u.get_root_git_dir()
-  if git_root == nil then return default_filename end
+  local modified = vim.api.nvim_buf_get_option(0, 'modified')
+  local readonly = vim.api.nvim_buf_get_option(0, 'readonly')
+  if git_root == nil then
+    local base_file = u.basename(vim.api.nvim_buf_get_name(0))
+    return base_file .. (modified and '  ' or '') .. (readonly and ' [-]' or '')
+  end
   local full_file_path = vim.fn.expand('%:p')
   local escaped_git_root = git_root:gsub("[%^%$%(%)%%%.%[%]%*%+%-%?]", "%%%1")
-  local res = full_file_path:gsub(escaped_git_root, "", 1)
-  return res
+  return full_file_path:gsub(escaped_git_root, "", 1) .. (modified and '  ' or '') .. (readonly and ' [-]' or '')
 end
 
 
