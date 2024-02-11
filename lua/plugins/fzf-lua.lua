@@ -16,7 +16,7 @@ return {
         -- fullscreen = true,
         preview = {
           layout   = 'vertical',
-          vertical = 'up:45%', -- up|down:size
+          vertical = 'up:70%', -- up|down:size
         }
       },
       actions = {
@@ -53,7 +53,7 @@ return {
     })
     vim.keymap.set("n", "<C-j>", fzfLua.git_files)
     vim.keymap.set("n", "<C-m>", function()
-      fzfLua.git_files({ cmd = "git ls-files -mu --format='%(path)'" })
+      fzfLua.git_files({ cmd = "git diff --name-only main" })
     end, {})
     vim.keymap.set("n", "<C-f>", fzfLua.live_grep_native)
     vim.keymap.set("n", "<leader>tgc", fzfLua.git_commits, {})
