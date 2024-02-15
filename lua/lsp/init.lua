@@ -1,3 +1,4 @@
+local handlers = require("lsp.handlers")
 local cmp_nvim_lsp_status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 local mason_status_ok, mason = pcall(require, "mason")
 local mason_tool_installer_ok, mason_tool_installer = pcall(require, "mason-tool-installer")
@@ -43,7 +44,7 @@ local on_attach = function(client, bufnr)
   end
 
   -- Keymaps
-  vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+  vim.keymap.set("n", "gd", handlers.smart_jump_to_definition, {})
   vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, {})
   vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
   vim.keymap.set("n", "gs", function()
