@@ -39,21 +39,21 @@ M.branch_exists = function(b)
 end
 
 
-M.add_current_file = function()
-  local file = u.copy_relative_filepath(true)
-  job:new({
-    command = 'git',
-    args = { 'add', file },
-    on_exit = vim.schedule_wrap(function(_, exit_code)
-      if exit_code ~= 0 then
-        require("notify")('Could not add file!', "error")
-        return
-      else
-        M.commit_file()
-      end
-    end),
-  }):start()
-end
+-- M.add_current_file = function()
+--   local file = u.copy_relative_filepath(true)
+--   job:new({
+--     command = 'git',
+--     args = { 'add', file },
+--     on_exit = vim.schedule_wrap(function(_, exit_code)
+--       if exit_code ~= 0 then
+--         require("notify")('Could not add file!', "error")
+--         return
+--       else
+--         M.commit_file()
+--       end
+--     end),
+--   }):start()
+-- end
 
 M.commit_file = function()
   local relative_file_path = u.copy_relative_filepath(true)
