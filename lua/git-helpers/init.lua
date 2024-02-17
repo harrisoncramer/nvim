@@ -43,7 +43,7 @@ M.add_current_file = function()
   local file = u.copy_relative_filepath(true)
   job:new({
     command = 'git',
-    args = { "add", file },
+    args = { 'add', file },
     on_exit = vim.schedule_wrap(function(_, exit_code)
       if exit_code ~= 0 then
         require("notify")('Could not add file!', "error")
