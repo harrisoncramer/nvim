@@ -1,4 +1,5 @@
-local u = require("functions.utils")
+local git = require("git-helpers")
+
 local function get_git_head()
   local head = vim.fn.FugitiveHead()
   if head == "" or head == nil then
@@ -11,7 +12,7 @@ local function get_git_head()
 end
 
 local filename = function()
-  local git_root = u.get_root_git_dir()
+  local git_root = git.get_root_git_dir()
   local modified = vim.api.nvim_buf_get_option(0, 'modified')
   local readonly = vim.api.nvim_buf_get_option(0, 'readonly')
   if git_root == nil then
