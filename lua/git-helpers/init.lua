@@ -38,23 +38,6 @@ M.branch_exists = function(b)
   return false
 end
 
-
--- M.add_current_file = function()
---   local file = u.copy_relative_filepath(true)
---   job:new({
---     command = 'git',
---     args = { 'add', file },
---     on_exit = vim.schedule_wrap(function(_, exit_code)
---       if exit_code ~= 0 then
---         require("notify")('Could not add file!', "error")
---         return
---       else
---         M.commit_file()
---       end
---     end),
---   }):start()
--- end
-
 M.commit_file = function()
   local relative_file_path = u.copy_relative_filepath(true)
   job:new({
@@ -62,12 +45,10 @@ M.commit_file = function()
     args = { "commit", relative_file_path, "-m", string.format("Refactor to %s", relative_file_path) },
     on_exit = vim.schedule_wrap(function(data, exit_code)
       if exit_code ~= 0 then
-        print(exit_code)
-        vim.print(data)
-        require("notify")('Could not commit change!', "error")
+        require("notify")('Could not commit change!', vim.log.levels.ERROR)
         return
       else
-        M.commit_file()
+        require("notify")('Committed file', vim.log.levels.INFO)
       end
     end),
   }):start()
