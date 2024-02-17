@@ -43,7 +43,7 @@ M.commit_file = function()
   job:new({
     command = 'git',
     args = { "commit", relative_file_path, "-m", string.format("Refactor to %s", relative_file_path) },
-    on_exit = vim.schedule_wrap(function(data, exit_code)
+    on_exit = vim.schedule_wrap(function(_, exit_code)
       if exit_code ~= 0 then
         require("notify")('Could not commit change!', vim.log.levels.ERROR)
         return
