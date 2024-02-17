@@ -56,14 +56,14 @@ M.add_current_file = function()
 end
 
 M.commit_file = function()
-  local file_name = u.copy_file_name(true)
   local relative_file_path = u.copy_relative_filepath(true)
-  print(string.format("Copying %s at path: %s", file_name, relative_file_path))
   job:new({
     command = 'git',
-    args = { "commit", relative_file_path, "-m", string.format("Refactor to %s", file_name) },
-    on_exit = vim.schedule_wrap(function(_, exit_code)
+    args = { "commit", relative_file_path, "-m", string.format("Refactor to %s", relative_file_path) },
+    on_exit = vim.schedule_wrap(function(data, exit_code)
       if exit_code ~= 0 then
+        print(exit_code)
+        vim.print(data)
         require("notify")('Could not commit change!', "error")
         return
       else
