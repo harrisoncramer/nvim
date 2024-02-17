@@ -30,7 +30,8 @@ return {
       },
       git = {
         files = {
-          prompt = "> "
+          prompt = "> ",
+          cmd = 'git ls-files --exclude-standard --others --cached',
         }
       },
       previewers = {
@@ -53,7 +54,7 @@ return {
     })
     vim.keymap.set("n", "<C-j>", fzfLua.git_files)
     vim.keymap.set("n", "<C-m>", function()
-      fzfLua.git_files({ cmd = "git diff --name-only main" })
+      fzfLua.git_files({ cmd = "git diff --name-only main && git ls-files --exclude-standard --others" })
     end, {})
     vim.keymap.set("n", "<C-f>", fzfLua.live_grep_native)
     vim.keymap.set("n", "<leader>tgc", fzfLua.git_commits, {})
