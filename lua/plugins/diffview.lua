@@ -4,77 +4,10 @@ return {
   config = function()
     vim.opt.fillchars:append { diff = "╱" }
     local actions = require("diffview.actions")
-    local u = require("functions.utils")
     local diffview = require("diffview")
     local cb = require("diffview.config").diffview_callback
 
-    -- Toggle file history of this file
-    vim.keymap.set("n", "<leader>gfh", function()
-      local isDiff = vim.fn.getwinvar(nil, "&diff")
-      local bufName = vim.api.nvim_buf_get_name(0)
-      diffview.FOCUSED_HISTORY_FILE = bufName
-      if isDiff ~= 0 or u.string_starts(bufName, "diff") then
-        diffview.FOCUSED_HISTORY_FILE = nil
-        vim.cmd.bd()
-        vim.cmd.tabprev()
-      else
-        vim.api.nvim_feedkeys(":DiffviewFileHistory " .. vim.fn.expand("%"), "n", false)
-        u.press_enter()
-      end
-    end)
-
-    vim.keymap.set("n", "<leader>gh", function()
-      local isDiff = vim.fn.getwinvar(nil, "&diff")
-      local bufName = vim.api.nvim_buf_get_name(0)
-      if isDiff ~= 0 or u.string_starts(bufName, "diff") then
-        vim.cmd.bd()
-        vim.cmd.tabprev()
-      else
-        vim.cmd.DiffviewFileHistory()
-      end
-    end)
-
-    -- Toggle viewing all current changes
-    vim.keymap.set("n", "<leader>gc", function()
-      local isDiff = vim.fn.getwinvar(nil, "&diff")
-      local bufName = vim.api.nvim_buf_get_name(0)
-      if isDiff ~= 0 or u.string_starts(bufName, "diff") then
-        vim.cmd.bd()
-        vim.cmd.tabprev()
-      else
-        vim.cmd.DiffviewOpen()
-        u.press_enter()
-      end
-    end)
-
-    -- Review changes against develop (will break if no develop branch present)
-    vim.keymap.set("n", "<leader>gR", function()
-      local isDiff = vim.fn.getwinvar(nil, "&diff")
-      local bufName = vim.api.nvim_buf_get_name(0)
-      local has_develop = u.branch_exists("main") -- TODO: Write this function
-      if not has_develop then
-        require("notify")('No main branch, cannot review!', "error")
-        return
-      end
-      if isDiff ~= 0 or u.string_starts(bufName, "diff") then
-        vim.cmd.tabclose()
-        vim.cmd.tabprev()
-      else
-        vim.cmd.DiffviewOpen("main")
-        u.press_enter()
-      end
-    end)
-
-    vim.keymap.set("n", "<leader>go", function()
-      local isDiff = vim.fn.getwinvar(nil, "&diff")
-      local bufName = vim.api.nvim_buf_get_name(0)
-      if isDiff ~= 0 or u.string_starts(bufName, "diff") then
-        vim.cmd.tabclose()
-        vim.cmd.tabprev()
-      else
-        vim.cmd.DiffviewOpen()
-      end
-    end)
+    -- See lua/git-helpers/ for keybindings...
 
     diffview.setup({
       view = {
@@ -171,7 +104,7 @@ return {
           ["<leader>e"] = cb("focus_files"),
           ["<leader>b"] = cb("toggle_files"),
         },
-        option_panel = { ["<tab>"] = cb("select"), ["q"] = cb("close") },
+        option_panel = { ["<tab>"] = cb("select"),["q"] = cb("close") },
       },
     })
   end

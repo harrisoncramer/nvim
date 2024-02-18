@@ -1,6 +1,11 @@
-local Popup = require("nui.popup")
 local u = require("functions.utils")
 local M = {}
+
+local popup_ok, Popup = pcall(require, "nui.popup")
+if not popup_ok then
+  vim.api.nvim_err_writeln("Mason, Mason Tool Installer, Completion, or LSP Format not installed!")
+  return
+end
 
 M.create_popup_state = function(title)
   local view_opts = {

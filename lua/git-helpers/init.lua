@@ -1,23 +1,50 @@
+local M = {}
 local map_opts = { noremap = true, silent = true, nowait = true }
 local u = require("functions.utils")
-local diffview = require("diffview")
 local popup = require("popup")
 
-local job = require('plenary.job')
-local M = {}
+local gitsigns_ok, gitsigns = pcall(require, "gitsigns")
+local diffview_ok, diffview = pcall(require, "diffview")
+local plenary_ok, job = pcall(require, "plenary.job")
 
-vim.keymap.set("n", "<leader>gcc", function() M.easy_commit() end, map_opts)
+if not gitsigns_ok or not diffview_ok or not plenary_ok then
+  vim.api.nvim_err_writeln("Gitsigns, diffview, or plenary not installed, cannot configure Git tools")
+  return
+end
+
+vim.keymap.set("n", "<leader>gn", gitsigns.next_hunk) -- Next Change
+vim.keymap.set("n", "<leader>gp", gitsigns.prev_hunk) -- Previous Change
+
+-- Adding files...
 vim.keymap.set("n", "<leader>gaa", function() M.add_all() end, map_opts)
+vim.keymap.set("n", "<leader>gah", gitsigns.stage_hunk)
 vim.keymap.set("n", "<leader>gac", function() M.add_current() end, map_opts)
+
+-- Committing changes...
 vim.keymap.set("n", "<leader>gcm", function() M.commit() end, map_opts)
+vim.keymap.set("n", "<leader>gce", function() M.commit_easy() end, map_opts)
+
+-- Resetting changes...
 vim.keymap.set("n", "<leader>gre", function() M.reset_easy_commits() end, map_opts)
+vim.keymap.set("n", "<leader>grr", function() M.reset() end, map_opts)
+vim.keymap.set("n", "<leader>grh", gitsigns.reset_hunk)
+
+-- Stashing and unstashing...
 vim.keymap.set("n", "<leader>gss", function() M.stash() end, map_opts)
 vim.keymap.set("n", "<leader>gsp", function() M.pop() end, map_opts)
-vim.keymap.set("n", "<leader>gfh", function() M.git_file_history() end, map_opts)
-vim.keymap.set("n", "<leader>gu", function() M.view_uncommitted() end, map_opts)
+
+-- Viewing changes and diffs...
+vim.keymap.set("n", "<leader>gvv", function() M.view_changes() end, map_opts)
+vim.keymap.set("n", "<leader>gvs", function() M.view_staged() end, map_opts)
+vim.keymap.set("n", "<leader>gvfh", function() M.view_file_history() end, map_opts)
+vim.keymap.set("n", "<leader>gvp", gitsigns.preview_hunk)
+
+-- Miscellaneous...
+vim.keymap.set("n", "<leader>gb", gitsigns.blame_line)
+vim.keymap.set("n", "<leader>gq", function() gitsigns.setqflist("all") end)
 
 -- Commits the changes in a file quickly with a message "Updated %s"
-M.easy_commit = function()
+M.commit_easy = function()
   local relative_file_path = u.copy_relative_filepath(true)
   job:new({
     command = 'git',
@@ -53,13 +80,29 @@ end
 M.add_all = function()
   job:new({
     command = 'git',
-    args = { "add", ".", },
+    args = { "add", "." },
     on_exit = vim.schedule_wrap(function(_, exit_code)
       if exit_code ~= 0 then
         require("notify")('Could not add all files!', vim.log.levels.ERROR)
         return
       else
         require("notify")('Added all files', vim.log.levels.INFO)
+      end
+    end),
+  }):start()
+end
+
+-- Unstages all changes (git reset)
+M.reset = function()
+  job:new({
+    command = 'git',
+    args = { "reset" },
+    on_exit = vim.schedule_wrap(function(_, exit_code)
+      if exit_code ~= 0 then
+        require("notify")('Could not reset staged changes', vim.log.levels.ERROR)
+        return
+      else
+        require("notify")('Unstaged all changes', vim.log.levels.INFO)
       end
     end),
   }):start()
@@ -180,7 +223,7 @@ M.branch_exists = function(b)
 end
 
 -- Toggle file history of this file
-M.git_file_history = function()
+M.view_file_history = function()
   local isDiff = vim.fn.getwinvar(nil, "&diff")
   local bufName = vim.api.nvim_buf_get_name(0)
   diffview.FOCUSED_HISTORY_FILE = bufName
@@ -194,15 +237,28 @@ M.git_file_history = function()
   end
 end
 
--- Toggle viewing all uncommitted changes (current diff)
-M.view_uncommitted = function()
+-- Toggle viewing all unstaged changes (current diff)
+M.view_changes = function()
   local isDiff = vim.fn.getwinvar(nil, "&diff")
   local bufName = vim.api.nvim_buf_get_name(0)
   if isDiff ~= 0 or u.string_starts(bufName, "diff") then
     vim.cmd.bd()
     vim.cmd.tabprev()
   else
-    vim.cmd.DiffviewOpen()
+    vim.cmd("DiffviewOpen")
+    u.press_enter()
+  end
+end
+
+-- Toggle viewing all uncommitted changes (current diff)
+M.view_staged = function()
+  local isDiff = vim.fn.getwinvar(nil, "&diff")
+  local bufName = vim.api.nvim_buf_get_name(0)
+  if isDiff ~= 0 or u.string_starts(bufName, "diff") then
+    vim.cmd.bd()
+    vim.cmd.tabprev()
+  else
+    vim.cmd("DiffviewOpen --staged")
     u.press_enter()
   end
 end

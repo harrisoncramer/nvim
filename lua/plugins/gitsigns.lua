@@ -2,6 +2,8 @@ return {
   "lewis6991/gitsigns.nvim",
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
+    -- See lua/git-helpers for keybindings...
+
     local gitsigns = require("gitsigns")
     gitsigns.setup({
       signs = {
@@ -59,16 +61,5 @@ return {
       },
       yadm = { enable = false },
     })
-
-    -- Gitsigns w/ hunks and blames.
-    vim.keymap.set("n", "<leader>ga", gitsigns.stage_hunk)
-    vim.keymap.set("n", "<leader>gb", gitsigns.blame_line)
-    vim.keymap.set("n", "<leader>gp", gitsigns.prev_hunk)
-    vim.keymap.set("n", "<leader>gn", gitsigns.next_hunk)
-    vim.keymap.set("n", "<leader>gr", gitsigns.reset_hunk)
-    vim.keymap.set("n", "<leader>gd", gitsigns.preview_hunk)
-    vim.keymap.set("n", "<leader>gq", function()
-      gitsigns.setqflist("all")
-    end)
   end
 }
