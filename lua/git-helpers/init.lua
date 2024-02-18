@@ -138,7 +138,7 @@ M.reset_easy_commits = function()
   local latest_non_easy_commit = io.popen(
     "git log --format=\"%s %H\" | grep -v \"^Updated \" | awk '{ print $NF }' | tail -n +1 | head -1")
   if latest_non_easy_commit == nil then
-    require("notify")('No easy commit hash found', vim.log.levels.ERROR)
+    require("notify")('No easy commit hash found!', vim.log.levels.ERROR)
     return
   end
 
@@ -170,7 +170,7 @@ M.commit = function()
           require("notify")('Could not commit changes with message!', vim.log.levels.ERROR)
           return
         else
-          require("notify")('Committed changes', vim.log.levels.INFO)
+          require("notify")('Committed.', vim.log.levels.INFO)
         end
       end),
     }):start()
@@ -187,7 +187,7 @@ M.pop = function()
         require("notify")('Could not pop off stash!', vim.log.levels.ERROR)
         return
       else
-        require("notify")('Popped', vim.log.levels.INFO)
+        require("notify")('Popped.', vim.log.levels.INFO)
       end
     end),
   }):start()
