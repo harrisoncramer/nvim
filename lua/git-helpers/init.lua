@@ -1,16 +1,20 @@
 local map_opts = { noremap = true, silent = true, nowait = true }
+local u = require("functions.utils")
+local diffview = require("diffview")
 local popup = require("popup")
 
-local u = require("functions.utils")
 local job = require('plenary.job')
 local M = {}
 
-vim.keymap.set("n", "<localleader>gcc", function() M.easy_commit() end, map_opts)
-vim.keymap.set("n", "<localleader>gaa", function() M.add_all() end, map_opts)
-vim.keymap.set("n", "<localleader>gcm", function() M.commit() end, map_opts)
-vim.keymap.set("n", "<localleader>gre", function() M.reset_easy_commits() end, map_opts)
-vim.keymap.set("n", "<localleader>gss", function() M.stash() end, map_opts)
-vim.keymap.set("n", "<localleader>gsp", function() M.pop() end, map_opts)
+vim.keymap.set("n", "<leader>gcc", function() M.easy_commit() end, map_opts)
+vim.keymap.set("n", "<leader>gaa", function() M.add_all() end, map_opts)
+vim.keymap.set("n", "<leader>gac", function() M.add_current() end, map_opts)
+vim.keymap.set("n", "<leader>gcm", function() M.commit() end, map_opts)
+vim.keymap.set("n", "<leader>gre", function() M.reset_easy_commits() end, map_opts)
+vim.keymap.set("n", "<leader>gss", function() M.stash() end, map_opts)
+vim.keymap.set("n", "<leader>gsp", function() M.pop() end, map_opts)
+vim.keymap.set("n", "<leader>gfh", function() M.git_file_history() end, map_opts)
+vim.keymap.set("n", "<leader>gu", function() M.view_uncommitted() end, map_opts)
 
 -- Commits the changes in a file quickly with a message "Updated %s"
 M.easy_commit = function()
@@ -27,23 +31,6 @@ M.easy_commit = function()
       end
     end),
   }):start()
-end
-
---- Checks if directory has uncommitted changes
-M.is_dirty = function()
-  local output = io.popen("git status --porcelain | wc -l")
-  if output == nil then
-    require("notify")('Could not check if clean project!', vim.log.levels.ERROR)
-    return true
-  end
-
-  local count = vim.fn.trim(output:read("*a"))
-  if count ~= '0' then
-    require("notify")('Project has uncommitted changes', vim.log.levels.ERROR)
-    return true
-  end
-
-  return false
 end
 
 -- Stashes all uncommitted changes in the current branch (git stash)
@@ -73,6 +60,23 @@ M.add_all = function()
         return
       else
         require("notify")('Added all files', vim.log.levels.INFO)
+      end
+    end),
+  }):start()
+end
+
+-- Stages current file (git add FILENAME)
+M.add_current = function()
+  local relative_file_path = u.copy_relative_filepath(true)
+  job:new({
+    command = 'git',
+    args = { "add", relative_file_path },
+    on_exit = vim.schedule_wrap(function(_, exit_code)
+      if exit_code ~= 0 then
+        require("notify")(string.format('Could not add %s!', relative_file_path), vim.log.levels.ERROR)
+        return
+      else
+        require("notify")('Added current file', vim.log.levels.INFO)
       end
     end),
   }):start()
@@ -175,5 +179,32 @@ M.branch_exists = function(b)
   return false
 end
 
+-- Toggle file history of this file
+M.git_file_history = function()
+  local isDiff = vim.fn.getwinvar(nil, "&diff")
+  local bufName = vim.api.nvim_buf_get_name(0)
+  diffview.FOCUSED_HISTORY_FILE = bufName
+  if isDiff ~= 0 or u.string_starts(bufName, "diff") then
+    diffview.FOCUSED_HISTORY_FILE = nil
+    vim.cmd.bd()
+    vim.cmd.tabprev()
+  else
+    vim.api.nvim_feedkeys(":DiffviewFileHistory " .. vim.fn.expand("%"), "n", false)
+    u.press_enter()
+  end
+end
+
+-- Toggle viewing all uncommitted changes (current diff)
+M.view_uncommitted = function()
+  local isDiff = vim.fn.getwinvar(nil, "&diff")
+  local bufName = vim.api.nvim_buf_get_name(0)
+  if isDiff ~= 0 or u.string_starts(bufName, "diff") then
+    vim.cmd.bd()
+    vim.cmd.tabprev()
+  else
+    vim.cmd.DiffviewOpen()
+    u.press_enter()
+  end
+end
 
 return M
