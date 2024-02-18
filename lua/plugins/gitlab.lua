@@ -7,7 +7,7 @@ return {
   build = function()
     require("gitlab.server").build()
   end,
-  -- dir = "~/.config/nvim/dev-plugins/gitlab",
+  dir = "~/.config/nvim/dev-plugins/gitlab",
   config = function()
     local gitlab = require("gitlab")
     vim.keymap.set("n", "gls", gitlab.summary)
@@ -33,9 +33,10 @@ return {
 
     gitlab.setup({
       attachment_dir = "/Users/harrisoncramer/Desktop/screenshots",
+      -- debug = { go_request = true },
       reviewer_settings = {
         diffview = {
-          imply_local = true, -- If true, will attempt to use --imply_local option when calling |:DiffviewOpen|
+          imply_local = false, -- If true, will attempt to use --imply_local option when calling |:DiffviewOpen|
         },
       },
       discussion_sign = {
@@ -70,7 +71,7 @@ return {
       discussion_tree = {
         position = "bottom",
         blacklist = { "project_7092381_bot_a74db8ad297ab0341e5720af7849e36f" },
-        tree_type = "simple"
+        tree_type = "simple",
       },
     })
   end,

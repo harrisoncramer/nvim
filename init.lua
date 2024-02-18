@@ -32,3 +32,6 @@ require("mappings")
 
 -- Language Servers
 require("lsp")
+
+-- Git helpers
+require("git-helpers")

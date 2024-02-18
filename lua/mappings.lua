@@ -42,7 +42,7 @@ vim.keymap.set("n", "<leader>lp", ":lua print()<Left>")
 
 -- Copy to clipboasrd
 vim.keymap.set("n", "<leader>yd", u.copy_relative_dir)
-vim.keymap.set("n", "<leader>yd", u.copy_relative_dir)
+vim.keymap.set("n", "<leader>yD", u.copy_absolute_dir)
 vim.keymap.set("n", "<leader>yF", u.copy_relative_filepath)
 vim.keymap.set("n", "<leader>yf", u.copy_file_name)
 
