@@ -46,6 +46,10 @@ vim.keymap.set("n", "<leader>gvp", gitsigns.preview_hunk)
 vim.keymap.set("n", "<leader>gb", gitsigns.blame_line)
 vim.keymap.set("n", "<leader>gq", function() gitsigns.setqflist("all") end)
 
+-- Pushing and pulling...
+vim.keymap.set("n", "<leader>gPP", function() M.push() end, map_opts)
+vim.keymap.set("n", "<leader>gPU", function() M.pull() end, map_opts)
+
 -- Commits the changes in a file quickly with a message "Updated %s"
 M.commit_easy = function()
   local relative_file_path = u.copy_relative_filepath(true)
@@ -189,6 +193,48 @@ M.pop = function()
   }):start()
 end
 
+-- Push changes (git push)
+M.push = function()
+  local push_job = job:new({
+    command = 'git',
+    args = { 'push' },
+    on_exit = function(_, exit_code)
+      if exit_code ~= 0 then
+        require("notify")("Could not push!", "error")
+        return
+      else
+        require("notify")("Pushed.", "info")
+      end
+    end,
+  })
+
+  local isSubmodule = vim.fn.trim(vim.fn.system("git rev-parse --show-superproject-working-tree"))
+  if isSubmodule == "" then
+    push_job:start()
+  else
+    vim.fn.confirm("Push to origin/main branch for submodule?")
+    push_job:start()
+  end
+end
+
+-- Pull changes from remote (git pull)
+M.pull = function()
+  local pull_job = job:new({
+    command = 'git',
+    args = { 'pull' },
+    on_exit = function(_, exit_code)
+      if exit_code ~= 0 then
+        require("notify")("Could not pull!", "error")
+        return
+      else
+        require("notify")("Pulled changes", "info")
+      end
+    end,
+  })
+
+  pull_job:start()
+end
+
 M.get_branch_name = function()
   local is_git_branch = io.popen("git rev-parse --is-inside-work-tree 2>/dev/null"):read("*a")
   if is_git_branch == "true\n" then
@@ -242,7 +288,7 @@ end
 
 -- Toggle viewing all unstaged changes (current diff)
 M.view_changes = function()
-  local isDiff = vim.fn.getwinvar(nil, "&diff")
+  local isDiff = vim.fn.getwinvar(0, "&diff")
   local bufName = vim.api.nvim_buf_get_name(0)
   if isDiff ~= 0 or u.string_starts(bufName, "diff") then
     vim.cmd.bd()
@@ -255,7 +301,7 @@ end
 
 -- Toggle viewing all uncommitted changes (current diff)
 M.view_staged = function()
-  local isDiff = vim.fn.getwinvar(nil, "&diff")
+  local isDiff = vim.fn.getwinvar(0, "&diff")
   local bufName = vim.api.nvim_buf_get_name(0)
   if isDiff ~= 0 or u.string_starts(bufName, "diff") then
     vim.cmd.bd()
@@ -265,5 +311,6 @@ M.view_staged = function()
     u.press_enter()
   end
 end
+
 
 return M
