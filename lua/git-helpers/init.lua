@@ -12,8 +12,12 @@ if not gitsigns_ok or not diffview_ok or not plenary_ok then
   return
 end
 
-vim.keymap.set("n", "<leader>gn", gitsigns.next_hunk) -- Next Change
-vim.keymap.set("n", "<leader>gp", gitsigns.prev_hunk) -- Previous Change
+-- Hunk-level operations
+vim.keymap.set("n", "<leader>ghn", gitsigns.next_hunk)  -- Next Change
+vim.keymap.set("n", "<leader>ghp", gitsigns.prev_hunk)  -- Previous Change
+vim.keymap.set("n", "<leader>ghp", gitsigns.prev_hunk)  -- Previous Change
+vim.keymap.set("n", "<leader>ghr", gitsigns.reset_hunk) -- Reset Hunk
+vim.keymap.set("n", "<leader>gha", gitsigns.stage_hunk) -- Add hunk
 
 -- Adding files...
 vim.keymap.set("n", "<leader>gaa", function() M.add_all() end, map_opts)
@@ -27,7 +31,6 @@ vim.keymap.set("n", "<leader>gce", function() M.commit_easy() end, map_opts)
 -- Resetting changes...
 vim.keymap.set("n", "<leader>gre", function() M.reset_easy_commits() end, map_opts)
 vim.keymap.set("n", "<leader>grr", function() M.reset() end, map_opts)
-vim.keymap.set("n", "<leader>grh", gitsigns.reset_hunk)
 
 -- Stashing and unstashing...
 vim.keymap.set("n", "<leader>gss", function() M.stash() end, map_opts)
