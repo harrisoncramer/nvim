@@ -227,7 +227,7 @@ M.pull = function()
         require("notify")("Could not pull!", "error")
         return
       else
-        require("notify")("Pulled changes", "info")
+        require("notify")("Pulled.", "info")
       end
     end,
   })
