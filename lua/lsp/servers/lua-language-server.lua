@@ -3,10 +3,10 @@ return {
     local neodev_ok, neodev = pcall(require, "neodev")
     if not (neodev_ok) then
       vim.api.nvim_err_writeln("Neodev not installed")
-      return
+    else
+      neodev.setup()
     end
 
-    neodev.setup()
     require("lspconfig").lua_ls.setup({
       on_attach = on_attach,
       capabilities = capabilities,

@@ -3,7 +3,7 @@ local M = {}
 
 local popup_ok, Popup = pcall(require, "nui.popup")
 if not popup_ok then
-  vim.api.nvim_err_writeln("Mason, Mason Tool Installer, Completion, or LSP Format not installed!")
+  vim.api.nvim_err_writeln("Nui not installed, cannot configure popups!")
   return
 end
 
