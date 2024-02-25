@@ -105,6 +105,14 @@ local go = {
   },
 }
 
+local lua = {
+  {
+    type = 'nlua',
+    request = 'attach',
+    name = "Attach to running Neovim instance",
+  }
+}
+
 return {
   setup = function(dap)
     dap.configurations = {
@@ -113,6 +121,7 @@ return {
       javascriptreact = chrome_debugger,
       vue = chrome_debugger,
       go = go,
+      lua = lua,
     }
   end
 }

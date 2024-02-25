@@ -33,12 +33,13 @@ return {
 
     gitlab.setup({
       attachment_dir = "/Users/harrisoncramer/Desktop/screenshots",
-      -- debug = { go_request = true },
+      debug = { go_request = true, go_response = true },
       reviewer_settings = {
         diffview = {
           imply_local = false, -- If true, will attempt to use --imply_local option when calling |:DiffviewOpen|
         },
       },
+      port = 8392,
       discussion_sign = {
         -- See :h sign_define for details about sign configuration.
         enabled = true,
@@ -69,8 +70,11 @@ return {
         },
       },
       discussion_tree = {
-        position = "bottom",
-        blacklist = { "project_7092381_bot_a74db8ad297ab0341e5720af7849e36f" },
+        position = "right",
+        blacklist = {
+          "project_7092381_bot_a74db8ad297ab0341e5720af7849e36f",
+          -- "project_45056705_bot_b8d05ad0fd92c0255adb37ca4823d010"
+        },
         tree_type = "simple",
       },
     })
