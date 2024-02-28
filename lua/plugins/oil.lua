@@ -6,10 +6,10 @@ local M = {
   'stevearc/oil.nvim',
   config = function()
     vim.keymap.set("n", "<C-h>", function()
+      vim.cmd.vsplit()
       local path = vim.fn.expand("%:p")
       local dir = u.dirname(path)
       file = u.basename(path)
-      vim.cmd.tabnew()
       require("oil").open(dir)
     end, { desc = "Open parent directory" })
     require("oil").setup({
@@ -29,7 +29,6 @@ local M = {
         ["gs"] = "actions.change_sort",
         ["gx"] = "actions.open_external",
         ["g."] = "actions.toggle_hidden",
-        ["g\\"] = "actions.toggle_trash",
       },
       view_options = {
         show_hidden = true,
