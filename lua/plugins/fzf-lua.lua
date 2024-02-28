@@ -23,6 +23,7 @@ return {
         files = {
           ["default"] = actions.file_edit_or_qf,
           ["ctrl-q"]  = actions.file_sel_to_qf,
+          ["ctrl-v"]  = actions.file_vsplit,
         }
       },
       fzf_opts = {
