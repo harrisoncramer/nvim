@@ -7,7 +7,6 @@ return {
   build = function()
     require("gitlab.server").build()
   end,
-  dir = "~/.config/nvim/dev-plugins/gitlab",
   config = function()
     local gitlab = require("gitlab")
     vim.keymap.set("n", "gls", gitlab.summary)
@@ -36,23 +35,10 @@ return {
       debug = { go_request = true, go_response = true },
       reviewer_settings = {
         diffview = {
-          imply_local = false, -- If true, will attempt to use --imply_local option when calling |:DiffviewOpen|
+          imply_local = true, -- If true, will attempt to use --imply_local option when calling |:DiffviewOpen|
         },
       },
       port = 8392,
-      discussion_sign = {
-        -- See :h sign_define for details about sign configuration.
-        enabled = true,
-        text = "↳",
-        linehl = 'DiagnosticSignWarn',
-        texthl = 'DiagnosticSignWarn',
-        culhl = nil,
-        numhl = nil,
-        priority = 20,
-        helper_signs = {
-          enabled = true,
-        },
-      },
       popup = {
         backup_register = "+",
       },
@@ -60,17 +46,11 @@ return {
         target = "main",
         template_file = "default.md"
       },
-      discussion_diagnostic = {
-        enabled = true,
+      discussion_signs = {
         severity = vim.diagnostic.severity.WARN,
-        code = 'gitlab.nvim',
-        display_opts = {
-          virtual_text = false,
-          severity_sort = true,
-        },
       },
       discussion_tree = {
-        position = "right",
+        position = "bottom",
         blacklist = {
           "project_7092381_bot_a74db8ad297ab0341e5720af7849e36f",
           -- "project_45056705_bot_b8d05ad0fd92c0255adb37ca4823d010"
