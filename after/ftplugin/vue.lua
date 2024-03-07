@@ -14,7 +14,7 @@ local get_component_references = function()
   local component = componentParts[1]
   local componentStart = '<' .. component
   local fzfLua = require("fzf-lua")
-  -- fzfLua.grep_string({ search = componentStart })
+  fzfLua.grep_string({ search = componentStart })
 end
 
 -- Gets vue "reference" to current component (searches for <ComponentName) in telescope
@@ -22,9 +22,8 @@ vim.keymap.set("n", "<localleader>vr", function() get_component_references() end
 
 -- Work-specific
 M.make_or_jump_to_test_file = function()
-  local file_path = u.copy_relative_filepath(true)
-  local file_name = u.copy_file_name(true):gsub(".vue", ".test.js")
-  local path = "test/specs/" .. file_path .. file_name
+  local file_path = u.copy_relative_filepath(true):gsub(".vue", ".test.js"):gsub("src/", "")
+  local path = "test/specs/" .. file_path
   vim.cmd(string.format("e %s", path))
   if vim.fn.filereadable(path) == 0 then
     require("notify")("New test file created, please save")
