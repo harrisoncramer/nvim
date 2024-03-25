@@ -4,7 +4,8 @@ return {
   dependencies = {
     "jay-babu/mason-nvim-dap.nvim",
     "mfussenegger/nvim-dap",
-    "williamboman/mason.nvim"
+    "nvim-neotest/nvim-nio",
+    "williamboman/mason.nvim",
   },
   config = function()
     local adapters = require("plugins.dap.adapters")

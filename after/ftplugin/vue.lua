@@ -22,7 +22,8 @@ vim.keymap.set("n", "<localleader>vr", function() get_component_references() end
 
 -- Work-specific
 M.make_or_jump_to_test_file = function()
-  local file_path = u.copy_relative_filepath(true):gsub(".vue", ".test.js"):gsub("src/", "")
+  local fp = u.copy_relative_filepath(true)
+  local file_path = fp:gsub(".vue", ".test.js"):gsub("src/", "")
   local path = "test/specs/" .. file_path
   vim.cmd(string.format("e %s", path))
   if vim.fn.filereadable(path) == 0 then
@@ -30,7 +31,7 @@ M.make_or_jump_to_test_file = function()
   end
 end
 
-vim.keymap.set("n", "<localleader>t", M.make_or_jump_to_test_file)
+vim.keymap.set("n", "<localleader>tj", M.make_or_jump_to_test_file)
 
 
 M.import_from_vue = function(recurse)
