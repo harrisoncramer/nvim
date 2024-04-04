@@ -29,13 +29,15 @@ local get_pipeline_icon = function(info)
   if not info.pipeline or info.pipeline == vim.NIL then
     return ""
   end
+  local icon_symbols = require("gitlab").state.settings.pipeline
+  local symbol = icon_symbols[info.pipeline.status]
   if info.pipeline.status == 'failed' then
-    return "%#RedChar✘#%"
+    return "%#DiagnosticError#" .. symbol
   end
   if info.pipeline.status == 'success' then
-    return "%#GreenChar#✔%"
+    return "%#DiagnosticOk#" .. symbol
   end
-  return "%#YellowChar#%"
+  return "%#DiagnosticWarn#" .. symbol
 end
 
 local mr_info = ""
@@ -56,7 +58,7 @@ local get_mr_info = {
       pipeline_icon = get_pipeline_icon(data.info)
     end)
 
-    return mr_info .. pipeline_icon
+    return mr_info .. "  " .. pipeline_icon .. "  "
   end,
   padding = { left = 0, right = 0 }, -- Adjust padding as needed
 }
@@ -72,6 +74,7 @@ return {
     local colorscheme = require("colorscheme")
     local custom_kanagawa = require('lualine.themes.kanagawa')
     custom_kanagawa.normal.c.fg = colorscheme.surimiOrange
+    custom_kanagawa.normal.c.bg = colorscheme.sumiInk1
 
     require("lualine").setup({
       options = {
