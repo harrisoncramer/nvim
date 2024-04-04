@@ -39,7 +39,6 @@ return {
           imply_local = true, -- If true, will attempt to use --imply_local option when calling |:DiffviewOpen|
         },
       },
-      port = 8392,
       popup = {
         backup_register = "+",
       },
