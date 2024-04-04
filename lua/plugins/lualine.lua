@@ -1,3 +1,4 @@
+local u = require("functions.utils")
 local git = require("git-helpers")
 
 local function get_git_head()
@@ -24,12 +25,21 @@ local filename = function()
   return full_file_path:gsub(escaped_git_root, "", 1) .. (modified and '  ' or '') .. (readonly and ' [-]' or '')
 end
 
+local pipeline = ""
+local gitlabMr = function()
+  local branch_name = require("git-helpers").get_branch_name()
+  if not branch_name or branch_name == "main" or branch_name == "master" then
+    return ""
+  end
+  require("gitlab").data({ resources = {}, refresh = false }, function(data)
+    pipeline = string.format("  '%s' by %s", data.info.title, data.info.author.username)
+  end)
+  return pipeline
+end
 
 local diagnostics = {
-  {
-    'diagnostics',
-    symbols = { error = "✘ ", warn = " ", hint = " ", info = " " },
-  }
+  'diagnostics',
+  symbols = { error = "✘ ", warn = " ", hint = " ", info = " " },
 }
 
 local disabled_filetypes = { 'gitlab', 'DiffviewFiles', "oil" }
@@ -38,6 +48,10 @@ return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
   config = function()
+    local colorscheme = require("colorscheme")
+    local custom_kanagawa = require('lualine.themes.kanagawa')
+    custom_kanagawa.normal.c.fg = colorscheme.surimiOrange
+
     require("lualine").setup({
       options = {
         disabled_filetypes = {
@@ -46,7 +60,7 @@ return {
         },
         component_separators = { right = "" },
         section_separators = { left = "", right = "" },
-        theme = "kanagawa",
+        theme = custom_kanagawa,
         globalstatus = true,
       },
       sections = {
@@ -55,8 +69,7 @@ return {
           filename,
           require("recorder").recordingStatus
         },
-        lualine_c = diagnostics,
-        lualine_d = { 'tabs' },
+        lualine_c = { diagnostics, gitlabMr },
         lualine_x = { 'diff' },
         lualine_y = { 'encoding', 'filetype', },
       },
@@ -67,7 +80,7 @@ return {
       winbar = {
         lualine_a = { filename },
         lualine_b = {},
-        lualine_c = diagnostics,
+        lualine_c = { diagnostics },
         lualine_x = { 'diff' },
         lualine_y = { 'progress', 'location' }
       },
