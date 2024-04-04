@@ -90,7 +90,7 @@ return {
         theme = custom_kanagawa,
         globalstatus = true,
         refresh = {
-          statusline = 4000,
+          statusline = 10000,
         }
       },
       sections = {
