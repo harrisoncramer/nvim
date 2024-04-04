@@ -36,7 +36,7 @@ local get_mr_info = function()
     return ""
   end
 
-  require("gitlab").data({ resources = {}, refresh = false }, function(data)
+  require("gitlab").data({ { type = "info", refresh = true } }, function(data)
     mr_info = string.format(" '%s' by %s", data.info.title, data.info.author.username)
   end)
   return mr_info
