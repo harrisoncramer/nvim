@@ -86,6 +86,9 @@ return {
         section_separators = { left = "", right = "" },
         theme = custom_kanagawa,
         globalstatus = true,
+        refresh = {
+          statusline = 4000,
+        }
       },
       sections = {
         lualine_a = { get_git_head },
