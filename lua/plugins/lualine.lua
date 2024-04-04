@@ -26,10 +26,10 @@ local filename = function()
 end
 
 local get_pipeline_status = function(info)
-  local icon_symbols = require("gitlab").state.settings.pipeline
   if not info.pipeline or info.pipeline == vim.NIL then
     return ""
   end
+  local icon_symbols = require("gitlab").state.settings.pipeline
   return icon_symbols[info.pipeline.status]
 end
 
