@@ -53,9 +53,11 @@ local get_mr_info = {
       return ""
     end
 
-    require("gitlab").data({ { type = "info", refresh = true } }, function(data)
-      mr_info = string.format("  '%s' by %s", data.info.title, data.info.author.username)
-      pipeline_icon = get_pipeline_icon(data.info)
+    vim.schedule(function()
+      require("gitlab").data({ { type = "info", refresh = true } }, function(data)
+        mr_info = string.format("  '%s' by %s", data.info.title, data.info.author.username)
+        pipeline_icon = get_pipeline_icon(data.info)
+      end)
     end)
 
     return mr_info .. "  " .. pipeline_icon .. "  "
