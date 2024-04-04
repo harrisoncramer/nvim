@@ -37,7 +37,7 @@ local get_mr_info = function()
   end
 
   require("gitlab").data({ resources = {}, refresh = false }, function(data)
-    mr_info = string.format("  '%s' by %s", data.info.title, data.info.author.username)
+    mr_info = string.format(" '%s' by %s", data.info.title, data.info.author.username)
   end)
   return mr_info
 end
@@ -74,9 +74,9 @@ return {
           filename,
           require("recorder").recordingStatus
         },
-        lualine_c = { diagnostics, get_mr_info },
-        lualine_x = { 'diff' },
-        lualine_y = { 'encoding', 'filetype', },
+        lualine_c = { diagnostics },
+        lualine_x = { get_mr_info, 'diff' },
+        lualine_y = { 'progress', 'encoding', 'filetype', },
       },
       inactive_winbar = {
         lualine_a = {},
