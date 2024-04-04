@@ -312,5 +312,21 @@ M.view_staged = function()
   end
 end
 
+M.is_gitlab_project = function()
+  for line in io.popen("git remote get-url origin"):lines() do
+    return string.find(line, "@gitlab") ~= nil
+  end
+  return false
+end
+
+M.is_gitlab_mr = function()
+  local branch_name = M.get_branch_name()
+  if not branch_name or branch_name == "main" or branch_name == "master" then
+    return false
+  end
+
+  return M.is_gitlab_project()
+end
+
 
 return M
