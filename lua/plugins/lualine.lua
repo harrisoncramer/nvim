@@ -43,23 +43,24 @@ end
 local mr_info = ""
 local pipeline_icon = ""
 local is_gitlab_mr = nil
+
+local timer = vim.loop.new_timer()
+timer:start(0, 10000, vim.schedule_wrap(function()
+  if is_gitlab_mr == nil then
+    is_gitlab_mr = require("git-helpers").is_gitlab_mr()
+  end
+
+  if not is_gitlab_mr then
+    return
+  end
+  require("gitlab").data({ { type = "info", refresh = true } }, function(data)
+    mr_info = string.format("  '%s' by %s", data.info.title, data.info.author.username)
+    pipeline_icon = get_pipeline_icon(data.info)
+  end)
+end))
+
 local get_mr_info = {
   function()
-    if is_gitlab_mr == nil then
-      is_gitlab_mr = require("git-helpers").is_gitlab_mr()
-    end
-
-    if not is_gitlab_mr then
-      return ""
-    end
-
-    vim.schedule(function()
-      require("gitlab").data({ { type = "info", refresh = true } }, function(data)
-        mr_info = string.format("  '%s' by %s", data.info.title, data.info.author.username)
-        pipeline_icon = get_pipeline_icon(data.info)
-      end)
-    end)
-
     return mr_info .. "  " .. pipeline_icon .. "  "
   end,
   padding = { left = 0, right = 0 }, -- Adjust padding as needed
