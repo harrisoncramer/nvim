@@ -25,6 +25,14 @@ local filename = function()
   return full_file_path:gsub(escaped_git_root, "", 1) .. (modified and '  ' or '') .. (readonly and ' [-]' or '')
 end
 
+local get_pipeline_status = function(info)
+  local icon_symbols = require("gitlab").state.settings.pipeline
+  if not info.pipeline or info.pipeline == vim.NIL then
+    return ""
+  end
+  return icon_symbols[info.pipeline.status]
+end
+
 local mr_info = ""
 local is_gitlab_mr = nil
 local get_mr_info = function()
@@ -37,15 +45,13 @@ local get_mr_info = function()
   end
 
   require("gitlab").data({ { type = "info", refresh = true } }, function(data)
-    mr_info = string.format(" '%s' by %s", data.info.title, data.info.author.username)
+    local pipeline_icon = get_pipeline_status(data.info)
+    mr_info = string.format(" '%s' by %s %s", data.info.title, data.info.author.username, pipeline_icon)
   end)
   return mr_info
 end
 
-local diagnostics = {
-  'diagnostics',
-  symbols = { error = "✘ ", warn = " ", hint = " ", info = " " },
-}
+local diagnostics = { 'diagnostics' }
 
 local disabled_filetypes = { 'gitlab', 'DiffviewFiles', "oil" }
 
@@ -81,6 +87,8 @@ return {
       inactive_winbar = {
         lualine_a = {},
         lualine_b = { filename },
+        lualine_c = {},
+        lualine_x = {},
       },
       winbar = {
         lualine_a = { filename },
