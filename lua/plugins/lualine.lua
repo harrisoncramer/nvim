@@ -25,7 +25,7 @@ local filename = function()
   return full_file_path:gsub(escaped_git_root, "", 1) .. (modified and '  ' or '') .. (readonly and ' [-]' or '')
 end
 
-local get_pipeline_status = function(info)
+local get_pipeline_icon = function(info)
   if not info.pipeline or info.pipeline == vim.NIL then
     return ""
   end
@@ -45,8 +45,7 @@ local get_mr_info = function()
   end
 
   require("gitlab").data({ { type = "info", refresh = true } }, function(data)
-    local pipeline_icon = get_pipeline_status(data.info)
-    mr_info = string.format(" '%s' by %s %s", data.info.title, data.info.author.username, pipeline_icon)
+    mr_info = string.format(" '%s' by %s %s", data.info.title, data.info.author.username, get_pipeline_icon(data.info))
   end)
   return mr_info
 end
