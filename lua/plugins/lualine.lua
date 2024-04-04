@@ -26,10 +26,16 @@ local filename = function()
 end
 
 local pipeline = ""
+local is_gitlab_mr = nil
 local gitlabMr = function()
-  if not require("git-helpers").is_gitlab_mr() then
+  if is_gitlab_mr == nil then
+    is_gitlab_mr = require("git-helpers").is_gitlab_mr()
+  end
+
+  if not is_gitlab_mr then
     return ""
   end
+
   require("gitlab").data({ resources = {}, refresh = false }, function(data)
     pipeline = string.format("  '%s' by %s", data.info.title, data.info.author.username)
   end)
