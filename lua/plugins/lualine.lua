@@ -27,8 +27,7 @@ end
 
 local pipeline = ""
 local gitlabMr = function()
-  local branch_name = require("git-helpers").get_branch_name()
-  if not branch_name or branch_name == "main" or branch_name == "master" then
+  if not require("git-helpers").is_gitlab_mr() then
     return ""
   end
   require("gitlab").data({ resources = {}, refresh = false }, function(data)
