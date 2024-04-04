@@ -25,9 +25,9 @@ local filename = function()
   return full_file_path:gsub(escaped_git_root, "", 1) .. (modified and '  ' or '') .. (readonly and ' [-]' or '')
 end
 
-local pipeline = ""
+local mr_info = ""
 local is_gitlab_mr = nil
-local gitlabMr = function()
+local get_mr_info = function()
   if is_gitlab_mr == nil then
     is_gitlab_mr = require("git-helpers").is_gitlab_mr()
   end
@@ -37,9 +37,9 @@ local gitlabMr = function()
   end
 
   require("gitlab").data({ resources = {}, refresh = false }, function(data)
-    pipeline = string.format("  '%s' by %s", data.info.title, data.info.author.username)
+    mr_info = string.format("  '%s' by %s", data.info.title, data.info.author.username)
   end)
-  return pipeline
+  return mr_info
 end
 
 local diagnostics = {
@@ -74,7 +74,7 @@ return {
           filename,
           require("recorder").recordingStatus
         },
-        lualine_c = { diagnostics, gitlabMr },
+        lualine_c = { diagnostics, get_mr_info },
         lualine_x = { 'diff' },
         lualine_y = { 'encoding', 'filetype', },
       },
