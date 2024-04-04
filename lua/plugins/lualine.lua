@@ -29,26 +29,37 @@ local get_pipeline_icon = function(info)
   if not info.pipeline or info.pipeline == vim.NIL then
     return ""
   end
-  local icon_symbols = require("gitlab").state.settings.pipeline
-  return icon_symbols[info.pipeline.status]
+  if info.pipeline.status == 'failed' then
+    return "%#RedChar✘#%"
+  end
+  if info.pipeline.status == 'success' then
+    return "%#GreenChar#✔%"
+  end
+  return "%#YellowChar#%"
 end
 
 local mr_info = ""
+local pipeline_icon = ""
 local is_gitlab_mr = nil
-local get_mr_info = function()
-  if is_gitlab_mr == nil then
-    is_gitlab_mr = require("git-helpers").is_gitlab_mr()
-  end
+local get_mr_info = {
+  function()
+    if is_gitlab_mr == nil then
+      is_gitlab_mr = require("git-helpers").is_gitlab_mr()
+    end
 
-  if not is_gitlab_mr then
-    return ""
-  end
+    if not is_gitlab_mr then
+      return ""
+    end
 
-  require("gitlab").data({ { type = "info", refresh = true } }, function(data)
-    mr_info = string.format(" '%s' by %s %s", data.info.title, data.info.author.username, get_pipeline_icon(data.info))
-  end)
-  return mr_info
-end
+    require("gitlab").data({ { type = "info", refresh = true } }, function(data)
+      mr_info = string.format("  '%s' by %s", data.info.title, data.info.author.username)
+      pipeline_icon = get_pipeline_icon(data.info)
+    end)
+
+    return mr_info .. pipeline_icon
+  end,
+  padding = { left = 0, right = 0 }, -- Adjust padding as needed
+}
 
 local diagnostics = { 'diagnostics' }
 
