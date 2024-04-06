@@ -235,16 +235,34 @@ M.pull = function()
   pull_job:start()
 end
 
-M.get_branch_name = function()
-  local is_git_branch = io.popen("git rev-parse --is-inside-work-tree 2>/dev/null"):read("*a")
-  if is_git_branch == "true\n" then
-    for line in io.popen("git branch 2>/dev/null"):lines() do
-      local current_branch = line:match("%* (.+)$")
-      if current_branch then
-        return current_branch
+M.is_inside_work_tree = function(cb)
+  local branch_name_job = job:new({
+    command = 'git',
+    args = { 'rev-parse', '--is-inside-work-tree' },
+    on_stdout = vim.schedule_wrap(function(err, data)
+      if err == nil and data == "true" then
+        cb()
       end
-    end
-  end
+    end)
+  })
+
+  branch_name_job:start()
+end
+
+M.is_feature_branch = function(cb)
+  local branch_name_job = job:new({
+    command = 'git',
+    args = { 'branch', '--show-current' },
+    on_stdout = vim.schedule_wrap(function(err, branch_name)
+      if err == nil and branch_name ~= nil then
+        if branch_name ~= "main" and branch_name ~= "master" then
+          cb(branch_name)
+        end
+      end
+    end)
+  })
+
+  branch_name_job:start()
 end
 
 M.get_root_git_dir = function()
@@ -319,13 +337,30 @@ M.is_gitlab_project = function()
   return false
 end
 
-M.is_gitlab_mr = function()
-  local branch_name = M.get_branch_name()
-  if not branch_name or branch_name == "main" or branch_name == "master" then
-    return false
-  end
+M.get_remote_url = function(cb)
+  local branch_name_job = job:new({
+    command = 'git',
+    args = { 'remote', 'get-url', 'origin' },
+    on_stdout = vim.schedule_wrap(function(err, output)
+      if err == nil and output ~= nil then
+        cb(output)
+      end
+    end)
+  })
 
-  return M.is_gitlab_project()
+  branch_name_job:start()
+end
+
+M.is_gitlab_mr = function(cb)
+  M.is_inside_work_tree(function()
+    M.is_feature_branch(function()
+      M.get_remote_url(function(url)
+        if string.find(url, "@gitlab") ~= nil then
+          cb() -- If we are inside a git worktree, not on main/master, and in a Gitlab project...
+        end
+      end)
+    end)
+  end)
 end
 
 
