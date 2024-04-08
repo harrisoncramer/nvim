@@ -330,13 +330,6 @@ M.view_staged = function()
   end
 end
 
-M.is_gitlab_project = function()
-  for line in io.popen("git remote get-url origin"):lines() do
-    return string.find(line, "@gitlab") ~= nil
-  end
-  return false
-end
-
 M.get_remote_url = function(cb)
   local branch_name_job = job:new({
     command = 'git',
@@ -351,14 +344,12 @@ M.get_remote_url = function(cb)
   branch_name_job:start()
 end
 
-M.is_gitlab_mr = function(cb)
+M.is_gitlab_project = function(cb)
   M.is_inside_work_tree(function()
-    M.is_feature_branch(function()
-      M.get_remote_url(function(url)
-        if string.find(url, "@gitlab") ~= nil then
-          cb() -- If we are inside a git worktree, not on main/master, and in a Gitlab project...
-        end
-      end)
+    M.get_remote_url(function(url)
+      if string.find(url, "@gitlab") ~= nil then
+        cb() -- If we are inside a git worktree, not on main/master, and in a Gitlab project...
+      end
     end)
   end)
 end
