@@ -25,34 +25,22 @@ local filename = function()
   return full_file_path:gsub(escaped_git_root, "", 1) .. (modified and '  ' or '') .. (readonly and ' [-]' or '')
 end
 
-local get_pipeline_icon = function(info)
-  if not info.pipeline or info.pipeline == vim.NIL then
-    return ""
-  end
-  local icon_symbols = require("gitlab").state.settings.pipeline
-  local symbol = icon_symbols[info.pipeline.status]
-  if info.pipeline.status == 'failed' then
-    return "%#DiagnosticError#" .. symbol
-  end
-  if info.pipeline.status == 'success' then
-    return "%#DiagnosticOk#" .. symbol
-  end
-  return "%#DiagnosticWarn#" .. symbol
-end
-
-local mr_info = ""
-local pipeline_icon = ""
+local pipeline_info = ""
+local outbound = false
 local get_mr_info = {
   function()
-    require("git-helpers").is_gitlab_mr(function()
-      if require("gitlab").data then
-        require("gitlab").data({ { type = "info", refresh = true } }, function(data)
-          mr_info = string.format("  '%s' by %s", data.info.title, data.info.author.username)
-          pipeline_icon = get_pipeline_icon(data.info)
+    if outbound then
+      return pipeline_info
+    end
+    outbound = true
+    require("git-helpers").is_gitlab_project(function()
+      require("gitlab").data({ { type = "pipeline", refresh = true } },
+        function(data)
+          pipeline_info = "Gitlab Pipeline: " .. (data.pipeline.latest_pipeline.status or "")
+          outbound = false
         end)
-      end
     end)
-    return mr_info .. "  " .. pipeline_icon .. "  "
+    return pipeline_info
   end,
   padding = { left = 0, right = 0 }, -- Adjust padding as needed
 }
@@ -81,7 +69,7 @@ return {
         theme = custom_kanagawa,
         globalstatus = true,
         refresh = {
-          statusline = 5000,
+          statusline = 10000,
         }
       },
       sections = {
