@@ -35,8 +35,8 @@ local get_mr_info = {
     outbound = true
     require("git-helpers").is_gitlab_project(function()
       require("gitlab").data({ { type = "pipeline", refresh = true } },
-        function(data)
-          pipeline_info = "Gitlab Pipeline: " .. (data.pipeline.latest_pipeline.status or "")
+        function()
+          pipeline_info = "Gitlab Pipeline: " .. (require("gitlab.actions.pipeline").get_pipeline_icon(true) or "")
           outbound = false
         end)
     end)
