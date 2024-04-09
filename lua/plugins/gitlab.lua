@@ -40,11 +40,13 @@ return {
         },
       },
       popup = {
-        backup_register = "+",
+        temporary_registers = { '"', "+", "g" },
       },
       create_mr = {
         target = "main",
-        template_file = "default.md"
+        template_file = "default.md",
+        squash = true,
+        delete_branch = true,
       },
       discussion_signs = {
         severity = vim.diagnostic.severity.WARN,
