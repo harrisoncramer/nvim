@@ -25,22 +25,25 @@ local filename = function()
   return full_file_path:gsub(escaped_git_root, "", 1) .. (modified and '  ' or '') .. (readonly and ' [-]' or '')
 end
 
-local pipeline_info = ""
+local mr_info = ""
 local outbound = false
 local get_mr_info = {
   function()
     if outbound then
-      return pipeline_info
+      return mr_info
     end
     outbound = true
     require("git-helpers").is_gitlab_project(function()
-      require("gitlab").data({ { type = "pipeline", refresh = true } },
-        function()
-          pipeline_info = "Gitlab Pipeline: " .. (require("gitlab.actions.pipeline").get_pipeline_icon(true) or "")
-          outbound = false
-        end)
+      require("git-helpers").is_feature_branch(function()
+        require("gitlab").data({ { type = "pipeline", refresh = true }, { type = "info", refresh = false } },
+          function(data)
+            mr_info = "  " ..
+                data.info.title .. " " .. (require("gitlab.actions.pipeline").get_pipeline_icon(true) or "") .. "  "
+            outbound = false
+          end)
+      end)
     end)
-    return pipeline_info
+    return mr_info
   end,
   padding = { left = 0, right = 0 }, -- Adjust padding as needed
 }
