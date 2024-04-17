@@ -30,6 +30,7 @@ return {
     vim.keymap.set("n", "glO", gitlab.create_mr)
     vim.keymap.set("n", "glal", gitlab.add_label)
     vim.keymap.set("n", "gldl", gitlab.delete_label)
+    vim.keymap.set("n", "glu", gitlab.copy_mr_url)
 
     gitlab.setup({
       attachment_dir = "/Users/harrisoncramer/Desktop/screenshots",
