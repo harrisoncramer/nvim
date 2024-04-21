@@ -128,21 +128,7 @@ return {
           }
         end,
       },
-      render = function(bufnr, notif, highlights)
-        local base = require("notify.render.base")
-        local namespace = base.namespace()
-        local padded_message = vim.tbl_map(function(line)
-          return " " .. line
-        end, notif.message)
-        vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, padded_message)
-
-        vim.api.nvim_buf_set_extmark(bufnr, namespace, 0, 0, {
-          hl_group = highlights.icon,
-          end_line = #notif.message - 1,
-          end_col = #notif.message[#notif.message] + 1,
-          priority = 50,
-        })
-      end,
+      render = require("notify.render.wrapped-compact")
     })
   end
 }
