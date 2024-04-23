@@ -19,9 +19,10 @@ Important: I'm on the latest Neovim release (0.9) and many of these plugins will
 - LSPs installed via <a href="https://github.com/williamboman/mason.nvim">Mason</a> and configured via <a href="https://github.com/neovim/nvim-lspconfig">lspconfig</a>
 - Debuggers installed and configured with <a href="https://github.com/mfussenegger/nvim-dap">nvim-dap</a>
 - <a href="https://github.com/numToStr/FTerm.nvim">fterm</a> for terminal integration
-- <a href="https://github.com/nvim-telescope/telescope.nvim/issues">telescope</a> for search
+- <a href="https://github.com/ibhagwan/fzf-lua">fzf-lua</a> for search
+- <a href="https://github.com/NeogitOrg/neogit">neogit</a> for git management
+- <a href="https://github.com/harrisoncramer/gitlab.nvim">gitlab.nvim</a> for Gitlab integration
 - <a href="https://github.com/sindrets/diffview.nvim">diffview</a> git branch/commit/diff viewing
-- <a href="https://github.com/tpope/vim-fugitive">fugitive</a> for git commits and pushes
 - <a href="https://github.com/nvim-lualine/lualine.nvim">lualine</a> for status bar
 - <a href="https://github.com/lukas-reineke/lsp-format.nvim">lsp-format</a> for formatting
 - <a href="https://github.com/rebelot/kanagawa.nvim">kanagawa</a> colorscheme

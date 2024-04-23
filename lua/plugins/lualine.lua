@@ -2,8 +2,8 @@ local u = require("functions.utils")
 local git = require("git-helpers")
 
 local function get_git_head()
-  local head = vim.fn.FugitiveHead()
-  if head == "" or head == nil then
+  local head = vim.fn.trim(vim.fn.system({ "git", "branch", "--show-current" }))
+  if vim.v.shell_error ~= 0 or head == "" or head == nil then
     return "DETATCHED "
   end
   if string.len(head) > 20 then
