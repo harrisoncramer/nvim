@@ -12,6 +12,12 @@ local function get_git_head()
   return " " .. head
 end
 
+vim.api.nvim_create_autocmd({ "FileType", "BufEnter", "FocusGained" }, {
+  callback = function()
+    vim.g.branch_name = get_git_head()
+  end
+})
+
 local filename = function()
   local git_root = git.get_root_git_dir()
   local modified = vim.api.nvim_buf_get_option(0, 'modified')
@@ -76,7 +82,7 @@ return {
         }
       },
       sections = {
-        lualine_a = { get_git_head },
+        lualine_a = { function() return vim.g.branch_name end },
         lualine_b = {
           filename,
           require("recorder").recordingStatus
