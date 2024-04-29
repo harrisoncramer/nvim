@@ -71,6 +71,7 @@ return {
     return result
   end,
   jump_to_line = function(search_text)
+    if search_text == nil then return end
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
     for i, line in ipairs(lines) do
       if string.find(line, search_text, 1, true) then
@@ -263,4 +264,11 @@ return {
     end
     return false
   end,
+  close_floating_windows = function()
+    for _, win in pairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_get_config(win).relative == 'win' then
+        vim.api.nvim_win_close(win, false)
+      end
+    end
+  end
 }
