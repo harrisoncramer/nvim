@@ -7,10 +7,6 @@ return {
       capabilities = capabilities,
       on_attach = on_attach,
       init_options = {
-        typescript = {
-          tsdk = vim.fn.expand("$HOME") ..
-              '/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib',
-        },
         languageFeatures = {
           references = true,
           definition = true,
