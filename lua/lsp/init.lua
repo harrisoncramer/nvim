@@ -45,7 +45,7 @@ local on_attach = function(client, bufnr)
   end
 
   -- Keymaps
-  vim.keymap.set("n", "gd", handlers.smart_jump_to_definition, map_opts)
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, map_opts)
   vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, map_opts)
   vim.keymap.set("n", "gr", vim.lsp.buf.references, map_opts)
   vim.keymap.set("n", "gss", function()
