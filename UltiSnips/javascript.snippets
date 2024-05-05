@@ -38,9 +38,21 @@ endsnippet
 
 snippet TEST "Test block" A
 describe("$1", () => {
-  it("should $2", () => {
+  it("Should $2", () => {
   });
 });
+endsnippet
+
+snippet SHOULD "It block for vitest" A
+it("Should $1", () => {
+	$2
+})
+endsnippet
+
+snippet DESCRIBE "Describe block for vitest" A
+describe("$1", () => {
+	$2
+})
 endsnippet
 
 # React
