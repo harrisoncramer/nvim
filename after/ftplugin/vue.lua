@@ -14,7 +14,7 @@ local get_component_references = function()
   local component = componentParts[1]
   local componentStart = '<' .. component
   local fzfLua = require("fzf-lua")
-  fzfLua.grep_string({ search = componentStart })
+  fzfLua.grep({ search = componentStart })
 end
 
 -- Gets vue "reference" to current component (searches for <ComponentName) in telescope

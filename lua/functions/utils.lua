@@ -232,6 +232,13 @@ return {
     end
     return -1
   end,
+  split = function(str, delimiter)
+    local result = {}
+    for match in (str .. delimiter):gmatch("(.-)" .. delimiter) do
+      table.insert(result, match)
+    end
+    return result
+  end,
   resize_vertical_splits = function()
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
   end,
