@@ -1,3 +1,5 @@
+local List = require("functions.list")
+
 -- These are functions that are used within the Lua
 -- configuration and are not meant for export to the end
 -- user.
@@ -42,6 +44,71 @@ end
 local basename = function(str)
   local name = string.gsub(str, "(.*/)(.*)", "%2")
   return name
+end
+
+---Splits a string by new lines and returns an iterator
+---@param s string The string to split
+---@return table: An iterator object
+local split_by_new_lines = function(s)
+  if s:sub(-1) ~= "\n" then
+    s = s .. "\n"
+  end                       -- Append a new line to the string, if there's none, otherwise the last line would be lost.
+  return s:gmatch("(.-)\n") -- Match 0 or more (as few as possible) characters followed by a new line.
+end
+
+local list_files_in_folder = function(folder_path)
+  if vim.fn.isdirectory(folder_path) == 0 then
+    return nil
+  end
+
+  local folder_ok, folder = pcall(vim.fn.readdir, folder_path)
+
+  if not folder_ok then
+    return nil
+  end
+
+  local files = {}
+  if folder ~= nil then
+    files = List.new(folder)
+        :map(function(file)
+          local file_path = folder_path .. "/" .. file
+          local timestamp = vim.fn.getftime(file_path)
+          return { name = file, timestamp = timestamp }
+        end)
+        :sort(function(a, b)
+          return a.timestamp > b.timestamp
+        end)
+        :map(function(file)
+          return file.name
+        end)
+  end
+  return files
+end
+
+---Takes a string of lines and returns a table of lines
+---@param s string The string to parse
+---@return table
+local lines_into_table = function(s)
+  local lines = {}
+  for line in split_by_new_lines(s) do
+    table.insert(lines, line)
+  end
+  return lines
+end
+
+local read_file = function(file_path, opts)
+  local file = io.open(file_path, "r")
+  if file == nil then
+    return nil
+  end
+  local file_contents = file:read("*all")
+  file:close()
+
+  if opts and opts.remove_newlines then
+    file_contents = string.gsub(file_contents, "\n", "")
+  end
+
+  return file_contents
 end
 
 local copy_file_name = function(quiet)
@@ -238,6 +305,22 @@ return {
       table.insert(result, match)
     end
     return result
+  end,
+  replace_text_with_file = function(folder)
+    local all_templates = list_files_in_folder(folder)
+    if all_templates == nil then
+      return
+    end
+    vim.ui.select(all_templates, {
+      prompt = "Choose Test Template",
+    }, function(choice)
+      if choice == nil then
+        return
+      end
+      local lines = read_file("test_templates" .. "/" .. choice)
+      local bufnr = vim.api.nvim_get_current_buf()
+      vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines_into_table(lines))
+    end)
   end,
   resize_vertical_splits = function()
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)

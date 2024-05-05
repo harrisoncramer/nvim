@@ -26,13 +26,10 @@ M.make_or_jump_to_test_file = function()
   local file_path = fp:gsub(".vue", ".test.js"):gsub("src/", "")
   local path = "test/specs/" .. file_path
   vim.cmd(string.format("e %s", path))
-  if vim.fn.filereadable(path) == 0 then
-    require("notify")("New test file created, please save")
-  end
+  u.replace_text_with_file("test_templates")
 end
 
 vim.keymap.set("n", "<localleader>tj", M.make_or_jump_to_test_file)
-
 
 M.import_from_vue = function(recurse)
   local ok = u.jump_to_line("from 'vue'")
@@ -54,3 +51,5 @@ end
 vim.keymap.set("n", "<localleader>vi", function()
   M.import_from_vue(true)
 end)
+
+return M
