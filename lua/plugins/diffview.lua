@@ -18,6 +18,15 @@ return {
           winbar_info = false,
         },
       },
+      win_config = function()
+        return {
+          type = "split",
+          position = "bottom",
+          height = 14,
+          relative = "win",
+          win = vim.api.nvim_tabpage_list_wins(0)[1],
+        }
+      end,
       diff_binaries = false,
       use_icons = true, -- Requires nvim-web-devicons
       icons = {
@@ -104,7 +113,7 @@ return {
           ["<leader>e"] = cb("focus_files"),
           ["<leader>b"] = cb("toggle_files"),
         },
-        option_panel = { ["<tab>"] = cb("select"),["q"] = cb("close") },
+        option_panel = { ["<tab>"] = cb("select"), ["q"] = cb("close") },
       },
     })
   end

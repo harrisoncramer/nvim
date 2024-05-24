@@ -4,6 +4,7 @@ local List = require("functions.list")
 -- configuration and are not meant for export to the end
 -- user.
 
+
 -- Validates number + function for debounce, see https://gist.github.com/runiq/31aa5c4bf00f8e0843cd267880117201
 local function td_validate(fn, ms)
   vim.validate({
@@ -205,6 +206,34 @@ return {
       end
     end
     return wrapped_fn, timer
+  end,
+  strip_extension = function(filename)
+    local pattern = "(.+)%.%w+$"
+    for name in filename:gmatch(pattern) do
+      return name
+    end
+    return nil
+  end,
+  remove_file = function(filename)
+    local cwd = vim.fn.getcwd()
+    local filepath = cwd .. '/' .. filename
+    local plenary_ok, job = pcall(require, "plenary.job")
+    if not plenary_ok then
+      require("notify")("Could not load Plenary.", vim.log.levels.ERROR)
+      return
+    end
+    job:new({
+      command = 'rm',
+      args = { filepath },
+      on_exit = vim.schedule_wrap(function(_, exit_code)
+        if exit_code ~= 0 then
+          require("notify")(filename .. " failed to remove", vim.log.levels.ERROR)
+          return
+        else
+          require("notify")(filename .. " removed successfully.", vim.log.levels.INFO)
+        end
+      end),
+    }):start()
   end,
   press_enter = press_enter,
   basename = basename,

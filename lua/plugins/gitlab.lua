@@ -31,13 +31,14 @@ return {
     vim.keymap.set("n", "glal", gitlab.add_label)
     vim.keymap.set("n", "gldl", gitlab.delete_label)
     vim.keymap.set("n", "glu", gitlab.copy_mr_url)
+    vim.keymap.set("n", "glb", gitlab.choose_merge_request)
 
     gitlab.setup({
       attachment_dir = "/Users/harrisoncramer/Desktop/screenshots",
       debug = { go_request = true, go_response = true },
       reviewer_settings = {
         diffview = {
-          imply_local = true, -- If true, will attempt to use --imply_local option when calling |:DiffviewOpen|
+          imply_local = false, -- If true, will attempt to use --imply_local option when calling |:DiffviewOpen|
         },
       },
       popup = {

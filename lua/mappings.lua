@@ -10,7 +10,7 @@ vim.keymap.set("n", "sl", "<C-w>l")
 vim.keymap.set("n", "sq", "<C-w>q")
 vim.keymap.set("n", "<leader>tn", ":tabnext<CR>")
 vim.keymap.set("n", "<leader>tp", ":tabprev<CR>")
-vim.keymap.set("n", "<esc>", u.close_floating_windows)
+-- vim.keymap.set("n", "<esc>", u.close_floating_windows)
 
 -- Using a simple plugin to provide better forward/backward surfing
 vim.keymap.set("n", "<C-t>", "<C-^>")

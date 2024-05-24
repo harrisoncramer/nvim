@@ -109,3 +109,35 @@ function! TabMessage(cmd)
 endfunction
 command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
 ]])
+
+-- Pandoc
+vim.api.nvim_create_user_command("PDF", function()
+  local filename = u.copy_file_name(true)
+  local no_extension = u.strip_extension(filename)
+  local pdf = no_extension .. ".pdf"
+  if u.file_exists(pdf) then
+    u.remove_file(pdf)
+  end
+
+  local plenary_ok, job = pcall(require, "plenary.job")
+  if not plenary_ok then
+    require("notify")("Could not load Plenary.", vim.log.levels.ERROR)
+    return
+  end
+
+  job:new({
+    command = 'pandoc',
+    args = { '-i', filename, "-o", pdf },
+    on_exit = vim.schedule_wrap(function(_, exit_code)
+      if exit_code ~= 0 then
+        require("notify")("Could not create " .. pdf, vim.log.levels.ERROR)
+        return
+      else
+        vim.notify("Created " .. filename, vim.log.levels.INFO)
+        vim.cmd("!open " .. pdf)
+      end
+    end),
+  }):start()
+end, {
+  nargs = 0,
+})
