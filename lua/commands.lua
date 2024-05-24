@@ -133,8 +133,8 @@ vim.api.nvim_create_user_command("PDF", function()
         require("notify")("Could not create " .. pdf, vim.log.levels.ERROR)
         return
       else
-        vim.notify("Created " .. filename, vim.log.levels.INFO)
-        vim.cmd("!open " .. pdf)
+        vim.notify(pdf .. " created!", vim.log.levels.INFO)
+        vim.cmd("silent !open " .. pdf)
       end
     end),
   }):start()
