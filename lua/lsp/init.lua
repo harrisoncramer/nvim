@@ -40,7 +40,15 @@ local on_attach = function(client, bufnr)
 
   -- Formatting for Vue handled by Eslint
   -- Formatting for Clojure handled by custom ZPrint function, see lua/lsp/servers/clojure-lsp.lua
-  if (u.has_value({ "eslint", "gopls", "astro", "terraformls", "lua_ls", "pylsp" }, client.name)) then
+  if (u.has_value({
+        "eslint",
+        "gopls",
+        "astro",
+        "terraformls",
+        "lua_ls",
+        "pylsp",
+        "clangd",
+      }, client.name)) then
     lsp_format.on_attach(client)
   end
 
