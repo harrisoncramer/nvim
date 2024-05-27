@@ -111,7 +111,8 @@ local servers = {
   "tailwindcss-language-server",
   "vue-language-server",
   "python-lsp-server",
-  "terraform-ls"
+  "terraform-ls",
+  "clangd"
 }
 
 local linters = {
