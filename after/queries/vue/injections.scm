@@ -1,4 +1,4 @@
-;; extends
+; extends
 ((style_element
-  (raw_text) @scss)
-)
+  (raw_text) @injection.content)
+ (#set! injection.language "scss"))
