@@ -3,7 +3,6 @@ return {
   dependencies = {
     "HiPhish/nvim-ts-rainbow2",
     -- "nvim-treesitter/nvim-treesitter-context",
-    "nvim-treesitter/playground",
     "windwp/nvim-ts-autotag",
     "nvim-treesitter/nvim-treesitter-textobjects",
     "andymass/vim-matchup",
