@@ -18,6 +18,7 @@ vim.keymap.set("n", "<leader>ghp", gitsigns.prev_hunk)  -- Previous Change
 vim.keymap.set("n", "<leader>ghp", gitsigns.prev_hunk)  -- Previous Change
 vim.keymap.set("n", "<leader>ghr", gitsigns.reset_hunk) -- Reset Hunk
 vim.keymap.set("n", "<leader>gha", gitsigns.stage_hunk) -- Add hunk
+vim.keymap.set("n", "<leader>ghv", gitsigns.preview_hunk)
 
 -- Adding files...
 vim.keymap.set("n", "<leader>gaa", function() M.add_all() end, map_opts)
@@ -40,7 +41,6 @@ vim.keymap.set("n", "<leader>gsp", function() M.pop() end, map_opts)
 vim.keymap.set("n", "<leader>gvv", function() M.view_changes() end, map_opts)
 vim.keymap.set("n", "<leader>gvs", function() M.view_staged() end, map_opts)
 vim.keymap.set("n", "<leader>gvfh", function() M.view_file_history() end, map_opts)
-vim.keymap.set("n", "<leader>gvp", gitsigns.preview_hunk)
 
 -- Miscellaneous...
 vim.keymap.set("n", "<leader>gb", gitsigns.blame_line)
