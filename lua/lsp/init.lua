@@ -48,6 +48,7 @@ local on_attach = function(client, bufnr)
         "lua_ls",
         "pylsp",
         "clangd",
+        "rust_analyzer"
       }, client.name)) then
     lsp_format.on_attach(client)
   end
@@ -108,6 +109,7 @@ end
 -- We could have configurations for the other tools but it's not
 -- been necessary for me thus far
 local servers = {
+  "rust-analyzer",
   "lua-language-server",
   "clojure-lsp",
   "eslint-lsp",

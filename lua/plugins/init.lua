@@ -27,6 +27,6 @@ return {
   { "AndrewRadev/tagalong.vim" },
   { "tpope/vim-abolish" },
   { 'djoshea/vim-autoread' },
-  { "jbyuki/one-small-step-for-vimkind" }
+  { "jbyuki/one-small-step-for-vimkind" },
   -- { 'sago35/tinygo.vim' },
 }
