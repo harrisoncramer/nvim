@@ -17,7 +17,7 @@ vim.api.nvim_create_user_command("SC", function()
   require("functions").shortcut()
 end, { nargs = 0 })
 
-vim.api.nvim_create_user_command("Exec", function()
+vim.api.nvim_create_user_command("EXEC", function()
   vim.api.nvim_command("silent ! chmod +x %:p")
 end, { nargs = 0 })
 
@@ -141,3 +141,13 @@ vim.api.nvim_create_user_command("PDF", function()
 end, {
   nargs = 0,
 })
+
+vim.api.nvim_create_user_command('WRAP', function(opts)
+  if vim.wo.wrap then
+    vim.cmd("set nowrap")
+    vim.cmd("set nolinebreak")
+  else
+    vim.cmd("set wrap")
+    vim.cmd("set linebreak")
+  end
+end, { nargs = 0 })

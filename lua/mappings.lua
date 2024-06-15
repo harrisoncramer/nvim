@@ -72,6 +72,12 @@ vim.cmd([[
   vnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>
 ]])
 
+-- Play macro against current visual selection
+vim.keymap.set("v", "q", function()
+  vim.api.nvim_feedkeys(":normal @a", "n", true)
+  u.press_enter()
+end)
+
 -- Delete surrounding function call (taken from https://github.com/faceleg/delete-surrounding-function-call.vim/blob/master/plugin/delete-surrounding-function-call.vim)
 vim.api.nvim_exec([[
   function! s:DeleteSurroundingFunctionCall()
