@@ -88,7 +88,7 @@ return {
           require("recorder").recordingStatus
         },
         lualine_c = { diagnostics },
-        lualine_x = { get_mr_info, 'diff' },
+        lualine_x = { 'diff' },
         lualine_y = { 'progress', 'encoding', 'filetype', },
       },
       inactive_winbar = {
