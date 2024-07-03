@@ -36,17 +36,13 @@ local disabled_filetypes = { 'gitlab', 'DiffviewFiles', "oil" }
 
 local mode_map = {
   n = "(ᴗ_ ᴗ。)",
-  nt = "(ᴗ_ ᴗ。)",
   i = "( •̯́ ₃ •̯̀)",
-  R = "(°△°   )",
+  R = "( ⌐■_■)",
   v = "(⊙ _ ⊙ )",
   V = "(⊙ _ ⊙ )",
   no = "(•̀ - •́ )",
-  ["\22"] = "(⊙ _ ⊙ )",
-  t = "(⌐■_■)",
   ['!'] = "(•̀ - •́ )",
   c = "(•̀ - •́ )",
-  s = "SUB"
 }
 
 return {
