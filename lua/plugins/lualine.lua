@@ -38,14 +38,14 @@ local mode_map = {
   n = "(ᴗ_ ᴗ。)",
   nt = "(ᴗ_ ᴗ。)",
   i = "( •̯́ ₃ •̯̀)",
-  R = "(•̀ - •́ )",
+  R = "(°△°   )",
   v = "(⊙ _ ⊙ )",
   V = "(⊙ _ ⊙ )",
-  no = "Σ(°△°ꪱꪱꪱ)",
+  no = "(•̀ - •́ )",
   ["\22"] = "(⊙ _ ⊙ )",
   t = "(⌐■_■)",
-  ['!'] = "Σ(°△°ꪱꪱꪱ)",
-  c = "Σ(°△°ꪱꪱꪱ)",
+  ['!'] = "(•̀ - •́ )",
+  c = "(•̀ - •́ )",
   s = "SUB"
 }
 
@@ -81,15 +81,6 @@ return {
         lualine_c = { diagnostics },
         lualine_x = { 'diff' },
         lualine_y = { 'progress', 'encoding', 'filetype', },
-        lualine_z = {
-          {
-            "mode",
-            icons_enabled = true,
-            fmt = function()
-              return mode_map[vim.api.nvim_get_mode().mode] or vim.api.nvim_get_mode().mode
-            end
-          }
-        }
       },
       inactive_winbar = {
         lualine_a = {},
@@ -102,7 +93,16 @@ return {
         lualine_b = {},
         lualine_c = { diagnostics },
         lualine_x = { 'diff' },
-        lualine_y = { 'progress', 'location' }
+        lualine_y = { 'progress', 'location' },
+        lualine_z = {
+          {
+            "mode",
+            icons_enabled = true,
+            fmt = function()
+              return mode_map[vim.api.nvim_get_mode().mode] or vim.api.nvim_get_mode().mode
+            end
+          }
+        }
       },
     })
   end
