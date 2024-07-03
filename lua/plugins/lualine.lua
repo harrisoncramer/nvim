@@ -31,32 +31,23 @@ local filename = function()
   return full_file_path:gsub(escaped_git_root, "", 1) .. (modified and '  ' or '') .. (readonly and ' [-]' or '')
 end
 
-local mr_info = ""
-local outbound = false
-local get_mr_info = {
-  function()
-    if outbound then
-      return mr_info
-    end
-    outbound = true
-    require("git-helpers").is_gitlab_project(function()
-      require("git-helpers").is_feature_branch(function()
-        require("gitlab").data({ { type = "pipeline", refresh = true }, { type = "info", refresh = false } },
-          function(data)
-            mr_info = "  " ..
-                data.info.title .. " " .. (require("gitlab.actions.pipeline").get_pipeline_icon(true) or "") .. "  "
-            outbound = false
-          end)
-      end)
-    end)
-    return mr_info
-  end,
-  padding = { left = 0, right = 0 }, -- Adjust padding as needed
-}
-
 local diagnostics = { 'diagnostics' }
-
 local disabled_filetypes = { 'gitlab', 'DiffviewFiles', "oil" }
+
+local mode_map = {
+  n = "(ᴗ_ ᴗ。)",
+  nt = "(ᴗ_ ᴗ。)",
+  i = "( •̯́ ₃ •̯̀)",
+  R = "(•̀ - •́ )",
+  v = "(⊙ _ ⊙ )",
+  V = "(⊙ _ ⊙ )",
+  no = "Σ(°△°ꪱꪱꪱ)",
+  ["\22"] = "(⊙ _ ⊙ )",
+  t = "(⌐■_■)",
+  ['!'] = "Σ(°△°ꪱꪱꪱ)",
+  c = "Σ(°△°ꪱꪱꪱ)",
+  s = "SUB"
+}
 
 return {
   "nvim-lualine/lualine.nvim",
@@ -90,6 +81,15 @@ return {
         lualine_c = { diagnostics },
         lualine_x = { 'diff' },
         lualine_y = { 'progress', 'encoding', 'filetype', },
+        lualine_z = {
+          {
+            "mode",
+            icons_enabled = true,
+            fmt = function()
+              return mode_map[vim.api.nvim_get_mode().mode] or vim.api.nvim_get_mode().mode
+            end
+          }
+        }
       },
       inactive_winbar = {
         lualine_a = {},
