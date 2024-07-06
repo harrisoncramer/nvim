@@ -7,7 +7,7 @@ return {
   build = function()
     require("gitlab.server").build()
   end,
-  -- dir = "~/.config/nvim/dev-plugins/gitlab",
+  dir = "~/.config/nvim/dev-plugins/gitlab",
   config = function()
     local gitlab = require("gitlab")
     vim.keymap.set("n", "gls", gitlab.summary)
@@ -28,8 +28,8 @@ return {
     vim.keymap.set("n", "glm", gitlab.move_to_discussion_tree_from_diagnostic)
     vim.keymap.set("n", "glM", gitlab.merge)
     vim.keymap.set("n", "glO", gitlab.create_mr)
-    vim.keymap.set("n", "glal", gitlab.add_label)
-    vim.keymap.set("n", "gldl", gitlab.delete_label)
+    vim.keymap.set("n", "glla", gitlab.add_label)
+    vim.keymap.set("n", "glld", gitlab.delete_label)
     vim.keymap.set("n", "glu", gitlab.copy_mr_url)
     vim.keymap.set("n", "glb", gitlab.choose_merge_request)
 
