@@ -128,9 +128,10 @@ vim.api.nvim_create_user_command("PDF", function()
   job:new({
     command = 'pandoc',
     args = { '-V', 'colorlinks=true', '-V', 'linkcolor=blue', '-i', filename, "-o", pdf },
-    on_exit = vim.schedule_wrap(function(_, exit_code)
+    on_exit = vim.schedule_wrap(function(err, exit_code)
       if exit_code ~= 0 then
-        require("notify")("Could not create " .. pdf, vim.log.levels.ERROR)
+        vim.print(_)
+        require("notify")("Could not create " .. pdf .. "\n " .. err._stderr_results[1], vim.log.levels.ERROR)
         return
       else
         vim.notify(pdf .. " created!", vim.log.levels.INFO)
