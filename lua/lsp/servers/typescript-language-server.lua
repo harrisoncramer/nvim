@@ -6,8 +6,53 @@ local vue_typescript_plugin = require('mason-registry')
 
 return {
   setup = function(on_attach, capabilities)
+    local ok, format_ts_errors = pcall(require, "format-ts-errors")
+    if not ok then
+      vim.api.nvim_err_writeln("Formatting for TS Errors not installed!")
+      return
+    end
     local lspconfig = require("lspconfig")
     lspconfig.tsserver.setup({
+      handlers = {
+        ["textDocument/publishDiagnostics"] = function(
+          _,
+          result,
+          ctx,
+          _config
+        )
+          if result.diagnostics == nil then
+            return
+          end
+
+          local newConfig = {
+            virtual_text = true,
+            signs = true,
+            update_in_insert = true,
+            underline = true,
+          }
+
+          local idx = 1
+          while idx <= #result.diagnostics do
+            local entry = result.diagnostics[idx]
+            local formatter = format_ts_errors[entry.code]
+            entry.message = formatter and formatter(entry.message) or entry.message
+            -- codes: https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json
+            if entry.code == 80001 then
+              -- ESM Vs. CommonJS
+              table.remove(result.diagnostics, idx)
+            else
+              idx = idx + 1
+            end
+          end
+
+          vim.lsp.diagnostic.on_publish_diagnostics(
+            _,
+            result,
+            ctx,
+            newConfig
+          )
+        end,
+      },
       init_options = {
         plugins = {
           {
@@ -23,7 +68,9 @@ return {
         "vue",
       },
       capabilities = capabilities,
-      on_attach = on_attach,
+      on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+      end
     })
 
     lspconfig.volar.setup({

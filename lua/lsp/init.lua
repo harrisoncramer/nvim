@@ -1,5 +1,4 @@
 local map_opts = { noremap = true, silent = true, nowait = true }
-local handlers = require("lsp.handlers")
 local cmp_nvim_lsp_status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 local mason_status_ok, mason = pcall(require, "mason")
 local mason_tool_installer_ok, mason_tool_installer = pcall(require, "mason-tool-installer")

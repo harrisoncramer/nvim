@@ -4,7 +4,12 @@
 return {
   { "rcarriga/nvim-notify" },
   { "williamboman/mason.nvim" },
-  { "neovim/nvim-lspconfig" },
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      { "davidosomething/format-ts-errors.nvim" },
+    }
+  },
   { "WhoIsSethDaniel/mason-tool-installer.nvim" },
   { "onsails/lspkind-nvim" },
   { "hrsh7th/nvim-cmp" },
