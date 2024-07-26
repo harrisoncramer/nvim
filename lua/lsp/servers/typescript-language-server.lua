@@ -18,18 +18,11 @@ return {
           _,
           result,
           ctx,
-          _config
+          config
         )
           if result.diagnostics == nil then
             return
           end
-
-          local newConfig = {
-            virtual_text = true,
-            signs = true,
-            update_in_insert = true,
-            underline = true,
-          }
 
           local idx = 1
           while idx <= #result.diagnostics do
@@ -49,7 +42,7 @@ return {
             _,
             result,
             ctx,
-            newConfig
+            config
           )
         end,
       },
