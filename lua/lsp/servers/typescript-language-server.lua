@@ -1,6 +1,4 @@
-local vue_typescript_plugin = require('mason-registry')
-    .get_package('vue-language-server')
-    :get_install_path()
+local vue_typescript_plugin = require('mason-registry').get_package('vue-language-server'):get_install_path()
     .. '/node_modules/@vue/language-server'
     .. '/node_modules/@vue/typescript-plugin'
 
@@ -57,7 +55,11 @@ return {
       },
       filetypes = {
         "javascript",
+        "javascriptreact",
+        "javascript.jsx",
         "typescript",
+        "typescriptreact",
+        "typescript.tsx",
         "vue",
       },
       capabilities = capabilities,
