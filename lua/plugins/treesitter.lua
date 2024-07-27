@@ -1,8 +1,7 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   dependencies = {
-    "HiPhish/nvim-ts-rainbow2",
-    -- "nvim-treesitter/nvim-treesitter-context",
+    -- "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
     "windwp/nvim-ts-autotag",
     "nvim-treesitter/nvim-treesitter-textobjects",
     "andymass/vim-matchup",
@@ -181,5 +180,29 @@ return {
         })
 
     vim.treesitter.language.register("markdown", "mdx")
+
+    -- Delimeter colors
+    -- Find a way to exclude template sections + jsx only???
+    -- local colors = require("colorscheme")
+    -- vim.api.nvim_set_hl(0, 'RainbowDelimiterYellow', { fg = colors.carpYellow })
+    -- vim.api.nvim_set_hl(0, 'RainbowDelimiterBlue', { fg = colors.lightBlue })
+    -- vim.api.nvim_set_hl(0, 'RainbowDelimiterGreen', { fg = colors.springGreen })
+    -- vim.api.nvim_set_hl(0, 'RainbowDelimiterViolet', { fg = colors.oniViolet })
+    -- vim.api.nvim_set_hl(0, 'RainbowDelimiterCyan', { fg = colors.crystalBlue })
+    -- require('rainbow-delimiters.setup').setup {
+    --   strategy = {
+    --     -- ...
+    --   },
+    --   query = {
+    --     -- ...
+    --   },
+    --   highlight = {
+    --     'RainbowDelimiterYellow',
+    --     'RainbowDelimiterBlue',
+    --     'RainbowDelimiterGreen',
+    --     'RainbowDelimiterViolet',
+    --     'RainbowDelimiterCyan',
+    --   },
+    -- }
   end
 }
