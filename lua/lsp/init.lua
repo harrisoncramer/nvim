@@ -121,6 +121,7 @@ local servers = {
   "vue-language-server",
   "python-lsp-server",
   "terraform-ls",
+  "css-lsp",
   "clangd"
 }
 

@@ -60,7 +60,6 @@ return {
         "typescript",
         "typescriptreact",
         "typescript.tsx",
-        "vue",
       },
       capabilities = capabilities,
       on_attach = function(client, bufnr)
@@ -71,6 +70,20 @@ return {
     lspconfig.volar.setup({
       capabilities = capabilities,
       on_attach = on_attach,
+      settings = {
+        css = {
+          validate = true,
+          lint = {
+            unknownAtRules = "ignore",
+          },
+        },
+        scss = {
+          validate = true,
+          lint = {
+            unknownAtRules = "ignore",
+          },
+        },
+      },
     })
   end,
 }
