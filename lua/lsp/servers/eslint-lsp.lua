@@ -8,6 +8,7 @@ return {
       capabilities = capabilities,
       root_dir = root_pattern(
         ".eslintrc.js",
+        "eslint.config.js",
         "node_modules",
         ".git"
       ),
