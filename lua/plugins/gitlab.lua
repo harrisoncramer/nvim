@@ -18,7 +18,7 @@ return {
     vim.keymap.set("n", "glc", gitlab.create_comment)
     vim.keymap.set("v", "glc", gitlab.create_multiline_comment)
     vim.keymap.set("n", "gln", gitlab.create_note)
-    vim.keymap.set("v", "gln", gitlab.create_comment_suggestion)
+    -- vim.keymap.set("v", "gln", gitlab.create_comment_suggestion)
     vim.keymap.set("n", "gld", gitlab.toggle_discussions)
     vim.keymap.set("n", "glaa", gitlab.add_assignee)
     vim.keymap.set("n", "glad", gitlab.delete_assignee)
@@ -43,6 +43,11 @@ return {
       },
       popup = {
         temporary_registers = { '"', "+", "g" },
+      },
+      keymaps = {
+        reviewer = {
+          create_suggestion = "x"
+        }
       },
       create_mr = {
         target = "main",

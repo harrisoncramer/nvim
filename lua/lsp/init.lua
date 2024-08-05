@@ -122,7 +122,8 @@ local servers = {
   "python-lsp-server",
   "terraform-ls",
   "css-lsp",
-  "clangd"
+  "clangd",
+  "yaml-language-server"
 }
 
 local linters = {
