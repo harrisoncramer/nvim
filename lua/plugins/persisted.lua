@@ -1,6 +1,9 @@
 return {
   "olimorris/persisted.nvim",
   config = function()
+    if vim.g.no_session then
+      return
+    end
     require("persisted").setup({
       save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), -- directory where session files are saved
       silent = true,                                                    -- silent nvim message when sourcing session file
