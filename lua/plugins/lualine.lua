@@ -31,6 +31,15 @@ local filename = function()
   return full_file_path:gsub(escaped_git_root, "", 1) .. (modified and '  ' or '') .. (readonly and ' [-]' or '')
 end
 
+local ollama = function()
+  local status = require("ollama").status()
+  if status == "IDLE" then
+    return "󱙺" -- nf-md-robot-outline
+  elseif status == "WORKING" then
+    return "󰚩" -- nf-md-robot
+  end
+end
+
 local diagnostics = { 'diagnostics' }
 local disabled_filetypes = { 'gitlab', 'DiffviewFiles', "oil" }
 
@@ -72,7 +81,8 @@ return {
         lualine_a = { function() return vim.g.branch_name end },
         lualine_b = {
           filename,
-          require("recorder").recordingStatus
+          require("recorder").recordingStatus,
+          ollama,
         },
         lualine_c = { diagnostics },
         lualine_x = { 'diff' },

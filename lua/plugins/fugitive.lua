@@ -16,8 +16,8 @@ end
 
 return {
   "tpope/vim-fugitive",
-  config = function()
+  init = function()
     local map_opts = { noremap = true, silent = true, nowait = true, buffer = false }
     vim.keymap.set("n", "<leader>gs", toggle_status, map_opts)
-  end,
+  end
 }
