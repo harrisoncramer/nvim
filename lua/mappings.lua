@@ -2,7 +2,7 @@ local u = require("functions.utils")
 
 -- Splits and tabs
 vim.keymap.set("n", "ss", ":split<Return>")
-vim.keymap.set("n", "sv", ":vsplit<Return><C-w>w")
+vim.keymap.set("n", "sv", ":vsplit <Return>")
 vim.keymap.set("n", "sh", "<C-w>h")
 vim.keymap.set("n", "sj", "<C-w>j")
 vim.keymap.set("n", "sk", "<C-w>k")
