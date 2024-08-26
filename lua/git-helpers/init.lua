@@ -43,7 +43,7 @@ vim.keymap.set("n", "<leader>gss", function() M.stash() end, map_opts)
 vim.keymap.set("n", "<leader>gsp", function() M.pop() end, map_opts)
 
 -- Viewing changes and diffs...
-vim.keymap.set("n", "<leader>gvv", function() M.view_changes() end, map_opts)
+vim.keymap.set("n", "<leader>gvc", function() M.view_changes() end, map_opts)
 vim.keymap.set("n", "<leader>gvs", function() M.view_staged() end, map_opts)
 vim.keymap.set("n", "<leader>gvfh", function() M.view_file_history() end, map_opts)
 
