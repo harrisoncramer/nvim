@@ -6,7 +6,9 @@ local M = {
   'stevearc/oil.nvim',
   config = function()
     vim.keymap.set("n", "<C-h>", function()
+      vim.opt.splitright = false
       vim.cmd.vsplit()
+      vim.opt.splitright = true
       local path = vim.fn.expand("%:p")
       local dir = u.dirname(path)
       file = u.basename(path)
