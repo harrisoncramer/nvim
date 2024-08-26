@@ -13,9 +13,14 @@ if not gitsigns_ok or not diffview_ok or not plenary_ok then
 end
 
 -- Hunk-level operations
-vim.keymap.set("n", "<leader>ghn", gitsigns.next_hunk)  -- Next Change
-vim.keymap.set("n", "<leader>ghp", gitsigns.prev_hunk)  -- Previous Change
-vim.keymap.set("n", "<leader>ghp", gitsigns.prev_hunk)  -- Previous Change
+vim.keymap.set("n", "<leader>ghn", function() -- Next Change
+  gitsigns.next_hunk()
+  gitsigns.preview_hunk()
+end)
+vim.keymap.set("n", "<leader>ghp", function() -- Next Change
+  gitsigns.prev_hunk()
+  gitsigns.preview_hunk()
+end)
 vim.keymap.set("n", "<leader>ghr", gitsigns.reset_hunk) -- Reset Hunk
 vim.keymap.set("n", "<leader>gha", gitsigns.stage_hunk) -- Add hunk
 vim.keymap.set("n", "<leader>ghv", gitsigns.preview_hunk)
