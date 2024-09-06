@@ -12,6 +12,7 @@ return {
   },
   { "WhoIsSethDaniel/mason-tool-installer.nvim" },
   { "onsails/lspkind-nvim" },
+  { "MunifTanjim/nui.nvim" },
   { "hrsh7th/nvim-cmp" },
   { "hrsh7th/cmp-nvim-lsp-signature-help" },
   { "hrsh7th/cmp-nvim-lua",                     ft = { "lua" } },

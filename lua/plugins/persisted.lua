@@ -17,7 +17,6 @@ return {
       ignored_dirs = nil,                                               -- table of dirs that are ignored when auto-saving and auto-loading
     })
     local group = vim.api.nvim_create_augroup("PersistedHooks", {})
-
     local branch = ''
     vim.api.nvim_create_autocmd({ "User" }, {
       pattern = "PersistedLoadPost",
