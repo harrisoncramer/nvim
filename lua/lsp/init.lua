@@ -14,7 +14,7 @@ mason.setup()
 
 lsp_format.setup({
   order = {
-    "tsserver",
+    "ts_ls",
     "eslint",
   }
 })

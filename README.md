@@ -90,7 +90,7 @@ sudo apt install python3-pip -y
 pip3 install --upgrade pynvim
 ```
 
-9. bun for faster language servers (tailwindcss and tsserver)
+9. bun for faster language servers (tailwindcss and ts_ls)
 ```bash
 curl -fsSL https://bun.sh/install | bash
 ```

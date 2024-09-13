@@ -10,13 +10,13 @@ return {
       return
     end
     local lspconfig = require("lspconfig")
-    lspconfig.tsserver.setup({
+    lspconfig.ts_ls.setup({
       handlers = {
         ["textDocument/publishDiagnostics"] = function(
-          _,
-          result,
-          ctx,
-          config
+            _,
+            result,
+            ctx,
+            config
         )
           if result.diagnostics == nil then
             return
