@@ -110,22 +110,42 @@ return {
 
     -- UI Settings
     ui.setup({
-      icons = { expanded = "▾", collapsed = "▸" },
-      mappings = {
-        expand = { "<CR>", "<2-LeftMouse>" },
-        open = "o",
-        remove = "d",
-        edit = "e",
-        repl = "r",
-        toggle = "t",
+      controls = {
+        element = "repl",
+        enabled = true,
+        icons = {
+          disconnect = "",
+          pause = "",
+          play = "",
+          run_last = "",
+          step_back = "",
+          step_into = "",
+          step_out = "",
+          step_over = "",
+          terminate = ""
+        }
+      },
+      element_mappings = {},
+      expand_lines = true,
+      floating = {
+        border = "single",
+        mappings = {
+          close = { "q", "<Esc>" }
+        }
+      },
+      force_buffers = true,
+      icons = {
+        collapsed = "",
+        current_frame = "",
+        expanded = ""
       },
       layouts = {
         {
           elements = {
-            "scopes",
+            "scopes"
           },
           size = 0.3,
-          position = "right"
+          position = "bottom",
         },
         {
           elements = {
@@ -133,21 +153,21 @@ return {
             "breakpoints"
           },
           size = 0.3,
-          position = "bottom",
+          position = "right"
         },
       },
-      floating = {
-        -- max_height = nil,
-        -- max_width = nil,
-        border = "single",
-        mappings = {
-          close = { "q", "<Esc>" },
-        },
+      mappings = {
+        edit = "e",
+        expand = { "t", "<2-LeftMouse>" },
+        open = "o",
+        remove = "d",
+        repl = "r",
+        toggle = nil,
       },
-      windows = { indent = 1 },
       render = {
-        max_type_length = nil,
-      },
+        indent = 1,
+        max_value_lines = 100
+      }
     })
   end
 }
