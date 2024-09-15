@@ -1,4 +1,5 @@
 -- Launch or attach to a running Javascript/Typescript process
+local M = {}
 local jsOrTs = {
   {
     type = 'node2',
@@ -41,23 +42,52 @@ local chrome_debugger = {
   webRoot = "${workspaceFolder}",
 }
 
-local function get_arguments()
+local function get_go_args()
   local co = coroutine.running()
-  if co then
-    return coroutine.create(function()
-      local args = {}
-      vim.ui.input({ prompt = "Args: " }, function(input)
-        args = vim.split(input or "", " ")
-      end)
-      coroutine.resume(co, args)
-    end)
-  else
+  vim.ui.input({ prompt = "Args: " }, function(input)
     local args = {}
-    vim.ui.input({ prompt = "Args: " }, function(input)
-      args = vim.split(input or "", " ")
-    end)
-    return args
-  end
+    input = input or ""
+    local i = 1
+    local len = #input
+    local in_quote = false
+    local quote_char = ''
+    local escaped = false
+    local current_arg = ''
+
+    while i <= len do
+      local c = input:sub(i, i)
+      if escaped then
+        current_arg = current_arg .. c
+        escaped = false
+      elseif c == '\\' then
+        escaped = true
+      elseif in_quote then
+        if c == quote_char then
+          in_quote = false
+          quote_char = ''
+        else
+          current_arg = current_arg .. c
+        end
+      elseif c == '"' or c == "'" then
+        in_quote = true
+        quote_char = c
+      elseif c:match('%s') then
+        if #current_arg > 0 then
+          table.insert(args, current_arg)
+          current_arg = ''
+        end
+      else
+        current_arg = current_arg .. c
+      end
+      i = i + 1
+    end
+    if #current_arg > 0 then
+      table.insert(args, current_arg)
+    end
+
+    coroutine.resume(co, args)
+  end)
+  return coroutine.yield()
 end
 
 local go = {
@@ -72,7 +102,7 @@ local go = {
     name = "Debug (Arguments)",
     request = "launch",
     program = "${file}",
-    args = get_arguments,
+    args = get_go_args,
   },
   {
     type = "go",
@@ -123,5 +153,5 @@ return {
       go = go,
       lua = lua,
     }
-  end
+  end,
 }

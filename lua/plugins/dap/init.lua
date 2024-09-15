@@ -159,10 +159,10 @@ return {
       mappings = {
         edit = "e",
         expand = { "t", "<2-LeftMouse>" },
-        open = "o",
         remove = "d",
-        repl = "r",
-        toggle = nil,
+        repl = {},
+        open = {},
+        toggle = {},
       },
       render = {
         indent = 1,
