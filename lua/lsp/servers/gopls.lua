@@ -14,8 +14,10 @@ return {
       settings = {
         gopls = {
           analyses = {
-            fillstruct = false
-          }
+            fillstruct = false,
+            unusedparams = true,
+          },
+          staticcheck = true, -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md#staticcheck-bool
         }
       }
     })
