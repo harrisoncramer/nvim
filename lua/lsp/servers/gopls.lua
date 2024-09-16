@@ -1,3 +1,4 @@
+local u = require("functions.utils")
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.go",
   callback = function()
@@ -8,6 +9,9 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 return {
   setup = function(on_attach, capabilities)
+    if not u.has_executable("staticcheck") then
+      vim.notify("Missing staticheck binary, gopls linting limited...", vim.log.levels.WARN)
+    end
     require("lspconfig").gopls.setup({
       on_attach = on_attach,
       capabilities = capabilities,

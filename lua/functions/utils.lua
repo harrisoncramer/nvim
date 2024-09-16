@@ -389,5 +389,12 @@ return {
         vim.api.nvim_win_close(win, false)
       end
     end
+  end,
+  ---Checks if an executable is installed
+  ---@param executable string
+  ---@return boolean
+  has_executable = function(executable)
+    local result = vim.fn.executable(executable)
+    return result == 1
   end
 }
