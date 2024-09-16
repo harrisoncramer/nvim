@@ -113,6 +113,7 @@ local servers = {
   "eslint-lsp",
   "bash-language-server",
   "gopls",
+  "golangci-lint-langserver",
   "astro-language-server",
   "marksman",
   "typescript-language-server",
