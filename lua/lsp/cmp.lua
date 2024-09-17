@@ -1,11 +1,18 @@
-local colors = require("colorscheme")
 local cmp_status_ok, cmp = pcall(require, "cmp")
-local lspkind_status_ok, lspkind = pcall(require, "lspkind")
 
-if not (cmp_status_ok and lspkind_status_ok) then
-  vim.api.nvim_err_writeln("CMP dependencies not yet installed!")
+if not cmp_status_ok then
+  vim.api.nvim_err_writeln("cmp not yet installed!")
   return
 end
+
+local cmp_sources = {
+  { name = "path",                   max_item_count = 10 },
+  { name = "nvim_lsp",               max_item_count = 5 },
+  { name = "nvim_lua",               max_item_count = 5 },
+  { name = "ultisnips",              max_item_count = 5 },
+  { name = "buffer",                 max_item_count = 5 },
+  { name = "nvim_lsp_signature_help" },
+}
 
 -- Setup completion engine
 if cmp_status_ok then
@@ -28,24 +35,7 @@ if cmp_status_ok then
       ["<S-Down>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
       ["<S-Up>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     },
-    sources = cmp.config.sources({
-      { name = "path",                   max_item_count = 10 },
-      { name = "nvim_lsp",               max_item_count = 5 },
-      { name = "nvim_lua",               max_item_count = 5 },
-      { name = "ultisnips",              max_item_count = 5 },
-      { name = "buffer",                 max_item_count = 5 },
-      { name = "nvim_lsp_signature_help" },
-    }),
-  })
-
-  -- Do not use buffer text for Go
-  cmp.setup.filetype('go', {
-    sources = cmp.config.sources({
-      { name = "path" },
-      { name = "nvim_lsp",               max_item_count = 5 },
-      { name = "nvim_lua",               max_item_count = 5 },
-      { name = "ultisnips",              max_item_count = 5 },
-      { name = "nvim_lsp_signature_help" },
-    }),
+    sources = cmp.config.sources(cmp_sources),
   })
 end
+
