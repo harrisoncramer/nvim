@@ -29,6 +29,7 @@ if cmp_status_ok then
       ["<S-Up>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     },
     sources = cmp.config.sources({
+      { name = "path",                   max_item_count = 10 },
       { name = "nvim_lsp",               max_item_count = 5 },
       { name = "nvim_lua",               max_item_count = 5 },
       { name = "ultisnips",              max_item_count = 5 },
@@ -40,6 +41,7 @@ if cmp_status_ok then
   -- Do not use buffer text for Go
   cmp.setup.filetype('go', {
     sources = cmp.config.sources({
+      { name = "path" },
       { name = "nvim_lsp",               max_item_count = 5 },
       { name = "nvim_lua",               max_item_count = 5 },
       { name = "ultisnips",              max_item_count = 5 },
