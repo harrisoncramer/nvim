@@ -3,10 +3,10 @@ return {
   "sphamba/smear-cursor.nvim",
   opts = {
     cursor_color = colors.carpYellow,
-    stiffness = 0.8,               -- 0.6      [0, 1]
-    trailing_stiffness = 0.5,      -- 0.3      [0, 1]
-    distance_stop_animating = 0.5, -- 0.1      > 0
-    hide_target_hack = false,      -- true     boolean
+    stiffness = 1.9,
+    trailing_stiffness = 0.6,
+    distance_stop_animating = 0.5,
+    hide_target_hack = false,
 
     -- Smear cursor when switching buffers or windows.
     smear_between_buffers = true,
