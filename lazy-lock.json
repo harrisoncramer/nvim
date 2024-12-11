@@ -55,6 +55,7 @@
   "persisted.nvim": { "branch": "main", "commit": "3006e641e2892b58fe51511c31595515e1a7dc00" },
   "plenary.nvim": { "branch": "master", "commit": "2d9b06177a975543726ce5c73fca176cedbffe9d" },
   "pounce.nvim": { "branch": "master", "commit": "2e36399ac09b517770c459f1a123e6b4b4c1c171" },
+  "smear-cursor.nvim": { "branch": "main", "commit": "45894eb7ab2adb1f6a8321655420348d436b2a72" },
   "tagalong.vim": { "branch": "main", "commit": "5a2bbf2b1d5b657685a49d48d98a4aa921c1fde3" },
   "treesj": { "branch": "main", "commit": "0d81326b5afd36babe7dd480aabbb0b05f33e688" },
   "ultisnips": { "branch": "master", "commit": "49dc8cb2086db19d385791c8e1635723b0fd95c7" },
