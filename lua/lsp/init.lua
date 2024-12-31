@@ -114,7 +114,8 @@ local servers = {
   "terraform-ls",
   "css-lsp",
   "clangd",
-  "yaml-language-server"
+  "yaml-language-server",
+  "protols"
 }
 
 local linters = {
