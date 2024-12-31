@@ -4,8 +4,8 @@ return {
   opts = {
     slots = { 'a', 'b', 'c', 'd', 'e', 'f', 'g' },
     mapping = {
-      startStopRecording = "r",
-      playMacro = "R",
+      startStopRecording = "R",
+      playMacro = "@",
     },
     lessNotifications = false,
     clear = false,
