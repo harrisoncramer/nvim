@@ -18,6 +18,12 @@ vim.api.nvim_create_autocmd({ "FileType", "BufEnter", "FocusGained" }, {
   end
 })
 
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  callback = function()
+    require("lualine")
+  end
+})
+
 local filename = function()
   local git_root = git.get_root_git_dir()
   local modified = vim.api.nvim_buf_get_option(0, 'modified')

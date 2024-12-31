@@ -29,7 +29,6 @@ end)
 vim.keymap.set("v", "<leader>y", '"+y') -- Copy to clipboard
 vim.keymap.set("n", "H", function()
   vim.cmd("silent! w")
-  require("lualine")
 end)                                     -- Quick save
 vim.keymap.set("i", "<C-h>", "<Lseft>")  -- Move left in insert
 vim.keymap.set("i", "<C-l>", "<Right>")  -- Move right in insert
