@@ -26,8 +26,11 @@ vim.keymap.set("n", "&", function()                      -- Rename word under cu
   u.press_enter()
   vim.api.nvim_feedkeys(":%s//", "n", false)
 end)
-vim.keymap.set("v", "<leader>y", '"+y')  -- Copy to clipboard
-vim.keymap.set("n", "H", ":w<CR>")       -- Quick save
+vim.keymap.set("v", "<leader>y", '"+y') -- Copy to clipboard
+vim.keymap.set("n", "H", function()
+  vim.cmd("silent! w")
+  require("lualine")
+end)                                     -- Quick save
 vim.keymap.set("i", "<C-h>", "<Lseft>")  -- Move left in insert
 vim.keymap.set("i", "<C-l>", "<Right>")  -- Move right in insert
 vim.keymap.set("x", "<leader>p", '"_dP') -- Keep paste register after paste
