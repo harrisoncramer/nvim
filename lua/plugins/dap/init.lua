@@ -25,7 +25,11 @@ return {
     -- Debuggers are installed via https://github.com/jayp0521/mason-nvim-dap.nvim
     mason.setup()
     mason_dap.setup({
-      ensure_installed = { "delve@v1.20.2", "node2@v1.43.0", "js@v1.77.0" },
+      ensure_installed = {
+        "delve@v1.20.2",
+        "js@v1.77.0",
+        -- "node2@v1.43.0", TODO: Not working
+      },
       automatic_installation = true
     })
 
