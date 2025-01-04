@@ -125,7 +125,7 @@ local linters = {
 local debuggers = {
   "js-debug-adapter",
   "delve",
-  "node-debug2-adapter",
+  -- "node-debug2-adapter", This is not working
 }
 
 local all = u.merge(servers, linters, debuggers)
