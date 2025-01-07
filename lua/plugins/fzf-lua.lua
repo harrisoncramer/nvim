@@ -50,9 +50,14 @@ return {
     vim.keymap.set("n", "<C-g><C-j>", function()
       fzfLua.git_files({ resume = true })
     end)
+
+    -- Searches only in directory of current service
     vim.keymap.set("n", "<C-m>", function()
-      fzfLua.git_files({ cmd = "git diff --name-only main && git ls-files --exclude-standard --others" })
+      local root_dir = vim.fn.getcwd()
+      local cmd = "git ls-files --exclude-standard " .. root_dir
+      fzfLua.git_files({ cmd = cmd })
     end, {})
+
     vim.keymap.set("n", "<C-f>", fzfLua.live_grep_native)
     vim.keymap.set("n", "<C-g><C-f>", function()
       fzfLua.live_grep_native({ resume = true })
