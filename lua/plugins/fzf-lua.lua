@@ -47,9 +47,6 @@ return {
       }
     })
     vim.keymap.set("n", "<C-j>", fzfLua.git_files)
-    vim.keymap.set("n", "<C-g><C-j>", function()
-      fzfLua.git_files({ resume = true })
-    end)
 
     -- Searches only in directory of current service
     vim.keymap.set("n", "<C-m>", function()
@@ -58,9 +55,21 @@ return {
       fzfLua.git_files({ cmd = cmd })
     end, {})
 
-    vim.keymap.set("n", "<C-f>", fzfLua.live_grep_native)
-    vim.keymap.set("n", "<C-g><C-f>", function()
-      fzfLua.live_grep_native({ resume = true })
+    vim.keymap.set("n", "<C-f>", function()
+      local git_root = require("git-helpers").get_root_git_dir()
+      fzfLua.live_grep_native({
+        search_paths = { git_root }
+      })
     end)
+
+    vim.keymap.set("n", "<C-c>", fzfLua.live_grep_native)
+
+    -- TODO: Come up w/ good searching functionality to "resume" old search
+    -- vim.keymap.set("n", "<C-g><C-c>", function()
+    --   fzfLua.live_grep_native({ resume = true })
+    -- end)
+    -- vim.keymap.set("n", "<C-g><C-j>", function()
+    --   fzfLua.git_files({ resume = true })
+    -- end)
   end
 }
