@@ -47,7 +47,8 @@ local on_attach = function(client, bufnr)
         "lua_ls",
         "pylsp",
         "clangd",
-        "rust_analyzer"
+        "rust_analyzer",
+        "prismals"
       }, client.name)) then
     lsp_format.on_attach(client)
   end
