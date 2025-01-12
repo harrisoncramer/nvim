@@ -115,6 +115,7 @@ local servers = {
   "css-lsp",
   "clangd",
   "yaml-language-server",
+  "prisma-language-server",
   "protols"
 }
 
