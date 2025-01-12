@@ -107,7 +107,6 @@ local servers = {
   "gopls",
   "golangci-lint-langserver",
   "astro-language-server",
-  "marksman",
   "typescript-language-server",
   "tailwindcss-language-server",
   "vue-language-server",
