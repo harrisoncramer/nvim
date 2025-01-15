@@ -47,6 +47,9 @@ vim.keymap.set("n", "<leader>gvc", function() M.view_changes() end, map_opts)
 vim.keymap.set("n", "<leader>gvs", function() M.view_staged() end, map_opts)
 vim.keymap.set("n", "<leader>gvfh", function() M.view_file_history() end, map_opts)
 
+-- Conflicts
+vim.keymap.set("n", "<leader>gxx", function() M.resolve_conflict() end, map_opts)
+
 -- Miscellaneous...
 vim.keymap.set("n", "<leader>gb", gitsigns.blame_line)
 vim.keymap.set("n", "<leader>gq", function() gitsigns.setqflist("all") end)
@@ -359,5 +362,50 @@ M.is_gitlab_project = function(cb)
   end)
 end
 
+M.resolve_conflict = function()
+  -- Get the current line and buffer
+  local current_line = vim.api.nvim_win_get_cursor(0)[1]
+  local buffer = vim.api.nvim_get_current_buf()
+
+  -- Fetch lines around the cursor
+  local lines = vim.api.nvim_buf_get_lines(buffer, current_line - 1, current_line + 10, false)
+
+  -- Detect a conflict
+  local conflict_start, conflict_middle, conflict_end
+  for i, line in ipairs(lines) do
+    if line:match("^<<<<") then
+      conflict_start = current_line + i - 2
+    elseif line:match("^====") then
+      conflict_middle = current_line + i - 2
+    elseif line:match("^>>>>") then
+      conflict_end = current_line + i - 2
+      break
+    end
+  end
+
+  -- Ensure all markers are found
+  if not (conflict_start and conflict_middle and conflict_end) then
+    vim.notify("No conflict markers found.", vim.log.levels.ERROR)
+    return
+  end
+
+  -- Prepare options
+  local options = { "Top (yours)", "Bottom (theirs)" }
+
+  vim.ui.select(options, { prompt = "Select conflict resolution:" }, function(choice)
+    if choice then
+      if choice == "Top (yours)" then
+        vim.api.nvim_buf_set_lines(buffer, conflict_start, conflict_end + 1, false,
+          vim.api.nvim_buf_get_lines(buffer, conflict_start + 1, conflict_middle, false))
+      elseif choice == "Bottom (theirs)" then
+        vim.api.nvim_buf_set_lines(buffer, conflict_start, conflict_end + 1, false,
+          vim.api.nvim_buf_get_lines(buffer, conflict_middle + 1, conflict_end, false))
+      end
+      vim.notify("Conflict resolved with " .. choice .. ".", vim.log.levels.INFO)
+    else
+      vim.notify("Conflict resolution canceled.", vim.log.levels.WARN)
+    end
+  end)
+end
 
 return M
