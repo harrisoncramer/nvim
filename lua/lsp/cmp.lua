@@ -38,4 +38,3 @@ if cmp_status_ok then
     sources = cmp.config.sources(cmp_sources),
   })
 end
-

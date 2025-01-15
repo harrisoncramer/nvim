@@ -70,32 +70,6 @@ local on_attach = function(client, bufnr)
     })
   end, map_opts)
 
-  -- Function to jump to the first value in the body
-  local function jump_to_first_value()
-    local node = ts_utils.get_node_at_cursor()
-
-    -- Ensure the cursor is at a body node
-    if not node or node:type() ~= "literal_value" then
-      print("Not at a body node")
-      return
-    end
-
-    -- Find the first value node
-    for keyed_element in node:iter_children() do
-      if keyed_element:type() == "keyed_element" then
-        local value_node = keyed_element:field("value")[1]
-        if value_node then
-          local row, col = value_node:start()
-          vim.api.nvim_win_set_cursor(0, { row + 1, col })
-          return
-        end
-      end
-    end
-
-    print("No value nodes found")
-  end
-
-  vim.keymap.set("n", "<leader>oo", jump_to_first_value, map_opts)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, map_opts)
   vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, map_opts)
   vim.keymap.set("n", "<leader>lt", vim.lsp.buf.type_definition, map_opts)
