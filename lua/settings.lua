@@ -10,13 +10,7 @@ vim.opt.splitright = true
 
 vim.g.wildmenu = true
 vim.g.wildignore = "**/node_modules/**"
--- update time for plugins (speed when they act)
-vim.opt.updatetime = 300
--- set.relative line numbers for jumping
-vim.opt.relativenumber = true
--- Number of current line
-vim.opt.number = true
--- Set regular expression engine
+-- -- Set regular expression engine
 vim.opt.regexpengine = 1
 -- Turn on clipboard across panes for tmux
 vim.opt.clipboard = 'unnamedplus'
@@ -46,7 +40,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.backspace = "indent,eol,start"
 
--- Don't break words in LSP docs
+-- Don't breakn words in LSP docs
 -- vim.api.nvim_command('set wrap linebreak nolist')
 vim.opt.wrap = false
 

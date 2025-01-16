@@ -51,11 +51,6 @@ return {
       transparent = false,     -- do not set background color
     })
 
-
-    -- vim.api.nvim_set_hl(0, "@tag", { fg = colors.lightBlue })
-    -- vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = colors.lightBlue, })
-    -- vim.api.nvim_set_hl(0, "@tag.attribute", { fg = colors.sakuraPink })
-
     vim.cmd.hi("NonText guifg=bg")
     vim.cmd("colorscheme kanagawa")
 
