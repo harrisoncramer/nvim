@@ -180,6 +180,12 @@ return {
   escape_string = function(text)
     return text:gsub("([^%w])", "%%%1")
   end,
+  get_first_word = function()
+    local line_num = vim.api.nvim_win_get_cursor(0)[1]                           -- Get current line number
+    local line = vim.api.nvim_buf_get_lines(0, line_num - 1, line_num, false)[1] -- Get current line text
+    local first_word = line:match("^%s*(%S+)")
+    return first_word
+  end,
   debounce = function(fn, ms, first)
     td_validate(fn, ms)
     local timer = vim.loop.new_timer()
@@ -373,6 +379,9 @@ return {
   end,
   move_line_up = function()
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("dd<Up>P", false, true, true), "n", false)
+  end,
+  pascal_to_snake_case = function(str)
+    return str:gsub("([A-Z])", "_%1"):gsub("^_", ""):lower()
   end,
   merge = merge,
   has_value = function(table, val)
