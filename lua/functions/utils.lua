@@ -381,7 +381,9 @@ return {
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("dd<Up>P", false, true, true), "n", false)
   end,
   pascal_to_snake_case = function(str)
-    return str:gsub("([A-Z])", "_%1"):gsub("^_", ""):lower()
+    return str:gsub("(%u+)", function(upper)
+      return "_" .. upper:lower()
+    end):gsub("^_", "")
   end,
   merge = merge,
   has_value = function(table, val)
