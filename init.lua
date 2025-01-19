@@ -30,8 +30,5 @@ require("lazy").setup("plugins", {
 -- Mappings
 require("mappings")
 
--- Language Servers
-require("lsp")
-
 -- Git helpers
 require("git-helpers")

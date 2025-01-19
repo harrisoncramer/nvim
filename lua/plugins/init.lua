@@ -20,7 +20,6 @@ return {
   { "hrsh7th/cmp-buffer" },
   { "hrsh7th/cmp-path" },
   { "nvim-lua/plenary.nvim" },
-  { "lukas-reineke/lsp-format.nvim" },
   { "tpope/vim-repeat" },
   { "tpope/vim-surround" },
   { "tpope/vim-rhubarb" },
