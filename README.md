@@ -1,16 +1,10 @@
 # Neovim Configuration
 
 ![Editor](https://hjc-public.s3.amazonaws.com/nvim1.png?)
-![Terminal](https://hjc-public.s3.amazonaws.com/nvim2.png?)
-![Debugging](https://harrisoncramer.me/static/6e0f346fac366e6835391c95b69aa43a/d61c2/nvim-dap-ui-go.png?)
 
 # About
 
-This repository contains my configurations, including key mappings, plugins, and other settings for Neovim. I'm primarily working day-to-day in VueJS, React, Typescript, Golang, Lua, and Clojure.
-
-# Neovim Version
-
-Important: I'm on the latest Neovim release (0.9) and many of these plugins will break if on an older version.
+This repository contains my configurations, including key mappings, plugins, and other settings for Neovim. I'm primarily working day-to-day in VueJS, React, Typescript, Go, Lua, and Clojure.
 
 # Features
 
@@ -20,7 +14,6 @@ Important: I'm on the latest Neovim release (0.9) and many of these plugins will
 - Debuggers installed and configured with <a href="https://github.com/mfussenegger/nvim-dap">nvim-dap</a>
 - <a href="https://github.com/numToStr/FTerm.nvim">fterm</a> for terminal integration
 - <a href="https://github.com/ibhagwan/fzf-lua">fzf-lua</a> for search
-- <a href="https://github.com/NeogitOrg/neogit">neogit</a> for git management
 - <a href="https://github.com/harrisoncramer/gitlab.nvim">gitlab.nvim</a> for Gitlab integration
 - <a href="https://github.com/sindrets/diffview.nvim">diffview</a> git branch/commit/diff viewing
 - <a href="https://github.com/nvim-lualine/lualine.nvim">lualine</a> for status bar
@@ -53,7 +46,7 @@ nvm install 20.5.0
 npm install -g tree-sitter-cli
 ```
 
-4. Golang (required for Golang Debugger + LSP). On Ubuntu:
+4. Go (required for Go Debugger + LSP). On Ubuntu:
 
 ```bash
 sudo add-apt-repository ppa:longsleep/golang-backports -y
@@ -81,28 +74,18 @@ curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_
 sudo dpkg -i ripgrep_13.0.0_amd64.deb
 ```
 
-8. python3 and pynvim for wilder
-```bash
-sudo add-apt-repository ppa:deadsnakes/ppa -y
-sudo apt update -y
-sudo apt install python3.11 -y
-sudo apt install python3-pip -y
-pip3 install --upgrade pynvim
-```
-
-9. bun for faster language servers (tailwindcss and ts_ls)
+8. bun for faster language servers (tailwindcss and ts_ls)
 ```bash
 curl -fsSL https://bun.sh/install | bash
 ```
 
-10. gnu-sed (for the <a href="https://github.com/nvim-pack/nvim-spectre">spectre</a> plugin)
+9. gnu-sed (for the <a href="https://github.com/nvim-pack/nvim-spectre">spectre</a> plugin)
 
 # Quickstart
 
 1. Install the required dependencies listed above.
 2. Clone this repository to your Neovim configuration path: `git clone https://github.com/harrisoncramer/nvim.git ~/.config/nvim`
 3. Open Neovim. The plugin installation should start automatically; so should the LSP and Debugger installations.
-4. Run `:UpdateRemotePlugins` to update Wilder
 
 Please be patient when you first open up Neovim, it is installing many depndencies the first time it starts! I'd recommend going and getting a cup of coffee, the process can take ~5 minutes to install all of the debuggers, LSPs, and treesitter language parsers.
 
