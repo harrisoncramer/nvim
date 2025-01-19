@@ -17,6 +17,9 @@ return {
       capabilities = capabilities,
       settings = {
         gopls = {
+          semanticTokens = true,
+          usePlaceholders = true,
+          completeFunctionCalls = true,
           analyses = {
             fillstruct = false,
             unusedparams = true,
