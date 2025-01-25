@@ -1,0 +1,6 @@
+.netrwhist
+.DS_Store
+.undo
+.vim
+lua/.luarc.json
+dev-plugins
