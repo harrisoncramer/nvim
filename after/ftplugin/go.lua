@@ -23,13 +23,31 @@ end
 
 local function go_to_query()
   local word = u.get_word_under_cursor()
-  local fzfLua = require("fzf-lua")
-  fzfLua.live_grep_native({
-    search = word,
-    cmd = "rg -t sql --line-number --column",
-    prompt = '> ',
-  })
+
+  local cmd = string.format(
+    "rg -o -t sql --json --line-number --column \"%s\" . | jq -r 'select(.data.submatches | length > 0)' | jq -r '.data'",
+    word)
+  local j = io.popen(cmd)
+  if j == nil then
+    require("notify")('No query found', vim.log.levels.ERROR)
+    return
+  end
+
+  local json = vim.fn.trim(j:read("*a"))
+  local success, data = pcall(vim.json.decode, json)
+  if not success then
+    require("notify")("Error decoding JSON: " .. tostring(data), vim.log.levels.ERROR)
+    return
+  end
+
+  if not data or not data.path or not data.path.text or not data.line_number or not data.submatches or not data.submatches[1] or not data.submatches[1].start then
+    require("notify")("Invalid data structure in JSON", vim.log.levels.ERROR)
+    return
+  end
+
+  vim.cmd("edit " .. data.path.text)                        -- Open the file specified in the path
+  vim.fn.cursor(data.line_number, data.submatches[1].start) -- Move cursor to the line and column
 end
 
 vim.keymap.set("n", "<localleader>jt", add_json_tag)
-vim.keymap.set("n", "<localleader>gq", go_to_query)
+vim.keymap.set("n", "gq", go_to_query)
