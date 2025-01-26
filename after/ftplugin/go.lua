@@ -21,4 +21,15 @@ local function add_json_tag()
   vim.api.nvim_buf_set_lines(0, line_num - 1, line_num, false, { new_line })
 end
 
-vim.keymap.set("n", "<leader>jt", add_json_tag)
+local function go_to_query()
+  local word = u.get_word_under_cursor()
+  local fzfLua = require("fzf-lua")
+  fzfLua.live_grep_native({
+    search = word,
+    cmd = "rg -t sql --line-number --column",
+    prompt = '> ',
+  })
+end
+
+vim.keymap.set("n", "<localleader>jt", add_json_tag)
+vim.keymap.set("n", "<localleader>gq", go_to_query)
