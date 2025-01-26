@@ -17,10 +17,6 @@ vim.api.nvim_create_user_command("SC", function()
   require("functions").shortcut()
 end, { nargs = 0 })
 
-vim.api.nvim_create_user_command("EXEC", function()
-  vim.api.nvim_command("silent ! chmod +x %:p")
-end, { nargs = 0 })
-
 vim.api.nvim_create_user_command("Stash", function(opts)
   local name = opts.args ~= "" and opts.args or u.get_date_time()
   name = string.gsub(name, "%s+", "_")

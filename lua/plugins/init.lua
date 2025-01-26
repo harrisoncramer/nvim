@@ -11,8 +11,6 @@ return {
   { "tpope/vim-repeat" },
   { "tpope/vim-surround" },
   { "tpope/vim-rhubarb" },
-  { "tpope/vim-eunuch" },
-  { "guns/vim-sexp",                            ft = { "clojure" } },
   { "romainl/vim-cool" },
   { "kyazdani42/nvim-web-devicons" },
   { "lambdalisue/glyph-palette.vim" },
