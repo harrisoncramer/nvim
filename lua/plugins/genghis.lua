@@ -32,5 +32,6 @@ return {
       rename = "󰑕",
       trash = "󰩹",
     }
-  }
+  },
+  successNotifications = false,
 }
