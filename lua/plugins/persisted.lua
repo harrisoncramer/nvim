@@ -1,10 +1,12 @@
+local is_disabled = vim.g.disable_persisted == 1
+
 return {
   "olimorris/persisted.nvim",
   lazy = false,
   opts = {
-    autoload = true,
-    autosave = true,
-    use_git_branch = true,
+    autoload = not is_disabled,
+    autosave = not is_disabled,
+    use_git_branch = not is_disabled,
   },
   config = function(_, opts)
     local persisted = require("persisted")
