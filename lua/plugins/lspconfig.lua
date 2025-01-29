@@ -108,6 +108,12 @@ return {
   },
   config = function()
     local servers = require("lsp.init").server_configs
+    local lspconfig = require('lspconfig')
+    for server, config in pairs(servers) do
+      config.on_attach = on_attach
+      config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+      lspconfig[server].setup(config)
+    end
     local lsp_format = require("lsp-format")
     lsp_format.setup({
       order = {
@@ -115,11 +121,5 @@ return {
         "eslint",
       }
     })
-    for server, config in pairs(servers) do
-      config.capabilities = require('blink.cmp').get_lsp_capabilities(config)
-      config.on_attach = on_attach
-      local lspconfig = require('lspconfig')
-      lspconfig[server].setup(config)
-    end
   end
 }

@@ -1,10 +1,3 @@
-local neodev_ok, neodev = pcall(require, "neodev")
-if not (neodev_ok) then
-  vim.api.nvim_err_writeln("Neodev not installed")
-else
-  neodev.setup()
-end
-
 return {
   lsp_name = "lua_ls",
   config = {
