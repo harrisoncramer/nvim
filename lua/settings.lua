@@ -3,6 +3,7 @@ vim.cmd([[ nnoremap <Space> <NOP>]])
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+vim.opt.shell = "/bin/zsh"
 vim.api.nvim_set_option('shm', vim.o.shm .. 'I')
 
 -- Open splits on the right
