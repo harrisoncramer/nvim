@@ -11,7 +11,6 @@ return {
     'DBUIFindBuffer',
   },
   init = function()
-    vim.g.db_adapter_ssh_port_range = vim.fn.range(5431, 5431)
     -- Your DBUI configuration
     vim.g.db_ui_use_nerd_fonts = 1
     vim.g.dbs = {
