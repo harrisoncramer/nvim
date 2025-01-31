@@ -16,6 +16,9 @@ return {
     vim.cmd(string.format('hi NotificationInfo guifg=%s guibg=%s', colors.sumiInk1, colors.autumnGreen))
     vim.cmd(string.format('hi NotificationWarning guifg=%s guibg=%s', colors.sumiInk1, colors.carpYellow))
     vim.cmd(string.format('hi NotificationError guifg=%s guibg=%s', colors.sumiInk1, colors.autumnRed))
+    vim.g.db_ui_save_location = '~/chariot/chariot/db_queries'
+    vim.g.db_ui_disable_info_notifications = 1
+    vim.g.db_ui_bind_param_pattern = "\\$\\d\\+"
 
     -- Your DBUI configuration
     vim.g.db_ui_use_nerd_fonts = 1
