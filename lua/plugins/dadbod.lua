@@ -11,6 +11,12 @@ return {
     'DBUIFindBuffer',
   },
   init = function()
+    local colors = require("colorscheme")
+
+    vim.cmd(string.format('hi NotificationInfo guifg=%s guibg=%s', colors.sumiInk1, colors.autumnGreen))
+    vim.cmd(string.format('hi NotificationWarning guifg=%s guibg=%s', colors.sumiInk1, colors.carpYellow))
+    vim.cmd(string.format('hi NotificationError guifg=%s guibg=%s', colors.sumiInk1, colors.autumnRed))
+
     -- Your DBUI configuration
     vim.g.db_ui_use_nerd_fonts = 1
     vim.g.dbs = {
