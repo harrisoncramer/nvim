@@ -26,25 +26,25 @@ return {
       {
         name = 'dev',
         url = function()
-          return vim.fn.system("getDbUrl dev")
+          return os.getenv("DEV_DATABASE_URL")
         end
       },
       {
         name = 'staging',
         url = function()
-          return vim.fn.system("getDbUrl staging")
+          return os.getenv("STAGING_DB_URL")
         end
       },
       {
         name = 'prod_read_only',
         url = function()
-          return vim.fn.system("getDbUrl prod_read_only")
+          return os.getenv("PROD_READ_ONLY_DB_URL")
         end
       },
       {
         name = 'prod',
         url = function()
-          return vim.fn.system("getDbUrl prod")
+          return os.getenv("PROD_DB_URL")
         end
       },
     }
