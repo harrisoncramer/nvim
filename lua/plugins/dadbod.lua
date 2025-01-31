@@ -1,8 +1,3 @@
-vim.api.nvim_create_user_command('DB', function()
-  vim.fn.system("setDbUrls")
-  vim.cmd("DBUI")
-end, { nargs = 0 })
-
 return {
   'kristijanhusak/vim-dadbod-ui',
   dependencies = {
@@ -20,27 +15,27 @@ return {
     vim.g.db_ui_use_nerd_fonts = 1
     vim.g.dbs = {
       {
-        name = 'prod',
+        name = 'dev',
         url = function()
-          return os.getenv("PROD_DB_URL")
+          return vim.fn.system("getDbUrl dev")
         end
       },
       {
         name = 'staging',
         url = function()
-          return os.getenv("STAGING_DB_URL")
-        end
-      },
-      {
-        name = 'dev',
-        url = function()
-          return os.getenv("DEV_DATABASE_URL")
+          return vim.fn.system("getDbUrl staging")
         end
       },
       {
         name = 'prod_read_only',
         url = function()
-          return os.getenv("PROD_READ_ONLY_DB_URL")
+          return vim.fn.system("getDbUrl prod_read_only")
+        end
+      },
+      {
+        name = 'prod',
+        url = function()
+          return vim.fn.system("getDbUrl prod")
         end
       },
     }
