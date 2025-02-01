@@ -1,4 +1,8 @@
+local map_opts = { noremap = true, silent = true, nowait = true, buffer = false }
+
+local w = require("functions.work")
 local u = require("functions.utils")
+local lsp = require("functions.lsp")
 
 -- Splits and tabs
 vim.keymap.set("n", "ss", ":split<Return>")
@@ -54,6 +58,10 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<S-Down>", "<C-d>zz")
 vim.keymap.set("n", "<S-Up>", "<C-u>zz")
+
+-- Failure related keymaps
+vim.keymap.set("n", "<leader>fb", w.get_build_failures, map_opts)
+vim.keymap.set("n", "<leader>fa", lsp.send_failures_to_qf, map_opts)
 
 -- Open Links
 vim.keymap.set('n', 'gx', ":silent! execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>")
