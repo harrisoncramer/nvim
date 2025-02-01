@@ -1,5 +1,9 @@
 local M = {}
 
+-- the FOLLOW commands runs the watch script, which sets a service name into a temporary file
+-- and then watches logs for any failures. These failures will update the tmux header so that we
+-- can see them right away, and can be picked up by get_build_failures command below, which runs
+-- the failures script
 vim.api.nvim_create_user_command("FOLLOW", function(opts)
   local result = vim.fn.system(string.format("watch %s", opts.args))
   if vim.v.shell_error ~= 0 then
@@ -19,7 +23,9 @@ M.get_current_service = function()
   return nil
 end
 
-
+-- get_build_failures runs the 'failures' script which returns to us a list of failures
+-- formatted in a way like  ./main.go:160:2: undefined: appGET
+-- We then parse out the file name and line number, and set it in the quickfix list
 M.get_build_failures = function()
   local svc = M.get_current_service()
   if svc == nil then
