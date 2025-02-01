@@ -1,11 +1,25 @@
 local M = {}
 
 M.get_current_service = function()
-  return vim.fs.basename(vim.fn.getcwd())
+  local file = io.open("/tmp/current_service", "r")
+  if file == nil then
+    return nil
+  end
+  local svc = file:read("*all"):gsub("%s+", "")
+  if svc ~= nil then
+    return svc
+  end
+  return nil
 end
 
 M.get_build_failures = function()
   local svc = M.get_current_service()
+  if svc == nil then
+    require("notify")("No service being monitored", vim.log.levels.ERROR)
+    return
+  end
+
+  vim.cmd(string.format("cd /Users/harrisoncramer/chariot/chariot/apps/%s", svc))
   local failures = vim.fn.systemlist(string.format("failures %s", svc))
 
   local qf_list = {}
