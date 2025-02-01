@@ -1,5 +1,9 @@
 local M = {}
 
+vim.api.nvim_create_user_command("RUN", function(opts)
+  vim.fn.system(string.format("watch %s", opts.args))
+end, { nargs = 1 })
+
 M.get_current_service = function()
   local file = io.open("/tmp/current_service", "r")
   if file == nil then
@@ -12,6 +16,7 @@ M.get_current_service = function()
   return nil
 end
 
+
 M.get_build_failures = function()
   local svc = M.get_current_service()
   if svc == nil then
@@ -19,7 +24,10 @@ M.get_build_failures = function()
     return
   end
 
+
+  vim.fn.setqflist({}, 'r')
   vim.cmd(string.format("cd /Users/harrisoncramer/chariot/chariot/apps/%s", svc))
+  vim.api.nvim_set_current_dir(string.format("/Users/harrisoncramer/chariot/chariot/apps/%s", svc))
   local failures = vim.fn.systemlist(string.format("failures %s", svc))
 
   local qf_list = {}
