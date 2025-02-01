@@ -1,7 +1,10 @@
 local M = {}
 
-vim.api.nvim_create_user_command("RUN", function(opts)
-  vim.fn.system(string.format("watch %s", opts.args))
+vim.api.nvim_create_user_command("FOLLOW", function(opts)
+  local result = vim.fn.system(string.format("watch %s", opts.args))
+  if vim.v.shell_error ~= 0 then
+    require("notify")(string.format("Could not follow '%s' container: ", opts.args) .. result)
+  end
 end, { nargs = 1 })
 
 M.get_current_service = function()
