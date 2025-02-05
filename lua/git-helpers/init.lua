@@ -72,12 +72,23 @@ vim.keymap.set("n", "<leader>gq", function() gitsigns.setqflist("all") end)
 vim.keymap.set("n", "<leader>gPP", function() M.push() end, map_opts)
 vim.keymap.set("n", "<leader>gPU", function() M.pull() end, map_opts)
 
+-- Get the file path relative to the git root
+M.copy_relative_git_path = function()
+  local buf_path = vim.api.nvim_buf_get_name(0)
+  local git_root = M.get_root_git_dir()
+  local relative_path = buf_path:sub(#git_root + 1)
+  return relative_path
+end
+
 -- Commits the changes in a file quickly with a message "Updated %s"
 M.commit_easy = function()
-  local relative_file_path = u.copy_relative_filepath(true)
+  local relative_file_path = M.copy_relative_git_path()
+  local git_root = M.get_root_git_dir()
+  vim.print({ relative_file_path, git_root })
   job:new({
     command = 'git',
     args = { "commit", relative_file_path, "-m", string.format("Updated %s", relative_file_path) },
+    cwd = git_root,
     on_exit = vim.schedule_wrap(function(_, exit_code)
       if exit_code ~= 0 then
         require("notify")('Could not commit change!', vim.log.levels.ERROR)
