@@ -433,4 +433,11 @@ M.resolve_conflict = function()
   end)
 end
 
+-- See changes compared to staging, exclude generated files
+vim.api.nvim_create_user_command("CHANGES", function()
+  vim.cmd([[
+    DiffviewOpen origin/staging -- ':(exclude)*/db/models/*'
+  ]])
+end, {})
+
 return M

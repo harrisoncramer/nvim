@@ -8,14 +8,27 @@ for type, icon in pairs(signs) do
 end
 
 -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = "solid",
-})
-
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-  vim.lsp.handlers.signature_help, {
-    border = "solid",
-  })
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "solid" })
+-- Give signature help
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "solid", })
+-- Customize publishing diagnostics
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, result, ctx, config)
+  if result.diagnostics then
+    local new_diagnostics = {}
+    for _, diagnostic in ipairs(result.diagnostics) do
+      if diagnostic.message:match("expected statement, found '<<'") and diagnostic.severity == vim.diagnostic.severity.WARN then
+        -- Remove these warnings...
+      elseif diagnostic.message:match("expected statement, found '<<'") and diagnostic.severity == vim.diagnostic.severity.ERROR then
+        diagnostic.message = "Git conflict detected."
+        table.insert(new_diagnostics, diagnostic)
+      else
+        table.insert(new_diagnostics, diagnostic)
+      end
+    end
+    result.diagnostics = new_diagnostics
+  end
+  vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+end
 
 local map_opts = { noremap = true, silent = true, nowait = true }
 local on_attach = function(client, bufnr)
