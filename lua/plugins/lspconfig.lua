@@ -7,28 +7,26 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
--- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "solid" })
--- Give signature help
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "solid", })
--- Customize publishing diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, result, ctx, config)
-  if result.diagnostics then
-    local new_diagnostics = {}
-    for _, diagnostic in ipairs(result.diagnostics) do
-      if diagnostic.message:match("expected statement, found '<<'") and diagnostic.severity == vim.diagnostic.severity.WARN then
-        -- Remove these warnings...
-      elseif diagnostic.message:match("expected statement, found '<<'") and diagnostic.severity == vim.diagnostic.severity.ERROR then
-        diagnostic.message = "Git conflict detected."
-        table.insert(new_diagnostics, diagnostic)
-      else
-        table.insert(new_diagnostics, diagnostic)
+local original_publish_handler = vim.diagnostic.handlers.signs
+vim.diagnostic.handlers.signs = {
+  show = function(ns, bufnr, diagnostics, opts)
+    if diagnostics then
+      local new_diagnostics = {}
+      for _, diagnostic in ipairs(diagnostics) do
+        if diagnostic.message:match("Unexpected statement, found '<<'") and diagnostic.severity == vim.diagnostic.severity.WARN then
+          -- Remove these warnings...
+        elseif diagnostic.message:match("Unexpected") and diagnostic.severity == vim.diagnostic.severity.ERROR then
+          diagnostic.message = "Git conflict detected."
+          table.insert(new_diagnostics, diagnostic)
+        else
+          table.insert(new_diagnostics, diagnostic)
+        end
       end
+      diagnostics = new_diagnostics
     end
-    result.diagnostics = new_diagnostics
-  end
-  vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
-end
+    original_publish_handler.show(ns, bufnr, diagnostics, opts)
+  end,
+}
 
 local map_opts = { noremap = true, silent = true, nowait = true }
 local on_attach = function(client, bufnr)
@@ -86,19 +84,19 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<leader>lc", vim.lsp.buf.incoming_calls, map_opts)
 
   vim.keymap.set("n", "]W", function()
-    vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
   end)
 
   vim.keymap.set("n", "[W", function()
-    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
   end)
 
   vim.keymap.set("n", "]w", function()
-    vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
+    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN })
   end)
 
   vim.keymap.set("n", "[w", function()
-    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })
+    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN })
   end)
 
 
