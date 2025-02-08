@@ -85,19 +85,35 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<leader>lc", vim.lsp.buf.incoming_calls, map_opts)
 
   vim.keymap.set("n", "]W", function()
-    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
+    vim.diagnostic.jump({
+      count = 1,
+      severity = vim.diagnostic.severity.ERROR,
+      float = true
+    })
   end)
 
   vim.keymap.set("n", "[W", function()
-    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
+    vim.diagnostic.jump({
+      count = 1,
+      severity = vim.diagnostic.severity.ERROR,
+      float = true
+    })
   end)
 
   vim.keymap.set("n", "]w", function()
-    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN })
+    vim.diagnostic.jump({
+      count = 1,
+      severity = vim.diagnostic.severity.WARN,
+      float = true
+    })
   end)
 
   vim.keymap.set("n", "[w", function()
-    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN })
+    vim.diagnostic.jump({
+      count = 1,
+      severity = vim.diagnostic.severity.WARN,
+      float = true
+    })
   end)
 
 
