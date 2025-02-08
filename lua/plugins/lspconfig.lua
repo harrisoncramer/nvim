@@ -36,9 +36,7 @@ vim.diagnostic.handlers.signs = {
 local map_opts = { noremap = true, silent = true, nowait = true }
 local on_attach = function(child_on_attach)
 	return function(client, bufnr)
-		print("attaching")
 		if child_on_attach ~= nil then
-			print("child attaching")
 			child_on_attach(client, bufnr)
 		end
 		local function buf_set_option(...)
