@@ -23,19 +23,19 @@ vim.keymap.set("n", "<C-t>", "<C-^>")
 vim.keymap.set("n", "<leader>vv", ":e $MYVIMRC<cr>")
 
 -- Miscellaneous
-vim.keymap.set("n", "<leader>a", "<esc>ggVG<CR>")        -- Select all
+vim.keymap.set("n", "<leader>a", "<esc>ggVG<CR>") -- Select all
 vim.keymap.set("n", "*", ":keepjumps normal! mi*`i<CR>") -- " Use * to add w/out jumping
-vim.keymap.set("n", "&", function()                      -- Rename word under cursor
-  vim.api.nvim_feedkeys(":keepjumps normal! mi*`i<CR>", "n", false)
-  u.press_enter()
-  vim.api.nvim_feedkeys(":%s//", "n", false)
+vim.keymap.set("n", "&", function() -- Rename word under cursor
+	vim.api.nvim_feedkeys(":keepjumps normal! mi*`i<CR>", "n", false)
+	u.press_enter()
+	vim.api.nvim_feedkeys(":%s//", "n", false)
 end)
 vim.keymap.set("v", "<leader>y", '"+y') -- Copy to clipboard
 vim.keymap.set("n", "H", function()
-  vim.cmd("silent! w")
-end)                                     -- Quick save
-vim.keymap.set("i", "<C-h>", "<Lseft>")  -- Move left in insert
-vim.keymap.set("i", "<C-l>", "<Right>")  -- Move right in insert
+	vim.cmd("silent! w")
+end) -- Quick save
+vim.keymap.set("i", "<C-h>", "<Lseft>") -- Move left in insert
+vim.keymap.set("i", "<C-l>", "<Right>") -- Move right in insert
 vim.keymap.set("x", "<leader>p", '"_dP') -- Keep paste register after paste
 vim.keymap.set("n", "[<space>", u.blank_line_above)
 vim.keymap.set("n", "]<space>", u.blank_line_below)
@@ -64,7 +64,7 @@ vim.keymap.set("n", "<leader>fb", w.get_build_failures, map_opts)
 vim.keymap.set("n", "<leader>fa", lsp.send_failures_to_qf, map_opts)
 
 -- Open Links
-vim.keymap.set('n', 'gx', ":silent! execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>")
+vim.keymap.set("n", "gx", ":silent! execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>")
 
 -- Allows numbered jumps to be saved to the jumplist, for use w/ C-o and C-i
 vim.api.nvim_exec("nnoremap <expr> k (v:count > 1 ? \"m'\" . v:count : '') . 'k'", false)
@@ -84,12 +84,13 @@ vim.cmd([[
 
 -- Play macro against current visual selection
 vim.keymap.set("v", "q", function()
-  vim.api.nvim_feedkeys(":normal @a", "n", true)
-  u.press_enter()
+	vim.api.nvim_feedkeys(":normal @a", "n", true)
+	u.press_enter()
 end)
 
 -- Delete surrounding function call (taken from https://github.com/faceleg/delete-surrounding-function-call.vim/blob/master/plugin/delete-surrounding-function-call.vim)
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+	[[
   function! s:DeleteSurroundingFunctionCall()
     let [success, opening_bracket] = s:FindFunctionCallStart('b')
     if !success
@@ -117,4 +118,6 @@ function! s:FindFunctionCallStart(flags)
   return [1, opener]
 endfunction
 nnoremap <silent> dsf :call <SID>DeleteSurroundingFunctionCall()<cr>
-]], false)
+]],
+	false
+)

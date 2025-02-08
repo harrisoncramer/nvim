@@ -1,3 +1,3 @@
 return {
-  lsp_name = "prismals",
+	lsp_name = "prismals",
 }

@@ -1,18 +1,18 @@
 return {
-  "Olical/conjure",
-  ft = { "clojure" },
-  config = function()
-    -- Let LSP do documentation and jump definitions
-    -- For SEXP (Turn off jumping in insert mode)
-    vim.cmd([[
+	"Olical/conjure",
+	ft = { "clojure" },
+	config = function()
+		-- Let LSP do documentation and jump definitions
+		-- For SEXP (Turn off jumping in insert mode)
+		vim.cmd([[
     let g:conjure#mapping#doc_word = v:false
     let g:conjure#mapping#def_word= v:false
     let g:sexp_enable_insert_mode_mappings = 0
   ]])
 
-    vim.keymap.set("n", "<localleader>T", ":ConjureEvalRootForm<CR> <bar> :ConjureCljRunCurrentTest<CR>")
-    vim.keymap.set("n", "<localleader>tfr", ":ConjureEvalBuf<CR> <bar> :ConjureCljRunCurrentTest<CR>")
-  end
+		vim.keymap.set("n", "<localleader>T", ":ConjureEvalRootForm<CR> <bar> :ConjureCljRunCurrentTest<CR>")
+		vim.keymap.set("n", "<localleader>tfr", ":ConjureEvalBuf<CR> <bar> :ConjureCljRunCurrentTest<CR>")
+	end,
 }
 
 -- As an example, we can change the default prefix from `<localleader>` to `,c`

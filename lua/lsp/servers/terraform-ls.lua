@@ -1,3 +1,3 @@
 return {
-  lsp_name = "terraformls",
+	lsp_name = "terraformls",
 }

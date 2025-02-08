@@ -4,7 +4,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
 vim.opt.shell = "/bin/zsh"
-vim.api.nvim_set_option('shm', vim.o.shm .. 'I')
+vim.api.nvim_set_option("shm", vim.o.shm .. "I")
 
 -- Open splits on the right
 vim.opt.splitright = true
@@ -14,7 +14,7 @@ vim.g.wildignore = "**/node_modules/**"
 -- -- Set regular expression engine
 vim.opt.regexpengine = 1
 -- Turn on clipboard across panes for tmux
-vim.opt.clipboard = 'unnamedplus'
+vim.opt.clipboard = "unnamedplus"
 -- set substitute/replace command to automatically use global flag
 vim.opt.gdefault = true
 -- Do not allow line wrapping
@@ -68,4 +68,4 @@ vim.opt.diffexpr = ""
 vim.o.ls = 0
 vim.o.ch = 0
 
-vim.filetype.add({ extension = { mdx = 'mdx' } })
+vim.filetype.add({ extension = { mdx = "mdx" } })

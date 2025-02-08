@@ -1,3 +1,3 @@
 return {
-  lsp_name = "bashls"
+	lsp_name = "bashls",
 }
