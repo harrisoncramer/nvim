@@ -47,5 +47,19 @@ return {
 			"typescript.tsx",
 			"vue",
 		},
+		on_attach = function(_, bufnr)
+			-- Automatically add missing imports before saving
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				buffer = bufnr,
+				callback = function()
+					vim.lsp.buf.code_action({
+						context = {
+							only = { "source.addMissingImports.ts" },
+						},
+						apply = true,
+					})
+				end,
+			})
+		end,
 	},
 }
