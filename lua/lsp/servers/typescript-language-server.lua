@@ -2,6 +2,41 @@ local vue_typescript_plugin = require("mason-registry").get_package("vue-languag
 	.. "/node_modules/@vue/language-server"
 	.. "/node_modules/@vue/typescript-plugin"
 
+local function add_autoimport_cmd()
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		group = vim.api.nvim_create_augroup("ts_fix_imports", { clear = true }),
+		desc = "Add missing imports and remove unused imports for TS",
+		pattern = { "*.ts", "*.tsx" },
+		callback = function()
+			local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+			for _, client in ipairs(clients) do
+				if client.name == "ts_ls" then
+					local params = vim.lsp.util.make_range_params(nil, "utf-8")
+					params.context = {
+						only = {
+							"source.addMissingImports.ts",
+							"source.removeUnused.ts",
+						},
+					}
+					local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
+					for _, res in pairs(result or {}) do
+						for _, r in pairs(res.result or {}) do
+							if r.kind == "source.addMissingImports.ts" or r.kind == "source.removeUnused.ts" then
+								vim.lsp.buf.code_action({
+									apply = true,
+									context = { only = { r.kind } },
+								})
+								vim.cmd("write")
+							end
+						end
+					end
+					break
+				end
+			end
+		end,
+	})
+end
+
 return {
 	lsp_name = "ts_ls",
 	config = {
@@ -48,18 +83,7 @@ return {
 			"vue",
 		},
 		on_attach = function(_, bufnr)
-			-- Automatically add missing imports before saving
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				buffer = bufnr,
-				callback = function()
-					vim.lsp.buf.code_action({
-						context = {
-							only = { "source.addMissingImports.ts" },
-						},
-						apply = true,
-					})
-				end,
-			})
+			add_autoimport_cmd()
 		end,
 	},
 }
