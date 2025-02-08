@@ -7,7 +7,7 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-local original_publish_handler = vim.diagnostic.handlers.signs
+local original_sign_handler = vim.diagnostic.handlers.signs
 vim.diagnostic.handlers.signs = {
   show = function(ns, bufnr, diagnostics, opts)
     if diagnostics then
@@ -15,7 +15,7 @@ vim.diagnostic.handlers.signs = {
       for _, diagnostic in ipairs(diagnostics) do
         if diagnostic.message:match("Unexpected statement, found '<<'") and diagnostic.severity == vim.diagnostic.severity.WARN then
           -- Remove these warnings...
-        elseif diagnostic.message:match("Unexpected") and diagnostic.severity == vim.diagnostic.severity.ERROR then
+        elseif diagnostic.message:match("Unexpected statement, found '<<'") and diagnostic.severity == vim.diagnostic.severity.ERROR then
           diagnostic.message = "Git conflict detected."
           table.insert(new_diagnostics, diagnostic)
         else
@@ -24,8 +24,9 @@ vim.diagnostic.handlers.signs = {
       end
       diagnostics = new_diagnostics
     end
-    original_publish_handler.show(ns, bufnr, diagnostics, opts)
+    original_sign_handler.show(ns, bufnr, diagnostics, opts)
   end,
+  hide = original_sign_handler.hide
 }
 
 local map_opts = { noremap = true, silent = true, nowait = true }

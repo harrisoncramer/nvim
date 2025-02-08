@@ -20,7 +20,12 @@ return {
       nerd_font_variant = 'mono'
     },
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer', 'dadbod' },
+      default = function()
+        if vim.bo.filetype == 'sql' then
+          return { 'dadbod' }
+        end
+        return { 'lsp', 'path', 'snippets', 'buffer' }
+      end,
       providers = {
         dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
       },
