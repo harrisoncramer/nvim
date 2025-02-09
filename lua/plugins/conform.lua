@@ -10,6 +10,9 @@ return {
 	opts = {
 		formatters_by_ft = {
 			lua = { "stylua" },
+			typescript = {
+				"prettierd",
+			},
 			javascript = {
 				"prettierd",
 				stop_after_first = true,
