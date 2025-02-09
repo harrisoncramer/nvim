@@ -1,8 +1,20 @@
 local M = {}
 
-vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
+M.note_pos = { 1, 0 }
+M.buf_pos = nil
+M.win_id = nil
 
-M.open_floating_window = function()
+M.toggle_floating_window = function()
+	if M.win_id ~= nil then
+		M.note_pos = vim.api.nvim_win_get_cursor(M.win_id)
+		M.win_id = nil
+		vim.cmd("bd")
+		vim.api.nvim_win_set_cursor(0, M.buf_pos)
+		return
+	end
+
+	M.buf_pos = vim.api.nvim_win_get_cursor(0)
+
 	local file_path = "~/.config/nvim/notes.md"
 
 	-- Create a new buffer for the file
@@ -31,12 +43,13 @@ M.open_floating_window = function()
 		border = "rounded",
 	}
 
-	vim.api.nvim_open_win(buf, true, opts)
-
-	vim.api.nvim_buf_set_keymap(0, "n", "<C-y>", ":bd<CR>", { noremap = true, silent = true })
+	local win_id = vim.api.nvim_open_win(buf, true, opts)
+	M.win_id = win_id
 
 	-- Open the file in the buffer
 	vim.cmd("silent! e " .. file_path)
+	vim.cmd("set wrap")
+	vim.api.nvim_win_set_cursor(0, M.note_pos)
 end
 
 return M

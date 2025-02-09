@@ -32,10 +32,10 @@ return {
 		})
 
 		-- Normal mode
-		-- <C-a>c Toggle new conversation
+		-- <C-a>n Toggle new conversation
 		-- <C-a><C-a> Toggle conversation
 		-- <C-a>f Find old conversation
-		vim.keymap.set({ "n", "i" }, "<C-a>c", function()
+		vim.keymap.set({ "n", "i" }, "<C-a>n", function()
 			vim.cmd("GpChatNew popup")
 			u.press_enter()
 			vim.api.nvim_put(ai_prompt, "c", true, true)

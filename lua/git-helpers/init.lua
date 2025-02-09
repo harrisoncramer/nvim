@@ -478,4 +478,21 @@ vim.api.nvim_create_user_command("CHANGES", function()
   ]])
 end, {})
 
+M.open_blame_in_github = function()
+	gitsigns.blame_line({ full = false }, function()
+		gitsigns.blame_line({}, function()
+			local commit = vim.fn.getline(1):match("^(%x+)")
+			vim.cmd(":quit")
+			vim.fn.system(string.format("gh browse %s", commit))
+		end)
+	end)
+end
+
+vim.keymap.set(
+	"n",
+	"<C-g>b",
+	M.open_blame_in_github,
+	{ desc = "Given the current line, opens up the commit in Github that made the change" }
+)
+
 return M

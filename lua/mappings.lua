@@ -49,7 +49,7 @@ vim.keymap.set("n", "<leader>ll", ":lua ")
 vim.keymap.set("n", "<leader>lp", ":lua print()<Left>")
 
 -- Notes
-vim.keymap.set("n", "<C-y>", note.open_floating_window, map_opts)
+vim.keymap.set("n", "<C-y>", note.toggle_floating_window, map_opts)
 
 -- Copy to clipboasrd
 vim.keymap.set("n", "<leader>yd", u.copy_relative_dir)
