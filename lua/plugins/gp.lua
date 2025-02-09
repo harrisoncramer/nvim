@@ -1,3 +1,13 @@
+local u = require("functions.utils")
+
+local ai_prompt = {
+	"",
+	"For the duration of this conversation, keep your answers terse.",
+	"If you provide code snippets, also make them short.",
+	"If I prefix a message with LONG you may provide a lengthier response with examples or more english text.",
+	"",
+}
+
 local function keymapOptions(desc)
 	return {
 		noremap = true,
@@ -15,8 +25,14 @@ return {
 		-- Normal mode
 		-- <C-a>c Toggle new conversation
 		-- <C-a><C-a> Toggle conversation
-		vim.keymap.set({ "n", "i" }, "<C-a>c", "<cmd>GpChatNew popup<cr>", keymapOptions("New Chat"))
+		-- <C-a>f Find old conversation
+		vim.keymap.set({ "n", "i" }, "<C-a>c", function()
+			vim.cmd("GpChatNew popup")
+			u.press_enter()
+			vim.api.nvim_put(ai_prompt, "c", true, true)
+		end, keymapOptions("New Chat"))
 		vim.keymap.set({ "n", "i" }, "<C-a><C-a>", "<cmd>GpChatToggle popup<cr>", keymapOptions("Toggle Chat"))
+		vim.keymap.set({ "n", "i" }, "<C-a>f", "<cmd>GpChatFinder<cr>", keymapOptions("Chat Finder")) -- Find old chat
 
 		-- Chat mode
 		vim.keymap.set("v", "<C-a>c", ":<C-u>'<,'>GpChatNew popup<cr>", keymapOptions("Visual Chat New"))
