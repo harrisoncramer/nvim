@@ -4,3 +4,4 @@
 .vim
 lua/.luarc.json
 dev-plugins
+notes.md

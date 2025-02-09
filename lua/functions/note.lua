@@ -3,7 +3,7 @@ local M = {}
 vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
 
 M.open_floating_window = function()
-	local file_path = "/tmp/notes.md"
+	local file_path = "~/.config/nvim/notes.md"
 
 	-- Create a new buffer for the file
 	local buf = vim.fn.bufnr(file_path, true) -- Get buffer number or create if not exists
