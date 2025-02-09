@@ -5,6 +5,7 @@ local ai_prompt = {
 	"For the duration of this conversation, keep your answers terse.",
 	"If you provide code snippets, also make them short.",
 	"If I prefix a message with LONG you may provide a lengthier response with examples or more english text.",
+	"After providing a LONG answer, resume short responses again. The LONG keyword is per-request",
 	"",
 }
 
@@ -21,6 +22,14 @@ return {
 	"robitx/gp.nvim",
 	config = function()
 		require("gp").setup()
+
+		-- Do not care about chat buffers when quitting Neovim
+		vim.api.nvim_create_autocmd("BufUnload", {
+			pattern = "~/.local/share/nvim/gp/chats/*.md",
+			callback = function()
+				vim.bo.modified = false
+			end,
+		})
 
 		-- Normal mode
 		-- <C-a>c Toggle new conversation
