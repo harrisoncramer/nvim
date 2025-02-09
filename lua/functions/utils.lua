@@ -410,4 +410,10 @@ return {
 		local result = vim.fn.executable(executable)
 		return result == 1
 	end,
+	get_visually_selected_lines = function()
+		local start_line = vim.fn.line("v") - 1 -- Convert to 0-based index
+		local end_line = vim.fn.line(".") -- Keep as 1-based index
+		local lines = vim.api.nvim_buf_get_lines(0, start_line, end_line, false)
+		return lines
+	end,
 }
