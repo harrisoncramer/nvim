@@ -1,6 +1,8 @@
-vim.api.nvim_create_user_command("Notes", open_floating_window, {})
+local M = {}
 
-local function open_floating_window()
+vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
+
+M.open_floating_window = function()
 	local file_path = "/tmp/notes.md"
 
 	-- Create a new buffer for the file
@@ -31,10 +33,10 @@ local function open_floating_window()
 
 	vim.api.nvim_open_win(buf, true, opts)
 
-	vim.api.nvim_buf_set_keymap(0, "n", "<C-n>", ":bd<CR>", { noremap = true, silent = true })
+	vim.api.nvim_buf_set_keymap(0, "n", "<C-y>", ":bd<CR>", { noremap = true, silent = true })
 
 	-- Open the file in the buffer
 	vim.cmd("silent! e " .. file_path)
 end
 
-vim.keymap.set("n", "<C-n>", open_floating_window, nil)
+return M

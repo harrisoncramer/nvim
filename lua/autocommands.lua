@@ -62,3 +62,11 @@ for group, commands in pairs(augroups) do
 		vim.api.nvim_create_autocmd(event, opts)
 	end
 end
+
+-- Basic session management!
+vim.api.nvim_create_autocmd("VimLeavePre", {
+	command = "mksession! /tmp/.nvim_session.vim",
+})
+
+-- Keybinding to restore session
+vim.api.nvim_set_keymap("n", "<leader>sr", ":source /tmp/.nvim_session.vim<CR>", { noremap = true, silent = true })

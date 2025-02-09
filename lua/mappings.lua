@@ -3,6 +3,7 @@ local map_opts = { noremap = true, silent = true, nowait = true, buffer = false 
 local w = require("functions.work")
 local u = require("functions.utils")
 local lsp = require("functions.lsp")
+local note = require("functions.note")
 
 -- Splits and tabs
 vim.keymap.set("n", "ss", ":split<Return>")
@@ -46,6 +47,9 @@ vim.keymap.set("n", "<leader>tc", vim.cmd.tabclose)
 -- Lua helpers
 vim.keymap.set("n", "<leader>ll", ":lua ")
 vim.keymap.set("n", "<leader>lp", ":lua print()<Left>")
+
+-- Notes
+vim.keymap.set("n", "<C-y>", note.open_floating_window, map_opts)
 
 -- Copy to clipboasrd
 vim.keymap.set("n", "<leader>yd", u.copy_relative_dir)
