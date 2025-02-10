@@ -52,6 +52,7 @@ local debuggers = {
 local formatters = {
 	"prettierd",
 	"stylua",
+	"sql-formatter",
 }
 
 local all = u.merge(servers, linters, debuggers, formatters)

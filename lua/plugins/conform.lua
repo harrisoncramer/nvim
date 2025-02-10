@@ -8,6 +8,12 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 return {
 	"stevearc/conform.nvim",
 	opts = {
+		formatters = {
+			["sql-formatter"] = {
+				command = "sql-formatter",
+				args = { "-l", "postgresql" },
+			},
+		},
 		formatters_by_ft = {
 			lua = { "stylua" },
 			typescript = {
@@ -16,6 +22,9 @@ return {
 			javascript = {
 				"prettierd",
 				stop_after_first = true,
+			},
+			sql = {
+				"sql-formatter",
 			},
 		},
 		default_format_opts = {

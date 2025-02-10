@@ -5,7 +5,7 @@ local M = {}
 -- can see them right away, and can be picked up by get_build_failures command below, which runs
 -- the failures script
 vim.api.nvim_create_user_command("FOLLOW", function(opts)
-	local result = vim.fn.system(string.format("watch %s", opts.args))
+	local result = vim.fn.system(string.format("watch-logs %s", opts.args))
 	if vim.v.shell_error ~= 0 then
 		require("notify")(string.format("Could not follow '%s' container: ", opts.args) .. result, vim.log.levels.ERROR)
 	end

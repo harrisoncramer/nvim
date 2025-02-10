@@ -8,6 +8,7 @@ M.toggle_floating_window = function()
 	if M.win_id ~= nil then
 		M.note_pos = vim.api.nvim_win_get_cursor(M.win_id)
 		M.win_id = nil
+		vim.cmd("w")
 		vim.cmd("bd")
 		vim.api.nvim_win_set_cursor(0, M.buf_pos)
 		return
