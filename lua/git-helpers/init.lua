@@ -110,7 +110,6 @@ end
 M.commit_easy = function()
 	local relative_file_path = M.copy_relative_git_path()
 	local git_root = M.get_root_git_dir()
-	vim.print({ relative_file_path, git_root })
 	job:new({
 		command = "git",
 		args = { "commit", relative_file_path, "-m", string.format("Updated %s", relative_file_path) },
