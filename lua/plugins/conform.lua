@@ -7,28 +7,31 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 return {
 	"stevearc/conform.nvim",
-	opts = {
-		formatters = {
-			["sql-formatter"] = {
-				command = "sql-formatter",
-				args = { "-l", "postgresql" },
+	config = function()
+		require("conform").setup({
+			formatters = {
+				["pg_format"] = {
+					command = "pg_format",
+					args = { "--inplace" },
+					cwd = require("conform.util").root_file({ ".pg_format" }),
+				},
 			},
-		},
-		formatters_by_ft = {
-			lua = { "stylua" },
-			typescript = {
-				"prettierd",
+			formatters_by_ft = {
+				lua = { "stylua" },
+				typescript = {
+					"prettierd",
+				},
+				javascript = {
+					"prettierd",
+					stop_after_first = true,
+				},
+				sql = {
+					"pg_format",
+				},
 			},
-			javascript = {
-				"prettierd",
-				stop_after_first = true,
+			default_format_opts = {
+				lsp_format = "fallback",
 			},
-			sql = {
-				"sql-formatter",
-			},
-		},
-		default_format_opts = {
-			lsp_format = "fallback",
-		},
-	},
+		})
+	end,
 }

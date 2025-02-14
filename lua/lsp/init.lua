@@ -52,7 +52,7 @@ local debuggers = {
 local formatters = {
 	"prettierd",
 	"stylua",
-	"sql-formatter",
+	"sql-formatter", -- This does not support @ symbols, use https://github.com/nene/prettier-plugin-sql-cst instead
 }
 
 local all = u.merge(servers, linters, debuggers, formatters)
