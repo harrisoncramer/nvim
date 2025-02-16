@@ -1,8 +1,13 @@
 local u = require("functions.utils")
 
-local keys = {
-	["i"] = "focus_input",
+local list_keys = {
+	["<Esc>"] = "",
 	["/"] = "toggle_focus",
+}
+
+local default_keys = {
+	["<Esc>"] = { "", mode = { "n", "x" } },
+	["/"] = { "toggle_focus", mode = { "i", "n", "x" } },
 	["<c-q>"] = "qflist",
 	["<c-s>"] = "edit_split",
 	["<c-v>"] = "edit_vsplit",
@@ -10,20 +15,14 @@ local keys = {
 	["<CR>"] = "confirm",
 	["<S-Tab>"] = { "select_and_prev", mode = { "n", "x" } },
 	["<Tab>"] = { "select_and_next", mode = { "n", "x" } },
-	["<C-o>"] = "select_all",
+	["<C-o>"] = { "select_all", mode = { "n", "i", "x" } },
 	["G"] = "list_bottom",
 	["gg"] = "list_top",
-	["<c-u>"] = "preview_scroll_up",
-	["<c-d>"] = "preview_scroll_down",
+	["<c-u>"] = { "preview_scroll_up", mode = { "n", "i" } },
+	["<c-d>"] = { "preview_scroll_down", mode = { "n", "i" } },
 	["?"] = "toggle_help_list",
 	["j"] = "list_down",
 	["k"] = "list_up",
-}
-
-local picker_config = {
-	win = {
-		input = keys,
-	},
 }
 
 return {
@@ -34,9 +33,19 @@ return {
 		{
 			"<C-j>",
 			function()
-				require("snacks").picker.git_files(u.merge(picker_config, {
+				require("snacks").picker.git_files({
 					title = "Search Files",
-				}))
+					win = {
+						list = {
+							keys = list_keys,
+						},
+						input = {
+							keys = u.merge(default_keys, {
+								["<C-j>"] = { "close", mode = { "n", "i" } },
+							}),
+						},
+					},
+				})
 			end,
 			mode = { "n" },
 			desc = "Find Git Files",
@@ -44,10 +53,20 @@ return {
 		{
 			"<C-m>",
 			function()
-				require("snacks").picker.git_files(u.merge(picker_config, {
+				require("snacks").picker.git_files({
 					cwd = "~/.config/nvim",
 					title = "Neovim Config",
-				}))
+					win = {
+						list = {
+							keys = list_keys,
+						},
+						input = {
+							keys = u.merge(default_keys, {
+								["<C-m>"] = { "close", mode = { "n", "i" } },
+							}),
+						},
+					},
+				})
 			end,
 			mode = { "n" },
 			desc = "Neovim Files",
@@ -55,10 +74,20 @@ return {
 		{
 			"<C-f>",
 			function()
-				require("snacks").picker.grep(u.merge(picker_config, {
+				require("snacks").picker.grep({
 					title = "Search Text",
 					live = true,
-				}))
+					win = {
+						list = {
+							keys = list_keys,
+						},
+						input = {
+							keys = u.merge(default_keys, {
+								["<C-f>"] = { "close", mode = { "n", "i" } },
+							}),
+						},
+					},
+				})
 			end,
 			mode = { "n" },
 			desc = "Search text",
@@ -66,10 +95,21 @@ return {
 		{
 			"<C-c>",
 			function()
-				require("snacks").picker.command_history(u.merge(picker_config, {
+				require("snacks").picker.command_history(u.merge({}, {
 					title = "Search Command History",
 					layout = {
 						layout = { position = "bottom" },
+					},
+					win = {
+						list = {
+							keys = list_keys,
+						},
+						input = {
+							keys = u.merge(default_keys, {
+								["<C-c>"] = { "close", mode = { "n", "i" } },
+								["<Enter>"] = { "pick", mode = { "n", "i" } },
+							}),
+						},
 					},
 				}))
 			end,
