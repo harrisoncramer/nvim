@@ -13,6 +13,8 @@ return {
 	init = function()
 		local colors = require("colorscheme")
 
+		vim.g.db_async = 2 -- Allow cancelling queries
+
 		vim.cmd(string.format("hi NotificationInfo guifg=%s guibg=%s", colors.sumiInk1, colors.autumnGreen))
 		vim.cmd(string.format("hi NotificationWarning guifg=%s guibg=%s", colors.sumiInk1, colors.carpYellow))
 		vim.cmd(string.format("hi NotificationError guifg=%s guibg=%s", colors.sumiInk1, colors.autumnRed))
