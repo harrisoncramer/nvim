@@ -1,4 +1,6 @@
-local input_keys = {
+local u = require("functions.utils")
+
+local keys = {
 	["i"] = "focus_input",
 	["/"] = "toggle_focus",
 	["<c-q>"] = "qflist",
@@ -16,14 +18,14 @@ local input_keys = {
 	["?"] = "toggle_help_list",
 	["j"] = "list_down",
 	["k"] = "list_up",
-	["q"] = "close",
 }
 
 local picker_config = {
 	win = {
-		input = input_keys,
+		input = keys,
 	},
 }
+
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
@@ -32,15 +34,31 @@ return {
 		{
 			"<C-j>",
 			function()
-				require("snacks").picker.git_files(picker_config)
+				require("snacks").picker.git_files(u.merge(picker_config, {
+					title = "Search Files",
+				}))
 			end,
 			mode = { "n" },
 			desc = "Find Git Files",
 		},
 		{
+			"<C-m>",
+			function()
+				require("snacks").picker.git_files(u.merge(picker_config, {
+					cwd = "~/.config/nvim",
+					title = "Neovim Config",
+				}))
+			end,
+			mode = { "n" },
+			desc = "Neovim Files",
+		},
+		{
 			"<C-f>",
 			function()
-				require("snacks").picker.grep(picker_config)
+				require("snacks").picker.grep(u.merge(picker_config, {
+					title = "Search Text",
+					live = true,
+				}))
 			end,
 			mode = { "n" },
 			desc = "Search text",
@@ -48,10 +66,15 @@ return {
 		{
 			"<C-c>",
 			function()
-				require("snacks").picker.command_history(picker_config)
+				require("snacks").picker.command_history(u.merge(picker_config, {
+					title = "Search Command History",
+					layout = {
+						layout = { position = "bottom" },
+					},
+				}))
 			end,
 			mode = { "n" },
-			desc = "Search text",
+			desc = "Search Command History",
 		},
 		{
 			"<C-z>",

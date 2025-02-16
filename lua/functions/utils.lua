@@ -30,14 +30,16 @@ local function get_line_number()
 	return vim.api.nvim_win_get_cursor(0)[1]
 end
 
-local merge = function(...)
-	local res = {}
-	for _, t in ipairs({ ... }) do
-		for _, value in ipairs(t) do
-			table.insert(res, value)
+local function merge(...)
+	local result = {}
+	local sources = { ... }
+	for i = 1, #sources do
+		local source = sources[i]
+		for key, value in pairs(source) do
+			result[key] = value
 		end
 	end
-	return res
+	return result
 end
 
 local basename = function(str)
