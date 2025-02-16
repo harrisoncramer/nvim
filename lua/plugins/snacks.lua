@@ -1,14 +1,21 @@
 local u = require("functions.utils")
 
-local list_keys = {
-	["<Esc>"] = "",
-	["/"] = "toggle_focus",
+local preview_keys = {
+	["<Esc>"] = { "", mode = { "n", "x" } },
+	["sh"] = { "toggle_focus", mode = { "n", "x" } },
 }
 
-local default_keys = {
+local list_keys = {
 	["<Esc>"] = { "", mode = { "n", "x" } },
+	["/"] = "toggle_focus",
+	["sp"] = { "focus_preview", mode = { "n", "x" } },
+}
+
+local input_keys = {
+	["<Esc>"] = { "", mode = { "n", "x" } },
+	["sl"] = { "focus_preview", mode = { "n", "x" } },
 	["/"] = { "toggle_focus", mode = { "i", "n", "x" } },
-	["<c-q>"] = "qflist",
+	["<c-q>"] = { "qflist", mode = { "i", "n", "x" } },
 	["<c-s>"] = "edit_split",
 	["<c-v>"] = "edit_vsplit",
 	["<c-t>"] = "tab",
@@ -36,11 +43,14 @@ return {
 				require("snacks").picker.git_files({
 					title = "Search Files",
 					win = {
+						preview = {
+							keys = preview_keys,
+						},
 						list = {
 							keys = list_keys,
 						},
 						input = {
-							keys = u.merge(default_keys, {
+							keys = u.merge(input_keys, {
 								["<C-j>"] = { "close", mode = { "n", "i" } },
 							}),
 						},
@@ -57,11 +67,14 @@ return {
 					cwd = "~/.config/nvim",
 					title = "Neovim Config",
 					win = {
+						preview = {
+							keys = preview_keys,
+						},
 						list = {
 							keys = list_keys,
 						},
 						input = {
-							keys = u.merge(default_keys, {
+							keys = u.merge(input_keys, {
 								["<C-m>"] = { "close", mode = { "n", "i" } },
 							}),
 						},
@@ -78,11 +91,14 @@ return {
 					title = "Search Text",
 					live = true,
 					win = {
+						preview = {
+							keys = preview_keys,
+						},
 						list = {
 							keys = list_keys,
 						},
 						input = {
-							keys = u.merge(default_keys, {
+							keys = u.merge(input_keys, {
 								["<C-f>"] = { "close", mode = { "n", "i" } },
 							}),
 						},
@@ -101,11 +117,14 @@ return {
 						layout = { position = "bottom" },
 					},
 					win = {
+						preview = {
+							keys = preview_keys,
+						},
 						list = {
 							keys = list_keys,
 						},
 						input = {
-							keys = u.merge(default_keys, {
+							keys = u.merge(input_keys, {
 								["<C-c>"] = { "close", mode = { "n", "i" } },
 								["<Enter>"] = { "pick", mode = { "n", "i" } },
 							}),
