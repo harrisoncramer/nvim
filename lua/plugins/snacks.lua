@@ -1,3 +1,29 @@
+local input_keys = {
+	["i"] = "focus_input",
+	["/"] = "toggle_focus",
+	["<c-q>"] = "qflist",
+	["<c-s>"] = "edit_split",
+	["<c-v>"] = "edit_vsplit",
+	["<c-t>"] = "tab",
+	["<CR>"] = "confirm",
+	["<S-Tab>"] = { "select_and_prev", mode = { "n", "x" } },
+	["<Tab>"] = { "select_and_next", mode = { "n", "x" } },
+	["<C-o>"] = "select_all",
+	["G"] = "list_bottom",
+	["gg"] = "list_top",
+	["<c-u>"] = "preview_scroll_up",
+	["<c-d>"] = "preview_scroll_down",
+	["?"] = "toggle_help_list",
+	["j"] = "list_down",
+	["k"] = "list_up",
+	["q"] = "close",
+}
+
+local picker_config = {
+	win = {
+		input = input_keys,
+	},
+}
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
@@ -6,16 +32,7 @@ return {
 		{
 			"<C-j>",
 			function()
-				require("snacks").picker.git_files({
-					win = {
-						input = {
-							keys = {
-								["<C-u>"] = "preview_scroll_up",
-								["<C-d>"] = "preview_scroll_down",
-							},
-						},
-					},
-				})
+				require("snacks").picker.git_files(picker_config)
 			end,
 			mode = { "n" },
 			desc = "Find Git Files",
@@ -23,11 +40,7 @@ return {
 		{
 			"<C-f>",
 			function()
-				require("snacks").picker.grep({
-					layout = {
-						position = "bottom",
-					},
-				})
+				require("snacks").picker.grep(picker_config)
 			end,
 			mode = { "n" },
 			desc = "Search text",
@@ -35,7 +48,7 @@ return {
 		{
 			"<C-c>",
 			function()
-				require("snacks").picker.command_history()
+				require("snacks").picker.command_history(picker_config)
 			end,
 			mode = { "n" },
 			desc = "Search text",
