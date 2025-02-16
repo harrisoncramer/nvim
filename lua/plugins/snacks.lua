@@ -3,15 +3,18 @@ local u = require("functions.utils")
 local preview_keys = {
 	["<Esc>"] = { "", mode = { "n", "x" } },
 	["sh"] = { "toggle_focus", mode = { "n", "x" } },
+	["<CR>"] = { "confirm", mode = { "n", "i", "x" } },
 }
 
 local list_keys = {
 	["<Esc>"] = { "", mode = { "n", "x" } },
 	["/"] = "toggle_focus",
 	["sp"] = { "focus_preview", mode = { "n", "x" } },
+	["<CR>"] = { "confirm", mode = { "n", "i", "x" } },
 }
 
 local input_keys = {
+	["<CR>"] = { "confirm", mode = { "n", "i", "x" } },
 	["<Esc>"] = { "", mode = { "n", "x" } },
 	["sl"] = { "focus_preview", mode = { "n", "x" } },
 	["/"] = { "toggle_focus", mode = { "i", "n", "x" } },
@@ -19,9 +22,8 @@ local input_keys = {
 	["<c-s>"] = "edit_split",
 	["<c-v>"] = "edit_vsplit",
 	["<c-t>"] = "tab",
-	["<CR>"] = "confirm",
-	["<S-Tab>"] = { "select_and_prev", mode = { "n", "x" } },
-	["<Tab>"] = { "select_and_next", mode = { "n", "x" } },
+	["<S-Tab>"] = { "select_and_prev", mode = { "n", "x", "i" } },
+	["<Tab>"] = { "select_and_next", mode = { "n", "x", "i" } },
 	["<C-o>"] = { "select_all", mode = { "n", "i", "x" } },
 	["G"] = "list_bottom",
 	["gg"] = "list_top",
