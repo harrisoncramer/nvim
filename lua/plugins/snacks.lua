@@ -1,23 +1,23 @@
 local u = require("functions.utils")
 
 local preview_keys = {
-	["<Esc>"] = { "", mode = { "n", "x" } },
+	-- ["<Esc>"] = { "", mode = { "n", "x" } },
 	["sh"] = { "toggle_focus", mode = { "n", "x" } },
 	["<CR>"] = { "confirm", mode = { "n", "i", "x" } },
 }
 
 local list_keys = {
 	["<Esc>"] = { "", mode = { "n", "x" } },
-	["/"] = "toggle_focus",
+	["<C-s>"] = "toggle_focus",
 	["sp"] = { "focus_preview", mode = { "n", "x" } },
 	["<CR>"] = { "confirm", mode = { "n", "i", "x" } },
 }
 
 local input_keys = {
+	--["<Esc>"] = { "", mode = { "n", "x" } },
 	["<CR>"] = { "confirm", mode = { "n", "i", "x" } },
-	["<Esc>"] = { "", mode = { "n", "x" } },
 	["sl"] = { "focus_preview", mode = { "n", "x" } },
-	["/"] = { "toggle_focus", mode = { "i", "n", "x" } },
+	["<C-s>"] = { "toggle_focus", mode = { "i", "n", "x" } },
 	["<c-q>"] = { "qflist", mode = { "i", "n", "x" } },
 	["<c-s>"] = "edit_split",
 	["<c-v>"] = "edit_vsplit",
