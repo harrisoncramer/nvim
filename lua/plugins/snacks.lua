@@ -183,8 +183,6 @@ return {
 						position = "bottom",
 					},
 				}, { desc = "Terminal" })
-				-- require("snacks").picker(require("snacks").terminal.list())
-				-- require("snacks").terminal.toggle()
 			end,
 			desc = "Toggle Terminal",
 		},
