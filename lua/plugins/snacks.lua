@@ -88,7 +88,6 @@ return {
 						"~/chariot/chariot/apps/dafpay/",
 						"~/chariot/chariot/apps/dashboard/",
 						"~/chariot/chariot/apps/integrations/",
-						"~/chariot/chariot/apps/nolnprofitDashboard/",
 						"~/chariot/chariot/apps/nonprofitDashboard/",
 						"~/chariot/chariot/apps/orchestration/",
 						"~/chariot/chariot/apps/payments/",
