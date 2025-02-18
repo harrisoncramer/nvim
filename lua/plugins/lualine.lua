@@ -47,7 +47,12 @@ local ollama = function()
 end
 
 local diagnostics = { "diagnostics" }
-local disabled_filetypes = { "gitlab", "DiffviewFiles", "oil" }
+local disabled_filetypes = {
+	"gitlab",
+	"DiffviewFiles",
+	"oil",
+	"snacks_terminal",
+}
 
 local mode_map = {
 	n = "(ᴗ_ ᴗ。)",

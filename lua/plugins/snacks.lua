@@ -1,5 +1,13 @@
 local u = require("functions.utils")
 
+-- https://stackoverflow.com/a/63908546/2338672
+vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
+	pattern = "*",
+	callback = function()
+		vim.wo.winbar = ""
+	end,
+})
+
 local preview_keys = {
 	-- ["<Esc>"] = { "", mode = { "n", "x" } },
 	["sh"] = { "toggle_focus", mode = { "n", "x" } },
@@ -63,22 +71,38 @@ return {
 			desc = "Find Git Files",
 		},
 		{
-			"<C-m>",
+			"<C-k>",
 			function()
-				require("snacks").picker.git_files({
-					cwd = "~/.config/nvim",
-					title = "Neovim Config",
+				require("snacks").picker.projects({
+					finder = "recent_projects",
+					patterns = { ".git", "package.json" },
+					recent = true,
+					matcher = {
+						frecency = true, -- use frecency boosting
+						sort_empty = true, -- sort even when the filter is empty
+						cwd_bonus = false,
+					},
+					sort = { fields = { "score:desc", "idx" } },
 					win = {
-						preview = {
-							keys = preview_keys,
-						},
-						list = {
-							keys = list_keys,
-						},
+						preview = { minimal = true },
 						input = {
-							keys = u.merge(input_keys, {
-								["<C-m>"] = { "close", mode = { "n", "i" } },
-							}),
+							keys = {
+								-- every action will always first change the cwd of the current tabpage to the project
+								["<c-e>"] = { { "tcd", "picker_explorer" }, mode = { "n", "i" } },
+								["<c-j>"] = { { "tcd", "picker_files" }, mode = { "n", "i" } },
+								["<c-f>"] = { { "tcd", "picker_grep" }, mode = { "n", "i" } },
+								["<c-r>"] = { { "tcd", "picker_recent" }, mode = { "n", "i" } },
+								["<c-w>"] = { { "tcd" }, mode = { "n", "i" } },
+								["<c-t>"] = {
+									function(picker)
+										vim.cmd("tabnew")
+										Snacks.notify("New tab opened")
+										picker:close()
+										Snacks.picker.projects()
+									end,
+									mode = { "n", "i" },
+								},
+							},
 						},
 					},
 				})
@@ -113,8 +137,8 @@ return {
 		{
 			"<C-c>",
 			function()
-				require("snacks").picker.command_history(u.merge({}, {
-					title = "Search Command History",
+				require("snacks").picker.command_history({
+					title = "Search Files",
 					layout = {
 						layout = { position = "bottom" },
 					},
@@ -128,44 +152,41 @@ return {
 						input = {
 							keys = u.merge(input_keys, {
 								["<C-c>"] = { "close", mode = { "n", "i" } },
-								["<Enter>"] = { "pick", mode = { "n", "i" } },
 							}),
 						},
 					},
-				}))
+				})
 			end,
 			mode = { "n" },
-			desc = "Search Command History",
+			desc = "Find Git Files",
 		},
 		{
 			"<C-z>",
 			mode = { "n", "t" },
 			function()
-				local current_dir = vim.fn.expand("%:p:h")
-				if current_dir == "" or vim.fn.isdirectory(current_dir) == 0 then
-					current_dir = vim.fn.getcwd()
-				end
-
-				local in_terminal = vim.bo.buftype == "terminal"
-				if in_terminal then
-					vim.cmd("hide")
-				else
-					require("snacks").terminal.toggle("zsh", {
-						-- cwd = current_dir,
-						env = {
-							TERM = "xterm-256color",
+				require("snacks").terminal("zsh", {
+					keys = {
+						term_normal = {
+							"<esc><esc>",
+							function()
+								return "<C-\\><C-n>"
+							end,
+							mode = "t",
+							expr = true,
+							desc = "Double escape to normal mode",
 						},
-						title = "",
-						win = {
-							style = "terminal",
-							relative = "editor",
-							width = 0.83,
-							height = 0.83,
-						},
-					})
-				end
+					},
+					win = {
+						style = "terminal",
+						relative = "editor",
+						minimal = true,
+						position = "bottom",
+					},
+				}, { desc = "Terminal" })
+				-- require("snacks").picker(require("snacks").terminal.list())
+				-- require("snacks").terminal.toggle()
 			end,
-			desc = "Toggle ZSH Terminal",
+			desc = "Toggle Terminal",
 		},
 	},
 	config = function()
@@ -179,6 +200,7 @@ return {
 				enabled = true,
 			},
 			terminal = {
+				wo = {},
 				bo = {
 					filetype = "snacks_terminal",
 				},
