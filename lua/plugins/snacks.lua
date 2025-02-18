@@ -75,10 +75,33 @@ return {
 			function()
 				require("snacks").picker.projects({
 					finder = "recent_projects",
-					patterns = { ".git", "package.json" },
-					recent = true,
+					projects = {
+						"~/chariot/chariot",
+						"~/chariot/chariot/apps/actor/",
+						"~/chariot/chariot/apps/assets/",
+						"~/chariot/chariot/apps/auth/",
+						"~/chariot/chariot/apps/clerk/",
+						"~/chariot/chariot/apps/cmd/",
+						"~/chariot/chariot/apps/coauth/",
+						"~/chariot/chariot/apps/compliance/",
+						"~/chariot/chariot/apps/connect/",
+						"~/chariot/chariot/apps/dafpay/",
+						"~/chariot/chariot/apps/dashboard/",
+						"~/chariot/chariot/apps/integrations/",
+						"~/chariot/chariot/apps/nolnprofitDashboard/",
+						"~/chariot/chariot/apps/nonprofitDashboard/",
+						"~/chariot/chariot/apps/orchestration/",
+						"~/chariot/chariot/apps/payments/",
+						"~/chariot/chariot/apps/secretary/",
+						"~/chariot/chariot/apps/sherlock/",
+						"~/chariot/chariot/apps/supervisor/",
+						"~/chariot/chariot/apps/token/",
+						"~/.dotfiles",
+						"~/.config/nvim",
+					},
+					recent = false,
 					matcher = {
-						frecency = true, -- use frecency boosting
+						frecency = false, -- use frecency boosting
 						sort_empty = true, -- sort even when the filter is empty
 						cwd_bonus = false,
 					},
