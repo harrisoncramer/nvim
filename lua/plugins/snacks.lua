@@ -34,6 +34,7 @@ local all_projects = {
 	"~/chariot/chariot/apps/supervisor/",
 	"~/chariot/chariot/apps/token/",
 	"~/.dotfiles",
+	"~/.config/nvim",
 }
 M.project_items = {}
 for _, v in ipairs(all_projects) do
