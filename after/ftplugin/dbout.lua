@@ -9,9 +9,9 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
-vim.api.nvim_create_autocmd({ "BufReadPost" }, {
-	pattern = { "*.dbout" },
-	callback = function()
-		vim.api.nvim_exec2([[ exe ':resize 30' ]], {})
-	end,
-})
+-- vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+-- 	pattern = { "*.dbout" },
+-- 	callback = function()
+-- 		vim.api.nvim_exec2([[ exe ':resize 30' ]], {})
+-- 	end,
+-- })
