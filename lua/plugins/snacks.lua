@@ -11,10 +11,16 @@ vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
 	end,
 })
 
+-- TODO: Set up file filter to search for particular files, then
+-- be able to search for text within them
+
 -- Set all projects up for project-specific search
 
 local all_projects = {
 	"~/chariot/chariot",
+	"~/chariot/proto",
+	"~/chariot/ops",
+	"~/chariot/deploy",
 	"~/chariot/chariot/apps/actor/",
 	"~/chariot/chariot/apps/assets/",
 	"~/chariot/chariot/apps/auth/",

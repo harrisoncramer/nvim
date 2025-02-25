@@ -12,7 +12,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		"antoinemadec/FixCursorHold.nvim",
 		"marilari88/neotest-vitest",
-		"nvim-neotest/neotest-go",
+		{ "fredrikaverpil/neotest-golang", version = "*" }, -- Installation
 	},
 	config = function()
 		local neotest = require("neotest")
@@ -105,7 +105,7 @@ return {
 			},
 			adapters = {
 				require("neotest-vitest"),
-				require("neotest-go"),
+				require("neotest-golang")({}),
 			},
 		})
 
@@ -138,20 +138,6 @@ return {
 			neotest.summary.toggle()
 			u.resize_vertical_splits()
 		end, map_opts)
-
-		-- vim.keymap.set(
-		--   "n",
-		--   "<localleader>tn",
-		--   neotest.jump.next,
-		--   map_opts
-		-- )
-		--
-		-- vim.keymap.set(
-		--   "n",
-		--   "<localleader>tp",
-		--   neotest.jump.prev,
-		--   map_opts
-		-- )
 
 		vim.keymap.set("n", "<localleader>tl", function()
 			neotest.run.run_last({ enter = true })
