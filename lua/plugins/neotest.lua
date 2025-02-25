@@ -1,3 +1,28 @@
+local notify = require("notify")
+local Job = require("plenary.job")
+
+local function start_test_db(cb)
+	Job:new({
+		command = "sh",
+		args = {
+			"-c",
+			"docker compose --profile test up -d test-db",
+		},
+		cwd = "~/chariot/chariot",
+		on_exit = function(j, return_val)
+			if return_val == 0 then
+				notify("Started test DB...", vim.log.levels.INFO)
+				vim.schedule(function()
+					cb()
+				end)
+			else
+				vim.print("Failed to start Test DB")
+				vim.print(j:stderr_result()) -- Ensure errors are captured
+			end
+		end,
+	}):start()
+end
+
 local u = require("functions.utils")
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "neotest-summary",
@@ -105,7 +130,7 @@ return {
 			},
 			adapters = {
 				require("neotest-vitest"),
-				require("neotest-golang")({}),
+				require("neotest-golang")(),
 			},
 		})
 
@@ -121,12 +146,24 @@ return {
 		vim.api.nvim_set_hl(0, "NeotestNamespace", { fg = colors.crystalBlue })
 		vim.api.nvim_set_hl(0, "NeotestAdapterName", { fg = colors.oniViolet })
 
+		local test_args = {
+			env = {
+				AWS_TEMPLATE_BUCKET = "fake-bucket",
+				TEST_DATABASE_URL_BASE = os.getenv("TEST_DATABASE_URL_BASE"),
+				TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL"),
+				TEST_DATABASE_NAME = os.getenv("TEST_DATABASE_NAME"),
+				CHARIOT_API_KEY = os.getenv("CHARIOT_API_KEY"),
+			},
+		}
+
+		vim.keymap.set("n", "<localleader>tdb", start_test_db, map_opts)
+
 		vim.keymap.set("n", "<localleader>tfr", function()
-			neotest.run.run(vim.fn.expand("%"))
+			neotest.run.run({ vim.fn.expand("%"), env = test_args.env })
 		end, map_opts)
 
 		vim.keymap.set("n", "<localleader>tr", function()
-			neotest.run.run()
+			neotest.run.run(test_args)
 			neotest.summary.open()
 		end, map_opts)
 
@@ -140,7 +177,7 @@ return {
 		end, map_opts)
 
 		vim.keymap.set("n", "<localleader>tl", function()
-			neotest.run.run_last({ enter = true })
+			neotest.run.run_last(u.merge({ enter = true }, test_args))
 			neotest.output.open({ last_run = true, enter = true })
 		end, map_opts)
 	end,
