@@ -8,10 +8,3 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt.foldenable = false
 	end,
 })
-
--- vim.api.nvim_create_autocmd({ "BufReadPost" }, {
--- 	pattern = { "*.dbout" },
--- 	callback = function()
--- 		vim.api.nvim_exec2([[ exe ':resize 30' ]], {})
--- 	end,
--- })

@@ -1,5 +1,8 @@
 return {
 	"saghen/blink.cmp",
+	dependencies = {
+		"olimorris/codecompanion.nvim",
+	},
 	version = "*",
 	opts = {
 		signature = {},
@@ -28,6 +31,11 @@ return {
 			end,
 			providers = {
 				dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+				codecompanion = {
+					name = "CodeCompanion",
+					module = "codecompanion.providers.completion.blink",
+					enabled = true,
+				},
 			},
 		},
 	},

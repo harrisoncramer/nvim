@@ -1,4 +1,3 @@
-local async_ok, async = pcall(require, "plenary.async")
 local u = require("functions.utils")
 
 vim.api.nvim_create_user_command("SCREENSHOT", function(opts)

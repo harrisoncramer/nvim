@@ -18,7 +18,7 @@ return {
 				["github.com"] = require("gitlinker.hosts").get_github_type_url,
 				["gitlab.com"] = require("gitlinker.hosts").get_gitlab_type_url,
 			},
-			mappings = "yg",
+			mappings = "<leader>yg",
 		})
 	end,
 }
