@@ -418,4 +418,16 @@ return {
 		local lines = vim.api.nvim_buf_get_lines(0, start_line, end_line, false)
 		return lines
 	end,
+	-- Gets the window holding a buffer in the current tab page
+	---@param buffer_id number Id of a buffer
+	---@return integer|nil
+	get_window_id_by_buffer_id = function(buffer_id)
+		local tabpage = vim.api.nvim_get_current_tabpage()
+		local windows = vim.api.nvim_tabpage_list_wins(tabpage)
+
+		return List.new(windows):find(function(win_id)
+			local buf_id = vim.api.nvim_win_get_buf(win_id)
+			return buf_id == buffer_id
+		end)
+	end,
 }
