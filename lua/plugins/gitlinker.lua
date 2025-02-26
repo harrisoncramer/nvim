@@ -7,7 +7,10 @@ return {
 				remote = nil,
 				add_current_line_on_normal_mode = true,
 				-- callback for what to do with the url
-				action_callback = require("gitlinker.actions").copy_to_clipboard,
+				action_callback = function(url)
+					require("gitlinker.actions").copy_to_clipboard(url)
+					require("notify")("Copied URL", vim.log.levels.INFO)
+				end,
 				-- print the url after performing the action
 				print_url = false,
 			},
