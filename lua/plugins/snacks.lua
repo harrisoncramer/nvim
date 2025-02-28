@@ -89,7 +89,6 @@ vim.keymap.set("n", "<leader>e", function()
 		icon_sources = { "emoji" },
 		finder = "icons",
 		format = "icon",
-		layout = { preset = "vscode" },
 		confirm = "put",
 	})
 end, map_opts)

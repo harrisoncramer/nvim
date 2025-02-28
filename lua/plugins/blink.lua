@@ -23,6 +23,9 @@ return {
 			nerd_font_variant = "mono",
 		},
 		cmdline = {
+			keymap = {
+				["<C-e>"] = { "select_and_accept" },
+			},
 			completion = {
 				menu = {
 					auto_show = function(ctx)
