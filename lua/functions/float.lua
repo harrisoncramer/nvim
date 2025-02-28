@@ -1,6 +1,6 @@
 local M = {}
 
-M.toggle_floating_window = function(file_path)
+M.toggle_writeable_window = function(file_path)
 	local note_pos = { 1, 0 }
 	local buf_pos = nil
 	local win_id = nil
