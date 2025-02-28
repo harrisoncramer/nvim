@@ -22,6 +22,15 @@ return {
 		appearance = {
 			nerd_font_variant = "mono",
 		},
+		cmdline = {
+			completion = {
+				menu = {
+					auto_show = function(ctx)
+						return vim.fn.getcmdtype() == ":"
+					end,
+				},
+			},
+		},
 		sources = {
 			default = function()
 				if vim.bo.filetype == "sql" then
