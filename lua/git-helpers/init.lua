@@ -123,9 +123,10 @@ M.commit_easy = function()
 		command = "git",
 		args = { "commit", relative_file_path, "-m", string.format("Updated %s", relative_file_path) },
 		cwd = git_root,
-		on_exit = vim.schedule_wrap(function(_, exit_code)
+		on_exit = vim.schedule_wrap(function(val, exit_code)
 			if exit_code ~= 0 then
 				require("notify")("Could not commit change!", vim.log.levels.ERROR)
+				require("notify")(val)
 				return
 			else
 				require("notify")("Committed file", vim.log.levels.INFO)
@@ -551,8 +552,6 @@ M.post_comment_to_github = function(pr_number, line_number, comment_body, file_p
 		comment_data,
 		pr_number
 	)
-
-	vim.print(curl_cmd)
 
 	-- Execute the curl command
 	local output = vim.fn.system(curl_cmd)
