@@ -197,6 +197,11 @@ M.recent_files = function(opts)
 	require("snacks").picker.recent({
 		title = "Recent Files",
 		cwd = opts.cwd,
+		formatters = {
+			file = {
+				filename_first = true,
+			},
+		},
 		win = {
 			preview = {
 				keys = preview_keys,
@@ -273,7 +278,7 @@ return {
 		{
 			"<C-m>",
 			M.recent_files,
-			mode = { "n", "t" },
+			mode = { "n" },
 			desc = "Recent Files",
 		},
 	},
