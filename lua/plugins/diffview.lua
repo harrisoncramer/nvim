@@ -8,6 +8,10 @@ return {
 		local cb = require("diffview.config").diffview_callback
 
 		-- See lua/git-helpers/ for keybindings...
+		vim.keymap.set("n", "cc", function()
+			vim.cmd("tabclose")
+			vim.cmd("Git commit")
+		end, {})
 
 		diffview.setup({
 			view = {

@@ -25,6 +25,11 @@ vim.keymap.set("n", "<leader>ghr", gitsigns.reset_hunk) -- Reset Hunk
 vim.keymap.set("n", "<leader>gha", gitsigns.stage_hunk) -- Add hunk
 vim.keymap.set("n", "<leader>ghv", gitsigns.preview_hunk)
 
+-- View current changes
+vim.keymap.set("n", "<leader>gd", function()
+	vim.cmd("DiffviewOpen")
+end)
+
 -- Adding files...
 vim.keymap.set("n", "<leader>gaa", function()
 	M.add_all()
