@@ -1,6 +1,6 @@
 snippet IFE "if error" A
 if err != nil {
-	$1
+	return fmt.Errorf("$1 %w", err)
 }
 endsnippet
 
