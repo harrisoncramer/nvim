@@ -39,6 +39,7 @@ local all_projects = {
 	"~/chariot/chariot/apps/sherlock/",
 	"~/chariot/chariot/apps/supervisor/",
 	"~/chariot/chariot/apps/token/",
+	"~/chariot/chariot/packages",
 	"~/.dotfiles",
 	"~/.config/nvim",
 }
@@ -83,7 +84,6 @@ local input_keys = {
 	["k"] = "list_up",
 }
 
--- TODO: Use snacks.picker.resume() to resume last search
 -- TODO: Add .env to searched files
 
 M.choose_directory_for_search = function()
@@ -126,6 +126,11 @@ M.git_files = function(opts)
 	require("snacks").picker.git_files({
 		cwd = opts.cwd,
 		title = "Search Files",
+		formatters = {
+			file = {
+				filename_first = true,
+			},
+		},
 		win = {
 			preview = {
 				keys = preview_keys,
@@ -144,10 +149,11 @@ end
 
 M.find_text = function(opts)
 	opts = opts or {}
-	require("snacks").picker.grep({
+	require("snacks").picker.git_grep({
 		cwd = opts.cwd,
 		title = opts.cwd and string.format("Search Text in %s", opts.cwd) or "Search Text",
 		live = true,
+		submodules = true,
 		win = {
 			preview = {
 				keys = preview_keys,
@@ -166,7 +172,7 @@ end
 
 M.command_history = function()
 	require("snacks").picker.command_history({
-		title = "Search Files",
+		title = "Command History",
 		layout = {
 			layout = { position = "bottom" },
 		},
@@ -180,6 +186,27 @@ M.command_history = function()
 			input = {
 				keys = u.merge(input_keys, {
 					["<C-c>"] = { "close", mode = { "n", "i" } },
+				}),
+			},
+		},
+	})
+end
+
+M.recent_files = function(opts)
+	opts = opts or {}
+	require("snacks").picker.recent({
+		title = "Recent Files",
+		cwd = opts.cwd,
+		win = {
+			preview = {
+				keys = preview_keys,
+			},
+			list = {
+				keys = list_keys,
+			},
+			input = {
+				keys = u.merge(input_keys, {
+					["<C-m>"] = { "close", mode = { "n", "i" } },
 				}),
 			},
 		},
@@ -233,7 +260,7 @@ return {
 		},
 		{
 			"<C-c>",
-			M.toggle_terminal,
+			M.command_history,
 			mode = { "n" },
 			desc = "Find Git Files",
 		},
@@ -242,6 +269,12 @@ return {
 			M.toggle_terminal,
 			mode = { "n", "t" },
 			desc = "Toggle Terminal",
+		},
+		{
+			"<C-m>",
+			M.recent_files,
+			mode = { "n", "t" },
+			desc = "Recent Files",
 		},
 	},
 	config = function()

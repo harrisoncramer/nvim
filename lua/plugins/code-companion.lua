@@ -1,6 +1,3 @@
-local multiplier = function(a, b, c)
-	return a * b * c
-end
 return {
 	"olimorris/codecompanion.nvim",
 	dependencies = {
