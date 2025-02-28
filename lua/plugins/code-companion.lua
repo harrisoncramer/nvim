@@ -30,7 +30,7 @@ return {
 				adapter = "openai",
 				roles = {
 					llm = "CodeCompanion",
-					user = "Me",
+					user = "Code Companion Chat",
 				},
 				keymaps = {
 					close = {
@@ -43,7 +43,7 @@ return {
 					},
 					stop = {
 						modes = {
-							n = "<C-c",
+							n = "<esc>",
 						},
 						index = 4,
 						callback = "keymaps.stop",
@@ -68,23 +68,7 @@ return {
 	},
 	keys = {
 		{
-			"<leader>ar",
-			":'<,'>CodeCompanion openai /buffer ",
-			mode = { "v" },
-			noremap = true,
-			silent = true,
-			desc = "CodeCompanion actions",
-		},
-		{
-			"<leader>ac",
-			"<cmd>CodeCompanionActions<cr>",
-			mode = { "n", "v" },
-			noremap = true,
-			silent = true,
-			desc = "CodeCompanion actions",
-		},
-		{
-			"<leader>aa",
+			"<C-a><C-a>",
 			"<cmd>CodeCompanionChat Toggle<cr>",
 			mode = { "n", "v" },
 			noremap = true,
