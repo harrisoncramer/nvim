@@ -84,8 +84,17 @@ local input_keys = {
 	["k"] = "list_up",
 }
 
--- TODO: Add .env to searched files
+vim.keymap.set("n", "<leader>e", function()
+	Snacks.picker.pick({
+		icon_sources = { "emoji" },
+		finder = "icons",
+		format = "icon",
+		layout = { preset = "vscode" },
+		confirm = "put",
+	})
+end, map_opts)
 
+-- TODO: Add .env to searched files
 M.choose_directory_for_search = function()
 	local directory_search_keys = {
 		["<C-j>"] = { "git_files", mode = { "n", "i" } },
