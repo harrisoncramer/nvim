@@ -5,7 +5,7 @@ M.go_to_word = function(opts)
 	opts = opts or {}
 	local filetype_option = opts.filetype and ("-t " .. opts.filetype) or ""
 	local cmd = string.format(
-		"rg -o %s --json --line-number --column \"%s\" . | jq -s 'map(select(.data.submatches | length > 0) | .data)'",
+		"rg -w -o %s --json --line-number --column \"%s\" . | jq -s 'map(select(.data.submatches | length > 0) | .data)'",
 		filetype_option,
 		opts.word
 	)
