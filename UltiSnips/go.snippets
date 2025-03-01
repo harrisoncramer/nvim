@@ -1,13 +1,15 @@
 snippet IFE "if error" A
 if err != nil {
-	return fmt.Errorf("$1 %w", err)
+	return $2 fmt.Errorf("$1 %w", err)
 }
+$3
 endsnippet
 
 snippet IFFE "if X and err non-nil" A
 if err := $1; err != nil {
-	$2
+	return $3 fmt.Errorf("$2 %w", err)
 }
+$4
 endsnippet
 
 snippet IOK "if error" A
