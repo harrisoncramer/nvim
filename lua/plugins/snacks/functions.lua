@@ -109,6 +109,11 @@ M.find_text = function(opts)
 		title = opts.cwd and string.format("Search Text in %s", opts.cwd) or "Search Text",
 		live = true,
 		submodules = true,
+		formatters = {
+			file = {
+				filename_first = true,
+			},
+		},
 		win = {
 			preview = {
 				keys = preview_keys,
