@@ -1,7 +1,6 @@
 return {
 	"saghen/blink.cmp",
 	dependencies = {
-		"olimorris/codecompanion.nvim",
 		"fang2hou/blink-copilot",
 	},
 	version = "*",
@@ -38,21 +37,20 @@ return {
 		sources = {
 			default = function()
 				if vim.bo.filetype == "sql" then
-					return { "dadbod" }
+					return { "dadbod", "copilot" }
 				end
 				return { "lsp", "copilot", "path", "snippets", "buffer" }
 			end,
 			providers = {
 				dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
-				codecompanion = {
-					name = "CodeCompanion",
-					module = "codecompanion.providers.completion.blink",
-					enabled = true,
+				lsp = {
+					score_offset = 3,
 				},
 				copilot = {
+					-- min_keyword_length = 2,
 					name = "copilot",
 					module = "blink-copilot",
-					score_offset = 100,
+					score_offset = 2,
 					async = true,
 				},
 			},

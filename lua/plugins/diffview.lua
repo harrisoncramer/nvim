@@ -7,12 +7,6 @@ return {
 		local diffview = require("diffview")
 		local cb = require("diffview.config").diffview_callback
 
-		-- See lua/git-helpers/ for keybindings...
-		vim.keymap.set("n", "cc", function()
-			vim.cmd("tabclose")
-			vim.cmd("Git commit")
-		end, {})
-
 		diffview.setup({
 			view = {
 				default = {
@@ -67,6 +61,10 @@ return {
 				-- The `view` bindings are active in the diff buffers, only when the current
 				-- tabpage is a Diffview.
 				view = {
+					["cc"] = function()
+						vim.cmd("tabclose")
+						vim.cmd("Git commit")
+					end,
 					["<C-n>"] = cb("select_next_entry"), -- Open the diff for the next file
 					["<C-p>"] = cb("select_prev_entry"), -- Open the diff for the previous file
 					["<CR>"] = cb("goto_file_edit"), -- Open the file in a new split in previous tabpage

@@ -157,7 +157,7 @@ end
 
 M.find_text = function(opts)
 	opts = opts or {}
-	require("snacks").picker.git_grep({
+	require("snacks").picker.grep({
 		cwd = opts.cwd,
 		title = opts.cwd and string.format("Search Text in %s", opts.cwd) or "Search Text",
 		live = true,
