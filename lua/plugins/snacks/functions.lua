@@ -1,58 +1,6 @@
-local u = require("functions.utils")
-
-local M = {}
-
--- Remove winbar from terminal
--- https://stackoverflow.com/a/63908546/2338672
-vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
-	pattern = "*",
-	callback = function()
-		vim.wo.winbar = ""
-	end,
-})
-
--- TODO: Set up file filter to search for particular files, then
--- be able to search for text within them
-
--- Set all projects up for project-specific search
-
-local all_projects = {
-	"~/chariot/chariot",
-	"~/chariot/proto",
-	"~/chariot/ops",
-	"~/chariot/deploy",
-	"~/chariot/chariot/apps/actor/",
-	"~/chariot/chariot/apps/assets/",
-	"~/chariot/chariot/apps/auth/",
-	"~/chariot/chariot/apps/clerk/",
-	"~/chariot/chariot/apps/cmd/",
-	"~/chariot/chariot/apps/coauth/",
-	"~/chariot/chariot/apps/compliance/",
-	"~/chariot/chariot/apps/connect/",
-	"~/chariot/chariot/apps/dafpay/",
-	"~/chariot/chariot/apps/dashboard/",
-	"~/chariot/chariot/apps/integrations/",
-	"~/chariot/chariot/apps/nonprofitDashboard/",
-	"~/chariot/chariot/apps/orchestration/",
-	"~/chariot/chariot/apps/payments/",
-	"~/chariot/chariot/apps/secretary/",
-	"~/chariot/chariot/apps/sherlock/",
-	"~/chariot/chariot/apps/supervisor/",
-	"~/chariot/chariot/apps/token/",
-	"~/chariot/chariot/packages",
-	"~/.dotfiles",
-	"~/.config/nvim",
-}
-M.project_items = {}
-for _, v in ipairs(all_projects) do
-	table.insert(M.project_items, {
-		title = v,
-		text = v,
-		file = v,
-	})
-end
-
--- Basic keybindings across all picker views
+--- @class PickerOpts
+--- @field cwd? string
+--- @field search? string
 
 local preview_keys = {
 	["sh"] = { "toggle_focus", mode = { "n", "x" } },
@@ -84,14 +32,10 @@ local input_keys = {
 	["k"] = "list_up",
 }
 
-vim.keymap.set("n", "<leader>e", function()
-	Snacks.picker.pick({
-		icon_sources = { "emoji" },
-		finder = "icons",
-		format = "icon",
-		confirm = "put",
-	})
-end, map_opts)
+local M = {}
+local u = require("functions.utils")
+local Projects = require("plugins.snacks.projects")
+local projects = Projects.new()
 
 -- TODO: Add .env to searched files
 M.choose_directory_for_search = function()
@@ -102,7 +46,7 @@ M.choose_directory_for_search = function()
 
 	Snacks.picker.pick({
 		source = "Search In Directory",
-		items = M.project_items,
+		items = projects:formatted_projects(),
 		preview = "directory",
 		format = "file",
 		actions = {
@@ -129,6 +73,7 @@ M.choose_directory_for_search = function()
 	})
 end
 
+--- @param opts PickerOpts
 M.git_files = function(opts)
 	opts = opts or {}
 	require("snacks").picker.git_files({
@@ -155,9 +100,11 @@ M.git_files = function(opts)
 	})
 end
 
+--- @param opts PickerOpts
 M.find_text = function(opts)
 	opts = opts or {}
 	require("snacks").picker.grep({
+		search = opts.search or "",
 		cwd = opts.cwd,
 		title = opts.cwd and string.format("Search Text in %s", opts.cwd) or "Search Text",
 		live = true,
@@ -200,6 +147,7 @@ M.command_history = function()
 	})
 end
 
+--- @param opts PickerOpts
 M.recent_files = function(opts)
 	opts = opts or {}
 	require("snacks").picker.recent({
@@ -248,66 +196,4 @@ M.toggle_terminal = function()
 	}, { desc = "Terminal" })
 end
 
-return {
-	"folke/snacks.nvim",
-	priority = 1000,
-	lazy = false,
-	keys = {
-		{
-			"<C-j>",
-			M.git_files,
-			mode = { "n" },
-			desc = "Find Git Files",
-		},
-		{
-			"<C-k>",
-			M.choose_directory_for_search,
-			mode = { "n" },
-			desc = "Neovim Files",
-		},
-		{
-			"<C-f>",
-			M.find_text,
-			mode = { "n" },
-			desc = "Search text",
-		},
-		{
-			"<C-c>",
-			M.command_history,
-			mode = { "n" },
-			desc = "Find Git Files",
-		},
-		{
-			"<C-z>",
-			M.toggle_terminal,
-			mode = { "n", "t" },
-			desc = "Toggle Terminal",
-		},
-		{
-			"<C-m>",
-			M.recent_files,
-			mode = { "n" },
-			desc = "Recent Files",
-		},
-	},
-	config = function()
-		---@type snacks.Config
-		return {
-			image = { enabled = false },
-			bigfile = { enabled = true },
-			notifier = { enabled = true },
-			gitbrowse = { enabled = true },
-			picker = {
-				enabled = true,
-			},
-			terminal = {
-				wo = {},
-				bo = {
-					filetype = "snacks_terminal",
-				},
-				win = { style = "terminal" },
-				enabled = true,
-			},
-		}
-	end,
-}
+return M

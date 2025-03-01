@@ -60,7 +60,8 @@ local on_attach = function(child_on_attach)
 		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, map_opts)
 		vim.keymap.set("n", "gr", vim.lsp.buf.references, map_opts)
 		vim.keymap.set("n", "gw", function()
-			require("functions.search-word").go_to_word({ word = vim.fn.expand("<cword>") }) -- A more flexible search option that just matches the word in all buffers
+			local word = vim.fn.expand("<cword>")
+			require("plugins.snacks.functions").find_text({ search = word })
 		end, map_opts)
 
 		-- Automatically fill struct (gopls)

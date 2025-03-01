@@ -74,6 +74,10 @@ return {
 					["<leader>b"] = cb("toggle_files"), -- Toggle the files panel.
 				},
 				file_panel = {
+					["cc"] = function()
+						vim.cmd("tabclose")
+						vim.cmd("Git commit")
+					end,
 					["j"] = cb("next_entry"), -- Bring the cursor to the next file entry
 					["<down>"] = cb("next_entry"),
 					["k"] = cb("prev_entry"), -- Bring the cursor to the previous file entry.
