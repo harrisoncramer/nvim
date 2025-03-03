@@ -7,7 +7,7 @@ endsnippet
 
 snippet IFFE "if X and err non-nil" A
 if err := $1; err != nil {
-	return $3 fmt.Errorf("$2 %w", err)
+	return$3 fmt.Errorf("$2 %w", err)
 }
 $4
 endsnippet

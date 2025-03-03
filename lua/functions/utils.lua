@@ -162,6 +162,16 @@ return {
 		local text = table.concat(lines, "\n")
 		return text
 	end,
+	-- Function to read all lines from the file
+	--- @param filepath string
+	--- @return table
+	read_lines_from_file = function(filepath)
+		local lines = {}
+		for line in io.lines(filepath) do
+			table.insert(lines, line)
+		end
+		return lines
+	end,
 	get_line_number = get_line_number,
 	get_line_content = function()
 		return vim.api.nvim_buf_get_lines(0, get_line_number() - 1, get_line_number(), false)[1]
