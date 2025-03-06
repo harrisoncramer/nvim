@@ -81,9 +81,9 @@ M.debug_methods = function(root, bufnr, filename)
 
 	-- Step 2: Insert print statements, updating offsets dynamically
 	local offset = 0
-	for _, entry in ipairs(nodes) do
+	for i, entry in ipairs(nodes) do
 		local start_row = entry.start_row + offset -- Adjust for previous insertions
-		M.insert_print_statement(start_row + 1, M.prepare_log_content(filename, start_row))
+		M.insert_print_statement(start_row + 1, M.prepare_log_content(filename, start_row + 1, "FUNCTION", i))
 		offset = offset + 1 -- Increase offset after insertion
 	end
 end
@@ -100,15 +100,15 @@ M.debug_functions = function(root, bufnr, filename)
 
 	-- Step 2: Insert print statements, updating offsets dynamically
 	local offset = 0
-	for _, entry in ipairs(nodes) do
+	for i, entry in ipairs(nodes) do
 		local start_row = entry.start_row + offset -- Adjust for previous insertions
-		M.insert_print_statement(start_row + 1, M.prepare_log_content(filename, start_row))
+		M.insert_print_statement(start_row + 1, M.prepare_log_content(filename, start_row + 1, "METHOD", i))
 		offset = offset + 1 -- Increase offset after insertion
 	end
 end
 
-M.prepare_log_content = function(filename, new_line_number)
-	return string.format("%s:%s [DEBUG_%s]", filename, new_line_number + 1, M.total_lines)
+M.prepare_log_content = function(filename, new_line_number, type, log_number)
+	return string.format("%s:%s [DEBUG_%s_%s]", filename, new_line_number + 1, type, log_number)
 end
 
 M.get_or_create_buffers = function(file_paths)
