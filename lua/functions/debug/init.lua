@@ -1,6 +1,8 @@
 local queries = require("functions.debug.queries")
 
-local M = {}
+local M = {
+	total_lines = 0,
+}
 
 -- Setup command for easy access
 vim.api.nvim_create_user_command("DEBUG", function()
@@ -18,7 +20,6 @@ end
 M.insert_print_statement = function(line, name)
 	local msg = string.format('fmt.Println("%s")', name)
 	vim.api.nvim_buf_set_lines(0, line, line, false, { msg })
-	vim.cmd("silent w")
 end
 
 M.prepare_traversal = function()
@@ -65,40 +66,49 @@ M.toggle = function()
 
 	M.debug_methods(root, bufnr, filename)
 	M.debug_functions(root, bufnr, filename)
+	vim.cmd("silent w")
 end
 
 M.debug_methods = function(root, bufnr, filename)
 	local q = queries.get()
-	local incrementer = 0
+	local nodes = {}
 	for _, node, _, _ in q.method_query:iter_captures(root, bufnr) do
-		local type = node:type()
-		if type == "block" then
-			M.total_lines = M.total_lines + 1
-			local starting_row, _, _, _ = node:range() -- range of the capture
-			local new_line_number = starting_row + 1 + incrementer
-			M.insert_print_statement(new_line_number, M.prepare_log_content(filename, new_line_number + 1))
-			incrementer = incrementer + 1
+		if node:type() == "block" then
+			local start_row, _, _, _ = node:range()
+			table.insert(nodes, { node = node, start_row = start_row })
 		end
+	end
+
+	-- Step 2: Insert print statements, updating offsets dynamically
+	local offset = 0
+	for _, entry in ipairs(nodes) do
+		local start_row = entry.start_row + offset -- Adjust for previous insertions
+		M.insert_print_statement(start_row + 1, M.prepare_log_content(filename, start_row))
+		offset = offset + 1 -- Increase offset after insertion
 	end
 end
 
 M.debug_functions = function(root, bufnr, filename)
 	local q = queries.get()
-	local incrementer = 0
+	local nodes = {}
 	for _, node, _, _ in q.function_query:iter_captures(root, bufnr) do
-		local type = node:type()
-		if type == "block" then
-			M.total_lines = M.total_lines + 1
-			local starting_row, _, _, _ = node:range() -- range of the capture
-			local new_line_number = starting_row + 1 + incrementer
-			M.insert_print_statement(new_line_number, M.prepare_log_content(filename, new_line_number))
-			incrementer = incrementer + 1
+		if node:type() == "block" then
+			local start_row, _, _, _ = node:range()
+			table.insert(nodes, { node = node, start_row = start_row })
 		end
+	end
+
+	-- Step 2: Insert print statements, updating offsets dynamically
+	local offset = 0
+	for _, entry in ipairs(nodes) do
+		local start_row = entry.start_row + offset -- Adjust for previous insertions
+		M.insert_print_statement(start_row + 1, M.prepare_log_content(filename, start_row))
+		offset = offset + 1 -- Increase offset after insertion
 	end
 end
 
 M.prepare_log_content = function(filename, new_line_number)
-	return string.format("%s:%s DEBUG_%s", filename, new_line_number + 1, M.total_lines)
+	return string.format("%s:%s [DEBUG_%s]", filename, new_line_number + 1, M.total_lines)
 end
 
 M.get_or_create_buffers = function(file_paths)
