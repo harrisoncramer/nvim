@@ -11,6 +11,7 @@ end, { nargs = 0 })
 M.clear_debug_statements = function()
 	vim.cmd("silent g/DEBUG_/d")
 	vim.cmd("silent w")
+	M.total_lines = 0
 end
 
 -- Function to insert a print statement at a given line
@@ -68,15 +69,15 @@ end
 
 M.debug_methods = function(root, bufnr, filename)
 	local q = queries.get()
-	local method_incrementer = 0
+	local incrementer = 0
 	for _, node, _, _ in q.method_query:iter_captures(root, bufnr) do
 		local type = node:type()
 		if type == "block" then
+			M.total_lines = M.total_lines + 1
 			local starting_row, _, _, _ = node:range() -- range of the capture
-			local new_line_number = starting_row + 1 + method_incrementer
-			local log_number = method_incrementer + 1
-			M.insert_print_statement(new_line_number, M.prepare_log_content(filename, new_line_number + 1, log_number))
-			method_incrementer = log_number
+			local new_line_number = starting_row + 1 + incrementer
+			M.insert_print_statement(new_line_number, M.prepare_log_content(filename, new_line_number + 1))
+			incrementer = incrementer + 1
 		end
 	end
 end
@@ -87,17 +88,17 @@ M.debug_functions = function(root, bufnr, filename)
 	for _, node, _, _ in q.function_query:iter_captures(root, bufnr) do
 		local type = node:type()
 		if type == "block" then
+			M.total_lines = M.total_lines + 1
 			local starting_row, _, _, _ = node:range() -- range of the capture
 			local new_line_number = starting_row + 1 + incrementer
-			local log_number = incrementer + 1
-			M.insert_print_statement(new_line_number, M.prepare_log_content(filename, new_line_number, log_number))
-			incrementer = log_number
+			M.insert_print_statement(new_line_number, M.prepare_log_content(filename, new_line_number))
+			incrementer = incrementer + 1
 		end
 	end
 end
 
-M.prepare_log_content = function(filename, new_line_number, log_number)
-	return string.format("%s:%s DEBUG_%s", filename, new_line_number + 1, log_number)
+M.prepare_log_content = function(filename, new_line_number)
+	return string.format("%s:%s DEBUG_%s", filename, new_line_number + 1, M.total_lines)
 end
 
 M.get_or_create_buffers = function(file_paths)

@@ -1,6 +1,8 @@
 --- @class PickerOpts
 --- @field cwd? string
 --- @field search? string
+--- @field extra_keys? table
+--- @field actions? table
 
 local preview_keys = {
 	["sh"] = { "toggle_focus", mode = { "n", "x" } },
@@ -79,6 +81,7 @@ M.git_files = function(opts)
 	require("snacks").picker.git_files({
 		cwd = opts.cwd,
 		title = "Search Files",
+		actions = opts.actions or {},
 		formatters = {
 			file = {
 				filename_first = true,
@@ -92,9 +95,7 @@ M.git_files = function(opts)
 				keys = list_keys,
 			},
 			input = {
-				keys = u.merge(input_keys, {
-					["<C-j>"] = { "close", mode = { "n", "i" } },
-				}),
+				keys = u.merge(input_keys, { ["<C-j>"] = { "close", mode = { "n", "i" } } }, opts.extra_keys or {}),
 			},
 		},
 	})
