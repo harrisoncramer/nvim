@@ -4,24 +4,7 @@ local M = {}
 
 -- Setup command for easy access
 vim.api.nvim_create_user_command("DEBUG", function()
-	M.toggle(vim.api.nvim_get_current_buf())
-end, { nargs = 0 })
-
-M.debugged_buffers = {}
-vim.api.nvim_create_user_command("DEBUGMANY", function()
-	-- TODO: Maybe implement this?
-	-- require("plugins.snacks.functions").git_files({
-	-- 	extra_keys = { ["<CR>"] = { "print", mode = { "n", "i" } } },
-	-- 	actions = {
-	-- 		print = function(res)
-	-- 			local paths = {}
-	-- 			for _, val in ipairs(res.list.selected) do
-	-- 				table.insert(paths, val._path)
-	-- 			end
-	-- 			local buffer_numbers = M.get_or_create_buffers(paths)
-	-- 		end,
-	-- 	},
-	-- })
+	M.toggle()
 end, { nargs = 0 })
 
 -- Removes previously added print statements
@@ -31,7 +14,7 @@ M.clear_debug_statements = function()
 end
 
 -- Function to insert a print statement at a given line
-local function insert_print_statement(line, name)
+M.insert_print_statement = function(line, name)
 	local msg = string.format('fmt.Println("%s")', name)
 	vim.api.nvim_buf_set_lines(0, line, line, false, { msg })
 	vim.cmd("silent w")
@@ -69,40 +52,52 @@ M.prepare_traversal = function()
 end
 
 -- Traverse the function and insert print statements
----@param bufnr integer
-M.toggle = function(bufnr)
+M.toggle = function()
 	local root = M.prepare_traversal()
 	if root == nil then
 		return
 	end
 
-	local q = queries.get()
-
+	local bufnr = vim.api.nvim_get_current_buf()
 	local Path = require("plenary").path
 	local filename = Path:new(vim.fn.expand("%")):make_relative()
 
+	M.debug_methods(root, bufnr, filename)
+	M.debug_functions(root, bufnr, filename)
+end
+
+M.debug_methods = function(root, bufnr, filename)
+	local q = queries.get()
+	local method_incrementer = 0
+	for _, node, _, _ in q.method_query:iter_captures(root, bufnr) do
+		local type = node:type()
+		if type == "block" then
+			local starting_row, _, _, _ = node:range() -- range of the capture
+			local new_line_number = starting_row + 1 + method_incrementer
+			local log_number = method_incrementer + 1
+			M.insert_print_statement(new_line_number, M.prepare_log_content(filename, new_line_number + 1, log_number))
+			method_incrementer = log_number
+		end
+	end
+end
+
+M.debug_functions = function(root, bufnr, filename)
+	local q = queries.get()
 	local incrementer = 0
 	for _, node, _, _ in q.function_query:iter_captures(root, bufnr) do
 		local type = node:type()
 		if type == "block" then
 			local starting_row, _, _, _ = node:range() -- range of the capture
-			insert_print_statement(starting_row + 1 + incrementer, M.prepare_log_content(filename, incrementer + 1))
-			incrementer = incrementer + 1
-		end
-	end
-
-	for _, node, _, _ in q.method_query:iter_captures(root, bufnr) do
-		local type = node:type()
-		if type == "block" then
-			local starting_row, _, _, _ = node:range() -- range of the capture
-			insert_print_statement(starting_row + incrementer, M.prepare_log_content(filename, incrementer + 1))
-			incrementer = incrementer + 1
+			local new_line_number = starting_row + 1 + incrementer
+			local log_number = incrementer + 1
+			M.insert_print_statement(new_line_number, M.prepare_log_content(filename, new_line_number, log_number))
+			incrementer = log_number
 		end
 	end
 end
 
-M.prepare_log_content = function(filename, count)
-	return string.format("%s: DEBUG_%s", filename, count)
+M.prepare_log_content = function(filename, new_line_number, log_number)
+	return string.format("%s:%s DEBUG_%s", filename, new_line_number + 1, log_number)
 end
 
 M.get_or_create_buffers = function(file_paths)
@@ -119,3 +114,20 @@ M.get_or_create_buffers = function(file_paths)
 end
 
 return M
+
+-- M.debugged_buffers = {}
+-- vim.api.nvim_create_user_command("DEBUGMANY", function()
+-- TODO: Maybe implement this?
+-- require("plugins.snacks.functions").git_files({
+-- 	extra_keys = { ["<CR>"] = { "print", mode = { "n", "i" } } },
+-- 	actions = {
+-- 		print = function(res)
+-- 			local paths = {}
+-- 			for _, val in ipairs(res.list.selected) do
+-- 				table.insert(paths, val._path)
+-- 			end
+-- 			local buffer_numbers = M.get_or_create_buffers(paths)
+-- 		end,
+-- 	},
+-- })
+-- end, { nargs = 0 })
