@@ -1,4 +1,5 @@
 local u = require("functions.utils")
+local debug = require("functions.debug")
 
 vim.api.nvim_create_user_command("SCREENSHOT", function(opts)
 	require("functions").screenshot()
@@ -10,6 +11,11 @@ end, { nargs = "*" })
 
 vim.api.nvim_create_user_command("RLC", function()
 	require("functions").reload_current()
+end, { nargs = 0 })
+
+-- Setup command for easy access
+vim.api.nvim_create_user_command("DEBUG", function()
+	debug.toggle()
 end, { nargs = 0 })
 
 vim.api.nvim_create_user_command("SC", function()
