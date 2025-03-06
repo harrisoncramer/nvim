@@ -95,8 +95,27 @@ end, map_opts)
 
 -- Miscellaneous...
 vim.keymap.set("n", "<leader>gb", gitsigns.blame_line)
-vim.keymap.set("n", "<leader>gq", function()
-	gitsigns.setqflist("all")
+
+-- Quickfix
+vim.keymap.set("n", "<leader>gqf", function()
+	-- Sends all changed files versus staging to the quickfix list
+	vim.ui.input({ prompt = "Enter branch/tag to get changed files against: " }, function(branch)
+		if branch == nil or branch == "" then
+			require("notify")("No branch entered!", vim.log.levels.ERROR)
+			return
+		end
+		local files = vim.fn.system({ "git", "diff", "--name-only", branch })
+		local lines = vim.split(files, "\n", { trimempty = true })
+		local qf_list = {}
+		for _, file in ipairs(lines) do
+			table.insert(qf_list, { filename = file })
+		end
+		vim.fn.setqflist(qf_list, "r")
+	end)
+end)
+
+vim.keymap.set("n", "<leader>gqq", function()
+	gitsigns.setqflist("all") -- Send current changes to the quickfix list
 end)
 
 -- Pushing and pulling...

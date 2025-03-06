@@ -12,7 +12,7 @@ return {
 			formatters = {
 				["pg_format"] = {
 					command = "pg_format",
-					args = { "--inplace" },
+					args = { "--inplace", "--config", ".pg_format.conf" },
 					cwd = require("conform.util").root_file({ ".pg_format" }),
 				},
 			},

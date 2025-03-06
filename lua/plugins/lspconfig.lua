@@ -5,6 +5,11 @@ for type, icon in pairs(signs) do
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
+vim.keymap.set("n", "gw", function()
+	local word = vim.fn.expand("<cword>")
+	require("plugins.snacks.functions").find_text({ search = word })
+end)
+
 local original_sign_handler = vim.diagnostic.handlers.signs
 vim.diagnostic.handlers.signs = {
 	show = function(ns, bufnr, diagnostics, opts)
@@ -59,10 +64,6 @@ local on_attach = function(child_on_attach)
 		vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, map_opts)
 		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, map_opts)
 		vim.keymap.set("n", "gr", vim.lsp.buf.references, map_opts)
-		vim.keymap.set("n", "gw", function()
-			local word = vim.fn.expand("<cword>")
-			require("plugins.snacks.functions").find_text({ search = word })
-		end, map_opts)
 
 		-- Automatically fill struct (gopls)
 		vim.keymap.set("n", "ga", function()
