@@ -55,14 +55,16 @@ M.toggle = function()
 
 	local q = queries.get()
 	local buf = vim.api.nvim_get_current_buf()
-	local buf_name = vim.api.nvim_buf_get_name(buf)
+
+	local Path = require("plenary").path
+	local filename = Path:new(vim.fn.expand("%")):make_relative()
 
 	local incrementer = 0
 	for id, node, _, _ in q.function_query:iter_captures(root, buf) do
 		local type = node:type()
 		if type == "block" then
 			local starting_row, _, _, _ = node:range() -- range of the capture
-			insert_print_statement(starting_row + 1 + incrementer, M.prepare_log_content(buf_name, incrementer + 1))
+			insert_print_statement(starting_row + 1 + incrementer, M.prepare_log_content(filename, incrementer + 1))
 			incrementer = incrementer + 1
 		end
 	end
@@ -71,7 +73,7 @@ M.toggle = function()
 		local type = node:type()
 		if type == "block" then
 			local starting_row, _, _, _ = node:range() -- range of the capture
-			insert_print_statement(starting_row + incrementer, M.prepare_log_content(buf_name, incrementer + 1))
+			insert_print_statement(starting_row + incrementer, M.prepare_log_content(filename, incrementer + 1))
 			incrementer = incrementer + 1
 		end
 	end
