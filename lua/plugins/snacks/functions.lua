@@ -37,7 +37,9 @@ local input_keys = {
 local M = {}
 local u = require("functions.utils")
 local Projects = require("plugins.snacks.projects")
+local ChangedFiles = require("plugins.snacks.changed-files")
 local projects = Projects.new()
+local changed_files = ChangedFiles.new()
 
 -- TODO: Add .env to searched files
 M.choose_directory_for_search = function()
@@ -80,7 +82,7 @@ M.git_files = function(opts)
 	opts = opts or {}
 	require("snacks").picker.git_files({
 		cwd = opts.cwd,
-		title = "Search Files",
+		title = "Git Files",
 		actions = opts.actions or {},
 		formatters = {
 			file = {
@@ -96,6 +98,34 @@ M.git_files = function(opts)
 			},
 			input = {
 				keys = u.merge(input_keys, { ["<C-j>"] = { "close", mode = { "n", "i" } } }, opts.extra_keys or {}),
+			},
+		},
+	})
+end
+
+--- @param opts PickerOpts
+M.changed_files = function(opts)
+	opts = opts or {}
+
+	require("snacks").picker.pick({
+		title = "Changed files",
+		items = changed_files:formatted(),
+		preview = "file",
+		format = "file",
+		formatters = {
+			file = {
+				filename_first = true,
+			},
+		},
+		win = {
+			preview = {
+				keys = preview_keys,
+			},
+			list = {
+				keys = list_keys,
+			},
+			input = {
+				keys = u.merge(input_keys, { ["<C-h>"] = { "close", mode = { "n", "i" } } }, opts.extra_keys or {}),
 			},
 		},
 	})

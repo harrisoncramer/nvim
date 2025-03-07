@@ -50,6 +50,12 @@ return {
 			mode = { "n" },
 			desc = "Recent Files",
 		},
+		{
+			"<C-h>",
+			snack_functions.changed_files,
+			mode = { "n" },
+			desc = "Recent Files",
+		},
 	},
 	config = function()
 		---@type snacks.Config

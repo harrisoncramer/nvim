@@ -104,15 +104,20 @@ vim.keymap.set("n", "<leader>gqf", function()
 			require("notify")("No branch entered!", vim.log.levels.ERROR)
 			return
 		end
-		local files = vim.fn.system({ "git", "diff", "--name-only", branch })
-		local lines = vim.split(files, "\n", { trimempty = true })
-		local qf_list = {}
-		for _, file in ipairs(lines) do
-			table.insert(qf_list, { filename = file })
-		end
-		vim.fn.setqflist(qf_list, "r")
+		local files = M.changed_files(branch)
+		vim.fn.setqflist(files, "r")
 	end)
 end)
+
+M.changed_files = function(branch)
+	local files = vim.fn.system({ "git", "diff", "--name-only", branch })
+	local lines = vim.split(files, "\n", { trimempty = true })
+	local result = {}
+	for _, file in ipairs(lines) do
+		table.insert(result, { filename = file })
+	end
+	return result
+end
 
 vim.keymap.set("n", "<leader>gqq", function()
 	gitsigns.setqflist("all") -- Send current changes to the quickfix list
