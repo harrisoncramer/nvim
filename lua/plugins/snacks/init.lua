@@ -51,7 +51,7 @@ return {
 			desc = "Recent Files",
 		},
 		{
-			"<C-h>",
+			"<C-l>",
 			snack_functions.changed_files,
 			mode = { "n" },
 			desc = "Recent Files",

@@ -5,7 +5,7 @@ local file
 local M = {
 	"stevearc/oil.nvim",
 	config = function()
-		vim.keymap.set("n", "<C-e>", function()
+		vim.keymap.set("n", "<C-h>", function()
 			vim.opt.splitright = false
 			vim.cmd.vsplit()
 			vim.opt.splitright = true

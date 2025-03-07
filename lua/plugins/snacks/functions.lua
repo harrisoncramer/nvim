@@ -39,7 +39,7 @@ local u = require("functions.utils")
 local Projects = require("plugins.snacks.projects")
 local ChangedFiles = require("plugins.snacks.changed-files")
 local projects = Projects.new()
-local changed_files = ChangedFiles.new()
+local changed_files = ChangedFiles.new("staging") -- TODO: @harrisoncramer fix this branch on init
 
 -- TODO: Add .env to searched files
 M.choose_directory_for_search = function()
