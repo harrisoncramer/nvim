@@ -1,6 +1,3 @@
-local map_opts = { noremap = true, silent = true, nowait = true, buffer = true }
-vim.keymap.set("n", "<esc>", ":q<CR>", map_opts)
-vim.keymap.set("n", "<C-n>", "<Down>", map_opts)
-vim.keymap.set("n", "<C-p>", "<Up>", map_opts)
-
-vim.keymap.set("n", "r", ":cdo %s///gc | up<Left><Left><Left><Left><Left><Left><Left><Left><Left>", map_opts)
+vim.keymap.set("n", "<esc>", ":q<CR>", merge(local_keymap_opts, { desc = "Close the window" }))
+vim.keymap.set("n", "<C-n>", "<Down>", merge(local_keymap_opts, { desc = "Move down" }))
+vim.keymap.set("n", "<C-p>", "<Up>", merge(local_keymap_opts, { desc = "Move up" }))

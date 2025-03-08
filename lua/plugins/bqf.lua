@@ -7,9 +7,9 @@ local function toggleQf()
 	end
 end
 
-vim.keymap.set("n", "<leader>q", toggleQf, {})
-vim.keymap.set("n", "]q", ":cnext<CR>", {})
-vim.keymap.set("n", "[q", ":cprev<CR>", {})
+vim.keymap.set("n", "<leader>q", toggleQf, {}, merge(global_keymap_opts, { desc = "Toggle quickfix" }))
+vim.keymap.set("n", "]q", ":cnext<CR>", {}, merge(global_keymap_opts, { desc = "Next quickfix" }))
+vim.keymap.set("n", "[q", ":cprev<CR>", {}, merge(global_keymap_opts, { desc = "Previous quickfix" }))
 
 return {
 	"kevinhwang91/nvim-bqf",

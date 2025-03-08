@@ -5,8 +5,6 @@ return {
 	config = function()
 		local treesj = require("treesj")
 		treesj.setup({ use_default_keymaps = false, max_join_length = 1000 })
-		vim.keymap.set("n", "<leader>jj", treesj.toggle)
-		vim.keymap.set("n", "<leader>je", treesj.split) -- "expand"
-		vim.keymap.set("n", "<leader>jc", treesj.toggle) -- "collapse"
+		vim.keymap.set("n", "<leader>jj", treesj.toggle, merge(global_keymap_opts, { desc = "Toggle treesitter join" }))
 	end,
 }

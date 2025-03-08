@@ -13,7 +13,7 @@ local M = {
 			local dir = u.dirname(path)
 			file = u.basename(path)
 			require("oil").open(dir)
-		end, { desc = "Open parent directory" })
+		end, merge(global_keymap_opts, { desc = "Open parent directory" }))
 		require("oil").setup({
 			delete_to_trash = true,
 			skip_confirm_for_simple_edits = true,

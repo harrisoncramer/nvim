@@ -1,28 +1,18 @@
 local u = require("functions.utils")
 local M = {}
 
-vim.keymap.set("n", "<localleader>m", ":/methods: {<CR>")
-vim.keymap.set("n", "<localleader>c", ":/computed: {<CR>")
-vim.keymap.set("n", "<localleader>i", ":/import <CR>")
-vim.keymap.set("n", "<localleader>p", ":/props: {<CR>")
-vim.keymap.set("n", "<localleader>s", ":/<style <CR>")
-
-local get_component_references = function()
+M.get_component_references = function()
 	local bufName = vim.api.nvim_buf_get_name(0)
 	local filename = u.basename(bufName)
 	local componentParts = u.split(filename, ".vue")
 	local component = componentParts[1]
 	local componentStart = "<" .. component
-	local fzfLua = require("fzf-lua")
-	fzfLua.grep({ search = componentStart })
+	_ = componentStart
+	-- TODO: Fix if we need Vue again
+	-- local fzfLua = require("fzf-lua")
+	-- fzfLua.grep({ search = componentStart })
 end
 
--- Gets vue "reference" to current component (searches for <ComponentName) in telescope
-vim.keymap.set("n", "<localleader>vr", function()
-	get_component_references()
-end)
-
--- Work-specific
 M.make_or_jump_to_test_file = function()
 	local fp = u.copy_relative_filepath(true)
 	local file_path = fp:gsub(".vue", ".test.js"):gsub("src/", "")
@@ -30,8 +20,6 @@ M.make_or_jump_to_test_file = function()
 	vim.cmd(string.format("e %s", path))
 	u.replace_text_with_file("test_templates")
 end
-
-vim.keymap.set("n", "<localleader>tj", M.make_or_jump_to_test_file)
 
 M.import_from_vue = function(recurse)
 	local ok = u.jump_to_line("from 'vue'")
@@ -50,8 +38,20 @@ M.import_from_vue = function(recurse)
 	end)
 end
 
+-- Gets vue "reference" to current component (searches for <ComponentName) in telescope
+vim.keymap.set("n", "<localleader>vr", function()
+	M.get_component_references()
+end, merge(local_keymap_opts, { description = "Get references to component" }))
+
+vim.keymap.set(
+	"n",
+	"<localleader>tj",
+	M.make_or_jump_to_test_file,
+	merge(local_keymap_opts, { description = "Make or jump to test file" })
+)
+
 vim.keymap.set("n", "<localleader>vi", function()
 	M.import_from_vue(true)
-end)
+end, merge(local_keymap_opts, { description = "Import from Vue" }))
 
 return M

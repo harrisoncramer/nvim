@@ -65,13 +65,13 @@ M.choose_directory_for_search = function()
 		},
 		win = {
 			preview = {
-				keys = u.merge(preview_keys, directory_search_keys),
+				keys = merge(preview_keys, directory_search_keys),
 			},
 			list = {
-				keys = u.merge(list_keys, directory_search_keys),
+				keys = merge(list_keys, directory_search_keys),
 			},
 			input = {
-				keys = u.merge(input_keys, { ["<C-k>"] = { "close", mode = { "n", "i" } } }, directory_search_keys),
+				keys = merge(input_keys, { ["<C-k>"] = { "close", mode = { "n", "i" } } }, directory_search_keys),
 			},
 		},
 	})
@@ -97,7 +97,7 @@ M.git_files = function(opts)
 				keys = list_keys,
 			},
 			input = {
-				keys = u.merge(input_keys, { ["<C-j>"] = { "close", mode = { "n", "i" } } }, opts.extra_keys or {}),
+				keys = merge(input_keys, { ["<C-j>"] = { "close", mode = { "n", "i" } } }, opts.extra_keys or {}),
 			},
 		},
 	})
@@ -125,7 +125,7 @@ M.changed_files = function(opts)
 				keys = list_keys,
 			},
 			input = {
-				keys = u.merge(input_keys, { ["<C-h>"] = { "close", mode = { "n", "i" } } }, opts.extra_keys or {}),
+				keys = merge(input_keys, { ["<C-h>"] = { "close", mode = { "n", "i" } } }, opts.extra_keys or {}),
 			},
 		},
 	})
@@ -153,7 +153,7 @@ M.find_text = function(opts)
 				keys = list_keys,
 			},
 			input = {
-				keys = u.merge(input_keys, {
+				keys = merge(input_keys, {
 					["<C-f>"] = { "close", mode = { "n", "i" } },
 				}),
 			},
@@ -175,7 +175,7 @@ M.command_history = function()
 				keys = list_keys,
 			},
 			input = {
-				keys = u.merge(input_keys, {
+				keys = merge(input_keys, {
 					["<C-c>"] = { "close", mode = { "n", "i" } },
 				}),
 			},
@@ -202,7 +202,7 @@ M.recent_files = function(opts)
 				keys = list_keys,
 			},
 			input = {
-				keys = u.merge(input_keys, {
+				keys = merge(input_keys, {
 					["<C-m>"] = { "close", mode = { "n", "i" } },
 				}),
 			},

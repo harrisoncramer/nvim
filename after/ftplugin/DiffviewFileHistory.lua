@@ -6,4 +6,4 @@ vim.keymap.set("n", "e", function()
 	local commit = words[4]
 	vim.cmd(":Gtabedit " .. commit .. ":" .. diffview.FOCUSED_HISTORY_FILE)
 	P(commit)
-end)
+end, merge(local_keymap_opts, { desc = "Open commit in tab" }))

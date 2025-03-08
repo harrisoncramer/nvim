@@ -11,6 +11,11 @@ return {
     augroup END
   ]])
 
+		-- Don't highlight lines from the quickfix view
+		vim.cmd([[
+    highlight! link QuickFixLine Normal
+      ]])
+
 		require("kanagawa").setup({
 			undercurl = true, -- enable undercurls
 			commentStyle = {

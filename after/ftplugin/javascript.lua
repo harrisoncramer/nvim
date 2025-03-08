@@ -10,9 +10,15 @@ M.jump_to_source_file = function()
 	end
 end
 
-vim.keymap.set("n", "<localleader>tj", M.jump_to_source_file)
+vim.keymap.set(
+	"n",
+	"<localleader>tj",
+	M.jump_to_source_file,
+	merge(local_keymap_opts, { desc = "Jump to source file" })
+)
+
 vim.keymap.set("n", "<localleader>ta", function()
 	u.replace_text_with_file("test_templates")
-end)
+end, merge(local_keymap_opts, { desc = "Replace text with test template" }))
 
 return M

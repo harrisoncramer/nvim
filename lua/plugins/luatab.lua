@@ -3,9 +3,9 @@ return {
 	"alvarosevilla95/luatab.nvim",
 	dependencies = { "kyazdani42/nvim-web-devicons" },
 	config = function()
-		vim.keymap.set("n", "<leader>tn", ":tabnext<CR>")
-		vim.keymap.set("n", "<leader>tp", ":tabprev<CR>")
-		vim.keymap.set("n", "<leader>tc", ":bd<CR>")
+		vim.keymap.set("n", "<leader>tn", ":tabnext<CR>", merge(global_keymap_opts, { desc = "Next tab" }))
+		vim.keymap.set("n", "<leader>tp", ":tabprev<CR>", merge(global_keymap_opts, { desc = "Previous tab" }))
+		vim.keymap.set("n", "<leader>tc", ":bd<CR>", merge(global_keymap_opts, { desc = "Close tab" }))
 		require("luatab").setup({
 			devicon = function()
 				return ""

@@ -30,5 +30,5 @@ local function go_to_query()
 	})
 end
 
-vim.keymap.set("n", "<localleader>jt", add_json_tag)
-vim.keymap.set("n", "gq", go_to_query)
+vim.keymap.set("n", "<localleader>jt", add_json_tag, merge(local_keymap_opts, { desc = "Add JSON tag" }))
+vim.keymap.set("n", "gq", go_to_query, merge(local_keymap_opts, { desc = "Go to SQL query" }))

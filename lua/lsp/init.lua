@@ -55,7 +55,7 @@ local formatters = {
 	"sql-formatter", -- This does not support @ symbols, use https://github.com/nene/prettier-plugin-sql-cst instead
 }
 
-local all = u.merge(servers, linters, debuggers, formatters)
+local all = merge(servers, linters, debuggers, formatters)
 
 mason_tool_installer.setup({
 	ensure_installed = all,

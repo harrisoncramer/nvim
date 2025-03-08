@@ -1,20 +1,18 @@
-local map_opts = { noremap = true, silent = false, nowait = true, buffer = false }
-
 vim.keymap.set("n", "<leader>fr", function()
 	require("genghis").renameFile()
-end, map_opts)
+end, merge(global_keymap_opts, { desc = "Rename file" }))
 
 vim.keymap.set("n", "<leader>fo", function()
 	require("genghis").showInSystemExplorer()
-end, map_opts)
+end, merge(global_keymap_opts, { desc = "Show in system explorer" }))
 
 vim.keymap.set("n", "<leader>ft", function()
 	require("genghis").trashFile()
-end, map_opts)
+end, merge(global_keymap_opts, { desc = "Trash file" }))
 
 vim.keymap.set("n", "<leader>fx", function()
 	require("genghis").chmodx()
-end)
+end, merge(global_keymap_opts, { desc = "Change file permissions" }))
 
 return {
 	"chrisgrieser/nvim-genghis",

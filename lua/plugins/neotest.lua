@@ -156,29 +156,29 @@ return {
 			},
 		}
 
-		vim.keymap.set("n", "<localleader>tdb", start_test_db, map_opts)
+		vim.keymap.set("n", "<localleader>tdb", start_test_db, merge({ desc = "Start test DB" }))
 
 		vim.keymap.set("n", "<localleader>tfr", function()
 			neotest.run.run({ vim.fn.expand("%"), env = test_args.env })
-		end, map_opts)
+		end, merge(global_keymap_opts, { desc = "Run focused test" }))
 
 		vim.keymap.set("n", "<localleader>tr", function()
 			neotest.run.run(test_args)
 			neotest.summary.open()
-		end, map_opts)
+		end, merge(global_keymap_opts, { desc = "Run all tests" }))
 
 		vim.keymap.set("n", "<localleader>to", function()
 			neotest.output.open({ last_run = true, enter = true })
-		end)
+		end, merge(global_keymap_opts, { desc = "Open output" }))
 
 		vim.keymap.set("n", "<localleader>tt", function()
 			neotest.summary.toggle()
 			u.resize_vertical_splits()
-		end, map_opts)
+		end, merge(global_keymap_opts, { desc = "Toggle test summary" }))
 
 		vim.keymap.set("n", "<localleader>tl", function()
-			neotest.run.run_last(u.merge({ enter = true }, test_args))
+			neotest.run.run_last(merge({ enter = true }, test_args))
 			neotest.output.open({ last_run = true, enter = true })
-		end, map_opts)
+		end, merge(global_keymap_opts, { desc = "Run last test" }))
 	end,
 }

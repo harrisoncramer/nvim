@@ -1,4 +1,5 @@
 -- Neovim Core Settings
+require("globals")
 require("settings")
 
 -- Helper functions and autocommands

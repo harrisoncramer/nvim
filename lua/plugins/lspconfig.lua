@@ -8,7 +8,7 @@ end
 vim.keymap.set("n", "gw", function()
 	local word = vim.fn.expand("<cword>")
 	require("plugins.snacks.functions").find_text({ search = word })
-end)
+end, merge(global_keymap_opts, { desc = "Search word under cursor" }))
 
 local original_sign_handler = vim.diagnostic.handlers.signs
 vim.diagnostic.handlers.signs = {
@@ -38,7 +38,7 @@ vim.diagnostic.handlers.signs = {
 	hide = original_sign_handler.hide,
 }
 
-local map_opts = { noremap = true, silent = true, nowait = true }
+local global_keymap_opts = { noremap = true, silent = true, nowait = true }
 local on_attach = function(child_on_attach)
 	return function(client, bufnr)
 		if child_on_attach ~= nil then
@@ -60,10 +60,20 @@ local on_attach = function(child_on_attach)
 		-- if client.server_capabilities.semanticTokensProvider = nil
 
 		-- Keymaps
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, map_opts)
-		vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, map_opts)
-		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, map_opts)
-		vim.keymap.set("n", "gr", vim.lsp.buf.references, map_opts)
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, merge(global_keymap_opts, { desc = "Go to definition" }))
+		vim.keymap.set(
+			"n",
+			"gt",
+			vim.lsp.buf.type_definition,
+			merge(global_keymap_opts, { desc = "Go to type definition" })
+		)
+		vim.keymap.set(
+			"n",
+			"gi",
+			vim.lsp.buf.implementation,
+			merge(global_keymap_opts, { desc = "Go to implementation" })
+		)
+		vim.keymap.set("n", "gr", vim.lsp.buf.references, merge(global_keymap_opts, { desc = "Go to references" }))
 
 		-- Automatically fill struct (gopls)
 		vim.keymap.set("n", "ga", function()
@@ -73,12 +83,22 @@ local on_attach = function(child_on_attach)
 				end,
 				apply = true,
 			})
-		end, map_opts)
+		end, merge(global_keymap_opts, { desc = "Fill struct" }))
 
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, map_opts)
-		vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, map_opts)
-		vim.keymap.set("n", "<leader>lt", vim.lsp.buf.type_definition, map_opts)
-		vim.keymap.set("n", "<leader>lc", vim.lsp.buf.incoming_calls, map_opts)
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, merge(global_keymap_opts, { desc = "Show hover information" }))
+		vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, merge(global_keymap_opts, { desc = "Rename" }))
+		vim.keymap.set(
+			"n",
+			"<leader>lt",
+			vim.lsp.buf.type_definition,
+			merge(global_keymap_opts, { desc = "Type definition" })
+		)
+		vim.keymap.set(
+			"n",
+			"<leader>lc",
+			vim.lsp.buf.incoming_calls,
+			merge(global_keymap_opts, { desc = "Incoming calls" })
+		)
 
 		vim.keymap.set("n", "]W", function()
 			vim.diagnostic.jump({
@@ -86,7 +106,7 @@ local on_attach = function(child_on_attach)
 				severity = vim.diagnostic.severity.ERROR,
 				float = true,
 			})
-		end)
+		end, merge(global_keymap_opts, { desc = "Next error" }))
 
 		vim.keymap.set("n", "[W", function()
 			vim.diagnostic.jump({
@@ -94,7 +114,7 @@ local on_attach = function(child_on_attach)
 				severity = vim.diagnostic.severity.ERROR,
 				float = true,
 			})
-		end)
+		end, merge(global_keymap_opts, { desc = "Previous error" }))
 
 		vim.keymap.set("n", "]w", function()
 			vim.diagnostic.jump({
@@ -102,7 +122,7 @@ local on_attach = function(child_on_attach)
 				severity = vim.diagnostic.severity.WARN,
 				float = true,
 			})
-		end)
+		end, merge(global_keymap_opts, { desc = "Next warning" }))
 
 		vim.keymap.set("n", "[w", function()
 			vim.diagnostic.jump({
@@ -110,11 +130,11 @@ local on_attach = function(child_on_attach)
 				severity = vim.diagnostic.severity.WARN,
 				float = true,
 			})
-		end)
+		end, merge(global_keymap_opts, { desc = "Previous warning" }))
 
 		vim.keymap.set("n", "<leader>d", function()
 			vim.diagnostic.setqflist({})
-		end)
+		end, merge(global_keymap_opts, { desc = "Show diagnostics" }))
 
 		-- This is ripped off from https://github.com/kabouzeid/dotfiles, it's for tailwind preview support
 		if client.name == "tailwindcss" then

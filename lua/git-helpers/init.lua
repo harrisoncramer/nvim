@@ -1,66 +1,62 @@
 local M = {}
 local map_opts = { noremap = true, silent = true, nowait = true }
 local u = require("functions.utils")
-local popup = require("popup")
 
 local gitsigns_ok, gitsigns = pcall(require, "gitsigns")
 local diffview_ok, diffview = pcall(require, "diffview")
 local plenary_ok, job = pcall(require, "plenary.job")
+require("git-helpers.github")
 
 if not gitsigns_ok or not diffview_ok or not plenary_ok then
 	vim.api.nvim_err_writeln("Gitsigns, diffview, or plenary not installed, cannot configure Git tools")
 	return
 end
 
--- Hunk-level operations
-vim.keymap.set("n", "<leader>ghn", function() -- Next Change
-	gitsigns.next_hunk()
-	gitsigns.preview_hunk()
-end)
-vim.keymap.set("n", "<leader>ghp", function() -- Next Change
-	gitsigns.prev_hunk()
-	gitsigns.preview_hunk()
-end)
-vim.keymap.set("n", "<leader>ghr", gitsigns.reset_hunk) -- Reset Hunk
-vim.keymap.set("n", "<leader>gha", gitsigns.stage_hunk) -- Add hunk
-vim.keymap.set("n", "<leader>ghv", gitsigns.preview_hunk)
-
--- View current changes
+-- Diffview
 vim.keymap.set("n", "<leader>gd", function()
 	vim.cmd("DiffviewOpen")
-end)
+end, merge(global_keymap_opts, { desc = "Diffview open (all current changes)" }))
 
--- Adding files...
+-- Blame line
+vim.keymap.set("n", "<leader>gb", gitsigns.blame_line, merge(global_keymap_opts, { desc = "Blame current line" }))
+
+-- Hunk operations
+vim.keymap.set("n", "<leader>ghn", function()
+	gitsigns.next_hunk()
+	gitsigns.preview_hunk()
+end, merge(global_keymap_opts, { desc = "Next change" }))
+
+vim.keymap.set("n", "<leader>ghp", function()
+	gitsigns.prev_hunk()
+	gitsigns.preview_hunk()
+end, merge(global_keymap_opts, { desc = "Previous change" }))
+
+vim.keymap.set("n", "<leader>ghr", gitsigns.reset_hunk, merge(global_keymap_opts, { desc = "Reset current hunk" }))
+vim.keymap.set("n", "<leader>gha", gitsigns.stage_hunk, merge(global_keymap_opts, { desc = "Stage current hunk" }))
+
+vim.keymap.set("n", "<leader>ghq", function()
+	gitsigns.setqflist("all")
+end, merge(global_keymap_opts, { desc = "Send all hunks to quickfix list" }))
+
+-- Adding/tracking files
 vim.keymap.set("n", "<leader>gaa", function()
 	M.add_all()
-end, map_opts)
-vim.keymap.set("n", "<leader>gah", gitsigns.stage_hunk)
+end, merge(global_keymap_opts, { desc = "Add all changes" }))
+
 vim.keymap.set("n", "<leader>gac", function()
 	M.add_current()
-end, map_opts)
+end, merge(global_keymap_opts, { desc = "Add current file" }))
 
--- Committing changes...
-vim.keymap.set("n", "<leader>gcm", function()
-	M.commit()
-end, map_opts)
+-- Committing changes
 vim.keymap.set("n", "<leader>gce", function()
 	M.commit_easy()
-end, map_opts)
-
-vim.keymap.set("n", "<leader>gC", function()
-	M.open_comment_popup()
-end, map_opts)
-
--- Resetting changes...
+end, merge(global_keymap_opts, { desc = "Easily commit current file" }))
 vim.keymap.set("n", "<leader>gre", function()
 	M.reset_easy_commits()
-end, map_opts)
-vim.keymap.set("n", "<leader>grr", function()
-	M.reset()
-end, map_opts)
+end, merge(global_keymap_opts, { desc = "Soft resets all recent easy commits" }))
 
--- Initiate squash since branching from staging
-vim.keymap.set("n", "<leader>gS", function()
+-- Rebase
+vim.keymap.set("n", "<leader>gR", function()
 	vim.ui.input({ prompt = "Enter branch/tag to compare against: " }, function(branch)
 		if branch == nil or branch == "" then
 			require("notify")("No branch entered!", vim.log.levels.ERROR)
@@ -75,26 +71,20 @@ vim.keymap.set("n", "<leader>gS", function()
 		local non_easy_hash = vim.fn.trim(j:read("*a"))
 		vim.cmd("Git rebase -i " .. non_easy_hash)
 	end)
-end, map_opts)
+end, merge(global_keymap_opts, { desc = "Rebase against branch" }))
 
--- Viewing changes and diffs...
-vim.keymap.set("n", "<leader>gvc", function()
-	M.view_changes()
-end, map_opts)
-vim.keymap.set("n", "<leader>gvs", function()
-	M.view_staged()
-end, map_opts)
+-- vim.keymap.set("n", "<leader>gvff", function()
+-- 	diffview.file_history(vim.fn.expand("%"))
+-- end, { unpack({}), desc = "Git view file history" })
+
 vim.keymap.set("n", "<leader>gvfh", function()
-	M.view_file_history()
-end, map_opts)
+	diffview.file_history()
+end, merge(global_keymap_opts, { desc = "Git view file history" }))
 
 -- Conflicts
 vim.keymap.set("n", "<leader>gxx", function()
 	M.resolve_conflict()
-end, map_opts)
-
--- Miscellaneous...
-vim.keymap.set("n", "<leader>gb", gitsigns.blame_line)
+end, merge(global_keymap_opts, { desc = "Resolve conflict" }))
 
 -- Quickfix
 vim.keymap.set("n", "<leader>gqf", function()
@@ -106,6 +96,7 @@ vim.keymap.set("n", "<leader>gqf", function()
 		end
 		local files = M.changed_files(branch)
 		vim.fn.setqflist(files, "r")
+		vim.cmd("copen")
 	end)
 end)
 
@@ -191,22 +182,6 @@ M.add_all = function()
 	}):start()
 end
 
--- Unstages all changes (git reset)
-M.reset = function()
-	job:new({
-		command = "git",
-		args = { "reset" },
-		on_exit = vim.schedule_wrap(function(_, exit_code)
-			if exit_code ~= 0 then
-				require("notify")("Could not reset staged changes", vim.log.levels.ERROR)
-				return
-			else
-				require("notify")("Unstaged all changes", vim.log.levels.INFO)
-			end
-		end),
-	}):start()
-end
-
 -- Stages current file (git add FILENAME)
 M.add_current = function()
 	local relative_file_path = u.copy_relative_filepath(true)
@@ -249,24 +224,6 @@ M.reset_easy_commits = function()
 			end
 		end),
 	}):start()
-end
-
--- Opens a popup in order to write a commit message
-M.commit = function()
-	popup.create_popup_with_action("Commit Message", function(msg)
-		job:new({
-			command = "git",
-			args = { "commit", "-m", msg },
-			on_exit = vim.schedule_wrap(function(_, exit_code)
-				if exit_code ~= 0 then
-					require("notify")("Could not commit changes with message!", vim.log.levels.ERROR)
-					return
-				else
-					require("notify")("Committed.", vim.log.levels.INFO)
-				end
-			end),
-		}):start()
-	end)
 end
 
 -- Pops stashed changes (git stash pop)
@@ -383,47 +340,6 @@ M.branch_exists = function(b)
 	return false
 end
 
--- Toggle file history of this file
-M.view_file_history = function()
-	local isDiff = vim.fn.getwinvar(nil, "&diff")
-	local bufName = vim.api.nvim_buf_get_name(0)
-	diffview.FOCUSED_HISTORY_FILE = bufName
-	if isDiff ~= 0 or u.string_starts(bufName, "diff") then
-		diffview.FOCUSED_HISTORY_FILE = nil
-		vim.cmd.bd()
-		vim.cmd.tabprev()
-	else
-		vim.api.nvim_feedkeys(":DiffviewFileHistory " .. vim.fn.expand("%"), "n", false)
-		u.press_enter()
-	end
-end
-
--- Toggle viewing all unstaged changes (current diff)
-M.view_changes = function()
-	local isDiff = vim.fn.getwinvar(0, "&diff")
-	local bufName = vim.api.nvim_buf_get_name(0)
-	if isDiff ~= 0 or u.string_starts(bufName, "diff") then
-		vim.cmd.bd()
-		vim.cmd.tabprev()
-	else
-		vim.cmd("DiffviewOpen")
-		u.press_enter()
-	end
-end
-
--- Toggle viewing all uncommitted changes (current diff)
-M.view_staged = function()
-	local isDiff = vim.fn.getwinvar(0, "&diff")
-	local bufName = vim.api.nvim_buf_get_name(0)
-	if isDiff ~= 0 or u.string_starts(bufName, "diff") then
-		vim.cmd.bd()
-		vim.cmd.tabprev()
-	else
-		vim.cmd("DiffviewOpen --staged")
-		u.press_enter()
-	end
-end
-
 M.get_remote_url = function(cb)
 	local branch_name_job = job:new({
 		command = "git",
@@ -504,30 +420,6 @@ M.resolve_conflict = function()
 	end)
 end
 
--- See changes compared to staging, exclude generated files
-vim.api.nvim_create_user_command("CHANGES", function()
-	vim.cmd([[
-    DiffviewOpen origin/staging -- ':(exclude)*/db/models/*'
-  ]])
-end, {})
-
-M.open_blame_in_github = function()
-	gitsigns.blame_line({ full = false }, function()
-		gitsigns.blame_line({}, function()
-			local commit = vim.fn.getline(1):match("^(%x+)")
-			vim.cmd(":quit")
-			vim.fn.system(string.format("gh browse %s", commit))
-		end)
-	end)
-end
-
-vim.keymap.set(
-	"n",
-	"<C-g>b",
-	M.open_blame_in_github,
-	{ desc = "Given the current line, opens up the commit in Github that made the change" }
-)
-
 ---Return whether user is focused on the new version of the file
 ---@return boolean
 M.is_current_sha_focused = function()
@@ -548,85 +440,6 @@ M.get_file_path_in_reviewer = function()
 	local b_win = u.get_window_id_by_buffer_id(layout.b.file.bufnr)
 	local file_path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(b_win)), ":p:~:.")
 	return file_path
-end
-
--- Define a function to post a comment to GitHub
-M.post_comment_to_github = function(pr_number, line_number, comment_body, file_path)
-	local commit_id =
-		vim.fn.system({ "gh", "pr", "view", "--json", "commits", "--jq", ".commits[-1].oid" }):gsub("%s+", "")
-	if vim.v.shell_error ~= 0 then
-		require("notify")("Error: Unable to retrieve commit hash")
-		return nil
-	end
-
-	local side = M.is_current_sha_focused() and "RIGHT" or "LEFT"
-	local comment_data = vim.json.encode({
-		body = comment_body,
-		commit_id = commit_id,
-		path = file_path,
-		line = line_number,
-		side = side,
-	})
-
-	local curl_cmd = string.format(
-		'curl -X POST -H "Authorization: token %s" '
-			.. "-d '%s' "
-			.. "https://api.github.com/repos/chariot-giving/chariot/pulls/%d/comments",
-		os.getenv("GITHUB_TOKEN"),
-		comment_data,
-		pr_number
-	)
-
-	-- Execute the curl command
-	local output = vim.fn.system(curl_cmd)
-
-	local exit_code = vim.v.shell_error
-	if exit_code ~= 0 then
-		require("notify")("Error sending comment", vim.log.levels.ERROR)
-		require("notify")(output, vim.log.levels.ERROR)
-	else
-		require("notify")("Comment posted successfully!")
-	end
-end
-
--- Function called to submit the comment
-M.submit_comment = function(pr_number, line_number, file_path)
-	local buf = vim.api.nvim_get_current_buf()
-	local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-	local comment_body = table.concat(lines, "\n")
-	vim.api.nvim_win_close(0, true) -- Close the popup
-	M.post_comment_to_github(pr_number, line_number, comment_body, file_path)
-end
-
--- Define a function to display a popup and capture input
-M.open_comment_popup = function()
-	-- Get the line number and PR number. Stub, replace with actual implementation.
-	local pr_number = vim.fn.system("gh pr view --json number --jq '.number'")
-	local cursor_pos = vim.api.nvim_win_get_cursor(0)
-	local line_number = cursor_pos[1]
-	local file_path = M.get_file_path_in_reviewer()
-
-	local buf = vim.api.nvim_create_buf(false, true)
-	local width, height = 60, 10
-	local opts = {
-		relative = "cursor",
-		width = width,
-		height = height,
-		col = 1, -- Shift slightly to the right of the cursor
-		row = 0, -- Keep it aligned with the cursor row
-		anchor = "NW", -- Anchor the window to the top-left of the cursor
-		style = "minimal",
-		border = "single", -- Optional: Adds a visible border
-	}
-
-	local _ = vim.api.nvim_open_win(buf, true, opts)
-
-	vim.keymap.set("n", "<leader>S", function()
-		M.submit_comment(pr_number, line_number, file_path)
-	end, { noremap = true, silent = true, buffer = vim.api.nvim_get_current_buf() })
-
-	-- Auto-close the float-buffer on leaving it
-	vim.api.nvim_create_autocmd("BufLeave", { buffer = buf, command = "bwipeout!" })
 end
 
 return M

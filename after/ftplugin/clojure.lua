@@ -1,7 +1,3 @@
-local map_opts = { noremap = true, silent = true, nowait = true, buffer = true }
-
-vim.keymap.set("n", "<localleader>cc", ":ConjureConnect<CR>", map_opts)
-
 local job = require("plenary.job")
 
 local format_file = function()
@@ -20,4 +16,10 @@ local format_file = function()
 	}):start()
 end
 
-vim.keymap.set("n", "ZZ", format_file, map_opts)
+vim.keymap.set(
+	"n",
+	"<localleader>cc",
+	":ConjureConnect<CR>",
+	{ unpack(local_keymap_opts), desc = "Connect to Conjure" }
+)
+vim.keymap.set("n", "ZZ", format_file, merge(local_keymap_opts, { desc = "Format Clojure file" }))
