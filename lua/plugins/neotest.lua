@@ -37,6 +37,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		"antoinemadec/FixCursorHold.nvim",
 		"marilari88/neotest-vitest",
+		"nvim-nio",
 		{ "fredrikaverpil/neotest-golang", version = "*" }, -- Installation
 	},
 	config = function()
