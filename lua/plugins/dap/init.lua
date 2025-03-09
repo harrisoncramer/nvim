@@ -8,15 +8,12 @@ return {
 		"williamboman/mason.nvim",
 	},
 	config = function()
-		local adapters = require("plugins.dap.adapters")
-		local configurations = require("plugins.dap.configs")
-
 		local mason = require("mason")
 		local mason_dap = require("mason-nvim-dap")
 		local dap = require("dap")
 		local ui = require("dapui")
 
-		-- dap.set_log_level("TRACE")
+		dap.set_log_level("TRACE")
 
 		-- ╭──────────────────────────────────────────────────────────╮
 		-- │ Debuggers                                                │
@@ -33,22 +30,33 @@ return {
 			automatic_installation = true,
 		})
 
-		-- ╭──────────────────────────────────────────────────────────╮
-		-- │ Adapters                                                 │
-		-- ╰──────────────────────────────────────────────────────────╯
-		-- Neovim needs a debug adapter with which it can communicate. Neovim can either
-		-- launch the debug adapter itself, or it can attach to an existing one.
-		-- To tell Neovim if it should launch a debug adapter or connect to one, and if
-		-- so, how, you need to configure them via the `dap.adapters` table.
-		adapters.setup(dap)
+		dap.configurations.go = {
+			{
+				type = "go",
+				name = "Attach",
+				request = "attach",
+				mode = "remote",
+				host = "127.0.0.1",
+				port = 8498,
+				showLog = true,
+				apiVersion = 2,
+				trace = "verbose",
+			},
+			{
+				type = "go",
+				name = "Run (and debug)",
+				request = "launch",
+				showLog = false,
+				program = "${file}",
+				dlvToolPath = vim.fn.exepath("dlv"), -- Adjust to where delve is installed
+			},
+		}
 
-		-- ╭──────────────────────────────────────────────────────────╮
-		-- │ Configuration                                            │
-		-- ╰──────────────────────────────────────────────────────────╯
-		-- In addition to launching (possibly) and connecting to a debug adapter, Neovim
-		-- needs to instruct the adapter itself how to launch and connect to the program
-		-- that you are trying to debug (the debugee).
-		configurations.setup(dap)
+		dap.adapters.go = {
+			type = "executable",
+			command = "node",
+			args = { "/Users/harrisoncramer/vscode-go/extension/dist/debugAdapter.js" },
+		}
 
 		-- ╭──────────────────────────────────────────────────────────╮
 		-- │ Keybindings + UI                                         │
