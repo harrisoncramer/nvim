@@ -53,7 +53,10 @@ return {
 		-- ╭──────────────────────────────────────────────────────────╮
 		-- │ Keybindings + UI                                         │
 		-- ╰──────────────────────────────────────────────────────────╯
-		vim.fn.sign_define("DapBreakpoint", { text = "🐞" })
+		vim.fn.sign_define("DapBreakpoint", { text = "🔴", texthl = "", linehl = "", numhl = "" })
+		vim.fn.sign_define("DapBreakpointCondition", { text = "🟠", texthl = "", linehl = "", numhl = "" })
+		vim.fn.sign_define("DapStopped", { text = "🟢", texthl = "", linehl = "", numhl = "" })
+		vim.fn.sign_define("DapBreakpointRejected", { text = "🚫", texthl = "", linehl = "", numhl = "" })
 
 		-- Opens up the debugger tab if it's not currently active
 		local function dap_start_debugging()
