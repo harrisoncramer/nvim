@@ -136,6 +136,9 @@ M.find_text = function(opts)
 	opts = opts or {}
 	require("snacks").picker.grep({
 		search = opts.search or "",
+		exclude = {
+			"**/db/models/**",
+		},
 		cwd = opts.cwd,
 		title = opts.cwd and string.format("Search Text in %s", opts.cwd) or "Search Text",
 		live = true,
