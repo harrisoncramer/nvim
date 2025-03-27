@@ -17,11 +17,20 @@ vim.keymap.set("n", "<leader>tp", ":tabprev<CR>", merge(global_keymap_opts, { de
 vim.keymap.set("n", "<leader>tc", ":tabclose<CR>", merge(global_keymap_opts, { desc = "Close the current tab" }))
 vim.keymap.set("n", "<C-t>", "<C-^>", merge(global_keymap_opts, { desc = "Switch to the alternate buffer" }))
 
+-- Rename word under cursor
+vim.keymap.set("n", "&", function()
+	vim.api.nvim_feedkeys(":keepjumps normal! mi*`i<CR>", "n", false)
+	u.press_enter()
+	vim.api.nvim_feedkeys(":%s//", "n", false)
+end)
+
 -- Copy/yank
 vim.keymap.set("n", "<leader>ya", ":silent %y<CR>", merge(global_keymap_opts, { desc = "Copy the entire file" }))
 
 -- Movement
 vim.keymap.set("n", "*", ":keepjumps normal! mi*`i<CR>", merge(global_keymap_opts, { desc = "Search on current word" }))
+vim.keymap.set("i", "<C-l>", "<Right>", merge(global_keymap_opts, { desc = "Move right in insert mode" }))
+vim.keymap.set("i", "<C-h>", "<Left>", merge(global_keymap_opts, { desc = "Move left in insert mode" }))
 
 -- File Operations
 vim.keymap.set("n", "H", function()
