@@ -41,17 +41,17 @@ end
 -- Gets vue "reference" to current component (searches for <ComponentName) in telescope
 vim.keymap.set("n", "<localleader>vr", function()
 	M.get_component_references()
-end, merge(local_keymap_opts, { description = "Get references to component" }))
+end, unpack({ local_keymap_opts, description = "Get references to component" }))
 
 vim.keymap.set(
 	"n",
 	"<localleader>tj",
 	M.make_or_jump_to_test_file,
-	merge(local_keymap_opts, { description = "Make or jump to test file" })
+	unpack({ local_keymap_opts, description = "Make or jump to test file" })
 )
 
 vim.keymap.set("n", "<localleader>vi", function()
 	M.import_from_vue(true)
-end, merge(local_keymap_opts, { description = "Import from Vue" }))
+end, unpack({ local_keymap_opts, description = "Import from Vue" }))
 
 return M

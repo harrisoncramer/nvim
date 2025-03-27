@@ -125,13 +125,50 @@ local go = {
 		mode = "local",
 		request = "attach",
 		processId = require("plugins.dap.utils").pick_process,
+		substitutePath = {
+			{
+				from = "${workspaceFolder}/apps/compliance",
+				to = "/app/",
+			},
+		},
+	},
+	{
+		name = "Compliance",
+		type = "go",
+		request = "attach",
+		mode = "remote",
+		host = "127.0.0.1",
+		port = 2354,
+		showLog = true,
+		apiVersion = 2,
+		trace = "verbose",
+		substitutePath = {
+			{
+				from = vim.fn.expand("${workspaceFolder}/apps/compliance"),
+				to = "/app/",
+			},
+		},
 	},
 	{
 		type = "go",
 		name = "Attach To Port (:9080)",
 		mode = "remote",
 		request = "attach",
-		port = "9080",
+		host = "localhost",
+		port = "8498",
+		showLog = true,
+		apiVersion = 2,
+	},
+	{
+		name = "Tester",
+		type = "go",
+		request = "attach",
+		mode = "remote",
+		host = "127.0.0.1",
+		port = 8498,
+		showLog = true,
+		apiVersion = 2,
+		trace = "verbose",
 	},
 }
 

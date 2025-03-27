@@ -9,6 +9,11 @@ vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
 	end,
 })
 
+vim.keymap.set("n", "gw", function()
+	local word = vim.fn.expand("<cword>")
+	require("plugins.snacks.functions").find_text({ search = word })
+end, merge(global_keymap_opts, { desc = "Search word under cursor" }))
+
 return {
 	"folke/snacks.nvim",
 	priority = 1000,

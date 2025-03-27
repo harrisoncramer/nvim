@@ -3,7 +3,6 @@ local M = {}
 local w = require("functions.work")
 local u = require("functions.utils")
 local lsp = require("functions.lsp")
-vim.cmd.source("~/.config/nvim/lua/mappings.vim")
 
 -- Splits and tabs
 vim.keymap.set("n", "ss", ":split<Return>", merge(global_keymap_opts, { desc = "Horizontal split" }))

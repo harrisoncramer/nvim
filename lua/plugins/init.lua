@@ -1,7 +1,10 @@
 -- Any files inside the lua/plugins directory will also
 -- automatically be sourced. These plugins are those that
 -- do not require any configuration.
+
 return {
+	{ "SirVer/ultisnips" },
+	{ "davidosomething/format-ts-errors.nvim" },
 	{ "rcarriga/nvim-notify" },
 	{ "williamboman/mason.nvim" },
 	{ "WhoIsSethDaniel/mason-tool-installer.nvim" },

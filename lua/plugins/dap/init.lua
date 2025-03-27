@@ -32,6 +32,23 @@ return {
 
 		dap.configurations.go = {
 			{
+				name = "Compliance",
+				type = "go",
+				request = "attach",
+				port = 2354,
+				host = "127.0.0.1",
+				showLog = true,
+				apiVersion = 2,
+				trace = "verbose",
+				mode = "remote",
+				substitutePath = {
+					{
+						from = "${workspaceFolder}/apps/compliance",
+						to = "/app",
+					},
+				},
+			},
+			{
 				type = "go",
 				name = "Attach",
 				request = "attach",
@@ -41,6 +58,7 @@ return {
 				showLog = true,
 				apiVersion = 2,
 				trace = "verbose",
+				dlvToolPath = vim.fn.exepath("dlv"), -- Adjust to where delve is installed
 			},
 			{
 				type = "go",

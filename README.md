@@ -10,16 +10,11 @@ This repository contains my configurations, including key mappings, plugins, and
 
 - Plugins managed with <a href="https://github.com/folke/lazy.nvim">lazy.nvim</a>
 - Syntax highlighting with <a href="https://github.com/nvim-treesitter/nvim-treesitter">treesitter</a>
-- LSPs installed via <a href="https://github.com/williamboman/mason.nvim">Mason</a> and configured via <a href="https://github.com/neovim/nvim-lspconfig">lspconfig</a>
+- LSPs installed with Mason + configured natively
 - Debuggers installed and configured with <a href="https://github.com/mfussenegger/nvim-dap">nvim-dap</a>
-- <a href="https://github.com/numToStr/FTerm.nvim">fterm</a> for terminal integration
-- <a href="https://github.com/ibhagwan/fzf-lua">fzf-lua</a> for search
-- <a href="https://github.com/harrisoncramer/gitlab.nvim">gitlab.nvim</a> for Gitlab integration
 - <a href="https://github.com/sindrets/diffview.nvim">diffview</a> git branch/commit/diff viewing
 - <a href="https://github.com/nvim-lualine/lualine.nvim">lualine</a> for status bar
-- <a href="https://github.com/lukas-reineke/lsp-format.nvim">lsp-format</a> for formatting
 - <a href="https://github.com/rebelot/kanagawa.nvim">kanagawa</a> colorscheme
-- <a href="https://github.com/nvim-pack/nvim-spectre">spectre</a> for project-wide regexes
 
 # Dependencies
 
@@ -72,11 +67,6 @@ sudo apt install build-essential -y
 ```bash
 curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
 sudo dpkg -i ripgrep_13.0.0_amd64.deb
-```
-
-8. bun for faster language servers (tailwindcss and ts_ls)
-```bash
-curl -fsSL https://bun.sh/install | bash
 ```
 
 9. gnu-sed (for the <a href="https://github.com/nvim-pack/nvim-spectre">spectre</a> plugin)

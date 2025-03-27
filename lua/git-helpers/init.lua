@@ -73,6 +73,24 @@ vim.keymap.set("n", "<leader>gR", function()
 	end)
 end, merge(global_keymap_opts, { desc = "Rebase against branch" }))
 
+-- Initiate squash since branching from staging
+vim.keymap.set("n", "<leader>gS", function()
+	vim.ui.input({ prompt = "Enter branch/tag to compare against: " }, function(branch)
+		if branch == nil or branch == "" then
+			require("notify")("No branch entered!", vim.log.levels.ERROR)
+			return
+		end
+		local j = io.popen("git merge-base origin/" .. branch .. " HEAD")
+		if j == nil then
+			require("notify")("No commit hash found since staging!", vim.log.levels.ERROR)
+			return
+		end
+
+		local non_easy_hash = vim.fn.trim(j:read("*a"))
+		vim.cmd("Git rebase -i " .. non_easy_hash)
+	end)
+end, map_opts)
+
 -- vim.keymap.set("n", "<leader>gvff", function()
 -- 	diffview.file_history(vim.fn.expand("%"))
 -- end, { unpack({}), desc = "Git view file history" })
