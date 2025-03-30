@@ -14,6 +14,16 @@ vim.keymap.set("n", "gw", function()
 	require("plugins.snacks.functions").find_text({ search = word })
 end, merge(global_keymap_opts, { desc = "Search word under cursor" }))
 
+vim.keymap.set("n", "<leader>e", function()
+	require("snacks").picker.icons({
+		icon_sources = { "emoji" },
+		finder = "icons",
+		format = "icon",
+		layout = { preset = "select" },
+		confirm = "put",
+	})
+end, merge(global_keymap_opts, { desc = "Place emoji at current location" }))
+
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
