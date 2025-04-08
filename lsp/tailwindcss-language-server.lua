@@ -2,6 +2,7 @@
 return {
 	cmd = { "tailwindcss-language-server", "--stdio" },
 	filetypes = {
+		"css",
 		"astro",
 		"astro-markdown",
 		"html",

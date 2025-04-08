@@ -1,4 +1,5 @@
 local u = require("functions.utils")
+require("functions.note")
 
 -- Globals
 function _G.P(...)
