@@ -10,6 +10,11 @@ return {
 	config = function()
 		require("conform").setup({
 			formatters = {
+				["eslint_d"] = {
+					command = "eslint_d", -- This needs to be in the shell!
+					args = { "--fix-to-stdout", "--stdin", "--stdin-filename", "$FILENAME" },
+					cwd = require("conform.util").root_file({ "package.json" }),
+				},
 				["pg_format"] = {
 					command = "pg_format",
 					args = { "--inplace", "--config", ".pg_format.conf" },
@@ -19,13 +24,15 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				typescriptreact = {
+					"eslint_d",
 					"prettierd",
-					"prettier",
 				},
 				typescript = {
+					"eslint_d",
 					"prettierd",
 				},
 				javascript = {
+					"eslint_d",
 					"prettierd",
 					stop_after_first = true,
 				},

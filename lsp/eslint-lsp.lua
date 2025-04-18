@@ -16,14 +16,10 @@ return {
 				enable = true,
 			},
 		},
-		codeActionOnSave = {
-			enable = false,
-			mode = "all",
-		},
+		-- Formatting is handled by Conform
 		experimental = {
 			useFlatConfig = false,
 		},
-		format = true,
 		nodePath = "",
 		onIgnoredFiles = "off",
 		problems = {
