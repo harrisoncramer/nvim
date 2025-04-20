@@ -10,10 +10,14 @@ return {
 	config = function()
 		require("conform").setup({
 			formatters = {
+				-- These are the configurations for all the formatters
 				["eslint_d"] = {
 					command = "eslint_d", -- This needs to be in the shell!
 					args = { "--fix-to-stdout", "--stdin", "--stdin-filename", "$FILENAME" },
 					cwd = require("conform.util").root_file({ "package.json" }),
+				},
+				prettierd = {
+					require_cwd = true,
 				},
 				["pg_format"] = {
 					command = "pg_format",
