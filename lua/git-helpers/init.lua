@@ -123,7 +123,9 @@ M.changed_files = function(branch)
 	local lines = vim.split(files, "\n", { trimempty = true })
 	local result = {}
 	for _, file in ipairs(lines) do
-		table.insert(result, { filename = file })
+		if not file:match(".*/db/models/.*") then
+			table.insert(result, { filename = file })
+		end
 	end
 	return result
 end
