@@ -119,11 +119,25 @@ vim.keymap.set("n", "<leader>gqf", function()
 end)
 
 M.changed_files = function(branch)
-	local files = vim.fn.system({ "git", "diff", "--name-only", "--diff-filter=ACM", branch .. "..." })
-	local lines = vim.split(files, "\n", { trimempty = true })
+	-- Committed changes
+	local committed_files = vim.fn.system({ "git", "diff", "--name-only", "--diff-filter=ACM", branch .. "..." })
+	-- Staged changes
+	local staged_files = vim.fn.system({ "git", "diff", "--name-only", "--cached" })
+	-- Untracked files
+	local untracked_files = vim.fn.system({ "git", "ls-files", "-o", "--exclude-standard" })
+
+	local lines =
+		vim.split(committed_files .. "\n" .. staged_files .. "\n" .. untracked_files, "\n", { trimempty = true })
+	local processed_files = {}
 	local result = {}
 	for _, file in ipairs(lines) do
-		if not file:match(".*/db/models/.*") then
+		if
+			file ~= ""
+			and not processed_files[file]
+			and not file:match(".*/db/models/.*")
+			and not file:match(".*/db/models/.*")
+		then
+			processed_files[file] = true
 			table.insert(result, { filename = file })
 		end
 	end
