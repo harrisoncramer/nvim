@@ -35,7 +35,6 @@ local input_keys = {
 }
 
 local M = {}
-local u = require("functions.utils")
 local Projects = require("plugins.snacks.projects")
 local ChangedFiles = require("plugins.snacks.changed-files")
 local projects = Projects.new()

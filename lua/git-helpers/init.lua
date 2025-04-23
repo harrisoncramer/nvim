@@ -119,7 +119,7 @@ vim.keymap.set("n", "<leader>gqf", function()
 end)
 
 M.changed_files = function(branch)
-	local files = vim.fn.system({ "git", "diff", "--name-only", branch })
+	local files = vim.fn.system({ "git", "diff", "--name-only", "--diff-filter=ACM", branch .. "..." })
 	local lines = vim.split(files, "\n", { trimempty = true })
 	local result = {}
 	for _, file in ipairs(lines) do
