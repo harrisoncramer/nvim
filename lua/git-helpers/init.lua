@@ -12,10 +12,26 @@ if not gitsigns_ok or not diffview_ok or not plenary_ok then
 	return
 end
 
--- Diffview
-vim.keymap.set("n", "<leader>gd", function()
+M.branch_input = function(callback)
+	vim.ui.input({ prompt = "Enter branch/tag: " }, function(branch)
+		if branch == nil or branch == "" then
+			return
+		end
+		callback(branch)
+	end)
+end
+
+-- Diffview changes against a branch
+vim.keymap.set("n", "<leader>gdd", function()
 	vim.cmd("DiffviewOpen")
-end, merge(global_keymap_opts, { desc = "Diffview open (all current changes)" }))
+end, merge(global_keymap_opts, { desc = "Diffview all changes" }))
+
+-- Diffview changes for current file against a particular branch
+vim.keymap.set("n", "<leader>gdf", function()
+	M.branch_input(function(branch)
+		vim.cmd("DiffviewOpen origin/" .. branch .. "...HEAD -- %")
+	end)
+end)
 
 -- Blame line
 vim.keymap.set("n", "<leader>gb", gitsigns.blame_line, merge(global_keymap_opts, { desc = "Blame current line" }))
@@ -33,10 +49,6 @@ end, merge(global_keymap_opts, { desc = "Previous change" }))
 
 vim.keymap.set("n", "<leader>ghr", gitsigns.reset_hunk, merge(global_keymap_opts, { desc = "Reset current hunk" }))
 vim.keymap.set("n", "<leader>gha", gitsigns.stage_hunk, merge(global_keymap_opts, { desc = "Stage current hunk" }))
-
-vim.keymap.set("n", "<leader>ghq", function()
-	gitsigns.setqflist("all")
-end, merge(global_keymap_opts, { desc = "Send all hunks to quickfix list" }))
 
 -- Adding/tracking files
 vim.keymap.set("n", "<leader>gaa", function()
@@ -57,17 +69,12 @@ end, merge(global_keymap_opts, { desc = "Soft resets all recent easy commits" })
 
 -- Rebase
 vim.keymap.set("n", "<leader>gR", function()
-	vim.ui.input({ prompt = "Enter branch/tag to compare against: " }, function(branch)
-		if branch == nil or branch == "" then
-			require("notify")("No branch entered!", vim.log.levels.ERROR)
-			return
-		end
+	M.branch_input(function(branch)
 		local j = io.popen("git merge-base origin/" .. branch .. " HEAD")
 		if j == nil then
 			require("notify")("No commit hash found since staging!", vim.log.levels.ERROR)
 			return
 		end
-
 		local non_easy_hash = vim.fn.trim(j:read("*a"))
 		vim.cmd("Git rebase -i " .. non_easy_hash)
 	end)
@@ -75,11 +82,7 @@ end, merge(global_keymap_opts, { desc = "Rebase against branch" }))
 
 -- Initiate squash since branching from staging
 vim.keymap.set("n", "<leader>gS", function()
-	vim.ui.input({ prompt = "Enter branch/tag to compare against: " }, function(branch)
-		if branch == nil or branch == "" then
-			require("notify")("No branch entered!", vim.log.levels.ERROR)
-			return
-		end
+	M.branch_input(function(branch)
 		local j = io.popen("git merge-base origin/" .. branch .. " HEAD")
 		if j == nil then
 			require("notify")("No commit hash found since staging!", vim.log.levels.ERROR)
@@ -91,10 +94,6 @@ vim.keymap.set("n", "<leader>gS", function()
 	end)
 end, map_opts)
 
--- vim.keymap.set("n", "<leader>gvff", function()
--- 	diffview.file_history(vim.fn.expand("%"))
--- end, { unpack({}), desc = "Git view file history" })
-
 vim.keymap.set("n", "<leader>gvfh", function()
 	diffview.file_history()
 end, merge(global_keymap_opts, { desc = "Git view file history" }))
@@ -103,20 +102,6 @@ end, merge(global_keymap_opts, { desc = "Git view file history" }))
 vim.keymap.set("n", "<leader>gxx", function()
 	M.resolve_conflict()
 end, merge(global_keymap_opts, { desc = "Resolve conflict" }))
-
--- Quickfix
-vim.keymap.set("n", "<leader>gqf", function()
-	-- Sends all changed files versus staging to the quickfix list
-	vim.ui.input({ prompt = "Enter branch/tag to get changed files against: " }, function(branch)
-		if branch == nil or branch == "" then
-			require("notify")("No branch entered!", vim.log.levels.ERROR)
-			return
-		end
-		local files = M.changed_files(branch)
-		vim.fn.setqflist(files, "r")
-		vim.cmd("copen")
-	end)
-end)
 
 M.changed_files = function(branch)
 	-- Committed changes
