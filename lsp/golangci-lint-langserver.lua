@@ -6,15 +6,10 @@ return {
 	filetypes = { "go", "gomod" },
 	init_options = {
 		command = {
-			"golangci-lint",
+			"/Users/harrisoncramer/.dotfiles/scripts/bin/golangci-lint__old",
 			"run",
-			"--output.json.path",
-			"stdout",
+			"--out-format=json",
 			"--show-stats=false",
-			"--issues-exit-code=1",
-			-- Chariot hasn't migrated to v3 yet, so pass a config path option
-			"-c",
-			"~/.golangci.chariot.v3.yml",
 		},
 	},
 	root_markers = {
@@ -27,3 +22,32 @@ return {
 		".git",
 	},
 }
+
+-- return {
+-- 	cmd = {
+-- 		"golangci-lint-langserver",
+-- 	},
+-- 	filetypes = { "go", "gomod" },
+-- 	init_options = {
+-- 		command = {
+-- 			"golangci-lint",
+-- 			"run",
+-- 			"--output.json.path",
+-- 			"stdout",
+-- 			"--show-stats=false",
+-- 			"--issues-exit-code=1",
+-- 			-- Chariot hasn't migrated to v3 yet, so pass a config path option
+-- 			"-c",
+-- 			"~/.golangci.chariot.v3.yml",
+-- 		},
+-- 	},
+-- 	root_markers = {
+-- 		".golangci.yml",
+-- 		".golangci.yaml",
+-- 		".golangci.toml",
+-- 		".golangci.json",
+-- 		"go.work",
+-- 		"go.mod",
+-- 		".git",
+-- 	},
+-- }
