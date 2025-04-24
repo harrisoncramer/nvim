@@ -55,11 +55,11 @@ return {
 					reverse = false,
 				},
 			},
-			hooks = {
-				diff_buf_win_enter = function()
-					vim.opt_local.foldenable = false
-				end,
-			},
+			-- hooks = {
+			-- 	diff_buf_win_enter = function()
+			-- 		vim.opt_local.foldenable = false
+			-- 	end,
+			-- },
 			key_bindings = {
 				disable_defaults = true, -- Disable the default key bindings
 				-- The `view` bindings are active in the diff buffers, only when the current

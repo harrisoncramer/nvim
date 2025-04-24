@@ -23,7 +23,9 @@ end
 
 -- Diffview changes against a branch
 vim.keymap.set("n", "<leader>gdd", function()
-	vim.cmd("DiffviewOpen")
+	M.branch_input(function(branch)
+		vim.cmd("DiffviewOpen origin/" .. branch)
+	end)
 end, merge(global_keymap_opts, { desc = "Diffview all changes" }))
 
 -- Diffview changes for current file against a particular branch
