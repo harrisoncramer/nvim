@@ -12,6 +12,9 @@ return {
 			"stdout",
 			"--show-stats=false",
 			"--issues-exit-code=1",
+			-- Chariot hasn't migrated to v3 yet, so pass a config path option
+			"-c",
+			"~/.golangci.chariot.v3.yml",
 		},
 	},
 	root_markers = {
