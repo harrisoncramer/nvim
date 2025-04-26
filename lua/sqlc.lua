@@ -71,3 +71,7 @@ vim.api.nvim_create_autocmd({ "BufWritePost", "InsertEnter" }, {
 		end
 	end,
 })
+
+return {
+	sqlc_namespace,
+}
