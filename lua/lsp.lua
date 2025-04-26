@@ -36,6 +36,7 @@ local servers = {
 	"prisma-language-server",
 	"protols",
 	"postgrestools",
+	"json-lsp",
 }
 
 local linters = {
