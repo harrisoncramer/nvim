@@ -27,3 +27,5 @@ require("lsp")
 
 -- Miscenalleous vim commands
 vim.cmd.source("~/.config/nvim/_init.vim")
+
+require("sqlc")

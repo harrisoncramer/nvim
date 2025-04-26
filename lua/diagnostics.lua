@@ -1,10 +1,4 @@
 -- Change Error Signs in Gutter
-local signs = { Error = "✘", Warn = " ", Hint = "", Info = "" }
-for type, icon in pairs(signs) do
-	local hl = "DiagnosticSign" .. type
-	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
 local original_sign_handler = vim.diagnostic.handlers.signs
 vim.diagnostic.handlers.signs = {
 	show = function(ns, bufnr, diagnostics, opts)
@@ -43,5 +37,13 @@ vim.diagnostic.config({
 		source = true,
 		border = "solid",
 		focusable = true,
+	},
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "✘",
+			[vim.diagnostic.severity.WARN] = " ",
+			[vim.diagnostic.severity.INFO] = "",
+			[vim.diagnostic.severity.HINT] = "",
+		},
 	},
 })
