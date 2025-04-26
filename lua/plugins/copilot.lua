@@ -6,6 +6,7 @@ return {
 		suggestion = { enabled = false },
 		panel = { enabled = false },
 		filetypes = {
+			sql = false,
 			markdown = true,
 			help = true,
 		},
