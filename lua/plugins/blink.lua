@@ -43,25 +43,25 @@ return {
 				end
 				return {
 					"snippets",
-					-- "lsp",
-					-- "copilot",
-					-- "path",
-					-- "buffer",
+					"lsp",
+					"copilot",
+					"path",
+					"buffer",
 				}
 			end,
-			-- providers = {
-			-- 	dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
-			-- 	lsp = {
-			-- 		score_offset = 3,
-			-- 	},
-			-- 	copilot = {
-			-- 		-- min_keyword_length = 2,
-			-- 		name = "copilot",
-			-- 		module = "blink-copilot",
-			-- 		score_offset = 2,
-			-- 		async = true,
-			-- 	},
-			-- },
+			providers = {
+				dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+				lsp = {
+					score_offset = 3,
+				},
+				copilot = {
+					-- min_keyword_length = 2,
+					name = "copilot",
+					module = "blink-copilot",
+					score_offset = 2,
+					async = true,
+				},
+			},
 		},
 	},
 	opts_extend = { "sources.default" },
