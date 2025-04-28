@@ -3,7 +3,6 @@
 -- do not require any configuration.
 
 return {
-	{ "SirVer/ultisnips" },
 	{ "davidosomething/format-ts-errors.nvim" },
 	{ "rcarriga/nvim-notify" },
 	{ "williamboman/mason.nvim" },

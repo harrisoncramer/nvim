@@ -1,0 +1,15 @@
+{
+  "console log": {
+    "prefix": "CL",
+    "body": [
+      "console.log($1)"
+    ],
+    "description": "console log"
+  },
+  "arrow function": {
+    "prefix": "XOQ",
+    "body": [
+      "($1) => $2"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "if error": {
+    "prefix": "IFE",
+    "body": [
+      "if err != nil {",
+      "\treturn fmt.Errorf(\"${1:message}: %w\", err)}",
+      "}",
+      "$3"
+    ],
+    "description": "if error, then return it"
+  },
+  "if err and non-nil": {
+    "prefix": "IFFE",
+    "body": [
+      "if err := $1; err != nil {",
+      "\treturn $3 fmt.Errorf(\"$2: %w\", err)",
+      "}"
+    ]
+  },
+  "if ok": {
+    "prefix": "IOK",
+    "body": [
+      "if !ok {",
+      "\t$2",
+      "}"
+    ],
+    "description": "if not ok"
+  }
+}

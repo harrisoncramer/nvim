@@ -2,9 +2,11 @@ return {
 	"saghen/blink.cmp",
 	dependencies = {
 		"fang2hou/blink-copilot",
+		{ "L3MON4D3/LuaSnip", version = "v2.*" },
 	},
 	version = "*",
 	opts = {
+		snippets = { preset = "luasnip" },
 		signature = {},
 		keymap = {
 			["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
@@ -39,21 +41,27 @@ return {
 				if vim.bo.filetype == "sql" then
 					return { "dadbod", "copilot" }
 				end
-				return { "lsp", "copilot", "path", "snippets", "buffer" }
+				return {
+					"snippets",
+					-- "lsp",
+					-- "copilot",
+					-- "path",
+					-- "buffer",
+				}
 			end,
-			providers = {
-				dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
-				lsp = {
-					score_offset = 3,
-				},
-				copilot = {
-					-- min_keyword_length = 2,
-					name = "copilot",
-					module = "blink-copilot",
-					score_offset = 2,
-					async = true,
-				},
-			},
+			-- providers = {
+			-- 	dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+			-- 	lsp = {
+			-- 		score_offset = 3,
+			-- 	},
+			-- 	copilot = {
+			-- 		-- min_keyword_length = 2,
+			-- 		name = "copilot",
+			-- 		module = "blink-copilot",
+			-- 		score_offset = 2,
+			-- 		async = true,
+			-- 	},
+			-- },
 		},
 	},
 	opts_extend = { "sources.default" },

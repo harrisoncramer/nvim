@@ -1,6 +1,7 @@
 {
   "Comment.nvim": { "branch": "master", "commit": "e30b7f2008e52442154b66f7c519bfd2f1e32acb" },
   "FixCursorHold.nvim": { "branch": "master", "commit": "1900f89dc17c603eec29960f57c00bd9ae696495" },
+  "LuaSnip": { "branch": "master", "commit": "03c8e67eb7293c404845b3982db895d59c0d1538" },
   "blink-copilot": { "branch": "main", "commit": "bdc45bbbed2ec252b3a29f4adecf031e157b5573" },
   "blink.cmp": { "branch": "main", "commit": "cb5e346d9e0efa7a3eee7fd4da0b690c48d2a98e" },
   "bufjump.nvim": { "branch": "master", "commit": "ae2728a77defbd27e9e5ef64c854fb0813ffba01" },
@@ -51,7 +52,6 @@
   "snacks.nvim": { "branch": "main", "commit": "bc0630e43be5699bb94dadc302c0d21615421d93" },
   "tagalong.vim": { "branch": "main", "commit": "5a2bbf2b1d5b657685a49d48d98a4aa921c1fde3" },
   "treesj": { "branch": "main", "commit": "f4049f8ba2177e7c5c03fb9e34d4e039c685d744" },
-  "ultisnips": { "branch": "master", "commit": "dbc458e110bb49299da76ec53f8b09b4f6dce28a" },
   "vim-abolish": { "branch": "master", "commit": "dcbfe065297d31823561ba787f51056c147aa682" },
   "vim-autoread": { "branch": "master", "commit": "24061f84652d768bfb85d222c88580b3af138dab" },
   "vim-cool": { "branch": "master", "commit": "9ea940c0d537e55de0de4c0298c04b976960fb12" },
