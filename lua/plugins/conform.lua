@@ -38,7 +38,6 @@ return {
 				javascript = {
 					"eslint_d",
 					"prettierd",
-					stop_after_first = true,
 				},
 				sql = {
 					"pg_format",

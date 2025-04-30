@@ -74,7 +74,9 @@ M.on_attach = function(client, bufnr)
 	-- client.config.flags.debounce_text_changes = 300
 
 	-- This will set up formatting for the attached LSPs
-	client.server_capabilities.documentFormattingProvider = true
+	if client.name == "gopls" then
+		client.server_capabilities.documentFormattingProvider = true
+	end
 
 	-- Turn off semantic tokens (too slow)
 	-- if client.server_capabilities.semanticTokensProvider = nil
