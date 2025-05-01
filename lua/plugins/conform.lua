@@ -35,6 +35,9 @@ return {
 					"eslint_d",
 					"prettierd",
 				},
+				json = {
+					"prettierd",
+				},
 				javascript = {
 					"eslint_d",
 					"prettierd",
