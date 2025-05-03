@@ -10,6 +10,9 @@ require("commands")
 -- Plugins
 require("lazyconfig")
 
+-- Marks
+require("marks")
+
 -- Mappings
 require("mappings")
 
