@@ -1,6 +1,20 @@
 local u = require("functions.utils")
 local git = require("git-helpers")
 
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "oil",
+	callback = function()
+		vim.opt.laststatus = 0
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufLeave", {
+	pattern = "oil",
+	callback = function()
+		vim.opt.laststatus = 2
+	end,
+})
+
 local function get_git_head()
 	local head = vim.fn.trim(vim.fn.system({ "git", "branch", "--show-current" }))
 	if vim.v.shell_error ~= 0 or head == "" or head == nil then
