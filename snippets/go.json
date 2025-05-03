@@ -3,7 +3,7 @@
     "prefix": "IFE",
     "body": [
       "if err != nil {",
-      "\treturn fmt.Errorf(\"${1:message}: %w\", err)}",
+      "\treturn $2fmt.Errorf(\"${1:message}: %w\", err)",
       "}",
       "$3"
     ],
