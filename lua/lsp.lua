@@ -74,7 +74,7 @@ M.on_attach = function(client, bufnr)
 	-- client.config.flags.debounce_text_changes = 300
 
 	-- This will set up formatting for the attached LSPs
-	if client.name == "gopls" then
+	if client.name == "gopls" or client.name == "json-lsp" then
 		client.server_capabilities.documentFormattingProvider = true
 	end
 
