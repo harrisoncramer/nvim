@@ -1,7 +1,3 @@
-local vue_typescript_plugin = require("mason-registry").get_package("vue-language-server"):get_install_path()
-	.. "/node_modules/@vue/language-server"
-	.. "/node_modules/@vue/typescript-plugin"
-
 local function add_autoimport_cmd()
 	vim.api.nvim_create_autocmd("BufWritePre", {
 		group = vim.api.nvim_create_augroup("ts_fix_imports", { clear = true }),
@@ -64,15 +60,6 @@ return {
 
 			vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
 		end,
-	},
-	init_options = {
-		plugins = {
-			{
-				name = "@vue/typescript-plugin",
-				location = vue_typescript_plugin,
-				languages = { "javascript", "typescript", "vue", "javascriptreact", "typescriptreact", "vue" },
-			},
-		},
 	},
 	filetypes = {
 		"javascript",

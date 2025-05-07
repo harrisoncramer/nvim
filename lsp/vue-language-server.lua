@@ -1,5 +1,5 @@
-local typescript_path = require("mason-registry").get_package("typescript-language-server"):get_install_path()
-	.. "/node_modules/typescript/lib"
+-- local typescript_path = require("mason-registry").get_package("typescript-language-server"):get_install_path()
+-- 	.. "/node_modules/typescript/lib"
 
 --- @class vim.lsp.Config
 return {
@@ -24,7 +24,7 @@ return {
 	},
 	init_options = {
 		typescript = {
-			tsdk = typescript_path,
+			-- tsdk = typescript_path,
 		},
 	},
 }
