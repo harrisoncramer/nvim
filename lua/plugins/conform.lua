@@ -22,7 +22,7 @@ return {
 				},
 				["pg_format"] = {
 					command = "pg_format",
-					args = { "--inplace", "--config", ".pg_format.conf" },
+					args = { "--inplace", "--config", ".pg_format" },
 					cwd = require("conform.util").root_file({ ".pg_format" }),
 				},
 			},
