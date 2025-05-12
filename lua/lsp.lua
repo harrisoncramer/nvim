@@ -37,6 +37,7 @@ local servers = {
 	"protols",
 	"postgrestools",
 	"json-lsp",
+	"shellcheck",
 }
 
 local linters = {
