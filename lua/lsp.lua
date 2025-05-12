@@ -54,6 +54,7 @@ local formatters = {
 	"prettierd",
 	"stylua",
 	"sql-formatter", -- This does not support @ symbols, use https://github.com/nene/prettier-plugin-sql-cst instead
+	"shfmt",
 }
 
 local all = merge(servers, linters, debuggers, formatters)
