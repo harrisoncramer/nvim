@@ -26,7 +26,14 @@ local function run_sqlc_against_current_file()
 	local config_file = "sqlc.yaml"
 	local current_dir = vim.fs.dirname(vim.api.nvim_buf_get_name(0))
 	local file_name = vim.fs.basename(vim.api.nvim_buf_get_name(0))
-	local command = "sqlc vet -f " .. current_dir .. "/" .. config_file .. " " .. current_dir .. "/" .. file_name
+	local command = "SQLC_DATABASE_URI=postgresql://chariot:samplepassword@0.0.0.0:5432/chariot?connect_timeout=300 sqlc vet -f "
+		.. current_dir
+		.. "/"
+		.. config_file
+		.. " "
+		.. current_dir
+		.. "/"
+		.. file_name
 
 	local output = vim.fn.system(command)
 	return output
