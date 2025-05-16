@@ -34,19 +34,19 @@ return {
 			{
 				name = "staging",
 				url = function()
-					return os.getenv("STAGING_DB_URL")
+					return os.getenv("STAGING_DATABASE_URL")
 				end,
 			},
 			{
 				name = "prod_read_only",
 				url = function()
-					return os.getenv("PROD_READ_ONLY_DB_URL")
+					return os.getenv("PROD_READ_ONLY_DATABASE_URL")
 				end,
 			},
 			{
 				name = "prod",
 				url = function()
-					return os.getenv("PROD_DB_URL")
+					return os.getenv("PROD_DATABASE_URL")
 				end,
 			},
 		}
