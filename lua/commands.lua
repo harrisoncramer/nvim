@@ -24,6 +24,11 @@ vim.api.nvim_create_user_command("Stash", function(opts)
 	require("notify")(string.format("Stashed %s", name))
 end, { nargs = "?" })
 
+vim.api.nvim_create_user_command("QFL", function()
+	local qf = require("quickfix")
+	qf.load_quickfix_from_file()
+end, { nargs = 0 })
+
 vim.api.nvim_create_user_command("SQL", function(opts)
 	local db = opts.args
 	local var_table = require("env." .. db)
@@ -60,25 +65,6 @@ end, { nargs = "+", complete = "command" })
 
 vim.cmd([[
   command -nargs=? -bar ReviewChanges call setqflist(map(systemlist("git diff --name-only <args>"), '{"filename": v:val, "lnum": 1}'))
-]])
-
--- Load quickfix lists! They can be saved with :w to .qf directory, which is globally gitignored
-vim.cmd([[
-  if exists('g:loaded_hqf')
-      finish
-  endif
-  let g:loaded_hqf = 1
-
-  function! s:load_file(type, bang, file) abort
-      let l:efm = &l:efm
-      let &l:errorformat = "%-G%f:%l: All of '%#%.depend'%.%#,%f%.%l col %c%. %m"
-      let l:cmd = a:bang ? 'getfile' : 'file'
-      exec a:type.l:cmd.' '.a:file
-      let &l:efm = l:efm
-      execute 'copen'
-  endfunction
-
-  command! -complete=file -nargs=1 -bang Qfl call <SID>load_file('c', <bang>0, <f-args>)
 ]])
 
 vim.cmd([[

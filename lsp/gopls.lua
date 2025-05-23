@@ -1,6 +1,8 @@
 --- @class vim.lsp.Config
 return {
-	cmd = { "gopls" },
+	cmd = {
+		"gopls",
+	},
 	filetypes = { "go" },
 	settings = {
 		gopls = {
