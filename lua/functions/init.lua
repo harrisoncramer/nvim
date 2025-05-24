@@ -43,42 +43,6 @@ return {
 			end
 		end
 	end,
-	reload_current = function()
-		local current_buffer = u.get_buffer_name()
-		local module_name = u.split(current_buffer, "/lua")
-		local patterns = { "/", ".lua" }
-		for _, value in ipairs(patterns) do
-			module_name = string.gsub(current_buffer, value, "")
-		end
-		package.loaded[module_name] = nil
-		local status = pcall(require, module_name)
-		if not status then
-			require("notify")(module_name .. " is not available.", "error")
-		end
-	end,
-	shortcut = function()
-		local branch = u.get_branch_name()
-		local finalUrl = "https://app.shortcut.com/crossbeam/story"
-		branch = u.get_branch_name() .. "/"
-
-		if not string.find(branch, "sc%-") then
-			require("notify")("Not a shortcut branch", "error")
-			return
-		end
-
-		local parts = {}
-		for word in string.gmatch(branch, "(.-)/") do
-			table.insert(parts, word)
-		end
-		for i = #parts, 1, -1 do
-			finalUrl = finalUrl .. "/" .. parts[i]
-		end
-		finalUrl = finalUrl:gsub("(sc%-)", "")
-		u.open_url(finalUrl)
-	end,
-	calendar = function()
-		u.open_url("https://calendar.google.com/")
-	end,
 	run_script = function(script_name, args)
 		local nvim_scripts_dir = "~/.config/nvim/scripts"
 		local f = nil

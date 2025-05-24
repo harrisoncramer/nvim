@@ -29,6 +29,16 @@ vim.api.nvim_create_user_command("QFL", function()
 	qf.load_quickfix_from_file()
 end, { nargs = 0 })
 
+vim.api.nvim_create_user_command("QFS", function()
+	local qf = require("quickfix")
+	qf.save_quickfix_to_file()
+end, { nargs = 0 })
+
+vim.api.nvim_create_user_command("QFD", function()
+	local qf = require("quickfix")
+	qf.delete_quickfix_entry()
+end, { nargs = 0 })
+
 vim.api.nvim_create_user_command("SQL", function(opts)
 	local db = opts.args
 	local var_table = require("env." .. db)
