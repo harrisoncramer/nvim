@@ -23,11 +23,6 @@ local read_quickfix_files = function()
 		})
 	end
 
-	if #all_files == 0 then
-		require("notify")("No quickfix entries found.", vim.log.levels.ERROR)
-		return nil
-	end
-
 	return all_files
 end
 
@@ -36,7 +31,8 @@ M.manage_quickfix_list = function()
 	local pickerFunctions = require("plugins.snacks.functions")
 
 	local all_files = read_quickfix_files()
-	if all_files == nil then
+	if #all_files == 0 then
+		require("notify")("No quickfix entries found.", vim.log.levels.ERROR)
 		return
 	end
 
