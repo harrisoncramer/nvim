@@ -1,3 +1,5 @@
+local qf = require("plugins.bqf.quickfix")
+
 local function toggleQf()
 	local ft = vim.bo.filetype
 	if ft == "qf" then
@@ -7,9 +9,11 @@ local function toggleQf()
 	end
 end
 
-vim.keymap.set("n", "<leader>q", toggleQf, {}, merge(global_keymap_opts, { desc = "Toggle quickfix" }))
-vim.keymap.set("n", "]q", ":cnext<CR>", {}, merge(global_keymap_opts, { desc = "Next quickfix" }))
-vim.keymap.set("n", "[q", ":cprev<CR>", {}, merge(global_keymap_opts, { desc = "Previous quickfix" }))
+vim.keymap.set("n", "<leader>qq", toggleQf, merge(global_keymap_opts, { desc = "Toggle quickfix" }))
+vim.keymap.set("n", "<leader>qm", qf.manage_quickfix_list, merge(global_keymap_opts, { desc = "Toggle quickfix" }))
+vim.keymap.set("n", "<leader>qs", qf.save_quickfix_to_file, merge(global_keymap_opts, { desc = "Toggle quickfix" }))
+vim.keymap.set("n", "]q", ":cnext<CR>", merge(global_keymap_opts, { desc = "Next quickfix" }))
+vim.keymap.set("n", "[q", ":cprev<CR>", merge(global_keymap_opts, { desc = "Previous quickfix" }))
 
 return {
 	"kevinhwang91/nvim-bqf",

@@ -1,22 +1,23 @@
---- @class PickerOpts
---- @field cwd? string
---- @field search? string
---- @field extra_keys? table
---- @field actions? table
+local Projects = require("plugins.snacks.projects")
+local ChangedFiles = require("plugins.snacks.changed-files")
+local projects = Projects.new()
+local changed_files = ChangedFiles.new("staging") -- TODO: @harrisoncramer fix this branch on init
 
-local preview_keys = {
+local M = {}
+
+M.preview_keys = {
 	["sh"] = { "toggle_focus", mode = { "n", "x" } },
 	["<CR>"] = { "confirm", mode = { "n", "i", "x" } },
 }
 
-local list_keys = {
+M.list_keys = {
 	["<Esc>"] = { "", mode = { "n", "x" } },
 	["<C-s>"] = "toggle_focus",
 	["sp"] = { "focus_preview", mode = { "n", "x" } },
 	["<CR>"] = { "confirm", mode = { "n", "i", "x" } },
 }
 
-local input_keys = {
+M.input_keys = {
 	["<CR>"] = { "confirm", mode = { "n", "i", "x" } },
 	["sl"] = { "focus_preview", mode = { "n", "x" } },
 	["<C-s>"] = { "toggle_focus", mode = { "i", "n", "x" } },
@@ -33,12 +34,6 @@ local input_keys = {
 	["j"] = "list_down",
 	["k"] = "list_up",
 }
-
-local M = {}
-local Projects = require("plugins.snacks.projects")
-local ChangedFiles = require("plugins.snacks.changed-files")
-local projects = Projects.new()
-local changed_files = ChangedFiles.new("staging") -- TODO: @harrisoncramer fix this branch on init
 
 -- TODO: Add .env to searched files
 M.choose_directory_for_search = function()
@@ -64,17 +59,23 @@ M.choose_directory_for_search = function()
 		},
 		win = {
 			preview = {
-				keys = merge(preview_keys, directory_search_keys),
+				keys = merge(M.preview_keys, directory_search_keys),
 			},
 			list = {
-				keys = merge(list_keys, directory_search_keys),
+				keys = merge(M.list_keys, directory_search_keys),
 			},
 			input = {
-				keys = merge(input_keys, { ["<C-k>"] = { "close", mode = { "n", "i" } } }, directory_search_keys),
+				keys = merge(M.input_keys, { ["<C-k>"] = { "close", mode = { "n", "i" } } }, directory_search_keys),
 			},
 		},
 	})
 end
+
+--- @class PickerOpts
+--- @field cwd? string
+--- @field search? string
+--- @field extra_keys? table
+--- @field actions? table
 
 --- @param opts PickerOpts
 M.git_files = function(opts)
@@ -90,13 +91,13 @@ M.git_files = function(opts)
 		},
 		win = {
 			preview = {
-				keys = preview_keys,
+				keys = M.preview_keys,
 			},
 			list = {
-				keys = list_keys,
+				keys = M.list_keys,
 			},
 			input = {
-				keys = merge(input_keys, { ["<C-j>"] = { "close", mode = { "n", "i" } } }, opts.extra_keys or {}),
+				keys = merge(M.input_keys, { ["<C-j>"] = { "close", mode = { "n", "i" } } }, opts.extra_keys or {}),
 			},
 		},
 	})
@@ -118,13 +119,13 @@ M.changed_files = function(opts)
 		},
 		win = {
 			preview = {
-				keys = preview_keys,
+				keys = M.preview_keys,
 			},
 			list = {
-				keys = list_keys,
+				keys = M.list_keys,
 			},
 			input = {
-				keys = merge(input_keys, { ["<C-h>"] = { "close", mode = { "n", "i" } } }, opts.extra_keys or {}),
+				keys = merge(M.input_keys, { ["<C-h>"] = { "close", mode = { "n", "i" } } }, opts.extra_keys or {}),
 			},
 		},
 	})
@@ -149,13 +150,13 @@ M.find_text = function(opts)
 		},
 		win = {
 			preview = {
-				keys = preview_keys,
+				keys = M.preview_keys,
 			},
 			list = {
-				keys = list_keys,
+				keys = M.list_keys,
 			},
 			input = {
-				keys = merge(input_keys, {
+				keys = merge(M.input_keys, {
 					["<C-f>"] = { "close", mode = { "n", "i" } },
 				}),
 			},
@@ -171,13 +172,13 @@ M.command_history = function()
 		},
 		win = {
 			preview = {
-				keys = preview_keys,
+				keys = M.preview_keys,
 			},
 			list = {
-				keys = list_keys,
+				keys = M.list_keys,
 			},
 			input = {
-				keys = merge(input_keys, {
+				keys = merge(M.input_keys, {
 					["<C-c>"] = { "close", mode = { "n", "i" } },
 				}),
 			},
@@ -198,13 +199,13 @@ M.recent_files = function(opts)
 		},
 		win = {
 			preview = {
-				keys = preview_keys,
+				keys = M.preview_keys,
 			},
 			list = {
-				keys = list_keys,
+				keys = M.list_keys,
 			},
 			input = {
-				keys = merge(input_keys, {
+				keys = merge(M.input_keys, {
 					["<C-m>"] = { "close", mode = { "n", "i" } },
 				}),
 			},
