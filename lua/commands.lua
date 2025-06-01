@@ -121,3 +121,7 @@ vim.api.nvim_create_user_command("WRAP", function(opts)
 		vim.cmd("set linebreak")
 	end
 end, { nargs = 0 })
+
+vim.api.nvim_create_user_command("TODO", function(_)
+	vim.cmd("e /Users/harrisoncramer/Library/Mobile\\ Documents/iCloud\\~ee\\~xero\\~Paper/Documents/todo.md")
+end, { nargs = 0 })

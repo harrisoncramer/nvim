@@ -153,6 +153,22 @@ M.on_attach = function(client, bufnr)
 		})
 	end, merge(global_keymap_opts, { desc = "Previous warning" }))
 
+	vim.keymap.set("n", "]i", function()
+		vim.diagnostic.jump({
+			count = 1,
+			severity = vim.diagnostic.severity.HINT,
+			float = true,
+		})
+	end, merge(global_keymap_opts, { desc = "Next hint" }))
+
+	vim.keymap.set("n", "[i", function()
+		vim.diagnostic.jump({
+			count = 1,
+			severity = vim.diagnostic.severity.HINT,
+			float = true,
+		})
+	end, merge(global_keymap_opts, { desc = "Previous hint" }))
+
 	vim.keymap.set("n", "<leader>d", function()
 		vim.diagnostic.setqflist({})
 	end, merge(global_keymap_opts, { desc = "Show diagnostics" }))
