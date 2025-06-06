@@ -81,6 +81,10 @@ return {
 			gitbrowse = { enabled = true },
 			picker = {
 				enabled = true,
+				exclude = {
+					"node_modules",
+					"gen",
+				},
 			},
 			terminal = {
 				wo = {},

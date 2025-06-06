@@ -5,6 +5,11 @@ local changed_files = ChangedFiles.new("staging") -- TODO: @harrisoncramer fix t
 
 local M = {}
 
+local excludes = {
+	"**/db/models/**",
+	"**/gen/**",
+}
+
 M.preview_keys = {
 	["sh"] = { "toggle_focus", mode = { "n", "x" } },
 	["<CR>"] = { "confirm", mode = { "n", "i", "x" } },
@@ -80,9 +85,10 @@ end
 --- @param opts PickerOpts
 M.git_files = function(opts)
 	opts = opts or {}
-	require("snacks").picker.git_files({
+	require("snacks").picker.files({
 		cwd = opts.cwd,
-		title = "Git Files",
+		title = "Files",
+		exclude = excludes,
 		actions = opts.actions or {},
 		formatters = {
 			file = {
@@ -136,9 +142,7 @@ M.find_text = function(opts)
 	opts = opts or {}
 	require("snacks").picker.grep({
 		search = opts.search or "",
-		exclude = {
-			"**/db/models/**",
-		},
+		exclude = excludes,
 		cwd = opts.cwd,
 		title = opts.cwd and string.format("Search Text in %s", opts.cwd) or "Search Text",
 		live = true,
