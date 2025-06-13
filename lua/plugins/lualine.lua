@@ -51,6 +51,10 @@ local filename = function()
 	return full_file_path:gsub(escaped_git_root, "", 1) .. (modified and "  " or "") .. (readonly and " [-]" or "")
 end
 
+local current_dir = function()
+	return vim.fn.getcwd():gsub("^" .. vim.fn.expand("~"), ""):gsub("^/", "")
+end
+
 local ollama = function()
 	local status = require("ollama").status()
 	if status == "IDLE" then
@@ -109,6 +113,7 @@ return {
 					end,
 				},
 				lualine_b = {
+					current_dir,
 					filename,
 					require("recorder").recordingStatus,
 					ollama,
@@ -118,14 +123,22 @@ return {
 				lualine_y = { "progress", "encoding", "filetype" },
 			},
 			inactive_winbar = {
-				lualine_a = {},
-				lualine_b = { filename },
+				lualine_a = {
+					filename,
+				},
+				lualine_b = {
+					current_dir,
+				},
 				lualine_c = {},
 				lualine_x = {},
 			},
 			winbar = {
-				lualine_a = { filename },
-				lualine_b = {},
+				lualine_a = {
+					filename,
+				},
+				lualine_b = {
+					current_dir,
+				},
 				lualine_c = { diagnostics },
 				lualine_x = { "diff" },
 				lualine_y = { "progress", "location" },
