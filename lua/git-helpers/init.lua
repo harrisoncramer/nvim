@@ -151,13 +151,13 @@ M.copy_relative_git_path = function()
 	return relative_path
 end
 
--- Commits the changes in a file quickly with a message "Updated %s"
+-- Commits the changes in a file quickly with a message "Updated %s [ci skip]"
 M.commit_easy = function()
 	local relative_file_path = M.copy_relative_git_path()
 	local git_root = M.get_root_git_dir()
 	job:new({
 		command = "git",
-		args = { "commit", relative_file_path, "-m", string.format("Updated %s", relative_file_path) },
+		args = { "commit", relative_file_path, "-m", string.format("Updated %s [ci skip]", relative_file_path) },
 		cwd = git_root,
 		on_exit = vim.schedule_wrap(function(val, exit_code)
 			if exit_code ~= 0 then

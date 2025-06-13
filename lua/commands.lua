@@ -125,3 +125,11 @@ end, { nargs = 0 })
 vim.api.nvim_create_user_command("TODO", function(_)
 	vim.cmd("e /Users/harrisoncramer/Library/Mobile\\ Documents/iCloud\\~ee\\~xero\\~Paper/Documents/todo.md")
 end, { nargs = 0 })
+
+vim.api.nvim_create_user_command("MONO", function(_)
+	vim.cmd("cd ~/chariot/chariot")
+end, { nargs = 0 })
+
+vim.api.nvim_create_user_command("DASH", function(_)
+	vim.cmd("cd ~/chariot/chariot/apps/dashboard")
+end, { nargs = 0 })
