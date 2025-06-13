@@ -87,9 +87,26 @@ M.git_files = function(opts)
 	opts = opts or {}
 	require("snacks").picker.files({
 		cwd = opts.cwd,
-		title = "Files",
-		exclude = excludes,
+		title = "Search Files",
 		actions = opts.actions or {},
+		hidden = true,
+		ignored = true,
+		exclude = {
+			"**/models/**",
+			"**/gen/**",
+			"**/node_modules/**",
+			"**/db_queries/**",
+			"**/.next/**",
+			"**/.turbo/**",
+			".DS_Store",
+			"**/logs/**",
+			"**/.git/**",
+			"**/dist/**",
+			"**/build/**",
+			"**/coverage/**",
+			"**/tmp/**",
+			"**/vendor/**",
+		},
 		formatters = {
 			file = {
 				filename_first = true,
