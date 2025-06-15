@@ -28,14 +28,26 @@ vim.diagnostic.handlers.signs = {
 }
 
 -- Global diagnostic settings
+-- vim.api.nvim_set_hl(0, "DiagnosticFloatingError", { link = "NormalFloat" }) -- Keep text of diagnostics white
 vim.diagnostic.config({
 	virtual_text = true,
 	severity_sort = true,
 	update_in_insert = false,
 	float = {
-		header = "",
 		source = true,
+		header = "",
 		border = "solid",
+		format = function(diagnostic)
+			local severity_symbols = {
+				[vim.diagnostic.severity.ERROR] = "✘",
+				[vim.diagnostic.severity.WARN] = " ",
+				[vim.diagnostic.severity.INFO] = "",
+				[vim.diagnostic.severity.HINT] = "",
+			}
+			local msg = diagnostic.message
+			local sym = severity_symbols[diagnostic.severity] or ""
+			return string.format("%s\n%s", sym, msg)
+		end,
 		focusable = true,
 	},
 	signs = {
