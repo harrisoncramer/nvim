@@ -157,7 +157,7 @@ M.commit_easy = function()
 	local git_root = M.get_root_git_dir()
 	job:new({
 		command = "git",
-		args = { "commit", relative_file_path, "-m", string.format("Updated %s [ci skip]", relative_file_path) },
+		args = { "commit", relative_file_path, "-m", string.format("Updated %s", relative_file_path) },
 		cwd = git_root,
 		on_exit = vim.schedule_wrap(function(val, exit_code)
 			if exit_code ~= 0 then
