@@ -104,6 +104,7 @@ M.git_files = function(opts)
 			"**/dist/**",
 			"**/build/**",
 			"**/coverage/**",
+			"**/.undo/**",
 			"**/tmp/**",
 			"**/vendor/**",
 		},
@@ -179,28 +180,6 @@ M.find_text = function(opts)
 			input = {
 				keys = merge(M.input_keys, {
 					["<C-f>"] = { "close", mode = { "n", "i" } },
-				}),
-			},
-		},
-	})
-end
-
-M.command_history = function()
-	require("snacks").picker.command_history({
-		title = "Command History",
-		layout = {
-			layout = { position = "bottom" },
-		},
-		win = {
-			preview = {
-				keys = M.preview_keys,
-			},
-			list = {
-				keys = M.list_keys,
-			},
-			input = {
-				keys = merge(M.input_keys, {
-					["<C-c>"] = { "close", mode = { "n", "i" } },
 				}),
 			},
 		},

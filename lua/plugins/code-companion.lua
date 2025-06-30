@@ -13,6 +13,16 @@ return {
 				provider = "default", -- default|mini_diff
 			},
 		},
+		adapters = {
+			anthropic = function()
+				local anthropicApiKey = os.getenv("ANTHROPIC_API_KEY")
+				return require("codecompanion.adapters").extend("anthropic", {
+					env = {
+						api_key = anthropicApiKey,
+					},
+				})
+			end,
+		},
 		strategies = {
 			chat = {
 				slash_commands = {
@@ -27,7 +37,7 @@ return {
 						},
 					},
 				},
-				adapter = "openai",
+				adapter = "anthropic",
 				roles = {
 					llm = "CodeCompanion",
 					user = "Code Companion Chat",

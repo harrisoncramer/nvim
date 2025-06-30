@@ -133,3 +133,7 @@ end, { nargs = 0 })
 vim.api.nvim_create_user_command("DASH", function(_)
 	vim.cmd("cd ~/chariot/chariot/apps/dashboard")
 end, { nargs = 0 })
+
+vim.api.nvim_create_user_command("LSPLOG", function(_)
+	vim.cmd("tabnew " .. vim.lsp.get_log_path())
+end, { nargs = 0 })

@@ -40,16 +40,18 @@ local servers = {
 	"shellcheck",
 }
 
+-- Mason will not auto-install these
 local linters = {
 	"pylint",
 }
 
+-- Mason will not auto-install these
 local debuggers = {
 	"js-debug-adapter",
 	"delve",
-	-- "node-debug2-adapter", TODO: Not working
 }
 
+-- Mason will not auto-install these
 local formatters = {
 	"prettierd",
 	"stylua",
@@ -69,6 +71,8 @@ M.on_attach = function(client, bufnr)
 	local function buf_set_option(...)
 		vim.api.nvim_buf_set_option(bufnr, ...)
 	end
+
+	vim.lsp.log.set_format_func(vim.inspect)
 
 	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 

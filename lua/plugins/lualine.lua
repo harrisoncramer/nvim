@@ -126,9 +126,6 @@ return {
 				lualine_a = {
 					filename,
 				},
-				lualine_b = {
-					current_dir,
-				},
 				lualine_c = {},
 				lualine_x = {},
 			},

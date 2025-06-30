@@ -48,12 +48,6 @@ return {
 			desc = "Search text",
 		},
 		{
-			"<C-c>",
-			snack_functions.command_history,
-			mode = { "n" },
-			desc = "Find Git Files",
-		},
-		{
 			"<C-z>",
 			snack_functions.toggle_terminal,
 			mode = { "n", "t" },
