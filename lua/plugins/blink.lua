@@ -6,6 +6,9 @@ return {
 	},
 	version = "*",
 	opts = {
+		fuzzy = {
+			implementation = "lua", -- Rust is breaking
+		},
 		snippets = { preset = "luasnip" },
 		signature = {},
 		keymap = {
