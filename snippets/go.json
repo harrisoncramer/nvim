@@ -10,16 +10,27 @@
     "description": "if error, then return it"
   },
   "if connect error": {
-    "prefix": "IFC",
+    "prefix": "ICE",
     "body": [
-      "return nil, e.NewConnectError(ctx, e.ConnectErrorDetails{",
-      "\tCode:     ${1:connect.CodeUnimplemented},",
-      "\tInternal: fmt.Errorf(\"${2:message}: %w\", err),",
-      "\tExternal: ${3:e.DefaultExternalErrMsg},",
-      "})",
+      "if err != nil {",
+      "\treturn nil, e.NewConnectError(ctx, e.ConnectErrorDetails{",
+      "\t\tCode:     ${1:connect.CodeUnimplemented},",
+      "\t\tInternal: fmt.Errorf(\"${2:message}: %w\", ${3}err),",
+      "\t\tExternal: ${4:e.DefaultExternalErrMsg},",
+      "\t})",
+      "}",
       "$4"
     ],
     "description": "if error, then return connect error"
+  },
+  "if no rows": {
+    "prefix": "EROWS",
+    "body": [
+      "if errors.Is(err, pgx.ErrNoRows) {",
+      "\t${1}",
+      "}"
+    ],
+    "description": ""
   },
   "if err and non-nil": {
     "prefix": "IFFE",
