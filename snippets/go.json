@@ -9,6 +9,18 @@
     ],
     "description": "if error, then return it"
   },
+  "if connect error": {
+    "prefix": "IFC",
+    "body": [
+      "return nil, e.NewConnectError(ctx, e.ConnectErrorDetails{",
+      "\tCode:     ${1:connect.CodeUnimplemented},",
+      "\tInternal: fmt.Errorf(\"${2:message}: %w\", err),",
+      "\tExternal: ${3:e.DefaultExternalErrMsg},",
+      "})",
+      "$4"
+    ],
+    "description": "if error, then return connect error"
+  },
   "if err and non-nil": {
     "prefix": "IFFE",
     "body": [
