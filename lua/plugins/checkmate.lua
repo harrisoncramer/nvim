@@ -6,12 +6,21 @@ return {
 	},
 	opts = {
 		keys = {
-			["<leader>tt"] = "toggle", -- Toggle todo item
-			-- ["<leader>tc"] = "check", -- Set todo item as checked (done)
-			-- ["<leader>tu"] = "uncheck", -- Set todo item as unchecked (not done)
-			["<leader>tn"] = "create", -- Create todo item
-			["<leader>tR"] = "remove_all_metadata", -- Remove all metadata from a todo item
-			["<leader>ta"] = "archive", -- Archive checked/completed todo items (move to bottom section)
+			["<leader>tt"] = {
+				rhs = "<cmd>Checkmate toggle<CR>",
+				desc = "Toggle todo item",
+				modes = { "n", "v" },
+			},
+			["<leader>tn"] = {
+				rhs = "<cmd>Checkmate create<CR>",
+				desc = "Create todo item",
+				modes = { "n", "v" },
+			},
+			["<leader>ta"] = {
+				rhs = "<cmd>Checkmate archive<CR>",
+				desc = "Archive checked/completed todo items (move to bottom section)",
+				modes = { "n" },
+			},
 		},
 	},
 }

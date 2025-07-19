@@ -16,10 +16,10 @@
       "\treturn nil, e.NewConnectError(ctx, e.ConnectErrorDetails{",
       "\t\tCode:     ${1:connect.CodeUnimplemented},",
       "\t\tInternal: fmt.Errorf(\"${2:message}: %w\", ${3}err),",
-      "\t\tExternal: ${4:e.DefaultExternalErrMsg},",
+      "\t\tExternal: \"${4}\",",
       "\t})",
       "}",
-      "$4"
+      "$5"
     ],
     "description": "if error, then return connect error"
   },
