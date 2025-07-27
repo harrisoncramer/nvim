@@ -20,6 +20,9 @@ return {
 				prettierd = {
 					require_cwd = true,
 				},
+				astro = {
+					command = "npx prettier --write **/*.astro",
+				},
 				["pg_format"] = {
 					command = "pg_format",
 					args = { "--inplace", "--config", ".pg_format.conf" },
@@ -45,6 +48,9 @@ return {
 				},
 				sql = {
 					"pg_format",
+				},
+				astro = {
+					"astro",
 				},
 			},
 			default_format_opts = {
