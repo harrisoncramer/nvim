@@ -17,6 +17,9 @@ vim.keymap.set("n", "<leader>tp", ":tabprev<CR>", merge(global_keymap_opts, { de
 vim.keymap.set("n", "<leader>tc", ":tabclose<CR>", merge(global_keymap_opts, { desc = "Close the current tab" }))
 vim.keymap.set("n", "<C-t>", "<C-^>", merge(global_keymap_opts, { desc = "Switch to the alternate buffer" }))
 
+-- Force quit
+vim.keymap.set("n", "ZX", ":qa!<CR>", merge(global_keymap_opts, { desc = "Force quit" }))
+
 -- Rename word under cursor
 vim.keymap.set("n", "&", function()
 	vim.api.nvim_feedkeys(":keepjumps normal! mi*`i<CR>", "n", false)

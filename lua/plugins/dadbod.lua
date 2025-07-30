@@ -44,6 +44,12 @@ return {
 				end,
 			},
 			{
+				name = "sandbox",
+				url = function()
+					return os.getenv("SANDBOX_DATABASE_URL")
+				end,
+			},
+			{
 				name = "prod",
 				url = function()
 					return os.getenv("PROD_DATABASE_URL")
