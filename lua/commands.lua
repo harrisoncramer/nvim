@@ -137,3 +137,7 @@ end, { nargs = 0 })
 vim.api.nvim_create_user_command("LSPLOG", function(_)
 	vim.cmd("tabnew " .. vim.lsp.get_log_path())
 end, { nargs = 0 })
+
+vim.api.nvim_create_user_command("TIL", function(_)
+	vim.cmd("tabnew | e ~/today-i-learned/README.md | normal! G")
+end, { nargs = 0 })
