@@ -6,9 +6,10 @@ return {
 	filetypes = { "go", "gomod" },
 	init_options = {
 		command = {
-			"/Users/harrisoncramer/.local/share/mise/installs/golangci-lint/v1.64.5/golangci-lint-1.64.5-darwin-arm64/golangci-lint",
+			"golangci-lint",
 			"run",
-			"--out-format=json",
+			"--output.json.path",
+			"stdout",
 			"--show-stats=false",
 		},
 	},
