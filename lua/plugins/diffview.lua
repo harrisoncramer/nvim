@@ -32,7 +32,7 @@ local M = {
 		-- View entire changes versus a specific branch.
 		vim.keymap.set("n", "<leader>gdd", function()
 			git_helpers.branch_input(function(branch)
-				vim.cmd(string.format("DiffviewOpen origin/%s...HEAD", branch))
+				vim.cmd(string.format("DiffviewOpen origin/%s...HEAD -- ':!*/models/*' ':!*/gen/*", branch))
 			end)
 		end, merge(global_keymap_opts, { desc = "Diffview all changes" }))
 
