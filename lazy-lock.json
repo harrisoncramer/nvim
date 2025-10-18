@@ -9,6 +9,7 @@
   "codecompanion.nvim": { "branch": "main", "commit": "91198ad292f3719f223afb4cfb61603ce13d5b53" },
   "conform.nvim": { "branch": "master", "commit": "a0ab60ed666c56b37fd7ed1847d2ac52f2482ce0" },
   "conjure": { "branch": "main", "commit": "1197c921dc087fa1061796013b7d351ab4a49ab4" },
+  "contextfiles.nvim": { "branch": "main", "commit": "f4a01aa465f7deeedb257266d47ef1849dd9b08b" },
   "copilot.lua": { "branch": "master", "commit": "f0c0d981de2737abc50bd7b5bb034ae440826827" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "dressing.nvim": { "branch": "master", "commit": "2d7c2db2507fa3c4956142ee607431ddb2828639" },

@@ -33,6 +33,42 @@ local M = {
 				["<C-h>"] = false,
 				["<C-t>"] = false,
 				["<C-l>"] = false,
+				["a"] = {
+					desc = "share file with code companion",
+					callback = function()
+						local Path = require("plenary.path")
+						local oil = require("oil")
+						local cc = require("codecompanion")
+						local fmt = string.format
+						local cur_dir = oil.get_current_dir()
+						local fullpath = cur_dir .. oil.get_cursor_entry().name
+						local path = Path:new(fullpath)
+						local ok, content = pcall(function()
+							return Path.new(fullpath):read()
+						end)
+
+						local relpath = path:make_relative()
+						local ft = vim.filetype.match({ filename = fullpath })
+						local description = fmt(
+							[[%s %s:
+
+```%s
+%s
+```]],
+							"Here is the content of the file",
+							"located at `" .. relpath .. "`",
+							ft,
+							content
+						)
+						local id = "<file>" .. relpath .. "</file>"
+						cc.last_chat():add_message({
+							role = require("codecompanion.config").config.constants.USER_ROLE,
+							content = description,
+						}, { reference = id, visible = false })
+
+						require("notify")("Sent file to code companion", vim.log.levels.INFO)
+					end,
+				},
 			},
 			view_options = {
 				show_hidden = true,

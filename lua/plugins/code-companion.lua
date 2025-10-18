@@ -1,6 +1,7 @@
 return {
 	"olimorris/codecompanion.nvim",
 	dependencies = {
+		"banjo/contextfiles.nvim",
 		"nvim-lua/plenary.nvim",
 		"nvim-treesitter/nvim-treesitter",
 	},
@@ -11,6 +12,14 @@ return {
 				layout = "vertical", -- vertical|horizontal split for default provider
 				opts = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },
 				provider = "default", -- default|mini_diff
+			},
+		},
+		extensions = {
+			contextfiles = {
+				opts = {
+					-- your contextfiles configuration here
+					-- or leave it empty to use the default configuration
+				},
 			},
 		},
 		adapters = {
