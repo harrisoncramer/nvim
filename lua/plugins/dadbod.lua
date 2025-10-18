@@ -55,6 +55,12 @@ return {
 					return os.getenv("PROD_DATABASE_URL")
 				end,
 			},
+			{
+				name = "sql-playground",
+				url = function()
+					return "postgresql://postgres:postgres@localhost:4444/postgres"
+				end,
+			},
 		}
 	end,
 }

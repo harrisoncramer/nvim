@@ -3,7 +3,7 @@ local map_opts = { noremap = true, silent = true, nowait = true }
 local u = require("functions.utils")
 
 local gitsigns_ok, gitsigns = pcall(require, "gitsigns")
-local diffview_ok, diffview = pcall(require, "diffview")
+local diffview_ok, _ = pcall(require, "diffview")
 local plenary_ok, job = pcall(require, "plenary.job")
 require("git-helpers.github")
 
@@ -20,20 +20,6 @@ M.branch_input = function(callback)
 		callback(branch)
 	end)
 end
-
--- Diffview changes against a branch
-vim.keymap.set("n", "<leader>gdd", function()
-	M.branch_input(function(branch)
-		vim.cmd("DiffviewOpen " .. branch)
-	end)
-end, merge(global_keymap_opts, { desc = "Diffview all changes" }))
-
--- Diffview changes for current file against a particular branch
-vim.keymap.set("n", "<leader>gdf", function()
-	M.branch_input(function(branch)
-		vim.cmd("DiffviewOpen origin/" .. branch .. "...HEAD -- %")
-	end)
-end)
 
 -- Blame line
 vim.keymap.set("n", "<leader>gb", gitsigns.blame_line, merge(global_keymap_opts, { desc = "Blame current line" }))
@@ -95,10 +81,6 @@ vim.keymap.set("n", "<leader>gS", function()
 		vim.cmd("Git rebase -i " .. non_easy_hash)
 	end)
 end, map_opts)
-
-vim.keymap.set("n", "<leader>gvfh", function()
-	diffview.file_history()
-end, merge(global_keymap_opts, { desc = "Git view file history" }))
 
 -- Conflicts
 vim.keymap.set("n", "<leader>gxx", function()
@@ -441,26 +423,26 @@ M.resolve_conflict = function()
 	end)
 end
 
----Return whether user is focused on the new version of the file
----@return boolean
-M.is_current_sha_focused = function()
-	local diffview_lib = require("diffview.lib")
-	local view = diffview_lib.get_current_view()
-	local layout = view.cur_layout
-	local b_win = u.get_window_id_by_buffer_id(layout.b.file.bufnr)
-	local current_win = vim.api.nvim_get_current_win()
-	return current_win == b_win
-end
+-- Use GitHub CLI to search for PR containing this commit
+M.open_pr_from_hash = function(hash)
+	local cmd =
+		string.format('gh pr list --search "%s" --state all --limit 1 --json url --jq ".[0].url // empty"', hash)
 
----Return whether user is focused on the new version of the file
----@return string
-M.get_file_path_in_reviewer = function()
-	local diffview_lib = require("diffview.lib")
-	local view = diffview_lib.get_current_view()
-	local layout = view.cur_layout
-	local b_win = u.get_window_id_by_buffer_id(layout.b.file.bufnr)
-	local file_path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(b_win)), ":p:~:.")
-	return file_path
+	vim.fn.jobstart(cmd, {
+		stdout_buffered = true,
+		on_stdout = function(_, data)
+			local pr_url = table.concat(data, ""):gsub("%s+", "")
+
+			if pr_url == "" or pr_url == "null" then
+				vim.notify("No PR found for commit " .. hash, vim.log.levels.WARN)
+				return
+			end
+			vim.fn.jobstart({ "open", pr_url }, { detach = true })
+		end,
+		on_stderr = function(_, data)
+			vim.notify("Error searching for PR: " .. table.concat(data, ""), vim.log.levels.ERROR)
+		end,
+	})
 end
 
 return M
