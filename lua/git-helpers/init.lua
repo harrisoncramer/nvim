@@ -5,7 +5,7 @@ local u = require("functions.utils")
 local gitsigns_ok, gitsigns = pcall(require, "gitsigns")
 local diffview_ok, _ = pcall(require, "diffview")
 local plenary_ok, job = pcall(require, "plenary.job")
-require("git-helpers.github")
+local github = require("git-helpers.github")
 
 if not gitsigns_ok or not diffview_ok or not plenary_ok then
 	vim.api.nvim_err_writeln("Gitsigns, diffview, or plenary not installed, cannot configure Git tools")
@@ -81,6 +81,15 @@ vim.keymap.set("n", "<leader>gS", function()
 		vim.cmd("Git rebase -i " .. non_easy_hash)
 	end)
 end, map_opts)
+
+-- If the line has a hash, open the PR in github
+vim.keymap.set("n", "<leader>go", function()
+	local hash = M.get_hash()
+	if hash == nil then
+		return
+	end
+	github.open_pr_from_hash(hash)
+end, merge(global_keymap_opts, { desc = "Open PR linked to current commit hash." }))
 
 -- Conflicts
 vim.keymap.set("n", "<leader>gxx", function()
@@ -423,26 +432,14 @@ M.resolve_conflict = function()
 	end)
 end
 
--- Use GitHub CLI to search for PR containing this commit
-M.open_pr_from_hash = function(hash)
-	local cmd =
-		string.format('gh pr list --search "%s" --state all --limit 1 --json url --jq ".[0].url // empty"', hash)
-
-	vim.fn.jobstart(cmd, {
-		stdout_buffered = true,
-		on_stdout = function(_, data)
-			local pr_url = table.concat(data, ""):gsub("%s+", "")
-
-			if pr_url == "" or pr_url == "null" then
-				vim.notify("No PR found for commit " .. hash, vim.log.levels.WARN)
-				return
-			end
-			vim.fn.jobstart({ "open", pr_url }, { detach = true })
-		end,
-		on_stderr = function(_, data)
-			vim.notify("Error searching for PR: " .. table.concat(data, ""), vim.log.levels.ERROR)
-		end,
-	})
+M.get_hash = function()
+	local line = vim.api.nvim_get_current_line()
+	local hash = line:match("([a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]+)")
+	if hash then
+		return hash
+	end
+	vim.notify("No valid commit hash found on this line", vim.log.levels.ERROR)
+	return nil
 end
 
 return M

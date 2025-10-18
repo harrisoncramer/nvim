@@ -8,25 +8,24 @@ local M = {
 		local diffview = require("diffview")
 		local cb = require("diffview.config").diffview_callback
 		local git_helpers = require("git-helpers")
+		local github = require("git-helpers.github")
 
-		-- Diffview changes against an entire branch
+		-- Diffview changes. Can be used to stage/unstage files.
 		vim.keymap.set("n", "<leader>gdd", function()
+			vim.cmd("DiffviewOpen")
+		end, merge(global_keymap_opts, { desc = "Diffview all changes" }))
+
+		-- View entire changes versus a specific branch.
+		vim.keymap.set("n", "<leader>gdD", function()
 			git_helpers.branch_input(function(branch)
-				vim.cmd("DiffviewOpen " .. branch)
+				vim.cmd(string.format("DiffviewOpen origin/%s...HEAD", branch))
 			end)
 		end, merge(global_keymap_opts, { desc = "Diffview all changes" }))
 
-		-- Diffview changes of entire file history
-		vim.keymap.set("n", "<leader>gdF", function()
-			diffview.file_history()
-		end, merge(global_keymap_opts, { desc = "Git view file history" }))
-
-		-- Diffview changes for current file against a particular branch
+		-- Diffview changes of entire file history all time.
 		vim.keymap.set("n", "<leader>gdf", function()
-			git_helpers.branch_input(function(branch)
-				vim.cmd("DiffviewOpen origin/" .. branch .. "...HEAD -- %")
-			end)
-		end)
+			vim.cmd("DiffviewFileHistory %")
+		end, merge(global_keymap_opts, { desc = "Git view file history" }))
 
 		diffview.setup({
 			view = {
@@ -109,7 +108,12 @@ local M = {
 					["<up>"] = cb("prev_entry"),
 					["o"] = cb("select_entry"),
 					["<2-LeftMouse>"] = cb("select_entry"),
-					["-"] = cb("toggle_stage_entry"), -- Stage / unstage the selected entry.
+					{
+						"n",
+						"s",
+						actions.toggle_stage_entry,
+						{ desc = "Stage / unstage the selected entry" },
+					},
 					["S"] = cb("stage_all"), -- Stage all entries.
 					["U"] = cb("unstage_all"), -- Unstage all entries.
 					["X"] = cb("restore_entry"), -- Restore entry to the state on the left side.
@@ -143,12 +147,12 @@ local M = {
 					["<C-w>gf"] = cb("goto_file_tab"),
 					["<leader>e"] = cb("focus_files"),
 					["<leader>b"] = cb("toggle_files"),
-					["<leader>o"] = function()
-						local hash = M.get_hash_from_file_history_view()
+					["<leader>go"] = function()
+						local hash = git_helpers.get_hash()
 						if hash == nil then
 							return
 						end
-						git_helpers.open_pr_from_hash()
+						github.open_pr_from_hash(hash)
 					end,
 				},
 				option_panel = { ["<tab>"] = cb("select"), ["q"] = cb("close") },
@@ -156,27 +160,5 @@ local M = {
 		})
 	end,
 }
-
-M.get_hash_from_file_history_view = function()
-	local line = vim.api.nvim_get_current_line()
-	local first_pipe = line:find("|")
-	if not first_pipe then
-		vim.notify("No pipe character found on this line", vim.log.levels.ERROR)
-		return
-	end
-	local second_pipe = line:find("|", first_pipe + 1)
-	if not second_pipe then
-		vim.notify("No second pipe character found on this line", vim.log.levels.ERROR)
-		return
-	end
-	local after_pipe = line:sub(second_pipe + 1)
-	local hash = after_pipe:match("^%s*([a-f0-9]+)")
-	if not hash or #hash < 7 then
-		vim.notify("No valid commit hash found on this line", vim.log.levels.ERROR)
-		return
-	end
-
-	return hash
-end
 
 return M
