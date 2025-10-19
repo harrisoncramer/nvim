@@ -4,21 +4,34 @@ return {
 		"banjo/contextfiles.nvim",
 		"nvim-lua/plenary.nvim",
 		"nvim-treesitter/nvim-treesitter",
+		"ravitemer/codecompanion-history.nvim",
 	},
 	opts = {
 		display = {
 			diff = {
 				enabled = true,
-				layout = "vertical", -- vertical|horizontal split for default provider
+				layout = "vertical",
 				opts = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },
-				provider = "default", -- default|mini_diff
+				provider = "default",
 			},
 		},
 		extensions = {
-			contextfiles = {
+			history = {
+				enabled = true,
 				opts = {
-					-- your contextfiles configuration here
-					-- or leave it empty to use the default configuration
+					-- Keymap to open history from chat buffer (default: gh)
+					keymap = "<C-a><C-h>",
+					auto_save = true,
+					expiration_days = 0,
+					picker = "snacks", --- ("telescope", "snacks", "fzf-lua", or "default")
+					chat_filter = nil, -- function(chat_data) return boolean end
+					picker_keymaps = {
+						rename = { n = "r", i = "<M-r>" },
+						delete = { n = "d", i = "<M-d>" },
+						duplicate = { n = "<C-y>", i = "<C-y>" },
+					},
+					auto_generate_title = true,
+					dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
 				},
 			},
 		},
@@ -95,12 +108,12 @@ return {
 			desc = "CodeCompanion chat",
 		},
 		{
-			"<leader>ad",
-			"<cmd>CodeCompanionChat Add<cr>",
-			mode = "v",
+			"<C-a><C-h>",
+			"<cmd>CodeCompanionHistory<cr>",
+			mode = { "n", "v" },
 			noremap = true,
 			silent = true,
-			desc = "CodeCompanion add to chat",
+			desc = "CodeCompanion history",
 		},
 	},
 }

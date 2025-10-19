@@ -43,7 +43,7 @@ local M = {
 						local cur_dir = oil.get_current_dir()
 						local fullpath = cur_dir .. oil.get_cursor_entry().name
 						local path = Path:new(fullpath)
-						local ok, content = pcall(function()
+						local _, content = pcall(function()
 							return Path.new(fullpath):read()
 						end)
 
@@ -51,10 +51,9 @@ local M = {
 						local ft = vim.filetype.match({ filename = fullpath })
 						local description = fmt(
 							[[%s %s:
-
-```%s
-%s
-```]],
+              ```%s
+              %s
+              ```]],
 							"Here is the content of the file",
 							"located at `" .. relpath .. "`",
 							ft,
