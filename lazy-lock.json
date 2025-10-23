@@ -7,7 +7,7 @@
   "bufjump.nvim": { "branch": "master", "commit": "ae2728a77defbd27e9e5ef64c854fb0813ffba01" },
   "checkmate.nvim": { "branch": "main", "commit": "b544f3fd447bdf7e752e2ab8caaa68c4370bc2a2" },
   "codecompanion-history.nvim": { "branch": "main", "commit": "eb99d256352144cf3b6a1c45608ec25544a0813d" },
-  "codecompanion.nvim": { "branch": "main", "commit": "91198ad292f3719f223afb4cfb61603ce13d5b53" },
+  "codecompanion.nvim": { "branch": "main", "commit": "9d49b758de4a3f2c4c2e8a0561e6d126e47dad85" },
   "conform.nvim": { "branch": "master", "commit": "a0ab60ed666c56b37fd7ed1847d2ac52f2482ce0" },
   "conjure": { "branch": "main", "commit": "1197c921dc087fa1061796013b7d351ab4a49ab4" },
   "contextfiles.nvim": { "branch": "main", "commit": "f4a01aa465f7deeedb257266d47ef1849dd9b08b" },

@@ -113,7 +113,7 @@ M.changed_files = function(branch)
 			file ~= ""
 			and not processed_files[file]
 			and not file:match(".*/db/models/.*")
-			and not file:match(".*/db/models/.*")
+			and not file:match(".*/chariot-shared/jet/*")
 		then
 			processed_files[file] = true
 			table.insert(result, { filename = file })

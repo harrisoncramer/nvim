@@ -6,9 +6,8 @@ local M = {
 		local actions = require("diffview.actions")
 		local diffview = require("diffview")
 		local git_helpers = require("git-helpers")
-		local github = require("git-helpers.github")
 
-		local ignorePaths = "':!*/models/*' ':!*/gen/*'"
+		local ignorePaths = "':!*/models/*' ':!*/gen/*' :!*/chariot-shared/jet/*"
 
 		-- Diffview changes. Can be used to stage/unstage files.
 		vim.keymap.set("n", "<leader>gs", function()
@@ -401,7 +400,7 @@ local M = {
 							if hash == nil then
 								return
 							end
-							github.open_pr_from_hash(hash)
+							git_helpers.github.open_pr_from_hash(hash)
 						end,
 						{ desc = "Open PR from hash" },
 					},
