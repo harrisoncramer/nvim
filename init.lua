@@ -28,7 +28,7 @@ require("diagnostics")
 -- LSP
 require("lsp")
 
-require("lua.experimental")
+require("experimental")
 
 -- Miscenalleous vim commands
 vim.cmd.source("~/.config/nvim/_init.vim")
