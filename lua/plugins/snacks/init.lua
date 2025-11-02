@@ -43,10 +43,14 @@ local opts = {
 		layout = {
 			layout = {
 				backdrop = false,
-				width = 0.95,
-				min_width = 0.95,
-				height = 0.95,
-				border = "none",
+				row = 2,
+				width = 0.9,
+				min_width = 0.9,
+				height = 0.9,
+				box = "vertical",
+				{ win = "preview", title = "{preview}", border = true },
+				{ win = "input", height = 1, border = true, title = "{title} {live} {flags}", title_pos = "center" },
+				{ win = "list", border = true },
 			},
 		},
 		sources = {
