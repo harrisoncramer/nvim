@@ -65,10 +65,26 @@ return {
 			mode = { "n" },
 			desc = "Recent Files",
 		},
+		{
+			"<leader>gp",
+			function()
+				Snacks.picker.gh_pr()
+			end,
+			desc = "GitHub Pull Requests (open)",
+		},
 	},
 	config = function()
 		---@type snacks.Config
 		return {
+			opts = {
+				gh = {},
+				picker = {
+					sources = {
+						gh_issue = {},
+						gh_pr = {},
+					},
+				},
+			},
 			image = { enabled = false },
 			bigfile = { enabled = true },
 			notifier = { enabled = true },
