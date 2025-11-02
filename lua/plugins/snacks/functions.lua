@@ -12,7 +12,7 @@ local excludes = {
 }
 
 M.preview_keys = {
-	["sh"] = { "toggle_focus", mode = { "n", "x" } },
+	["sk"] = { "toggle_focus", mode = { "n", "x" } },
 	["<CR>"] = { "confirm", mode = { "n", "i", "x" } },
 }
 
@@ -25,7 +25,7 @@ M.list_keys = {
 
 M.input_keys = {
 	["<CR>"] = { "confirm", mode = { "n", "i", "x" } },
-	["sl"] = { "focus_preview", mode = { "n", "x" } },
+	["sj"] = { "focus_preview", mode = { "n", "x" } },
 	["<C-s>"] = { "toggle_focus", mode = { "i", "n", "x" } },
 	["<c-q>"] = { "qflist", mode = { "i", "n", "x" } },
 	["<c-s>"] = "edit_split",
