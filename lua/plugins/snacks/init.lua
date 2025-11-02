@@ -1,5 +1,12 @@
 local snack_functions = require("plugins.snacks.functions")
 
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown.gh",
+	callback = function()
+		vim.opt_local.foldenable = false
+	end,
+})
+
 -- Remove winbar from terminal
 -- https://stackoverflow.com/a/63908546/2338672
 vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
@@ -23,6 +30,39 @@ vim.keymap.set("n", "<leader>e", function()
 		confirm = "put",
 	})
 end, merge(global_keymap_opts, { desc = "Place emoji at current location" }))
+
+---@type snacks.Config
+local opts = {
+	gh = {},
+	image = { enabled = false },
+	bigfile = { enabled = true },
+	notifier = { enabled = true },
+	gitbrowse = { enabled = true },
+	picker = {
+		layout = {
+			-- preset = "telescope",
+			width = 0,
+			height = 0,
+		},
+		sources = {
+			gh_issue = {},
+			gh_pr = {},
+		},
+		enabled = true,
+		exclude = {
+			"node_modules",
+			"gen",
+		},
+	},
+	terminal = {
+		wo = {},
+		bo = {
+			filetype = "snacks_terminal",
+		},
+		win = { style = "terminal" },
+		enabled = true,
+	},
+}
 
 return {
 	"folke/snacks.nvim",
@@ -73,37 +113,5 @@ return {
 			desc = "GitHub Pull Requests (open)",
 		},
 	},
-	config = function()
-		---@type snacks.Config
-		return {
-			opts = {
-				gh = {},
-				picker = {
-					sources = {
-						gh_issue = {},
-						gh_pr = {},
-					},
-				},
-			},
-			image = { enabled = false },
-			bigfile = { enabled = true },
-			notifier = { enabled = true },
-			gitbrowse = { enabled = true },
-			picker = {
-				enabled = true,
-				exclude = {
-					"node_modules",
-					"gen",
-				},
-			},
-			terminal = {
-				wo = {},
-				bo = {
-					filetype = "snacks_terminal",
-				},
-				win = { style = "terminal" },
-				enabled = true,
-			},
-		}
-	end,
+	opts = opts,
 }
