@@ -48,9 +48,9 @@ local opts = {
 				min_width = 0.9,
 				height = 0.9,
 				box = "vertical",
-				{ win = "preview", title = "{preview}", border = true },
 				{ win = "input", height = 1, border = true, title = "{title} {live} {flags}", title_pos = "center" },
 				{ win = "list", border = true },
+				{ win = "preview", title = "{preview}", border = true },
 			},
 		},
 		sources = {
