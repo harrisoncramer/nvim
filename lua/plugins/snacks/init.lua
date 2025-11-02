@@ -41,9 +41,13 @@ local opts = {
 	gitbrowse = { enabled = true },
 	picker = {
 		layout = {
-			-- preset = "telescope",
-			width = 0,
-			height = 0,
+			layout = {
+				backdrop = false,
+				width = 0.95,
+				min_width = 0.95,
+				height = 0.95,
+				border = "none",
+			},
 		},
 		sources = {
 			gh_issue = {},
