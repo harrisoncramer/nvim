@@ -4,6 +4,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = "markdown.gh",
 	callback = function()
 		vim.opt_local.foldenable = false
+		vim.cmd("set nowrap")
 	end,
 })
 

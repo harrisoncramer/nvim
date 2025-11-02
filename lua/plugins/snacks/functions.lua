@@ -171,6 +171,13 @@ M.find_text = function(opts)
 				filename_first = true,
 			},
 		},
+		opts = {
+
+			layout = {
+				width = 1,
+				height = 1,
+			},
+		},
 		win = {
 			preview = {
 				keys = M.preview_keys,
