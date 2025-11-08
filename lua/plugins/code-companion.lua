@@ -45,6 +45,18 @@ return {
 						},
 					})
 				end,
+				llama3 = function()
+					return require("codecompanion.adapters").extend("ollama", {
+						schema = {
+							env = {
+								url = "http://localhost:11434",
+							},
+							model = {
+								default = "codellama",
+							},
+						},
+					})
+				end,
 			},
 		},
 		strategies = {
@@ -61,7 +73,7 @@ return {
 						},
 					},
 				},
-				adapter = "anthropic",
+				adapter = "llama3",
 				roles = {
 					llm = "CodeCompanion",
 					user = "Code Companion Chat",
