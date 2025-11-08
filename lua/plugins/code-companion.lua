@@ -45,14 +45,14 @@ return {
 						},
 					})
 				end,
-				llama3 = function()
+				qwen = function()
 					return require("codecompanion.adapters").extend("ollama", {
 						schema = {
 							env = {
 								url = "http://localhost:11434",
 							},
 							model = {
-								default = "codellama",
+								default = "qwen2.5-coder",
 							},
 						},
 					})
@@ -73,7 +73,7 @@ return {
 						},
 					},
 				},
-				adapter = "llama3",
+				adapter = "qwen",
 				roles = {
 					llm = "CodeCompanion",
 					user = "Code Companion Chat",
