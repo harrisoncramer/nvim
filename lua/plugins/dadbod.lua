@@ -22,9 +22,16 @@ return {
 		vim.g.db_ui_disable_info_notifications = 1
 		vim.g.db_ui_bind_param_pattern = "\\$\\d\\+"
 
-		-- Your DBUI configuration
-		vim.g.db_ui_use_nerd_fonts = 1
-		vim.g.dbs = {
+		local personal_config = {
+			{
+				name = "dev",
+				url = function()
+					return "postgresql://postgres:postgres@localhost:4444/postgres"
+				end,
+			},
+		}
+
+		local work_config = {
 			{
 				name = "dev",
 				url = function()
@@ -62,5 +69,9 @@ return {
 				end,
 			},
 		}
+
+		-- Your DBUI configuration
+		vim.g.db_ui_use_nerd_fonts = 1
+		vim.g.dbs = os.getenv("HOST_NAME") == "harry-work-computer" and work_config or personal_config
 	end,
 }
