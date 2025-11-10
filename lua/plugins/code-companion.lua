@@ -45,18 +45,18 @@ return {
 						},
 					})
 				end,
-				qwen = function()
-					return require("codecompanion.adapters").extend("ollama", {
-						schema = {
-							env = {
-								url = "http://localhost:11434",
-							},
-							model = {
-								default = "qwen2.5-coder",
-							},
-						},
-					})
-				end,
+				-- qwen = function()
+				-- 	return require("codecompanion.adapters").extend("ollama", {
+				-- 		schema = {
+				-- 			env = {
+				-- 				url = "http://localhost:11434",
+				-- 			},
+				-- 			model = {
+				-- 				default = "qwen2.5-coder",
+				-- 			},
+				-- 		},
+				-- 	})
+				-- end,
 			},
 		},
 		strategies = {
@@ -73,7 +73,7 @@ return {
 						},
 					},
 				},
-				adapter = "qwen",
+				adapter = "anthropic",
 				roles = {
 					llm = "CodeCompanion",
 					user = "Code Companion Chat",
