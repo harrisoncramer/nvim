@@ -72,6 +72,7 @@ return {
 
 		-- Your DBUI configuration
 		vim.g.db_ui_use_nerd_fonts = 1
-		vim.g.dbs = os.getenv("HOST_NAME") == "harry-work-computer" and work_config or personal_config
+		local hostname = vim.fn.system("hostname"):gsub("\n", "")
+		vim.g.dbs = hostname == "harry-work-computer" and work_config or personal_config
 	end,
 }
