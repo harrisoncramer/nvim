@@ -5,7 +5,16 @@ M.review_changes = function(branch)
 	local Path = require("plenary.path")
 	local cc = require("codecompanion")
 	local diff_file = vim.fn.tempname() .. ".diff"
-	local git_cmd = string.format("git diff origin/%s..HEAD > %s", branch, diff_file)
+
+	local exclusions = {
+		"':(exclude)*go.mod'",
+		"':(exclude)*go.sum'",
+		"':(exclude)**/db/models/**'",
+		"':(exclude)**/jet/**'",
+	}
+
+	local git_cmd =
+		string.format("git diff origin/%s..HEAD -- %s > %s", branch, table.concat(exclusions, " "), diff_file)
 
 	local result = vim.fn.system(git_cmd)
 	local exit_code = vim.v.shell_error
