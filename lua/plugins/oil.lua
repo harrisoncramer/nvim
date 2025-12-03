@@ -71,7 +71,6 @@ local M = {
 
 						local Path = require("plenary.path")
 						local oil = require("oil")
-						local cc = require("codecompanion")
 						local fmt = string.format
 						local cur_dir = oil.get_current_dir()
 						local fullpath = cur_dir .. oil.get_cursor_entry().name
