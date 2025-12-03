@@ -150,4 +150,78 @@ M.save_quickfix_to_file = function()
 	end)
 end
 
+M.send_file_to_codecompanion = function()
+	local cc = require("codecompanion")
+	local last_chat = cc.last_chat()
+
+	if not last_chat then
+		require("notify")("No active CodeCompanion chat session. Please start a chat first.", vim.log.levels.WARN)
+		return
+	end
+	local qflist = vim.fn.getqflist()
+	local current_line = vim.fn.line(".")
+
+	if current_line > #qflist then
+		require("notify")("No quickfix entry at current line", vim.log.levels.WARN)
+		return
+	end
+
+	local item = qflist[current_line]
+	local filename
+
+	if item.filename and item.filename ~= "" then
+		filename = item.filename
+	elseif item.user_data and item.user_data.lsp and item.user_data.lsp.item then
+		local uri = item.user_data.lsp.item.uri
+		if uri then
+			filename = vim.uri_to_fname(uri)
+		end
+	elseif item.bufnr and item.bufnr > 0 then
+		local path = vim.api.nvim_buf_get_name(item.bufnr)
+		if path and path ~= "" then
+			filename = path
+		end
+	end
+
+	if not filename or filename == "" then
+		require("notify")("Could not determine filename for current quickfix entry", vim.log.levels.ERROR)
+		return
+	end
+
+	filename = filename:gsub("^file://", "")
+
+	local Path = require("plenary.path")
+	local path = Path:new(filename)
+	local success, content = pcall(function()
+		return path:read()
+	end)
+
+	if not success then
+		require("notify")("Failed to read file: " .. filename, vim.log.levels.ERROR)
+		return
+	end
+
+	local cc = require("codecompanion")
+	local relpath = path:make_relative()
+	local ft = vim.filetype.match({ filename = filename })
+	local description = string.format(
+		[[%s %s:
+```%s
+%s
+```]],
+		"Here is the content of the file",
+		"located at `" .. relpath .. "`",
+		ft or "",
+		content
+	)
+
+	local id = "<file>" .. relpath .. "</file>"
+	cc.last_chat():add_message({
+		role = require("codecompanion.config").config.constants.USER_ROLE,
+		content = description,
+	}, { reference = id, visible = false })
+
+	require("notify")("Sent file to CodeCompanion: " .. relpath, vim.log.levels.INFO)
+end
+
 return M

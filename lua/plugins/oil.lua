@@ -58,6 +58,17 @@ local M = {
 				["a"] = {
 					desc = "share file with code companion",
 					callback = function()
+						local cc = require("codecompanion")
+						local last_chat = cc.last_chat()
+
+						if not last_chat then
+							require("notify")(
+								"No active CodeCompanion chat session. Please start a chat first.",
+								vim.log.levels.WARN
+							)
+							return
+						end
+
 						local Path = require("plenary.path")
 						local oil = require("oil")
 						local cc = require("codecompanion")
