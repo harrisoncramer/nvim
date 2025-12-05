@@ -6,6 +6,7 @@ local M = {
 	"stevearc/oil.nvim",
 	config = function()
 		vim.keymap.set("n", "<C-h>", function()
+			M.original_win = vim.api.nvim_get_current_win() -- Store window to replace later
 			vim.opt.splitright = false
 			vim.cmd.vsplit()
 			vim.opt.splitright = true
@@ -20,7 +21,7 @@ local M = {
 			skip_confirm_for_simple_edits = true,
 			keymaps = {
 				["<Enter>"] = {
-					desc = "Select file",
+					desc = "Select file and replace current split",
 					callback = function()
 						local oil = require("oil")
 						local entry = oil.get_cursor_entry()
@@ -32,8 +33,16 @@ local M = {
 							require("oil").select()
 							return
 						end
+						local dir = oil.get_current_dir()
+						local filepath = dir .. entry.name
+						vim.cmd("close")
 
-						require("oil").select()
+						-- Replace the buffer in the original window
+						if M.original_win and vim.api.nvim_win_is_valid(M.original_win) then
+							vim.api.nvim_set_current_win(M.original_win)
+							vim.cmd("edit " .. vim.fn.fnameescape(filepath))
+							M.original_win = nil
+						end
 					end,
 				},
 				["g?"] = "actions.show_help",
