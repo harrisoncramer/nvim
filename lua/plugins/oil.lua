@@ -6,7 +6,6 @@ local M = {
 	"stevearc/oil.nvim",
 	config = function()
 		vim.keymap.set("n", "<C-h>", function()
-			M.original_buf = vim.api.nvim_get_current_buf() -- Store buffer to close later
 			vim.opt.splitright = false
 			vim.cmd.vsplit()
 			vim.opt.splitright = true
@@ -21,7 +20,7 @@ local M = {
 			skip_confirm_for_simple_edits = true,
 			keymaps = {
 				["<Enter>"] = {
-					desc = "Select file and close original buffer",
+					desc = "Select file",
 					callback = function()
 						local oil = require("oil")
 						local entry = oil.get_cursor_entry()
@@ -35,10 +34,6 @@ local M = {
 						end
 
 						require("oil").select()
-						if M.original_buf and vim.api.nvim_buf_is_valid(M.original_buf) then
-							vim.api.nvim_buf_delete(M.original_buf, { force = false })
-							M.original_buf = nil
-						end
 					end,
 				},
 				["g?"] = "actions.show_help",
