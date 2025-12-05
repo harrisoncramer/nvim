@@ -1,15 +1,33 @@
 local Projects = require("plugins.snacks.projects")
 local ChangedFiles = require("plugins.snacks.changed-files")
+local auto_save = require("plugins.bqf.auto-save")
 local projects = Projects.new()
-local changed_files = ChangedFiles.new("staging") -- TODO: @harrisoncramer fix this branch on init
+local changed_files = ChangedFiles.new("staging")
 
 local M = {}
 
 local excludes = {
+	"**/.qf/**",
 	"**/db/models/**",
 	"**/chariot-shared/jet/**",
 	"**/gen/**",
 }
+
+local function get_search_query(picker)
+	if picker.input and picker.input:get() then
+		return picker.input:get()
+	end
+
+	if picker.opts and picker.opts.search then
+		if type(picker.opts.search) == "function" then
+			return picker.opts.search(picker) or ""
+		else
+			return picker.opts.search or ""
+		end
+	end
+
+	return ""
+end
 
 M.preview_keys = {
 	["sk"] = { "toggle_focus", mode = { "n", "x" } },
@@ -40,7 +58,6 @@ M.input_keys = {
 	["k"] = "list_up",
 }
 
--- TODO: Add .env to searched files
 M.choose_directory_for_search = function()
 	local directory_search_keys = {
 		["<C-j>"] = { "git_files", mode = { "n", "i" } },
@@ -76,25 +93,25 @@ M.choose_directory_for_search = function()
 	})
 end
 
---- @class PickerOpts
---- @field cwd? string
---- @field search? string
---- @field extra_keys? table
---- @field actions? table
-
---- @param opts PickerOpts
 M.git_files = function(opts)
 	opts = opts or {}
 	require("snacks").picker.files({
 		cwd = opts.cwd,
 		title = "Search Files",
-		actions = opts.actions or {},
+		actions = {
+			qflist = function(picker)
+				require("snacks").picker.actions.qflist(picker)
+				local search_query = get_search_query(picker) or "git_files"
+				auto_save.auto_save_quickfix(search_query)
+			end,
+		},
 		hidden = true,
 		ignored = true,
 		exclude = {
 			"**/models/**",
 			"**/gen/**",
 			"**/node_modules/**",
+			"**/.qf/**",
 			"**/db_queries/**",
 			"**/.next/**",
 			"**/.turbo/**",
@@ -121,13 +138,12 @@ M.git_files = function(opts)
 				keys = M.list_keys,
 			},
 			input = {
-				keys = merge(M.input_keys, opts.extra_keys or {}),
+				keys = M.input_keys,
 			},
 		},
 	})
 end
 
---- @param opts PickerOpts
 M.changed_files = function(opts)
 	opts = opts or {}
 
@@ -136,6 +152,13 @@ M.changed_files = function(opts)
 		items = changed_files:formatted(),
 		preview = "file",
 		format = "file",
+		actions = {
+			qflist = function(picker)
+				require("snacks").picker.actions.qflist(picker)
+				local search_query = get_search_query(picker) or "changed_files"
+				auto_save.auto_save_quickfix(search_query)
+			end,
+		},
 		formatters = {
 			file = {
 				filename_first = true,
@@ -149,13 +172,12 @@ M.changed_files = function(opts)
 				keys = M.list_keys,
 			},
 			input = {
-				keys = merge(M.input_keys, opts.extra_keys or {}),
+				keys = M.input_keys,
 			},
 		},
 	})
 end
 
---- @param opts PickerOpts
 M.find_text = function(opts)
 	opts = opts or {}
 	require("snacks").picker.grep({
@@ -165,13 +187,19 @@ M.find_text = function(opts)
 		title = opts.cwd and string.format("Search Text in %s", opts.cwd) or "Search Text",
 		live = true,
 		submodules = true,
+		actions = {
+			qflist = function(picker)
+				require("snacks").picker.actions.qflist(picker)
+				local search_query = get_search_query(picker) or "grep_results"
+				auto_save.auto_save_quickfix(search_query)
+			end,
+		},
 		formatters = {
 			file = {
 				filename_first = true,
 			},
 		},
 		opts = {
-
 			layout = {
 				width = 1,
 				height = 1,
@@ -185,18 +213,24 @@ M.find_text = function(opts)
 				keys = M.list_keys,
 			},
 			input = {
-				keys = merge(M.input_keys),
+				keys = M.input_keys,
 			},
 		},
 	})
 end
 
---- @param opts PickerOpts
 M.recent_files = function(opts)
 	opts = opts or {}
 	require("snacks").picker.recent({
 		title = "Recent Files",
 		cwd = opts.cwd,
+		actions = {
+			qflist = function(picker)
+				require("snacks").picker.actions.qflist(picker)
+				local search_query = get_search_query(picker) or "recent_files"
+				auto_save.auto_save_quickfix(search_query)
+			end,
+		},
 		formatters = {
 			file = {
 				filename_first = true,
