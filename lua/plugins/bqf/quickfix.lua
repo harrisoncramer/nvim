@@ -2,6 +2,7 @@ local M = {}
 
 -- Track the currently loaded quickfix file
 local current_qf_file = nil
+local qf_change_timer = nil
 
 local read_quickfix_files = function()
 	vim.fn.mkdir(".qf", "p")
@@ -50,45 +51,13 @@ M.remove_current_qf_item = function()
 		return
 	end
 
-	-- Remove the item at current line
 	table.remove(qflist, current_line)
-
-	-- Update the quickfix list
 	vim.fn.setqflist({}, "r", { items = qflist })
 
-	-- Re-save the file
-	local file = io.open(current_qf_file, "w")
-	if not file then
-		require("notify")("Failed to update quickfix file", vim.log.levels.ERROR)
-		return
+	if M.save_qf_to_file(current_qf_file, qflist) then
+		vim.fn.fnamemodify(current_qf_file, ":t")
 	end
 
-	for _, item in ipairs(qflist) do
-		local entry_file_name
-		if item.filename and item.filename ~= "" then
-			entry_file_name = item.filename
-		elseif item.user_data and item.user_data.lsp and item.user_data.lsp.item then
-			local uri = item.user_data.lsp.item.uri
-			if uri then
-				entry_file_name = vim.uri_to_fname(uri)
-			end
-		elseif item.bufnr and item.bufnr > 0 then
-			local path = vim.api.nvim_buf_get_name(item.bufnr)
-			if path and path ~= "" then
-				entry_file_name = path
-			end
-		end
-
-		local current_dir = vim.fn.getcwd()
-		entry_file_name = (entry_file_name or "[No file]"):gsub("^file://", ""):gsub(current_dir .. "/", "")
-
-		local line = string.format("%s:%d:%d: %s", entry_file_name, item.lnum or 0, item.col or 0, item.text or "")
-		file:write(line .. "\n")
-	end
-
-	file:close()
-
-	-- Move cursor to appropriate line if we're not at the end
 	if current_line <= #qflist and current_line > 1 then
 		vim.fn.cursor(current_line, 1)
 	elseif #qflist > 0 then
@@ -310,6 +279,60 @@ end
 
 M._set_current_file = function(filepath)
 	current_qf_file = filepath
+end
+
+M.save_qf_to_file = function(filepath, qflist)
+	local file = io.open(filepath, "w")
+	if not file then
+		require("notify")("Failed to update quickfix file", vim.log.levels.ERROR)
+		return false
+	end
+
+	for _, item in ipairs(qflist) do
+		local entry_file_name
+		if item.filename and item.filename ~= "" then
+			entry_file_name = item.filename
+		elseif item.user_data and item.user_data.lsp and item.user_data.lsp.item then
+			local uri = item.user_data.lsp.item.uri
+			if uri then
+				entry_file_name = vim.uri_to_fname(uri)
+			end
+		elseif item.bufnr and item.bufnr > 0 then
+			local path = vim.api.nvim_buf_get_name(item.bufnr)
+			if path and path ~= "" then
+				entry_file_name = path
+			end
+		end
+
+		local current_dir = vim.fn.getcwd()
+		entry_file_name = (entry_file_name or "[No file]"):gsub("^file://", ""):gsub(current_dir .. "/", "")
+
+		local line = string.format("%s:%d:%d: %s", entry_file_name, item.lnum or 0, item.col or 0, item.text or "")
+		file:write(line .. "\n")
+	end
+
+	file:close()
+	return true
+end
+
+M.handle_qf_change = function()
+	if not current_qf_file then
+		return
+	end
+
+	if qf_change_timer then
+		qf_change_timer:stop()
+	end
+
+	qf_change_timer = vim.defer_fn(function()
+		local qflist = vim.fn.getqflist()
+		if #qflist > 0 then
+			if M.save_qf_to_file(current_qf_file, qflist) then
+				vim.fn.fnamemodify(current_qf_file, ":t")
+			end
+		end
+		qf_change_timer = nil
+	end, 100)
 end
 
 return M
