@@ -10,5 +10,15 @@
       "}"
     ],
     "description": "A for loop."
+  },
+  "TODO Comment": {
+    "prefix": [
+      "TODO",
+      "td"
+    ],
+    "body": [
+      "// TODO(@harrisoncramer): $1"
+    ],
+    "description": "Insert TODO comment with username"
   }
 }

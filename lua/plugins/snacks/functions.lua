@@ -9,6 +9,8 @@ local M = {}
 local excludes = {
 	"**/.qf/**",
 	"**/db/models/**",
+	"**/__evq/**",
+	"**/__delta/**",
 	"**/chariot-shared/jet/**",
 	"**/gen/**",
 }

@@ -1,3 +1,5 @@
+local isChariot = vim.fn.getcwd() == "/Users/harrisoncramer/chariot/chariot"
+
 --- @class vim.lsp.Config
 return {
 	cmd = {
@@ -6,7 +8,7 @@ return {
 	filetypes = { "go", "gomod" },
 	init_options = {
 		command = {
-			"golangci-lint",
+			isChariot and "custom-gcl" or "golangci-lint",
 			"run",
 			"--output.json.path",
 			"stdout",
