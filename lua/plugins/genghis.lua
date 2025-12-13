@@ -17,7 +17,9 @@ end, merge(global_keymap_opts, { desc = "Change file permissions" }))
 return {
 	"chrisgrieser/nvim-genghis",
 	opts = {
-		trashCmd = "trash",
+		fileOperations = {
+			trash = "trash",
+		},
 		icons = {
 			chmodx = "󰒃",
 			copyPath = "󰅍",

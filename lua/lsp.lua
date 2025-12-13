@@ -25,7 +25,7 @@ local servers = {
 	"bash-language-server",
 	"gopls",
 	"golangci-lint-langserver",
-	"astro-language-server",
+	-- "astro-language-server",
 	"typescript-language-server",
 	"tailwindcss-language-server",
 	"vue-language-server",
