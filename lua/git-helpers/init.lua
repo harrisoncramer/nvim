@@ -51,6 +51,12 @@ end, merge(global_keymap_opts, { desc = "Add current file" }))
 vim.keymap.set("n", "<leader>gce", function()
 	M.commit_easy()
 end, merge(global_keymap_opts, { desc = "Easily commit current file" }))
+
+-- Pushing and pulling...
+vim.keymap.set("n", "<leader>gp", function()
+	M.push()
+end, merge(global_keymap_opts, { desc = "Easily commit current file" }))
+
 vim.keymap.set("n", "<leader>gre", function()
 	M.reset_easy_commits()
 end, merge(global_keymap_opts, { desc = "Soft resets all recent easy commits" }))
@@ -125,14 +131,6 @@ end
 vim.keymap.set("n", "<leader>gqq", function()
 	gitsigns.setqflist("all") -- Send current changes to the quickfix list
 end)
-
--- Pushing and pulling...
-vim.keymap.set("n", "<leader>gPP", function()
-	M.push()
-end, map_opts)
-vim.keymap.set("n", "<leader>gPU", function()
-	M.pull()
-end, map_opts)
 
 -- Get the file path relative to the git root
 M.copy_relative_git_path = function()

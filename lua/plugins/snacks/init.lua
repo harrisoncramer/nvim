@@ -114,13 +114,13 @@ return {
 			mode = { "n" },
 			desc = "Recent Files",
 		},
-		{
-			"<leader>gp",
-			function()
-				Snacks.picker.gh_pr()
-			end,
-			desc = "GitHub Pull Requests (open)",
-		},
+		-- {
+		-- 	"<leader>gp",
+		-- 	function()
+		-- 		Snacks.picker.gh_pr()
+		-- 	end,
+		-- 	desc = "GitHub Pull Requests (open)",
+		-- },
 	},
 	opts = opts,
 }
