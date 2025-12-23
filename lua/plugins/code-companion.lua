@@ -11,23 +11,23 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		"ravitemer/codecompanion-history.nvim",
 	},
-	rules = {
-		opts = {
-			chat = {
-				enabled = true,
-				autoload = "default",
-			},
-		},
-		default = {
-			enabled = true,
-			parser = "claude",
-			description = "Collection of common files for all projects",
-			files = {
-				"~/.config/nvim/.ai/rules/RULE.md",
-			},
-		},
-	},
 	opts = {
+		rules = {
+			default = {
+				enabled = true,
+				parser = "claude",
+				description = "Collection of common files for all projects",
+				files = {
+					"~/.config/nvim/.ai/rules",
+				},
+			},
+			opts = {
+				chat = {
+					enabled = true,
+					autoload = "default",
+				},
+			},
+		},
 		display = {
 			diff = {
 				enabled = true,
