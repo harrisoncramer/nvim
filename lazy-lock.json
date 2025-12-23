@@ -10,7 +10,6 @@
   "codecompanion.nvim": { "branch": "main", "commit": "418d8abce319ed8cd449933ca1e12be4e595881e" },
   "conform.nvim": { "branch": "master", "commit": "9fd3d5e0b689ec1bf400c53cbbec72c6fdf24081" },
   "conjure": { "branch": "main", "commit": "a92c59a7912140904c28dd988292df76c681c4d8" },
-  "contextfiles.nvim": { "branch": "main", "commit": "f4a01aa465f7deeedb257266d47ef1849dd9b08b" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "dressing.nvim": { "branch": "master", "commit": "2d7c2db2507fa3c4956142ee607431ddb2828639" },
   "format-ts-errors.nvim": { "branch": "main", "commit": "4b7418d6689bc0fd3c1db0500c67133422522384" },

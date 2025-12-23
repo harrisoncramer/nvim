@@ -35,11 +35,15 @@ local M = {
 						end
 						local dir = oil.get_current_dir()
 						local filepath = dir .. entry.name
-						vim.cmd("close")
 
-						-- Replace the buffer in the original window
-						if M.original_win and vim.api.nvim_win_is_valid(M.original_win) then
+						-- If we have an existing window, close it and open with selection
+						if M.original_win and vim.api.nvim_win_is_valid(M.original_win) and vim.fn.winnr("$") > 1 then
+							vim.cmd("close")
 							vim.api.nvim_set_current_win(M.original_win)
+							vim.cmd("edit " .. vim.fn.fnameescape(filepath))
+							M.original_win = nil
+						else
+							-- Otherwise, just open the buffer
 							vim.cmd("edit " .. vim.fn.fnameescape(filepath))
 							M.original_win = nil
 						end

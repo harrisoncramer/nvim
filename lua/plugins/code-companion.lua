@@ -7,10 +7,25 @@ end, merge(global_keymap_opts, { desc = "Send diff of current branch to code com
 return {
 	"olimorris/codecompanion.nvim",
 	dependencies = {
-		"banjo/contextfiles.nvim",
 		"nvim-lua/plenary.nvim",
 		"nvim-treesitter/nvim-treesitter",
 		"ravitemer/codecompanion-history.nvim",
+	},
+	rules = {
+		opts = {
+			chat = {
+				enabled = true,
+				autoload = "default",
+			},
+		},
+		default = {
+			enabled = true,
+			parser = "claude",
+			description = "Collection of common files for all projects",
+			files = {
+				"~/.config/nvim/.ai/rules/RULE.md",
+			},
+		},
 	},
 	opts = {
 		display = {
@@ -51,18 +66,6 @@ return {
 						},
 					})
 				end,
-				-- qwen = function()
-				-- 	return require("codecompanion.adapters").extend("ollama", {
-				-- 		schema = {
-				-- 			env = {
-				-- 				url = "http://localhost:11434",
-				-- 			},
-				-- 			model = {
-				-- 				default = "qwen2.5-coder",
-				-- 			},
-				-- 		},
-				-- 	})
-				-- end,
 			},
 		},
 		strategies = {
