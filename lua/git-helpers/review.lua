@@ -11,6 +11,7 @@ local exclusions = {
 	"':(exclude)**/*.pb.go'",
 	"':(exclude)**/*_test.go'", -- Should we exclude tests?
 	"':(exclude)**/*.connect.go'",
+	"':(exclude)*yarn.lock'",
 }
 
 M.ignore_paths = table.concat(exclusions, " ")
