@@ -79,8 +79,11 @@ M.on_attach = function(client, bufnr)
 	-- Debounce by 300ms by default
 	-- client.config.flags.debounce_text_changes = 300
 
+	local bufname = vim.api.nvim_buf_get_name(bufnr)
+	local is_lazy_lock = bufname:match("lazy%-lock%.json$") ~= nil
+
 	-- This will set up formatting for the attached LSPs
-	if client.name == "gopls" or client.name == "json-lsp" then
+	if client.name == "gopls" or (client.name == "json-lsp" and not is_lazy_lock) then
 		client.server_capabilities.documentFormattingProvider = true
 	end
 
