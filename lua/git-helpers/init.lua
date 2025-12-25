@@ -52,6 +52,10 @@ vim.keymap.set("n", "<leader>gce", function()
 	M.commit_easy()
 end, merge(global_keymap_opts, { desc = "Easily commit current file" }))
 
+vim.keymap.set("n", "<leader>gca", function()
+	M.commit_all_easy()
+end, merge(global_keymap_opts, { desc = "Easily commit all changes" }))
+
 -- Pushing and pulling...
 vim.keymap.set("n", "<leader>gp", function()
 	M.push()
@@ -156,6 +160,52 @@ M.commit_easy = function()
 			else
 				require("notify")("Committed file", vim.log.levels.INFO)
 			end
+		end),
+	}):start()
+end
+
+-- Adds all changes and then commits them, prompting hte user for a message.
+M.commit_all_easy = function()
+	local git_root = M.get_root_git_dir()
+
+	job:new({
+		command = "git",
+		args = { "add", "." },
+		cwd = git_root,
+		on_exit = vim.schedule_wrap(function(_, exit_code)
+			if exit_code ~= 0 then
+				require("notify")("Could not add all files!", vim.log.levels.ERROR)
+				return
+			end
+
+			local popup_module = require("popup")
+			popup_module.create_popup_with_action("Enter commit message", function(commit_message)
+				commit_message = vim.fn.trim(commit_message)
+				if commit_message == nil or commit_message == "" then
+					require("notify")("Commit cancelled - empty message", vim.log.levels.WARN)
+					return
+				end
+
+				local commit_job_opts = {
+					command = "git",
+					args = { "commit", "-m", commit_message },
+					on_exit = vim.schedule_wrap(function(val, commit_exit_code)
+						if commit_exit_code ~= 0 then
+							require("notify")("Could not commit changes!", vim.log.levels.ERROR)
+							require("notify")(val)
+							return
+						else
+							require("notify")("Committed all changes", vim.log.levels.INFO)
+						end
+					end),
+				}
+
+				if git_root then
+					commit_job_opts.cwd = git_root
+				end
+
+				job:new(commit_job_opts):start()
+			end)
 		end),
 	}):start()
 end

@@ -29,6 +29,10 @@ return {
 			},
 		},
 		display = {
+			chat = {
+				fold_reasoning = false,
+				show_reasoning = true,
+			},
 			diff = {
 				enabled = true,
 				layout = "vertical",
