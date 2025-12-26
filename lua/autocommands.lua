@@ -69,4 +69,4 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
 })
 
 -- Keybinding to restore session
-vim.api.nvim_set_keymap("n", "<leader>sr", ":source /tmp/.nvim_session.vim<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>S", ":source /tmp/.nvim_session.vim<CR>", { noremap = true, silent = true })

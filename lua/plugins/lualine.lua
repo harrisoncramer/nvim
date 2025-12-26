@@ -26,15 +26,9 @@ local function get_git_head()
 	return " " .. head
 end
 
-vim.api.nvim_create_autocmd({ "FileType", "BufEnter", "FocusGained" }, {
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained" }, {
 	callback = function()
 		vim.g.branch_name = get_git_head()
-	end,
-})
-
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-	callback = function()
-		require("lualine")
 	end,
 })
 
@@ -102,9 +96,9 @@ return {
 				section_separators = { left = "", right = "" },
 				theme = custom_kanagawa,
 				globalstatus = true,
-				refresh = {
-					statusline = 100,
-				},
+				-- refresh = {
+				-- 	statusline = 100,
+				-- },
 			},
 			sections = {
 				lualine_a = {
