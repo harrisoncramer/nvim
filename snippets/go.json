@@ -9,6 +9,16 @@
     ],
     "description": "if error, then return it"
   },
+  "if non-enriched error": {
+    "prefix": "IFJ",
+    "body": [
+      "if err != nil {",
+      "\treturn $1err",
+      "}",
+      "$2"
+    ],
+    "description": "if error, then return it"
+  },
   "if connect error": {
     "prefix": "ICE",
     "body": [

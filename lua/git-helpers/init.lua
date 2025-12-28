@@ -140,7 +140,7 @@ end)
 M.copy_relative_git_path = function()
 	local buf_path = vim.api.nvim_buf_get_name(0)
 	local git_root = M.get_root_git_dir()
-	local relative_path = buf_path:sub(#git_root + 1)
+	local relative_path = buf_path:sub(#git_root + 2)
 	return relative_path
 end
 
@@ -152,10 +152,13 @@ M.commit_easy = function()
 		command = "git",
 		args = { "commit", relative_file_path, "-m", string.format("Updated %s", relative_file_path) },
 		cwd = git_root,
-		on_exit = vim.schedule_wrap(function(val, exit_code)
+		on_exit = vim.schedule_wrap(function(j, exit_code)
 			if exit_code ~= 0 then
 				require("notify")("Could not commit change!", vim.log.levels.ERROR)
-				require("notify")(val)
+				local stderr = table.concat(j:stderr_result(), "\n")
+				if stderr ~= "" then
+					require("notify")(stderr, vim.log.levels.ERROR)
+				end
 				return
 			else
 				require("notify")("Committed file", vim.log.levels.INFO)
@@ -194,10 +197,13 @@ M.commit_all_easy = function()
 				local commit_job_opts = {
 					command = "git",
 					args = { "commit", "-m", commit_message },
-					on_exit = vim.schedule_wrap(function(val, commit_exit_code)
+					on_exit = vim.schedule_wrap(function(j, commit_exit_code)
 						if commit_exit_code ~= 0 then
 							require("notify")("Could not commit changes!", vim.log.levels.ERROR)
-							require("notify")(val)
+							local stderr = table.concat(j:stderr_result(), "\n")
+							if stderr ~= "" then
+								require("notify")(stderr, vim.log.levels.ERROR)
+							end
 							return
 						else
 							require("notify")("Committed all changes", vim.log.levels.INFO)
