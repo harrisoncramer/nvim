@@ -1,5 +1,4 @@
 local u = require("functions.utils")
-local git = require("git-helpers")
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "oil",
@@ -14,6 +13,19 @@ vim.api.nvim_create_autocmd("BufLeave", {
 		vim.opt.laststatus = 2
 	end,
 })
+
+local root_dir = function()
+	local cur_path = vim.fn.expand("%:p")
+	local dir = vim.fs.find(".git", {
+		path = cur_path,
+		upward = true,
+		type = "directory",
+	})[1]
+	if dir == nil then
+		return dir
+	end
+	return dir:sub(1, -5)
+end
 
 local function get_git_head()
 	local head = vim.fn.trim(vim.fn.system({ "git", "branch", "--show-current" }))
@@ -33,7 +45,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained" }, {
 })
 
 local filename = function()
-	local git_root = git.get_root_git_dir()
+	local git_root = root_dir()
 	local modified = vim.api.nvim_buf_get_option(0, "modified")
 	local readonly = vim.api.nvim_buf_get_option(0, "readonly")
 	if git_root == nil then
