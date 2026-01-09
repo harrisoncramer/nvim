@@ -8,6 +8,7 @@
   "checkmate.nvim": { "branch": "main", "commit": "fc8edd6ecf8e4095ef878780e4bed83cc5c56c14" },
   "codecompanion-history.nvim": { "branch": "main", "commit": "8c6ca9f998aeef89f3543343070f8562bf911fb4" },
   "codecompanion.nvim": { "branch": "main", "commit": "5894748009c1282c07cc51d250286725820aed89" },
+  "codediff.nvim": { "branch": "main", "commit": "e6d0efcf20197b266deeb8e4b6a2bbe7f0e8c6ec" },
   "conform.nvim": { "branch": "master", "commit": "8314f4c9e205e7f30b62147069729f9a1227d8bf" },
   "conjure": { "branch": "main", "commit": "67705566318002cc0a88b075f695518a43aa0ca7" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
