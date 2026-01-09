@@ -1,21 +1,36 @@
 local M = {}
 
+local exclusions = {
+	"':(exclude)*go.mod'",
+	"':(exclude)*go.sum'",
+	"':(exclude)**/db/models/**'",
+	"':(exclude)**/jet/**'",
+	"':(exclude)**/*_grpc.pb.go'",
+	"':(exclude)**/*_grpc.go'",
+	"':(exclude)**/*.sql.go'",
+	"':(exclude)**/*.pb.go'",
+	"':(exclude)**/*_test.go'", -- Should we exclude tests?
+	"':(exclude)**/*.connect.go'",
+	"':(exclude)*yarn.lock'",
+}
+
+M.ignore_paths = table.concat(exclusions, " ")
+
 -- Get diff of current feature branch and create a diff file, then give that file to Code Companion.
 M.review_changes = function(branch)
 	local Path = require("plenary.path")
 	local cc = require("codecompanion")
 	local diff_file = vim.fn.tempname() .. ".diff"
 
-	local exclusions = {
-		"':(exclude)*go.mod'",
-		"':(exclude)*go.sum'",
-		"':(exclude)**/db/models/**'",
-		"':(exclude)**/jet/**'",
-	}
+	local git_cmd = string.format(
+		-- The --diff-filter=ADM excludes renamed files
+		"git diff --diff-filter=ADM origin/%s..HEAD -- %s > %s",
+		branch,
+		M.ignore_paths,
+		diff_file
+	)
 
-	local git_cmd =
-		string.format("git diff origin/%s..HEAD -- %s > %s", branch, table.concat(exclusions, " "), diff_file)
-
+	-- ...existing code...
 	local result = vim.fn.system(git_cmd)
 	local exit_code = vim.v.shell_error
 
@@ -57,14 +72,15 @@ M.review_changes = function(branch)
 		end
 
 		local lines = string.format(
-			[[Please review the following code changes and provide feedback on:
+			[[You are a senior sofware engineer. You are giving feedback to another engineer on the following code changes. You are checking mostly for
+
 			  - Potential bugs or issues.
         - Performance considerations.
         - Maintainability and readability.
 
         You do not have to stick to these specific sections, for instance if there are no performance considerations to consider just don't mention them in your chat.
 
-        Please be precise with your feedback, referencing specific line numbers in the code whenever you make a suggestion. Do not mention theoreticals or poential problems, but be grounded in actual problems. Also, be brief if there is nothing obviously wrong.
+        Please be precise with your feedback, referencing specific line numbers in the code whenever you make a suggestion. Do not mention theoreticals or potential problems, but be grounded in actual problems.
         Here is the diff:
       %s
       %s

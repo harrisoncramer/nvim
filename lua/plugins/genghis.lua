@@ -18,7 +18,7 @@ return {
 	"chrisgrieser/nvim-genghis",
 	opts = {
 		fileOperations = {
-			trash = "trash",
+			trashCmd = "trash",
 		},
 		icons = {
 			chmodx = "󰒃",

@@ -51,6 +51,16 @@ end, merge(global_keymap_opts, { desc = "Add current file" }))
 vim.keymap.set("n", "<leader>gce", function()
 	M.commit_easy()
 end, merge(global_keymap_opts, { desc = "Easily commit current file" }))
+
+vim.keymap.set("n", "<leader>gca", function()
+	M.commit_all_easy()
+end, merge(global_keymap_opts, { desc = "Easily commit all changes" }))
+
+-- Pushing and pulling...
+vim.keymap.set("n", "<leader>gp", function()
+	M.push()
+end, merge(global_keymap_opts, { desc = "Easily commit current file" }))
+
 vim.keymap.set("n", "<leader>gre", function()
 	M.reset_easy_commits()
 end, merge(global_keymap_opts, { desc = "Soft resets all recent easy commits" }))
@@ -126,19 +136,11 @@ vim.keymap.set("n", "<leader>gqq", function()
 	gitsigns.setqflist("all") -- Send current changes to the quickfix list
 end)
 
--- Pushing and pulling...
-vim.keymap.set("n", "<leader>gPP", function()
-	M.push()
-end, map_opts)
-vim.keymap.set("n", "<leader>gPU", function()
-	M.pull()
-end, map_opts)
-
 -- Get the file path relative to the git root
 M.copy_relative_git_path = function()
 	local buf_path = vim.api.nvim_buf_get_name(0)
 	local git_root = M.get_root_git_dir()
-	local relative_path = buf_path:sub(#git_root + 1)
+	local relative_path = buf_path:sub(#git_root + 2)
 	return relative_path
 end
 
@@ -150,14 +152,71 @@ M.commit_easy = function()
 		command = "git",
 		args = { "commit", relative_file_path, "-m", string.format("Updated %s", relative_file_path) },
 		cwd = git_root,
-		on_exit = vim.schedule_wrap(function(val, exit_code)
+		on_exit = vim.schedule_wrap(function(j, exit_code)
 			if exit_code ~= 0 then
 				require("notify")("Could not commit change!", vim.log.levels.ERROR)
-				require("notify")(val)
+				local stderr = table.concat(j:stderr_result(), "\n")
+				if stderr ~= "" then
+					require("notify")(stderr, vim.log.levels.ERROR)
+				end
 				return
 			else
 				require("notify")("Committed file", vim.log.levels.INFO)
 			end
+		end),
+	}):start()
+end
+
+-- Adds all changes and then commits them, prompting hte user for a message.
+M.commit_all_easy = function()
+	local git_root = M.get_root_git_dir()
+
+	if not git_root then
+		require("notify")("Not in a git repository", vim.log.levels.ERROR)
+		return
+	end
+
+	job:new({
+		command = "git",
+		args = { "add", "." },
+		cwd = git_root,
+		on_exit = vim.schedule_wrap(function(_, exit_code)
+			if exit_code ~= 0 then
+				require("notify")("Could not add all files!", vim.log.levels.ERROR)
+				return
+			end
+
+			local popup_module = require("popup")
+			popup_module.create_popup_with_action("Enter commit message", function(commit_message)
+				commit_message = vim.fn.trim(commit_message)
+				if commit_message == nil or commit_message == "" then
+					require("notify")("Commit cancelled - empty message", vim.log.levels.WARN)
+					return
+				end
+
+				local commit_job_opts = {
+					command = "git",
+					args = { "commit", "-m", commit_message },
+					on_exit = vim.schedule_wrap(function(j, commit_exit_code)
+						if commit_exit_code ~= 0 then
+							require("notify")("Could not commit changes!", vim.log.levels.ERROR)
+							local stderr = table.concat(j:stderr_result(), "\n")
+							if stderr ~= "" then
+								require("notify")(stderr, vim.log.levels.ERROR)
+							end
+							return
+						else
+							require("notify")("Committed all changes", vim.log.levels.INFO)
+						end
+					end),
+				}
+
+				if git_root then
+					commit_job_opts.cwd = git_root
+				end
+
+				job:new(commit_job_opts):start()
+			end)
 		end),
 	}):start()
 end
@@ -206,33 +265,6 @@ M.add_current = function()
 				return
 			else
 				require("notify")("Added current file", vim.log.levels.INFO)
-			end
-		end),
-	}):start()
-end
-
--- Resets all recent easy commits softly, used in combination with add_all() and commit() to squash
--- easy commits into readable commit message
-M.reset_easy_commits = function()
-	local latest_non_easy_commit =
-		io.popen('git log --format="%s %H" | grep -v "^Updated " | awk \'{ print $NF }\' | tail -n +1 | head -1')
-	if latest_non_easy_commit == nil then
-		require("notify")("No easy commit hash found!", vim.log.levels.ERROR)
-		return
-	end
-
-	local non_easy_hash = vim.fn.trim(latest_non_easy_commit:read("*a"))
-	latest_non_easy_commit:close()
-
-	job:new({
-		command = "git",
-		args = { "reset", "--soft", non_easy_hash },
-		on_exit = vim.schedule_wrap(function(_, exit_code)
-			if exit_code ~= 0 then
-				require("notify")("Could not reset easy commits softly!", vim.log.levels.ERROR)
-				return
-			else
-				require("notify")("Soft reset all easy commits", vim.log.levels.INFO)
 			end
 		end),
 	}):start()
@@ -327,16 +359,12 @@ M.is_feature_branch = function(cb)
 end
 
 M.get_root_git_dir = function()
-	local cur_path = vim.fn.expand("%:p")
-	local dir = vim.fs.find(".git", {
-		path = cur_path,
-		upward = true,
-		type = "directory",
-	})[1]
-	if dir == nil then
-		return dir
+	local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null")
+	git_root = vim.fn.trim(git_root)
+	if vim.v.shell_error ~= 0 or git_root == "" then
+		return nil
 	end
-	return dir:sub(1, -5)
+	return git_root
 end
 
 M.branch_exists = function(b)

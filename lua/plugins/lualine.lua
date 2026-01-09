@@ -1,5 +1,4 @@
 local u = require("functions.utils")
-local git = require("git-helpers")
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "oil",
@@ -15,6 +14,19 @@ vim.api.nvim_create_autocmd("BufLeave", {
 	end,
 })
 
+local root_dir = function()
+	local cur_path = vim.fn.expand("%:p")
+	local dir = vim.fs.find(".git", {
+		path = cur_path,
+		upward = true,
+		type = "directory",
+	})[1]
+	if dir == nil then
+		return dir
+	end
+	return dir:sub(1, -5)
+end
+
 local function get_git_head()
 	local head = vim.fn.trim(vim.fn.system({ "git", "branch", "--show-current" }))
 	if vim.v.shell_error ~= 0 or head == "" or head == nil then
@@ -26,20 +38,14 @@ local function get_git_head()
 	return " " .. head
 end
 
-vim.api.nvim_create_autocmd({ "FileType", "BufEnter", "FocusGained" }, {
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained" }, {
 	callback = function()
 		vim.g.branch_name = get_git_head()
 	end,
 })
 
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-	callback = function()
-		require("lualine")
-	end,
-})
-
 local filename = function()
-	local git_root = git.get_root_git_dir()
+	local git_root = root_dir()
 	local modified = vim.api.nvim_buf_get_option(0, "modified")
 	local readonly = vim.api.nvim_buf_get_option(0, "readonly")
 	if git_root == nil then
@@ -102,9 +108,9 @@ return {
 				section_separators = { left = "", right = "" },
 				theme = custom_kanagawa,
 				globalstatus = true,
-				refresh = {
-					statusline = 100,
-				},
+				-- refresh = {
+				-- 	statusline = 100,
+				-- },
 			},
 			sections = {
 				lualine_a = {
