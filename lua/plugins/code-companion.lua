@@ -4,6 +4,15 @@ vim.keymap.set("n", "<C-a><C-r>", function()
 	end)
 end, merge(global_keymap_opts, { desc = "Send diff of current branch to code companion" }))
 
+local anthropic_config = function()
+	local anthropicApiKey = os.getenv("ANTHROPIC_API_KEY")
+	return require("codecompanion.adapters").extend("claude_code", {
+		env = {
+			ANTHROPIC_API_KEY = anthropicApiKey,
+		},
+	})
+end
+
 return {
 	"olimorris/codecompanion.nvim",
 	dependencies = {
@@ -12,10 +21,22 @@ return {
 		"ravitemer/codecompanion-history.nvim",
 	},
 	opts = {
+		-- There are two "types" of adapter in CodeCompanion; http adapters which connect you to an LLM and ACP adapters which leverage the Agent Client Protocol to connect you to an agent.
+		-- The configuration for both types of adapters is exactly the same, however they sit within their own tables (adapters.http.* and adapters.acp.*) and have different options available. HTTP adapters use models to allow users to select the specific LLM they'd like to interact with. ACP adapters use commands to allow users to customize their interaction with agents (e.g. enabling yolo mode).
+		adapters = {
+			acp = {
+				claude_code = anthropic_config,
+			},
+		},
+		-- This sets the default adapter for the ACP to be claude code.
+		interactions = {
+			chat = {
+				adapter = "claude_code",
+			},
+		},
 		rules = {
 			default = {
 				enabled = true,
-				parser = "claude",
 				description = "Collection of common files for all projects",
 				files = {
 					"~/.config/nvim/.ai/rules",
@@ -37,7 +58,6 @@ return {
 				enabled = true,
 				layout = "vertical",
 				opts = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },
-				provider = "default",
 			},
 		},
 		extensions = {
@@ -55,21 +75,9 @@ return {
 						delete = { n = "d", i = "<M-d>" },
 						duplicate = { n = "<C-y>", i = "<C-y>" },
 					},
-					auto_generate_title = true,
+					auto_generate_title = false,
 					dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
 				},
-			},
-		},
-		adapters = {
-			http = {
-				anthropic = function()
-					local anthropicApiKey = os.getenv("ANTHROPIC_API_KEY")
-					return require("codecompanion.adapters").extend("anthropic", {
-						env = {
-							api_key = anthropicApiKey,
-						},
-					})
-				end,
 			},
 		},
 		strategies = {
@@ -86,7 +94,6 @@ return {
 						},
 					},
 				},
-				adapter = "anthropic",
 				roles = {
 					llm = "CodeCompanion",
 					user = "Code Companion Chat",
@@ -112,7 +119,7 @@ return {
 			},
 		},
 		inline = {
-			adapter = "openai",
+			adapter = "anthropic",
 			keymaps = {
 				accept_change = {
 					modes = { n = "ga" },
@@ -128,7 +135,7 @@ return {
 	keys = {
 		{
 			"<C-a><C-a>",
-			"<cmd>CodeCompanionChat Toggle<cr>",
+			"<cmd>CodeCompanionChat adapter=claude_code Toggle<cr>",
 			mode = { "n", "v" },
 			noremap = true,
 			silent = true,
