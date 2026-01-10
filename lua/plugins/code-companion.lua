@@ -27,6 +27,9 @@ return {
 			acp = {
 				claude_code = anthropic_config,
 			},
+			http = {
+				anthropic = anthropic_config,
+			},
 		},
 		-- This sets the default adapter for the ACP to be claude code.
 		interactions = {
