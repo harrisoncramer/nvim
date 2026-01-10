@@ -15,6 +15,7 @@ end
 
 return {
 	"olimorris/codecompanion.nvim",
+	lazy = false,
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-treesitter/nvim-treesitter",
@@ -35,6 +36,19 @@ return {
 		interactions = {
 			chat = {
 				adapter = "claude_code",
+			},
+			inline = {
+				adapter = "anthropic",
+				keymaps = {
+					accept_change = {
+						modes = { n = "ga" },
+						description = "Accept the suggested change",
+					},
+					reject_change = {
+						modes = { n = "gr" },
+						description = "Reject the suggested change",
+					},
+				},
 			},
 		},
 		rules = {
@@ -121,19 +135,6 @@ return {
 				},
 			},
 		},
-		inline = {
-			adapter = "anthropic",
-			keymaps = {
-				accept_change = {
-					modes = { n = "ga" },
-					description = "Accept the suggested change",
-				},
-				reject_change = {
-					modes = { n = "gr" },
-					description = "Reject the suggested change",
-				},
-			},
-		},
 	},
 	keys = {
 		{
@@ -151,6 +152,34 @@ return {
 			noremap = true,
 			silent = true,
 			desc = "CodeCompanion history",
+		},
+		{
+			"<C-a>a",
+			function()
+				vim.ui.input({ prompt = "Append prompt: " }, function(input)
+					if input then
+						vim.cmd("'<,'>CodeCompanion " .. input)
+					end
+				end)
+			end,
+			mode = "v",
+			noremap = true,
+			silent = true,
+			desc = "CodeCompanion append",
+		},
+		{
+			"<C-a>r",
+			function()
+				vim.ui.input({ prompt = "Rewrite prompt: " }, function(input)
+					if input then
+						vim.cmd("'<,'>CodeCompanion " .. input)
+					end
+				end)
+			end,
+			mode = "v",
+			noremap = true,
+			silent = true,
+			desc = "CodeCompanion rewrite",
 		},
 	},
 }
