@@ -1,3 +1,4 @@
+-- Send Diff to CodeCompanion and have it review the changes.
 vim.keymap.set("n", "<C-a><C-r>", function()
 	require("git-helpers").branch_input(function(branch)
 		require("git-helpers.review").review_changes(branch)
@@ -39,16 +40,6 @@ return {
 			},
 			inline = {
 				adapter = "anthropic",
-				keymaps = {
-					accept_change = {
-						modes = { n = "ga" },
-						description = "Accept the suggested change",
-					},
-					reject_change = {
-						modes = { n = "gr" },
-						description = "Reject the suggested change",
-					},
-				},
 			},
 		},
 		rules = {
@@ -81,8 +72,6 @@ return {
 			history = {
 				enabled = true,
 				opts = {
-					-- Keymap to open history from chat buffer (default: gh)
-					keymap = "<C-a><C-h>",
 					auto_save = true,
 					expiration_days = 0,
 					picker = "snacks", --- ("telescope", "snacks", "fzf-lua", or "default")
@@ -92,7 +81,7 @@ return {
 						delete = { n = "d", i = "<M-d>" },
 						duplicate = { n = "<C-y>", i = "<C-y>" },
 					},
-					auto_generate_title = false,
+					auto_generate_title = false, -- Does not work in ACP/Agentic mode
 					dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
 				},
 			},
@@ -138,6 +127,7 @@ return {
 	},
 	keys = {
 		{
+			-- Toggles the chat window
 			"<C-a><C-a>",
 			"<cmd>CodeCompanionChat adapter=claude_code Toggle<cr>",
 			mode = { "n", "v" },
@@ -146,6 +136,7 @@ return {
 			desc = "CodeCompanion chat",
 		},
 		{
+			-- Opens hisotry of previous chats
 			"<C-a><C-h>",
 			"<cmd>CodeCompanionHistory<cr>",
 			mode = { "n", "v" },
@@ -153,24 +144,11 @@ return {
 			silent = true,
 			desc = "CodeCompanion history",
 		},
-		{
-			"<C-a>a",
-			function()
-				vim.ui.input({ prompt = "Append prompt: " }, function(input)
-					if input then
-						vim.cmd("'<,'>CodeCompanion " .. input)
-					end
-				end)
-			end,
-			mode = "v",
-			noremap = true,
-			silent = true,
-			desc = "CodeCompanion append",
-		},
+		-- Key mapping for visual mode: Prompts the user for input, then runs the CodeCompanion command on the visually selected lines with the given input
 		{
 			"<C-a>r",
 			function()
-				vim.ui.input({ prompt = "Rewrite prompt: " }, function(input)
+				vim.ui.input({ prompt = "Prompt:" }, function(input)
 					if input then
 						vim.cmd("'<,'>CodeCompanion " .. input)
 					end
@@ -179,7 +157,7 @@ return {
 			mode = "v",
 			noremap = true,
 			silent = true,
-			desc = "CodeCompanion rewrite",
+			desc = "CodeCompanion prompt to update/rework/refactor some visual selection.",
 		},
 	},
 }
