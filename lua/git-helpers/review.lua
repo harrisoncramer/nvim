@@ -22,15 +22,29 @@ M.review_changes = function(branch)
 	local cc = require("codecompanion")
 	local diff_file = vim.fn.tempname() .. ".diff"
 
+	local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null")
+	git_root = vim.fn.trim(git_root)
+	if vim.v.shell_error ~= 0 or git_root == "" then
+		vim.notify("Not in a git repository", vim.log.levels.ERROR)
+		return
+	end
+
+	local merge_base_cmd = string.format("cd '%s' && git merge-base origin/%s HEAD", git_root, branch)
+	local merge_base = vim.fn.trim(vim.fn.system(merge_base_cmd))
+	if vim.v.shell_error ~= 0 then
+		vim.notify("Error finding merge base with origin/" .. branch, vim.log.levels.ERROR)
+		return
+	end
+
 	local git_cmd = string.format(
 		-- The --diff-filter=ADM excludes renamed files
-		"git diff --diff-filter=ADM origin/%s..HEAD -- %s > %s",
-		branch,
+		"cd '%s' && git diff --diff-filter=ADM %s..HEAD -- %s > %s",
+		git_root,
+		merge_base,
 		M.ignore_paths,
 		diff_file
 	)
 
-	-- ...existing code...
 	local result = vim.fn.system(git_cmd)
 	local exit_code = vim.v.shell_error
 
@@ -75,16 +89,18 @@ M.review_changes = function(branch)
 			[[You are a senior sofware engineer. You are giving feedback to another engineer on the following code changes. You are checking mostly for
 
 			  - Potential bugs or issues.
-        - Performance considerations.
-        - Maintainability and readability.
+	       - Performance considerations.
+	       - Maintainability and readability.
 
-        You do not have to stick to these specific sections, for instance if there are no performance considerations to consider just don't mention them in your chat.
+	       You do not have to stick to these specific sections, for instance if there are no performance considerations to consider just don't mention them in your chat.
 
-        Please be precise with your feedback, referencing specific line numbers in the code whenever you make a suggestion. Do not mention theoreticals or potential problems, but be grounded in actual problems.
-        Here is the diff:
-      %s
-      %s
-      ]],
+         CRITICAL: Do not give feedback for anything that already works or is well designed, your job is specifically to find errors and other code smells.
+
+	       Please be precise with your feedback, referencing specific line numbers in the code whenever you make a suggestion. Do not mention theoreticals or potential problems, but be grounded in actual problems.
+	       Here is the diff:
+	     %s
+	     %s
+	     ]],
 			pr_info,
 			content
 		)
