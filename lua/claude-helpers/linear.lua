@@ -86,6 +86,10 @@ M.process_issue = function(issue)
 		[[
 You are performing an automated investigation of this Linear issue: %s
 
+If this ticket is a bug, you are trying to provide context that's helpful in solving the bug, and replicating it. This context and hypothesis of the underlying issue(s) will be used by a subsequent step to attempt to replicate it and fix it.
+
+If this ticket is a feature request, you are writing the plan for a subsequent agent to pick up and execute to build the feature.
+
 Your task:
 1. Use mcp__linear-server__get_issue with the issue identifier %s to fetch full details
 2. If it's already been enriched, there will be a file at /tmp/%s.md. If so, just exit.
@@ -97,24 +101,27 @@ Your task:
    e. Write the temp file to /tmp/%s.md
    f. Use mcp__linear-server__create_comment to post a shortened summary of this findings file.
 
-Investigation report format:
-
 ## Claude Enrichment
 
-### Related Codepaths
+### Related Codepaths or Files
+
+- `path/to/file.ts:123` 
 - `path/to/file.ts:123` 
 - `path/to/other.go:456`
 
-### Possible Causes
+### (If bug) Possible Causes
 
 What you believe may be causing the issue. Give your most likely cause, and how confident you are, two to three sentences. Then list other possible causes, no more than 1 sentence each.
+
+### (If feature) Action Plan
+
+A detailed plan for the next agent to use to implement the feature.
 
 ---
 *Automated investigation by Claude Code*
 
 Guidelines:
 - READ-ONLY operations only - do not modify files or execute code
-- Search for error messages, function names, component names mentioned in issues
 - For frontend issues: check components, pages, and API endpoints
 - For backend issues: check service handlers, SQLC queries, gRPC definitions
 - Include file:line_number references in your findings
