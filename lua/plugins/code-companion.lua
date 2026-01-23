@@ -1,10 +1,4 @@
 -- Send Diff to CodeCompanion and have it review the changes.
-vim.keymap.set("n", "<C-a><C-r>", function()
-	require("git-helpers").branch_input(function(branch)
-		require("claude-helpers").review_changes(branch)
-	end)
-end, merge(global_keymap_opts, { desc = "Send diff of current branch to code companion" }))
-
 local anthropic_config = function()
 	local anthropicApiKey = os.getenv("ANTHROPIC_API_KEY")
 	return require("codecompanion.adapters").extend("claude_code", {
