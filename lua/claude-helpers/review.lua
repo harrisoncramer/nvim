@@ -1,21 +1,5 @@
 local M = {}
 
-local exclusions = {
-	"':(exclude)*go.mod'",
-	"':(exclude)*go.sum'",
-	"':(exclude)**/db/models/**'",
-	"':(exclude)**/jet/**'",
-	"':(exclude)**/*_grpc.pb.go'",
-	"':(exclude)**/*_grpc.go'",
-	"':(exclude)**/*.sql.go'",
-	"':(exclude)**/*.pb.go'",
-	"':(exclude)**/*_test.go'", -- Should we exclude tests?
-	"':(exclude)**/*.connect.go'",
-	"':(exclude)*yarn.lock'",
-}
-
-M.ignore_paths = table.concat(exclusions, " ")
-
 -- Get diff of current feature branch and create a diff file, then give that file to Code Companion.
 M.review_changes = function(branch)
 	local Path = require("plenary.path")
@@ -41,7 +25,7 @@ M.review_changes = function(branch)
 		"cd '%s' && git diff --diff-filter=ADM %s..HEAD -- %s > %s",
 		git_root,
 		merge_base,
-		M.ignore_paths,
+		require("git-helpers").ignore_paths,
 		diff_file
 	)
 
