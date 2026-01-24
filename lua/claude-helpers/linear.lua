@@ -1,5 +1,10 @@
 local M = {}
 
+local toolNotes = [[
+Tool notes:
+- Always use ripgrep when searching files, not find, which is slower
+]]
+
 M.enrich_issue = function()
 	local api_key = os.getenv("LINEAR_API_KEY")
 	if not api_key then
@@ -9,7 +14,7 @@ M.enrich_issue = function()
 
 	local query = [[
 {
-  issues(filter: { labels: { name: { eq: "Claude" } } }) {
+  issues(filter: { team: { name: { eq: "Engineering" } }, state: { name: { eq: "Todo" } } }) {
     nodes {
       id
       identifier
@@ -80,7 +85,6 @@ M.process_issue = function(issue)
 	end
 
 	local cc = require("codecompanion")
-	local Path = require("plenary.path")
 
 	local prompt = string.format(
 		[[
@@ -92,7 +96,7 @@ If this ticket is a feature request, you are writing the plan for a subsequent a
 
 Your task:
 1. Use mcp__linear-server__get_issue with the issue identifier %s to fetch full details
-2. If it's already been enriched, there will be a file at /tmp/%s.md. If so, just exit.
+2. Use mcp__linear-server__list_comments to check if there's already a comment starting with "## Claude Enrichment". If so, just exit.
 3. Do the enrichment:
    a. Analyze the issue description and title
    b. Search the codebase for relevant code using Glob and Grep
@@ -100,6 +104,7 @@ Your task:
    d. Create an investigation report
    e. Write the temp file to /tmp/%s.md
    f. Use mcp__linear-server__create_comment to post a shortened summary of this findings file.
+   g. Add the "Claude" label to the issue using mcp__linear-server__update_issue
 
 ## Claude Enrichment
 
@@ -127,26 +132,171 @@ Guidelines:
 - Include file:line_number references in your findings
 - Keep investigations concise but thorough
 - Focus on actionable information
+
+%s
 ]],
 		issue,
 		issue,
 		issue,
-		issue
+		issue,
+		toolNotes
 	)
-
-	local tmp_file = "/tmp/" .. issue .. ".md"
-	local p = Path:new(tmp_file)
-
-	if p:exists() then
-		vim.notify("Issue already enriched: " .. tmp_file, vim.log.levels.INFO)
-		return
-	end
 
 	vim.cmd("CodeCompanionChat<cmd>CodeCompanionChat adapter=claude_code Toggle")
 	cc.last_chat():add_message({
 		role = require("codecompanion.config").config.constants.USER_ROLE,
 		content = prompt,
 	}, { reference = "<enrich_issue_review>", visible = false })
+	require("codecompanion").last_chat():submit()
+end
+
+M.code_picker = function()
+	local api_key = os.getenv("LINEAR_API_KEY")
+	if not api_key then
+		vim.notify("LINEAR_API_KEY not set", vim.log.levels.ERROR)
+		return
+	end
+
+	local query = [[
+{
+  issues(filter: { team: { name: { eq: "Engineering" } }, labels: { name: { eq: "Claude" } }, state: { name: { eq: "Todo" } } }) {
+    nodes {
+      id
+      identifier
+      title
+      description
+    }
+  }
+}
+]]
+
+	local curl_cmd = string.format(
+		[[curl -s -X POST https://api.linear.app/graphql \
+  -H "Content-Type: application/json" \
+  -H "Authorization: %s" \
+  -d '{"query": "%s"}']],
+		api_key,
+		query:gsub("\n", "\\n"):gsub('"', '\\"')
+	)
+
+	vim.fn.jobstart(curl_cmd, {
+		stdout_buffered = true,
+		on_stdout = function(_, data)
+			if not data or #data == 0 then
+				return
+			end
+
+			local response = table.concat(data, "\n")
+			local ok, parsed = pcall(vim.json.decode, response)
+
+			if not ok or not parsed.data or not parsed.data.issues then
+				vim.notify("Failed to fetch issues from Linear", vim.log.levels.ERROR)
+				return
+			end
+
+			local issues = parsed.data.issues.nodes
+			if #issues == 0 then
+				vim.notify("No enriched issues found with 'Claude' label", vim.log.levels.INFO)
+				return
+			end
+
+			local issue_list = {}
+			for _, issue_data in ipairs(issues) do
+				table.insert(issue_list, issue_data.identifier .. ": " .. issue_data.title)
+			end
+
+			vim.ui.select(issue_list, {
+				prompt = "Select Claude issue to implement:",
+			}, function(selected, idx)
+				if not selected then
+					return
+				end
+
+				local issue = issues[idx].identifier
+				M.code(issue)
+			end)
+		end,
+		on_stderr = function(_, data)
+			if data and #data > 0 then
+				vim.notify("Error fetching issues: " .. table.concat(data, "\n"), vim.log.levels.ERROR)
+			end
+		end,
+	})
+end
+
+M.code = function(issue)
+	if issue == nil or issue == "" then
+		return
+	end
+
+	local cc = require("codecompanion")
+	local Path = require("plenary.path")
+
+	local investigation_file = "/tmp/" .. issue .. ".md"
+	local p = Path:new(investigation_file)
+
+	if not p:exists() then
+		vim.notify("No investigation found for " .. issue .. ". Run enrich_issue first.", vim.log.levels.ERROR)
+		return
+	end
+
+	local implementation_file = "/tmp/" .. issue .. "-implementation.md"
+	local impl_p = Path:new(implementation_file)
+
+	if impl_p:exists() then
+		vim.notify("Issue already implemented: " .. implementation_file, vim.log.levels.INFO)
+		return
+	end
+
+	local prompt = string.format(
+		[[
+You are implementing a fix or feature for Linear issue: %s
+
+Your task:
+1. Read the investigation report at %s
+2. Use mcp__linear-server__get_issue with identifier %s to get full issue details
+3. Get the branch name from Linear's API using the branchName field from the issue
+4. Check out that branch: git checkout -b <branchName>
+5. Implement the fix or feature based on the investigation and action plan
+6. Stage all changes: git add .
+7. Commit using commitizen: cz commit (follow the interactive prompts)
+8. Push the branch: git push -u origin <branchName>
+9. Create a draft PR: gh pr create --draft --title "<issue>: <title>" --body "<summary>"
+10. Write an implementation summary to %s
+11. Use mcp__linear-server__create_comment to post a brief summary (three, maybe four short, punchy sentences) with the changes made, be short but descriptive.
+
+Implementation summary format:
+
+## Implementation Summary
+
+Brief explanation of the implementation. Couple of sentences max.
+
+### Notes
+Any concerns, limitations, or follow-up work needed. Couple of sentences max.
+
+---
+*Automated implementation by Claude Code*
+
+Guidelines:
+- Follow existing code patterns and conventions
+- Write tests if they exist for similar functionality
+- Keep commits atomic and well-described
+- If you encounter errors, document them in the implementation summary
+- The PR body should include a link to the Linear issue
+%s
+]],
+		issue,
+		investigation_file,
+		issue,
+		implementation_file,
+		toolNotes
+	)
+
+	vim.cmd("CodeCompanionChat<cmd>CodeCompanionChat adapter=claude_code Toggle")
+	cc.last_chat():add_message({
+		role = require("codecompanion.config").config.constants.USER_ROLE,
+		content = prompt,
+	}, { reference = "<implement_issue>", visible = false })
 	require("codecompanion").last_chat():submit()
 end
 
