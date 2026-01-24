@@ -256,7 +256,7 @@ Your task:
 1. Read the investigation report at %s
 2. Use mcp__linear-server__get_issue with identifier %s to get full issue details
 3. Get the branch name from Linear's API using the branchName field from the issue
-4. Check out that branch: git checkout -b <branchName>
+4. Make sure you have the latest code from staging by fetching it to the root worktree. Then check out that branch, off of that latest staging code, in this worktree.
 5. Implement the fix or feature based on the investigation and action plan
 6. Stage all changes: git add .
 7. Commit using commitizen: cz commit (follow the interactive prompts)
