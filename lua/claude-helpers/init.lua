@@ -1,19 +1,19 @@
 vim.keymap.set(
 	"n",
-	"<C-a>i",
+	"<leader>ai",
 	require("claude-helpers.linear").enrich_issue,
-	vim.tbl_extend("force", local_keymap_opts, { desc = "Linear investigate" })
+	vim.tbl_extend("force", global_keymap_opts, { desc = "Linear investigate" })
 )
 
 vim.keymap.set(
 	"n",
-	"<C-a>o",
+	"<leader>ao",
 	require("claude-helpers.linear").code_picker,
-	vim.tbl_extend("force", local_keymap_opts, { desc = "Linear investigate" })
+	vim.tbl_extend("force", global_keymap_opts, { desc = "Linear investigate" })
 )
 
-vim.keymap.set("n", "<C-a>r", function()
+vim.keymap.set("n", "<leader>ar", function()
 	require("git-helpers").branch_input(function(branch)
-		require("claude-helpers").review_changes(branch)
+		require("claude-helpers.review").review_changes(branch)
 	end)
 end, merge(global_keymap_opts, { desc = "Send diff of current branch to code companion" }))
