@@ -7,6 +7,28 @@ return {
 		"--stdio",
 	},
 	settings = {
+		validate = "on",
+		packageManager = nil,
+		useESLintClass = false,
+		experimental = {
+			useFlatConfig = false,
+		},
+		codeActionOnSave = {
+			enable = false,
+			mode = "all",
+		},
+		format = false,
+		quiet = false,
+		onIgnoredFiles = "off",
+		rulesCustomizations = {},
+		run = "onType",
+		problems = {
+			shortenToSingleLine = false,
+		},
+		nodePath = "",
+		workingDirectory = {
+			mode = "location",
+		},
 		codeAction = {
 			disableRuleComment = {
 				enable = true,
@@ -15,23 +37,6 @@ return {
 			showDocumentation = {
 				enable = true,
 			},
-		},
-		-- Formatting is handled by Conform
-		experimental = {
-			useFlatConfig = false,
-		},
-		nodePath = "",
-		onIgnoredFiles = "off",
-		problems = {
-			shortenToSingleLine = false,
-		},
-		quiet = false,
-		rulesCustomizations = {},
-		run = "onType",
-		useESLintClass = false,
-		validate = "on",
-		workingDirectory = {
-			mode = "location",
 		},
 	},
 	filetypes = {
