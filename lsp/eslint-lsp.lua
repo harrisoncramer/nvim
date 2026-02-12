@@ -42,6 +42,7 @@ return {
 	},
 	root_markers = {
 		".eslintrc.js",
+		".eslintrc.json",
 		"eslint.config.js",
 		"node_modules",
 		".git",
