@@ -30,10 +30,14 @@ return {
 			new_config.settings.editor = {}
 		end
 		if not new_config.settings.editor.tabSize then
-			-- set tab size for hover
 			new_config.settings.editor.tabSize = vim.lsp.util.get_effective_tabstop()
 		end
 	end,
+	capabilities = {
+		textDocument = {
+			colorProvider = nil,
+		},
+	},
 	root_markers = {
 		"tailwind.config.js",
 		"tailwind.config.ts",
