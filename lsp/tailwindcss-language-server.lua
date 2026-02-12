@@ -35,7 +35,7 @@ return {
 	end,
 	capabilities = {
 		textDocument = {
-			colorProvider = false,
+			colorProvider = nil,
 		},
 	},
 	root_markers = {
