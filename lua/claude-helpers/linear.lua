@@ -6,12 +6,6 @@ Tool notes:
 ]]
 
 M.enrich_issue = function()
-	local api_key = os.getenv("LINEAR_API_KEY")
-	if not api_key then
-		vim.notify("LINEAR_API_KEY not set", vim.log.levels.ERROR)
-		return
-	end
-
 	local query = [[
 {
   issues(filter: { team: { name: { eq: "Engineering" } }, state: { name: { eq: "Todo" } }, assignee: { email: { eq: "harrisonc@givechariot.com" } } }) {
@@ -20,63 +14,26 @@ M.enrich_issue = function()
       identifier
       title
       description
+      url
     }
   }
 }
 ]]
 
-	local curl_cmd = string.format(
-		[[curl -s -X POST https://api.linear.app/graphql \
-  -H "Content-Type: application/json" \
-  -H "Authorization: %s" \
-  -d '{"query": "%s"}']],
-		api_key,
-		query:gsub("\n", "\\n"):gsub('"', '\\"')
-	)
+	M.call_linear_api(query, function(data)
+		if not data.issues then
+			vim.notify("Failed to fetch issues from Linear", vim.log.levels.ERROR)
+			return
+		end
 
-	vim.fn.jobstart(curl_cmd, {
-		stdout_buffered = true,
-		on_stdout = function(_, data)
-			if not data or #data == 0 then
-				return
-			end
+		local issues = data.issues.nodes
+		if #issues == 0 then
+			vim.notify("No issues found", vim.log.levels.INFO)
+			return
+		end
 
-			local response = table.concat(data, "\n")
-			local ok, parsed = pcall(vim.json.decode, response)
-
-			if not ok or not parsed.data or not parsed.data.issues then
-				vim.notify("Failed to fetch issues from Linear", vim.log.levels.ERROR)
-				return
-			end
-
-			local issues = parsed.data.issues.nodes
-			if #issues == 0 then
-				vim.notify("No issues found with 'Claude' label", vim.log.levels.INFO)
-				return
-			end
-
-			local issue_list = {}
-			for _, issue_data in ipairs(issues) do
-				table.insert(issue_list, issue_data.identifier .. ": " .. issue_data.title)
-			end
-
-			vim.ui.select(issue_list, {
-				prompt = "Select issue to enrich:",
-			}, function(selected, idx)
-				if not selected then
-					return
-				end
-
-				local issue = issues[idx].identifier
-				M.process_issue(issue)
-			end)
-		end,
-		on_stderr = function(_, data)
-			if data and #data > 0 then
-				vim.notify("Error fetching issues: " .. table.concat(data, "\n"), vim.log.levels.ERROR)
-			end
-		end,
-	})
+		M.show_issue_picker("Select issue to enrich:", issues, M.process_issue)
+	end)
 end
 
 M.process_issue = function(issue)
@@ -148,80 +105,6 @@ Guidelines:
 		content = prompt,
 	}, { reference = "<enrich_issue_review>", visible = false })
 	require("codecompanion").last_chat():submit()
-end
-
-M.code_picker = function()
-	local api_key = os.getenv("LINEAR_API_KEY")
-	if not api_key then
-		vim.notify("LINEAR_API_KEY not set", vim.log.levels.ERROR)
-		return
-	end
-
-	local query = [[
-{
-  issues(filter: { team: { name: { eq: "Engineering" } }, labels: { name: { eq: "Claude" } }, state: { name: { eq: "Todo" } }, assignee: { email: { eq: "harrisonc@givechariot.com" } } }) {
-    nodes {
-      id
-      identifier
-      title
-      description
-    }
-  }
-}
-]]
-
-	local curl_cmd = string.format(
-		[[curl -s -X POST https://api.linear.app/graphql \
-  -H "Content-Type: application/json" \
-  -H "Authorization: %s" \
-  -d '{"query": "%s"}']],
-		api_key,
-		query:gsub("\n", "\\n"):gsub('"', '\\"')
-	)
-
-	vim.fn.jobstart(curl_cmd, {
-		stdout_buffered = true,
-		on_stdout = function(_, data)
-			if not data or #data == 0 then
-				return
-			end
-
-			local response = table.concat(data, "\n")
-			local ok, parsed = pcall(vim.json.decode, response)
-
-			if not ok or not parsed.data or not parsed.data.issues then
-				vim.notify("Failed to fetch issues from Linear", vim.log.levels.ERROR)
-				return
-			end
-
-			local issues = parsed.data.issues.nodes
-			if #issues == 0 then
-				vim.notify("No enriched issues found with 'Claude' label", vim.log.levels.INFO)
-				return
-			end
-
-			local issue_list = {}
-			for _, issue_data in ipairs(issues) do
-				table.insert(issue_list, issue_data.identifier .. ": " .. issue_data.title)
-			end
-
-			vim.ui.select(issue_list, {
-				prompt = "Select Claude issue to implement:",
-			}, function(selected, idx)
-				if not selected then
-					return
-				end
-
-				local issue = issues[idx].identifier
-				M.code(issue)
-			end)
-		end,
-		on_stderr = function(_, data)
-			if data and #data > 0 then
-				vim.notify("Error fetching issues: " .. table.concat(data, "\n"), vim.log.levels.ERROR)
-			end
-		end,
-	})
 end
 
 M.code = function(issue)
@@ -298,6 +181,87 @@ Guidelines:
 		content = prompt,
 	}, { reference = "<implement_issue>", visible = false })
 	require("codecompanion").last_chat():submit()
+end
+
+M.show_issue_picker = function(prompt, issues, on_select)
+	local issue_items = {}
+	for _, issue_data in ipairs(issues) do
+		table.insert(issue_items, {
+			text = issue_data.identifier .. ": " .. issue_data.title,
+			identifier = issue_data.identifier,
+			description = issue_data.description or "No description",
+			url = issue_data.url or "",
+		})
+	end
+
+	require("snacks").picker.pick({
+		prompt = prompt,
+		items = issue_items,
+		format = function(item)
+			return { { item.text, "Normal" } }
+		end,
+		preview = function(ctx)
+			local desc = ctx.item.description or "No description"
+			local lines = vim.split(desc, "\n")
+			ctx.preview:set_lines(lines)
+			ctx.preview:highlight({ ft = "markdown" })
+		end,
+		confirm = function(item)
+			on_select(item.identifier)
+		end,
+	})
+end
+
+M.call_linear_api = function(query, on_success, on_error)
+	local api_key = os.getenv("LINEAR_API_KEY")
+	if not api_key then
+		vim.notify("LINEAR_API_KEY not set", vim.log.levels.ERROR)
+		return
+	end
+
+	local curl_cmd = string.format(
+		[[curl -s -X POST https://api.linear.app/graphql \
+  -H "Content-Type: application/json" \
+  -H "Authorization: %s" \
+  -d '{"query": "%s"}']],
+		api_key,
+		query:gsub("\n", "\\n"):gsub('"', '\\"')
+	)
+
+	vim.fn.jobstart(curl_cmd, {
+		stdout_buffered = true,
+		on_stdout = function(_, data)
+			if not data or #data == 0 then
+				return
+			end
+
+			local response = table.concat(data, "\n")
+			local ok, parsed = pcall(vim.json.decode, response)
+
+			if not ok or not parsed.data then
+				if on_error then
+					on_error("Failed to parse response from Linear")
+				else
+					vim.notify("Failed to fetch data from Linear", vim.log.levels.ERROR)
+				end
+				return
+			end
+
+			if on_success then
+				on_success(parsed.data)
+			end
+		end,
+		on_stderr = function(_, data)
+			if data and #data > 0 then
+				local error_msg = table.concat(data, "\n")
+				if on_error then
+					on_error(error_msg)
+				else
+					vim.notify("Error from Linear API: " .. error_msg, vim.log.levels.ERROR)
+				end
+			end
+		end,
+	})
 end
 
 return M
