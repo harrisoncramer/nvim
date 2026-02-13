@@ -206,9 +206,34 @@ M.show_issue_picker = function(prompt, issues, on_select)
 			ctx.preview:set_lines(lines)
 			ctx.preview:highlight({ ft = "markdown" })
 		end,
+		actions = {
+			open_in_linear = function(picker)
+				local item = picker.list:current()
+				if item and item.url then
+					vim.fn.jobstart({ "open", item.url }, { detach = true })
+				end
+			end,
+		},
 		confirm = function(item)
 			on_select(item.identifier)
 		end,
+		win = {
+			preview = {
+				keys = {
+					["<C-e>"] = { "open_in_linear", mode = { "n" } },
+				},
+			},
+			list = {
+				keys = {
+					["<C-e>"] = { "open_in_linear", mode = { "n" } },
+				},
+			},
+			input = {
+				keys = {
+					["<C-e>"] = { "open_in_linear", mode = { "n", "i" } },
+				},
+			},
+		},
 	})
 end
 
