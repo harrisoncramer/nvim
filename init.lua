@@ -30,8 +30,11 @@ require("lsp")
 
 require("experimental")
 
--- AI
-require("claude-helpers")
+-- Linear
+require("linear")
+
+-- Claude
+require("claude")
 
 -- Miscenalleous vim commands
 vim.cmd.source("~/.config/nvim/_init.vim")

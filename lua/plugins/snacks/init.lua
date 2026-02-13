@@ -108,12 +108,6 @@ return {
 			mode = { "n" },
 			desc = "Recent Files",
 		},
-		{
-			"<C-l>",
-			snack_functions.changed_files,
-			mode = { "n" },
-			desc = "Recent Files",
-		},
 		-- {
 		-- 	"<leader>gp",
 		-- 	function()

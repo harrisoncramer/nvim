@@ -5,7 +5,7 @@ Tool notes:
 - Always use ripgrep when searching files, not find, which is slower
 ]]
 
-M.enrich_issue = function()
+M.select_issue = function()
 	local query = [[
 {
   issues(filter: { team: { name: { eq: "Engineering" } }, state: { name: { eq: "Todo" } }, assignee: { email: { eq: "harrisonc@givechariot.com" } } }) {
@@ -45,7 +45,7 @@ M.enrich_issue = function()
 			return
 		end
 
-		M.show_issue_picker("Select issue to enrich:", issues, M.process_issue)
+		M.show_issue_picker("Search: ", issues, M.process_issue)
 	end)
 end
 
@@ -116,7 +116,7 @@ Guidelines:
 	cc.last_chat():add_message({
 		role = require("codecompanion.config").config.constants.USER_ROLE,
 		content = prompt,
-	}, { reference = "<enrich_issue_review>", visible = false })
+	}, { reference = "<select_issue>", visible = false })
 	require("codecompanion").last_chat():submit()
 end
 
@@ -132,7 +132,7 @@ M.code = function(issue)
 	local p = Path:new(investigation_file)
 
 	if not p:exists() then
-		vim.notify("No investigation found for " .. issue .. ". Run enrich_issue first.", vim.log.levels.ERROR)
+		vim.notify("No investigation found for " .. issue .. ". Run select_issue first.", vim.log.levels.ERROR)
 		return
 	end
 
@@ -259,6 +259,7 @@ M.show_issue_picker = function(prompt, issues, on_select)
 			end
 
 			ctx.preview:set_lines(lines)
+			ctx.preview:wo({ wrap = true, linebreak = true })
 			ctx.preview:highlight({ ft = "markdown" })
 		end,
 		actions = {
@@ -277,27 +278,36 @@ M.show_issue_picker = function(prompt, issues, on_select)
 					vim.notify("No branch name available", vim.log.levels.WARN)
 				end
 			end,
+			investigate = function(picker)
+				local item = picker.list:current()
+				if item then
+					on_select(item.identifier)
+				end
+			end,
 		},
 		confirm = function(item)
-			on_select(item.identifier)
+			M.code(item.identifier)
 		end,
 		win = {
 			preview = {
 				keys = {
 					["<C-e>"] = { "open_in_linear", mode = { "n" } },
 					["<C-g>"] = { "copy_branch", mode = { "n" } },
+					["<C-i>"] = { "investigate", mode = { "n" } },
 				},
 			},
 			list = {
 				keys = {
 					["<C-e>"] = { "open_in_linear", mode = { "n" } },
 					["<C-g>"] = { "copy_branch", mode = { "n" } },
+					["<C-i>"] = { "investigate", mode = { "n" } },
 				},
 			},
 			input = {
 				keys = {
 					["<C-e>"] = { "open_in_linear", mode = { "n", "i" } },
 					["<C-g>"] = { "copy_branch", mode = { "n", "i" } },
+					["<C-i>"] = { "investigate", mode = { "n", "i" } },
 				},
 			},
 		},
@@ -344,16 +354,21 @@ M.call_linear_api = function(query, on_success, on_error)
 			end
 		end,
 		on_stderr = function(_, data)
-			if data and #data > 0 then
+			if data and #data > 0 and data[1] ~= "" then
 				local error_msg = table.concat(data, "\n")
 				if on_error then
 					on_error(error_msg)
-				else
-					vim.notify("Error from Linear API: " .. error_msg, vim.log.levels.ERROR)
 				end
 			end
 		end,
 	})
 end
+
+vim.keymap.set(
+	"n",
+	"<C-l>",
+	M.select_issue,
+	vim.tbl_extend("force", global_keymap_opts, { desc = "Select Linear issue" })
+)
 
 return M

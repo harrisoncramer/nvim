@@ -146,40 +146,6 @@ M.git_files = function(opts)
 	})
 end
 
-M.changed_files = function(opts)
-	opts = opts or {}
-
-	require("snacks").picker.pick({
-		title = "Changed files",
-		items = changed_files:formatted(),
-		preview = "file",
-		format = "file",
-		actions = {
-			qflist = function(picker)
-				require("snacks").picker.actions.qflist(picker)
-				local search_query = get_search_query(picker) or "changed_files"
-				auto_save.auto_save_quickfix(search_query)
-			end,
-		},
-		formatters = {
-			file = {
-				filename_first = true,
-			},
-		},
-		win = {
-			preview = {
-				keys = M.preview_keys,
-			},
-			list = {
-				keys = M.list_keys,
-			},
-			input = {
-				keys = M.input_keys,
-			},
-		},
-	})
-end
-
 M.find_text = function(opts)
 	opts = opts or {}
 	require("snacks").picker.grep({
