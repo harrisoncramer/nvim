@@ -8,7 +8,7 @@ Tool notes:
 M.select_issue = function()
 	local query = [[
 {
-  issues(filter: { team: { name: { eq: "Engineering" } }, state: { name: { neq: "In Production" } }, assignee: { email: { eq: "harrisonc@givechariot.com" } } }) {
+  issues(filter: { team: { name: { eq: "Engineering" } }, state: { name: { in: ["Todo", "In Development", "In Staging"] } }, assignee: { email: { eq: "harrisonc@givechariot.com" } } }) {
     nodes {
       id
       identifier
