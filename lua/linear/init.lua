@@ -74,7 +74,6 @@ Your task:
    d. Create an investigation report
    e. Write the temp file to /tmp/%s.md
    f. Use mcp__linear-server__create_comment to post a shortened summary of this findings file.
-   g. Add the "Claude" label to the issue using mcp__linear-server__update_issue
 
 ## Claude Enrichment
 
@@ -278,7 +277,7 @@ M.show_issue_picker = function(prompt, issues, on_select)
 					vim.notify("No branch name available", vim.log.levels.WARN)
 				end
 			end,
-			investigate = function(picker)
+			run = function(picker)
 				local item = picker.list:current()
 				if item then
 					on_select(item.identifier)
@@ -293,21 +292,21 @@ M.show_issue_picker = function(prompt, issues, on_select)
 				keys = {
 					["<C-e>"] = { "open_in_linear", mode = { "n" } },
 					["<C-g>"] = { "copy_branch", mode = { "n" } },
-					["<C-i>"] = { "investigate", mode = { "n" } },
+					["<C-r>"] = { "run", mode = { "n" } },
 				},
 			},
 			list = {
 				keys = {
 					["<C-e>"] = { "open_in_linear", mode = { "n" } },
 					["<C-g>"] = { "copy_branch", mode = { "n" } },
-					["<C-i>"] = { "investigate", mode = { "n" } },
+					["<C-r>"] = { "run", mode = { "n" } },
 				},
 			},
 			input = {
 				keys = {
 					["<C-e>"] = { "open_in_linear", mode = { "n", "i" } },
 					["<C-g>"] = { "copy_branch", mode = { "n", "i" } },
-					["<C-i>"] = { "investigate", mode = { "n", "i" } },
+					["<C-r>"] = { "run", mode = { "n", "i" } },
 				},
 			},
 		},
