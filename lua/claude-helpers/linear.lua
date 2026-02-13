@@ -15,6 +15,19 @@ M.enrich_issue = function()
       title
       description
       url
+      branchName
+      priority
+      labels {
+        nodes {
+          name
+        }
+      }
+      project {
+        name
+      }
+      state {
+        name
+      }
     }
   }
 }
@@ -186,11 +199,33 @@ end
 M.show_issue_picker = function(prompt, issues, on_select)
 	local issue_items = {}
 	for _, issue_data in ipairs(issues) do
+		local labels = {}
+		if type(issue_data.labels) == "table" and type(issue_data.labels.nodes) == "table" then
+			for _, label in ipairs(issue_data.labels.nodes) do
+				table.insert(labels, label.name)
+			end
+		end
+
+		local project_name = "None"
+		if type(issue_data.project) == "table" and issue_data.project.name then
+			project_name = issue_data.project.name
+		end
+
+		local state_name = "Unknown"
+		if type(issue_data.state) == "table" and issue_data.state.name then
+			state_name = issue_data.state.name
+		end
+
 		table.insert(issue_items, {
 			text = issue_data.identifier .. ": " .. issue_data.title,
 			identifier = issue_data.identifier,
-			description = issue_data.description or "No description",
-			url = issue_data.url or "",
+			description = type(issue_data.description) == "string" and issue_data.description or "No description",
+			url = type(issue_data.url) == "string" and issue_data.url or "",
+			branchName = type(issue_data.branchName) == "string" and issue_data.branchName or "",
+			priority = type(issue_data.priority) == "string" and issue_data.priority or "None",
+			labels = labels,
+			project = project_name,
+			state = state_name,
 		})
 	end
 
@@ -201,8 +236,28 @@ M.show_issue_picker = function(prompt, issues, on_select)
 			return { { item.text, "Normal" } }
 		end,
 		preview = function(ctx)
+			local lines = {}
+
+			table.insert(lines, "## Properties")
+			table.insert(lines, "")
+			table.insert(lines, "**Project:** " .. ctx.item.project)
+			table.insert(lines, "**State:** " .. ctx.item.state)
+			table.insert(lines, "**Priority:** " .. ctx.item.priority)
+			if #ctx.item.labels > 0 then
+				table.insert(lines, "**Labels:** " .. table.concat(ctx.item.labels, ", "))
+			end
+			if ctx.item.branchName ~= "" then
+				table.insert(lines, "**Branch:** " .. ctx.item.branchName)
+			end
+			table.insert(lines, "")
+			table.insert(lines, "## Description")
+			table.insert(lines, "")
+
 			local desc = ctx.item.description or "No description"
-			local lines = vim.split(desc, "\n")
+			for _, line in ipairs(vim.split(desc, "\n")) do
+				table.insert(lines, line)
+			end
+
 			ctx.preview:set_lines(lines)
 			ctx.preview:highlight({ ft = "markdown" })
 		end,
@@ -210,7 +265,16 @@ M.show_issue_picker = function(prompt, issues, on_select)
 			open_in_linear = function(picker)
 				local item = picker.list:current()
 				if item and item.url then
-					vim.fn.jobstart({ "open", item.url }, { detach = true })
+					vim.fn.jobstart({ "open", "-a", "/Applications/Linear.app", item.url }, { detach = true })
+				end
+			end,
+			copy_branch = function(picker)
+				local item = picker.list:current()
+				if item and item.branchName and item.branchName ~= "" then
+					vim.fn.setreg("+", item.branchName)
+					vim.notify("Copied branch: " .. item.branchName, vim.log.levels.INFO)
+				else
+					vim.notify("No branch name available", vim.log.levels.WARN)
 				end
 			end,
 		},
@@ -221,16 +285,19 @@ M.show_issue_picker = function(prompt, issues, on_select)
 			preview = {
 				keys = {
 					["<C-e>"] = { "open_in_linear", mode = { "n" } },
+					["<C-g>"] = { "copy_branch", mode = { "n" } },
 				},
 			},
 			list = {
 				keys = {
 					["<C-e>"] = { "open_in_linear", mode = { "n" } },
+					["<C-g>"] = { "copy_branch", mode = { "n" } },
 				},
 			},
 			input = {
 				keys = {
 					["<C-e>"] = { "open_in_linear", mode = { "n", "i" } },
+					["<C-g>"] = { "copy_branch", mode = { "n", "i" } },
 				},
 			},
 		},
