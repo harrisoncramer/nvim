@@ -8,6 +8,12 @@ local anthropic_config = function()
 	})
 end
 
+vim.keymap.set("n", "<C-a><C-r>", function()
+	require("git-helpers").branch_input(function(branch)
+		require("claude-helpers.review").review_changes(branch)
+	end)
+end, merge(global_keymap_opts, { desc = "Send diff of current branch to code companion" }))
+
 return {
 	"olimorris/codecompanion.nvim",
 	lazy = false,
