@@ -14,7 +14,7 @@ M.enrich_issue = function()
 
 	local query = [[
 {
-  issues(filter: { team: { name: { eq: "Engineering" } }, state: { name: { eq: "Todo" } } }) {
+  issues(filter: { team: { name: { eq: "Engineering" } }, state: { name: { eq: "Todo" } }, assignee: { email: { eq: "harrisonc@givechariot.com" } } }) {
     nodes {
       id
       identifier
@@ -159,7 +159,7 @@ M.code_picker = function()
 
 	local query = [[
 {
-  issues(filter: { team: { name: { eq: "Engineering" } }, labels: { name: { eq: "Claude" } }, state: { name: { eq: "Todo" } } }) {
+  issues(filter: { team: { name: { eq: "Engineering" } }, labels: { name: { eq: "Claude" } }, state: { name: { eq: "Todo" } }, assignee: { email: { eq: "harrisonc@givechariot.com" } } }) {
     nodes {
       id
       identifier
