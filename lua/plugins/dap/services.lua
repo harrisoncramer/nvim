@@ -43,7 +43,7 @@ function M.get_service_ports()
 	local port_offset = M.get_port_offset()
 	local services = {}
 
-	local handle = io.popen('find "' .. repo_root .. '/apps" -name ".air.toml" -type f 2>/dev/null')
+	local handle = io.popen('rg --files --glob ".air.toml" "' .. repo_root .. '/apps" 2>/dev/null')
 	if not handle then
 		return {}
 	end
