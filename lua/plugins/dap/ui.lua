@@ -1,4 +1,5 @@
 local u = require("functions.utils")
+local services = require("plugins.dap.services")
 
 local M = {}
 
@@ -21,6 +22,10 @@ M.setup_ui = function(dap, ui)
 		dap.clear_breakpoints()
 		require("notify")("Breakpoints cleared", vim.log.levels.WARN)
 	end, merge(global_keymap_opts, { desc = "Clears all breakpoints" }))
+
+	vim.keymap.set("n", "<localleader>da", function()
+		services.attach_to_service(dap, ui)
+	end, merge(global_keymap_opts, { desc = "Attach to running service" }))
 
 	-- Other keybindings
 	vim.keymap.set("n", "<localleader>dl", require("dap.ui.widgets").hover)
