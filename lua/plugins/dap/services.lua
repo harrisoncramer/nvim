@@ -1,17 +1,11 @@
 local M = {}
 
-function M.get_repo_root()
-	local handle = io.popen("git rev-parse --show-toplevel 2>/dev/null")
-	if not handle then
-		return nil
-	end
-	local result = handle:read("*a")
-	handle:close()
-	return result:gsub("%s+$", "")
-end
+local git_helpers = require("git-helpers")
+local system = require("functions.system")
 
+-- Gets the port offset for the current worktree
 function M.get_port_offset()
-	local repo_root = M.get_repo_root()
+	local repo_root = git_helpers.get_root_git_dir()
 	if not repo_root then
 		return 0
 	end
@@ -34,8 +28,9 @@ function M.get_port_offset()
 	return 0
 end
 
+-- Creates a mapping from service name to port (including offset)
 function M.get_service_ports()
-	local repo_root = M.get_repo_root()
+	local repo_root = git_helpers.get_root_git_dir()
 	if not repo_root then
 		return {}
 	end
@@ -69,19 +64,9 @@ function M.get_service_ports()
 	return services
 end
 
-function M.check_port_available(port)
-	local handle = io.popen("nc -z localhost " .. port .. " 2>/dev/null; echo $?")
-	if not handle then
-		return false
-	end
-	local result = handle:read("*a")
-	handle:close()
-	return result:match("^0") ~= nil
-end
-
-function M.attach_to_service(dap, dapui)
+function M.attach_to_service(dap)
 	local services = M.get_service_ports()
-	local repo_root = M.get_repo_root()
+	local repo_root = git_helpers.get_root_git_dir()
 
 	if vim.tbl_isempty(services) then
 		vim.notify("No services found with debug ports configured", vim.log.levels.ERROR)
@@ -104,7 +89,7 @@ function M.attach_to_service(dap, dapui)
 		local service_name = choice:match("^([^%s]+)")
 		local port = services[service_name]
 
-		if not M.check_port_available(port) then
+		if not system.is_port_available(port) then
 			vim.notify("Service " .. service_name .. " not running on localhost:" .. port, vim.log.levels.ERROR)
 			return
 		end
