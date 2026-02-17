@@ -72,7 +72,7 @@ M.review_changes = function(branch)
 		local lines = string.format(
 			[[You are a senior sofware engineer. You are giving feedback to another engineer on the following code changes. You are checking mostly for
 
-			  - Potential bugs or issues.
+         - Potential bugs or issues.
 	       - Performance considerations.
 	       - Maintainability and readability.
 
@@ -81,6 +81,8 @@ M.review_changes = function(branch)
          CRITICAL: Do not give feedback for anything that already works or is well designed, your job is specifically to find errors and other code smells.
 
 	       Please be precise with your feedback, referencing specific line numbers in the code whenever you make a suggestion. Do not mention theoreticals or potential problems, but be grounded in actual problems.
+
+         At the top of your review please give a summary of the changes. It should be a short paragraph, for instnace: "The point of these changes is to refactor the payments service to do X Y and Z. This is achieved by refactoring the service X  to do Y. Most of the complexity..."
 	       Here is the diff:
 	     %s
 	     %s
@@ -92,7 +94,7 @@ M.review_changes = function(branch)
 		local relpath = path:make_relative()
 		local id = "<file>" .. relpath .. "</file>"
 
-		vim.cmd("CodeCompanionChat Toggle")
+		vim.cmd("CodeCompanionChat<cmd>CodeCompanionChat adapter=claude_code Toggle")
 		cc.last_chat():add_message({
 			role = require("codecompanion.config").config.constants.USER_ROLE,
 			content = lines,
