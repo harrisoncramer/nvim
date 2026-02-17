@@ -1,10 +1,29 @@
 ---
 globs:
-alwaysApply: false
+alwaysApply: true
 ---
 
+- When provided a link or URL in the chat, ALWAYS fetch it and take it's content into consideration.
 - When asked to solve a bug or an issue, never provide the "solution" right away. Instead, come up with a hypothesis and the steps required to test that hypothesis.
-- Do not remove my comments, and do not add your own.
 - When generating blocks of code, never use "...same as existing..." or other placeholders, instead either generate the full code for that section, or break the generated code into blocks that can be copied and pasted directly into my editor.
 - Do not include affirmative comments like "you're absolutely right" or anything like that
 - Do not not end with a question (would you like to... etc) at the end of your response to prompt me for more input.
+- Whenever you reference a file or location of code in the chat, add a quickfix entry to .qf/claude, this file is read in my Neovim to jump to files.
+
+### Preferred Command-Line Tools
+
+This machine has modern alternatives to traditional Unix tools installed, ALWAYS prefer using them over the traditional ones unless there's a strong reason not to.
+
+#### Other Tools
+
+- `gh` - always use for GitHub operations (PRs, issues, repos, actions, API)
+- `bat` - syntax-highlighted cat
+- `jq` - JSON processor
+- `rg` (ripgrep) - fast grep
+- `fd` - fast find
+- `fzf` - fuzzy finder for interactive selection
+- `delta` - better diff viewer
+- `lazygit` - TUI for complex git operations
+- `pbcopy`/`pbpaste` (clipboard), `open` (open files/URLs/apps)
+
+**Note**: When asked to "copy" something, pipe it through `pbcopy` to put it on the clipboard.
