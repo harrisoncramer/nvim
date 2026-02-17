@@ -35,6 +35,7 @@ require("linear")
 
 -- Claude
 require("claude")
+require("plan")
 
 -- Miscenalleous vim commands
 vim.cmd.source("~/.config/nvim/_init.vim")

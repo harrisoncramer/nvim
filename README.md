@@ -4,7 +4,7 @@
 
 # About
 
-This repository contains my configurations, including key mappings, plugins, and other settings for Neovim. I'm primarily working day-to-day in VueJS, React, Typescript, Go, Lua, and Clojure.
+This repository contains my configurations, including key mappings, plugins, and other settings for Neovim. I'm primarily working day-to-day in VueJS, React, TypeScript, Go, Lua, and Clojure.
 
 # Features
 
@@ -14,7 +14,7 @@ This repository contains my configurations, including key mappings, plugins, and
 - Debuggers installed and configured with <a href="https://github.com/mfussenegger/nvim-dap">nvim-dap</a>
 - <a href="https://github.com/sindrets/diffview.nvim">diffview</a> git branch/commit/diff viewing
 - <a href="https://github.com/nvim-lualine/lualine.nvim">lualine</a> for status bar
-- <a href="https://github.com/rebelot/kanagawa.nvim">kanagawa</a> colorscheme
+- <a href="https://github.com/rebelot/kanagawa.nvim">kanagawa</a> color scheme
 
 # Dependencies
 
@@ -49,7 +49,7 @@ sudo apt update -y
 sudo apt install golang-go -y
 ```
 
-5. Zip/Unzip commands (required to unpack Typescript Debugger)
+5. Zip/Unzip commands (required to unpack TypeScript Debugger)
 
 ```bash
 sudo apt install zip -y
@@ -77,6 +77,6 @@ sudo dpkg -i ripgrep_13.0.0_amd64.deb
 2. Clone this repository to your Neovim configuration path: `git clone https://github.com/harrisoncramer/nvim.git ~/.config/nvim`
 3. Open Neovim. The plugin installation should start automatically; so should the LSP and Debugger installations.
 
-Please be patient when you first open up Neovim, it is installing many depndencies the first time it starts! I'd recommend going and getting a cup of coffee, the process can take ~5 minutes to install all of the debuggers, LSPs, and treesitter language parsers.
+Please be patient when you first open up Neovim, it is installing many dependencies the first time it starts! I'd recommend going and getting a cup of coffee, the process can take ~5 minutes to install all the debuggers, LSPs, and treesitter language parsers.
 
 You can see the status of the plugin installation with the `:Lazy` command. This will open automatically. You can see the status of the LSP and Debugger installations with the `:Mason` command.
