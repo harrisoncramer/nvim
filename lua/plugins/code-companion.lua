@@ -69,14 +69,6 @@ return {
 			},
 		},
 		extensions = {
-			mcphub = {
-				callback = "mcphub.extensions.codecompanion",
-				opts = {
-					make_vars = true,
-					make_slash_commands = true,
-					show_result_in_chat = true,
-				},
-			},
 			history = {
 				enabled = true,
 				opts = {
@@ -105,6 +97,11 @@ return {
 					["buffer"] = {
 						opts = {
 							provider = "snacks",
+						},
+					},
+					["image"] = {
+						opts = {
+							dirs = { "~/Desktop/screenshots" },
 						},
 					},
 				},
