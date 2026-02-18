@@ -8,7 +8,12 @@ alwaysApply: true
 - When generating blocks of code, never use "...same as existing..." or other placeholders, instead either generate the full code for that section, or break the generated code into blocks that can be copied and pasted directly into my editor.
 - Do not include affirmative comments like "you're absolutely right" or anything like that
 - Do not not end with a question (would you like to... etc) at the end of your response to prompt me for more input.
-- Whenever you reference a file or location of code in the chat, add a quickfix entry to .qf/claude, this file is read in my Neovim to jump to files.
+- Whenever I reference a file path, always read it before responding or taking action.
+- Whenever you reference a file or location of code in the chat, add a quickfix entry to .qf/claude, this file is read in my Neovim to jump to files. They must be structured like this:
+```txt
+apps/integrations/pkg/llm_exports/validate.go:30:3:
+apps/integrations/pkg/llm_exports/validate.go:35:3:
+```
 
 ### Preferred Command-Line Tools
 
