@@ -17,9 +17,9 @@ alwaysApply: true
 
 ### Behavior
 
+- NEVER try to connect or modify anything in the production or staging databases. Before using any tool or system that interacts with the production databases, double check with me and have me do it.
 - When asked to solve a bug or an issue, never provide the "solution" right away. Instead, come up with possibilities that indicate what might be wrong after searching through relevant files.
 - When generating blocks of code, never use "...same as existing..." or other placeholders, instead either generate the full code for that section, or break the generated code into blocks that can be copied and pasted directly into my editor.
-
 - Do not include affirmative comments like "you're absolutely right." Do not not end with a question (would you like to... etc) at the end of your response to prompt me for more input.
 
 ### Preferred Command-Line Tools
