@@ -10,7 +10,7 @@ alwaysApply: true
 
 ## Quickfix
 
-- Whenever you modify a file, add quickfix entires to the top of .qf/claude, in the current directory. This file is read in my Neovim to jump to recent LLM changes. They must be structured as an absolute path, e.g. from /Users/harrisoncramer (my root). You should always add a trailing space:
+- Whenever you modify a file, replace the .qf/claude file. This file is read in my Neovim to jump to recent LLM changes. They must be structured as an absolute path, e.g. from /Users/harrisoncramer (my root). You should always add a trailing space. There should be one entry per changed file:
 ```txt
 /Users/harrisoncramer/chariot/apps/integrations/pkg/llm_exports/validate.go:30:3: 
 ```
