@@ -5,7 +5,6 @@ local anthropic_config = function()
 		env = {
 			ANTHROPIC_API_KEY = anthropicApiKey,
 		},
-		permissions_bypass = true,
 	})
 end
 
@@ -38,6 +37,7 @@ return {
 		interactions = {
 			chat = {
 				adapter = "claude_code",
+				model = "opus",
 			},
 			inline = {
 				adapter = "anthropic",
