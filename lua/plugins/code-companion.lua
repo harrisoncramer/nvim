@@ -11,13 +11,34 @@ local anthropic_config = function()
 	})
 end
 
--- This configuration is necessary because I want a YOLO-style Claude code mostly, but want high configurability
--- in the types of commands that it should be able to run or not. Since we want to version control our Claude configuration
--- along with codecompanion this works...
+-- This configuration is necessary because I want a mostly YOLO-style ACP, but want high configurability
+-- in the types of commands that it should be able to run or not. This setup lets me allow most things by
+-- default, but gate on specific commands
 
--- Add Lua patterns to this table to allow edits without confirmation.
+-- Add sensitive tasks to this table, wildcard matches
+local sensitive_scripts = {
+	"prod",
+	"staging",
+	"admin",
+	"db",
+	"email",
+	"sms",
+	"env",
+	"github",
+	"commit",
+	"push",
+	"rebase",
+	"docker",
+	"feature",
+	"grantmaker:onboard",
+	"grantmaker:add-program",
+	"kube:logs",
+}
+
+-- Add Lua patterns to this table to allow edits without confirmation. Typically, file edits are the only thing
+-- that require permission checks, so I can keep track of what Claude is changing.
 local auto_approve_edit_patterns = {
-	"%.qf/claude$", -- Quickfix file for tracking LLM changes
+	"%.qf/claude$",
 }
 
 -- Check if a file path matches any auto-approve patterns
@@ -30,6 +51,19 @@ local function is_auto_approved_file(file_path)
 	return false
 end
 
+-- Check if a bash command contains sensitive tasks
+-- These are blocked regardless of current working directory
+local function is_sensitive_bash_command(command)
+	for _, task in ipairs(sensitive_scripts) do
+		-- Use plain string find (not pattern matching) with the 4th arg = true
+		if command:find(task, 1, true) then
+			return true
+		end
+	end
+
+	return false
+end
+
 -- Auto-approve all ACP requests except mcp__acp__Edit (unless file is in auto-approve list).
 vim.api.nvim_create_autocmd("User", {
 	pattern = "CodeCompanionChatAdapter",
@@ -38,16 +72,24 @@ vim.api.nvim_create_autocmd("User", {
 		if ok and req_perm then
 			local original_show = req_perm.show
 			req_perm.show = function(chat, request)
-				-- Check if this is an mcp__acp__Edit request
 				local tool_name = request.tool_call
 					and request.tool_call._meta
 					and request.tool_call._meta.claudeCode
 					and request.tool_call._meta.claudeCode.toolName
 
-				if tool_name == "mcp__acp__Edit" then -- Check if the file being edited is in the auto-approve list
+				-- Check if this is an mcp__acp__Edit request
+				if tool_name == "mcp__acp__Edit" then
 					local file_path = request.tool_call.rawInput and request.tool_call.rawInput.file_path
 					if file_path and not is_auto_approved_file(file_path) then
-						return original_show(chat, request) -- Show permission prompt for non-approved files
+						return original_show(chat, request)
+					end
+				end
+
+				-- Check if this is a Bash command with sensitive mise tasks
+				if tool_name == "Bash" then
+					local command = request.tool_call.rawInput and request.tool_call.rawInput.command
+					if command and is_sensitive_bash_command(command) then
+						return original_show(chat, request)
 					end
 				end
 
