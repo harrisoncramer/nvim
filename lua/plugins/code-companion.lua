@@ -78,7 +78,8 @@ vim.api.nvim_create_autocmd("User", {
 		chat.replace_vars_and_tools = function(self, message)
 			if message and message.content and message.content ~= "" then
 				if not message.content:match("#{viewport}") then
-					message.content = "#{viewport}\n\n" .. message.content
+					message.content = "The current user's view is here, it may or may not be relevant to your prompt. #{viewport}\n\n"
+						.. message.content
 				end
 			end
 			return original_replace_vars_and_tools(self, message)
