@@ -64,6 +64,29 @@ local function is_sensitive_bash_command(command)
 	return false
 end
 
+-- Automatically inject #lsp into every message so the LLM always has fresh LSP diagnostics
+vim.api.nvim_create_autocmd("User", {
+	pattern = "CodeCompanionChatCreated",
+	callback = function(args)
+		local chat = require("codecompanion").buf_get_chat(args.data.bufnr)
+		if not chat then
+			return
+		end
+
+		local original_replace_vars_and_tools = chat.replace_vars_and_tools
+
+		chat.replace_vars_and_tools = function(self, message)
+			-- Underlying chat.
+			-- if message and message.content and message.content ~= "" then
+			-- if not message.content:match("#{lsp}") then
+			-- 	message.content = "#{lsp}\n\n" .. message.content
+			-- end
+			-- end
+			return original_replace_vars_and_tools(self, message)
+		end
+	end,
+})
+
 -- Auto-approve all ACP requests except mcp__acp__Edit (unless file is in auto-approve list).
 vim.api.nvim_create_autocmd("User", {
 	pattern = "CodeCompanionChatAdapter",
