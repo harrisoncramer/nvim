@@ -5,6 +5,7 @@ local anthropic_config = function()
 		env = {
 			ANTHROPIC_API_KEY = anthropicApiKey,
 		},
+		permissions_bypass = true,
 	})
 end
 
