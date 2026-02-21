@@ -1,3 +1,4 @@
+-- Split and join code blocks using treesitter
 return {
 	"Wansmer/treesj",
 	keys = { "<leader>jt", "<leader>jj", "<leader>je" },

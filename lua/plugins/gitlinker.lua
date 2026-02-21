@@ -1,3 +1,4 @@
+-- Generate shareable URLs for git repository lines and copy to clipboard
 return {
 	"ruifm/gitlinker.nvim",
 	dependencies = "nvim-lua/plenary.nvim",

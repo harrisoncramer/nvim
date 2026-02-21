@@ -1,10 +1,13 @@
+-- File browser plugin that lets you edit your filesystem like a buffer
 local u = require("functions.utils")
 
+-- Tracks the filename to restore cursor position when opening oil
 local file
 
 local M = {
 	"stevearc/oil.nvim",
 	config = function()
+		-- Open oil in a left vertical split showing the current file's directory
 		vim.keymap.set("n", "<C-h>", function()
 			M.original_win = vim.api.nvim_get_current_win() -- Store window to replace later
 			vim.opt.splitright = false
@@ -36,7 +39,7 @@ local M = {
 						local dir = oil.get_current_dir()
 						local filepath = dir .. entry.name
 
-						-- If we have an existing window, close it and open with selection
+						-- Close oil split and open file in original window
 						if M.original_win and vim.api.nvim_win_is_valid(M.original_win) and vim.fn.winnr("$") > 1 then
 							vim.cmd("close")
 							vim.api.nvim_set_current_win(M.original_win)
@@ -65,6 +68,7 @@ local M = {
 				["<C-l>"] = false,
 				["a"] = {
 					desc = "share file with code companion",
+					-- Send the file under cursor to the active CodeCompanion chat session
 					callback = function()
 						local cc = require("codecompanion")
 						local last_chat = cc.last_chat()
@@ -120,6 +124,7 @@ local M = {
 	dependencies = { "kyazdani42/nvim-web-devicons" },
 }
 
+-- When oil opens, jump to the line of the file that was open before
 vim.api.nvim_create_autocmd("User", {
 	pattern = "OilEnter",
 	callback = vim.schedule_wrap(function(args)
