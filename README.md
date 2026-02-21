@@ -15,6 +15,7 @@ This repository contains my configurations, including key mappings, plugins, and
 - <a href="https://github.com/sindrets/diffview.nvim">diffview</a> git branch/commit/diff viewing
 - <a href="https://github.com/nvim-lualine/lualine.nvim">lualine</a> for status bar
 - <a href="https://github.com/rebelot/kanagawa.nvim">kanagawa</a> color scheme
+- AI-assisted development with <a href="https://github.com/anthropics/claude-code">Claude Code</a>
 
 # Dependencies
 
