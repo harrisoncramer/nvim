@@ -5,6 +5,9 @@ local anthropic_config = function()
 		env = {
 			ANTHROPIC_API_KEY = anthropicApiKey,
 		},
+		defaults = {
+			model = "opus",
+		},
 	})
 end
 
@@ -41,6 +44,7 @@ return {
 			},
 			inline = {
 				adapter = "anthropic",
+				model = "haiku",
 			},
 		},
 		rules = {
