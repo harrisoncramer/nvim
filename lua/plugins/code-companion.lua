@@ -64,7 +64,7 @@ local function is_sensitive_bash_command(command)
 	return false
 end
 
--- Automatically inject #lsp into every message so the LLM always has fresh LSP diagnostics
+-- Automatically send the current view every time!
 vim.api.nvim_create_autocmd("User", {
 	pattern = "CodeCompanionChatCreated",
 	callback = function(args)
@@ -76,12 +76,11 @@ vim.api.nvim_create_autocmd("User", {
 		local original_replace_vars_and_tools = chat.replace_vars_and_tools
 
 		chat.replace_vars_and_tools = function(self, message)
-			-- Underlying chat.
-			-- if message and message.content and message.content ~= "" then
-			-- if not message.content:match("#{lsp}") then
-			-- 	message.content = "#{lsp}\n\n" .. message.content
-			-- end
-			-- end
+			if message and message.content and message.content ~= "" then
+				if not message.content:match("#{viewport}") then
+					message.content = "#{viewport}\n\n" .. message.content
+				end
+			end
 			return original_replace_vars_and_tools(self, message)
 		end
 	end,
