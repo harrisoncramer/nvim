@@ -3,12 +3,19 @@ globs:
 alwaysApply: true
 ---
 
+## Content and References
+
 - When provided a link or URL in the chat, ALWAYS fetch it and take it's content into consideration.
 - Whenever I reference a file path, always read it before responding or taking action.
-- Whenever you modify a file, add quickfix entires to the top of .qf/claude. This file is read in my Neovim to jump to recent LLM changes. They must be structured as an absolute path, e.g. from /Users/harrisoncramer (my root). You should always add a trailing space:
+
+## Quickfix
+
+- Whenever you modify a file, add quickfix entires to the top of .qf/claude, in the current directory. This file is read in my Neovim to jump to recent LLM changes. They must be structured as an absolute path, e.g. from /Users/harrisoncramer (my root). You should always add a trailing space:
 ```txt
 /Users/harrisoncramer/chariot/apps/integrations/pkg/llm_exports/validate.go:30:3: 
 ```
+
+### Behavior
 
 - When asked to solve a bug or an issue, never provide the "solution" right away. Instead, come up with possibilities that indicate what might be wrong after searching through relevant files.
 - When generating blocks of code, never use "...same as existing..." or other placeholders, instead either generate the full code for that section, or break the generated code into blocks that can be copied and pasted directly into my editor.
