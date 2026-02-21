@@ -11,6 +11,59 @@ local anthropic_config = function()
 	})
 end
 
+-- This configuration is necessary because I want a YOLO-style Claude code mostly, but want high configurability
+-- in the types of commands that it should be able to run or not. Since we want to version control our Claude configuration
+-- along with codecompanion this works...
+
+-- Add Lua patterns to this table to allow edits without confirmation.
+local auto_approve_edit_patterns = {
+	"%.qf/claude$", -- Quickfix file for tracking LLM changes
+}
+
+-- Check if a file path matches any auto-approve patterns
+local function is_auto_approved_file(file_path)
+	for _, pattern in ipairs(auto_approve_edit_patterns) do
+		if file_path:match(pattern) then
+			return true
+		end
+	end
+	return false
+end
+
+-- Auto-approve all ACP requests except mcp__acp__Edit (unless file is in auto-approve list).
+vim.api.nvim_create_autocmd("User", {
+	pattern = "CodeCompanionChatAdapter",
+	callback = function()
+		local ok, req_perm = pcall(require, "codecompanion.interactions.chat.acp.request_permission")
+		if ok and req_perm then
+			local original_show = req_perm.show
+			req_perm.show = function(chat, request)
+				-- Check if this is an mcp__acp__Edit request
+				local tool_name = request.tool_call
+					and request.tool_call._meta
+					and request.tool_call._meta.claudeCode
+					and request.tool_call._meta.claudeCode.toolName
+
+				if tool_name == "mcp__acp__Edit" then -- Check if the file being edited is in the auto-approve list
+					local file_path = request.tool_call.rawInput and request.tool_call.rawInput.file_path
+					if file_path and not is_auto_approved_file(file_path) then
+						return original_show(chat, request) -- Show permission prompt for non-approved files
+					end
+				end
+
+				-- Auto-approve everything else
+				for _, opt in ipairs(request.options or {}) do
+					if opt.kind and opt.kind:find("allow", 1, true) then
+						return request.respond(opt.optionId, false)
+					end
+				end
+				-- Fallback: reject if no allow option found
+				return request.respond(nil, true)
+			end
+		end
+	end,
+})
+
 vim.keymap.set("n", "<C-a><C-r>", function()
 	require("git-helpers").branch_input(function(branch)
 		require("claude").review_changes(branch)
