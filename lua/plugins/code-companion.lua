@@ -30,9 +30,9 @@ local sensitive_scripts = {
 	"rebase",
 	"docker",
 	"feature",
-	"grantmaker:onboard",
-	"grantmaker:add-program",
-	"kube:logs",
+	-- Chariot-specific
+	"grantmaker",
+	"kube",
 }
 
 -- Add Lua patterns to this table to allow edits without confirmation. Typically, file edits are the only thing
