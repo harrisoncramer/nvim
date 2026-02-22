@@ -24,6 +24,7 @@
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
   "lualine.nvim": { "branch": "master", "commit": "47f91c416daef12db467145e16bed5bbfe00add8" },
   "luatab.nvim": { "branch": "master", "commit": "7ac54b014b542f02a73b62fcae65db7a2382a378" },
+  "markview.nvim": { "branch": "main", "commit": "9e852c299351fc2110e763edc7fc899358ee112e" },
   "mason-tool-installer.nvim": { "branch": "main", "commit": "443f1ef8b5e6bf47045cb2217b6f748a223cf7dc" },
   "mason.nvim": { "branch": "main", "commit": "44d1e90e1f66e077268191e3ee9d2ac97cc18e65" },
   "messages.nvim": { "branch": "main", "commit": "24dbb56829d1ed2d8d878e9f5547478441838567" },
