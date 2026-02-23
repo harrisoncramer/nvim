@@ -30,9 +30,9 @@ local sensitive_scripts = {
 	"rebase",
 	"docker",
 	"feature",
+	"rm",
 	-- Chariot-specific
 	"grantmaker",
-	"rm",
 	"kube",
 }
 
