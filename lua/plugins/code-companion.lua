@@ -32,6 +32,7 @@ local sensitive_scripts = {
 	"feature",
 	-- Chariot-specific
 	"grantmaker",
+	"rm",
 	"kube",
 }
 
