@@ -76,6 +76,11 @@ vim.api.nvim_create_autocmd("User", {
 		local original_replace_vars_and_tools = chat.replace_vars_and_tools
 
 		chat.replace_vars_and_tools = function(self, message)
+			-- Always use current buffer for viewport context
+			if self.buffer_context then
+				self.buffer_context.bufnr = vim.api.nvim_get_current_buf()
+			end
+
 			if message and message.content and message.content ~= "" then
 				if not message.content:match("#{viewport}") then
 					message.content = "The current user's view is here, it may or may not be relevant to your prompt. #{viewport}\n\n"
