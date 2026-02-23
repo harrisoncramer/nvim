@@ -65,6 +65,8 @@ local function is_sensitive_bash_command(command)
 end
 
 -- Automatically send the current view every time!
+-- Workaround: validate buffer_context.bufnr before calling original function to avoid
+-- "Invalid buffer id" errors when the original buffer has been deleted.
 vim.api.nvim_create_autocmd("User", {
 	pattern = "CodeCompanionChatCreated",
 	callback = function(args)
