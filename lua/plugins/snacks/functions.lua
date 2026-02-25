@@ -154,6 +154,7 @@ M.find_text = function(opts)
 		cwd = opts.cwd,
 		title = opts.cwd and string.format("Search Text in %s", opts.cwd) or "Search Text",
 		live = true,
+		hidden = true,
 		submodules = true,
 		actions = {
 			qflist = function(picker)
