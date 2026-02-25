@@ -75,7 +75,10 @@ Your task:
    e. Write the temp file to /tmp/%s.md
    f. Use mcp__linear-server__create_comment to post a shortened summary of this findings file.
 
-## Claude Enrichment
+## Database Context
+
+You may need to fetch some data from our production or local databases to further investigate this issue. You are welcome to check on the schema files in ~/chariot/chariot/packages/cprisma to get more information on the schemas, but 
+you won't have produciton access yourself. Prior to submitting your final report please provide the SQL queries to performa nd I'll run them for you.
 
 ### Related Codepaths or Files
 
