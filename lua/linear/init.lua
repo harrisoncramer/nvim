@@ -71,14 +71,17 @@ Your task:
    a. Analyze the issue description and title
    b. Search the codebase for relevant code using Glob and Grep
    c. Read relevant files using mcp__acp__Read to understand the context
+     cb. OPTIONAL: Interrupt this flow, provide me with SQL queries to run, see "Database Context" section
    d. Create an investigation report
    e. Write the temp file to /tmp/%s.md
    f. Use mcp__linear-server__create_comment to post a shortened summary of this findings file.
 
 ## Database Context
 
-You may need to fetch some data from our production or local databases to further investigate this issue. You are welcome to check on the schema files in ~/chariot/chariot/packages/cprisma to get more information on the schemas, but 
-you won't have produciton access yourself. Prior to submitting your final report please provide the SQL queries to performa nd I'll run them for you.
+When investigating a bug, you will very often need to fetch some data from our production or local databases to further investigate this issue. For instance, likely your first
+guess at the issue won't be confirmed or correct until you check the DB records.
+
+You are welcome to check on the schema files in ~/chariot/chariot/packages/cprisma to get more information on the schemas, but you won't have produciton access yourself. Prior to submitting your final report please provide the SQL queries to performa nd I'll run them for you.
 
 ### Related Codepaths or Files
 
