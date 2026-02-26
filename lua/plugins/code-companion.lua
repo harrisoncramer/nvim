@@ -6,7 +6,7 @@ local anthropic_config = function()
 			ANTHROPIC_API_KEY = anthropicApiKey,
 		},
 		defaults = {
-			model = "opus",
+			model = "sonnet",
 		},
 	})
 end
@@ -231,6 +231,7 @@ return {
 					["image"] = {
 						opts = {
 							dirs = { "~/Desktop/screenshots" },
+							provider = "snacks",
 						},
 					},
 				},
