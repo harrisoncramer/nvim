@@ -71,7 +71,10 @@ Your task:
    a. Analyze the issue description and title
    b. Search the codebase for relevant code using Glob and Grep
    c. Read relevant files using mcp__acp__Read to understand the context
-     cb. OPTIONAL: Interrupt this flow, provide me with SQL queries to run, see "Database Context" section
+     - OPTIONAL: Interrupt this flow, provide me with SQL queries to run, see "Database Context" section
+   d. If you have an exact error message, solid timestamp, or other identifying information about the issue, search our Sentry environment for relevant logs.
+     - NOTE: Search by project, e.g. if it's an error from a particular service like compliance, search in the compliance logs.
+     - This is only relevant for production issues.
    d. Create an investigation report
    e. Write the temp file to /tmp/%s.md
    f. Use mcp__linear-server__create_comment to post a shortened summary of this findings file.
