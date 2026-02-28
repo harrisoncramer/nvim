@@ -5,9 +5,6 @@ local anthropic_config = function()
 		env = {
 			ANTHROPIC_API_KEY = anthropicApiKey,
 		},
-		defaults = {
-			model = "sonnet",
-		},
 	})
 end
 
