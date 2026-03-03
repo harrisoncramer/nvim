@@ -8,12 +8,9 @@ alwaysApply: true
 - When provided a link or URL in the chat, ALWAYS fetch it and take it's content into consideration.
 - Whenever I reference a file path, always read it before responding or taking action.
 
-## Quickfix
+## RFCs
 
-- Whenever you modify a file, replace the .qf/claude file. This file is read in my Neovim to jump to recent LLM changes. They must be structured as an absolute path, e.g. from /Users/harrisoncramer (my root). You should always add a trailing space. There should be one entry per changed file:
-```txt
-/Users/harrisoncramer/chariot/apps/integrations/pkg/llm_exports/validate.go:30:3: 
-```
+- When I ask you to put together an rfc, put it in the `rfcs/` folder in the root of the git repo.
 
 ### Behavior
 
