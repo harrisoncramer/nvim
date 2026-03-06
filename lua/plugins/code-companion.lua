@@ -12,130 +12,6 @@ local anthropic_config = function()
 	})
 end
 
--- This configuration is necessary because I want a mostly YOLO-style ACP, but want high configurability
--- in the types of commands that it should be able to run or not. This setup lets me allow most things by
--- default, but gate on specific commands
-
--- Add sensitive tasks to this table, wildcard matches
-local sensitive_scripts = {
-	"prod",
-	"staging",
-	"admin",
-	"db",
-	"email",
-	"sms",
-	"env",
-	"github",
-	"commit",
-	"push",
-	"rebase",
-	"docker",
-	"feature",
-	"rm",
-	-- Chariot-specific
-	"grantmaker",
-	"kube",
-}
-
--- Add Lua patterns to this table to allow edits without confirmation. Typically, file edits are the only thing
--- that require permission checks, so I can keep track of what Claude is changing.
-local auto_approve_edit_patterns = {
-	"%.qf/claude$",
-}
-
--- Check if a file path matches any auto-approve patterns
-local function is_auto_approved_file(file_path)
-	for _, pattern in ipairs(auto_approve_edit_patterns) do
-		if file_path:match(pattern) then
-			return true
-		end
-	end
-	return false
-end
-
--- Check if a bash command contains sensitive tasks
--- These are blocked regardless of current working directory
-local function is_sensitive_bash_command(command)
-	for _, task in ipairs(sensitive_scripts) do
-		-- Use plain string find (not pattern matching) with the 4th arg = true
-		if command:find(task, 1, true) then
-			return true
-		end
-	end
-
-	return false
-end
-
--- Automatically send the current view every time!
-vim.api.nvim_create_autocmd("User", {
-	pattern = "CodeCompanionChatCreated",
-	callback = function(args)
-		local chat = require("codecompanion").buf_get_chat(args.data.bufnr)
-		if not chat then
-			return
-		end
-
-		local original_replace_vars_and_tools = chat.replace_vars_and_tools
-
-		chat.replace_vars_and_tools = function(self, message)
-			-- Always use current buffer for viewport context
-			if self.buffer_context then
-				self.buffer_context.bufnr = vim.api.nvim_get_current_buf()
-			end
-
-			if message and message.content and message.content ~= "" then
-				if not message.content:match("#{viewport}") then
-					message.content = "The current user's view is here, it may or may not be relevant to your prompt. #{viewport}\n\n"
-						.. message.content
-				end
-			end
-			return original_replace_vars_and_tools(self, message)
-		end
-	end,
-})
-
--- Auto-approve all ACP requests except mcp__acp__Edit (unless file is in auto-approve list).
-vim.api.nvim_create_autocmd("User", {
-	pattern = "CodeCompanionChatAdapter",
-	callback = function()
-		local ok, req_perm = pcall(require, "codecompanion.interactions.chat.acp.request_permission")
-		if ok and req_perm then
-			local original_show = req_perm.show
-			req_perm.show = function(chat, request)
-				local tool_name = request.tool_call
-					and request.tool_call._meta
-					and request.tool_call._meta.claudeCode
-					and request.tool_call._meta.claudeCode.toolName
-
-				-- Check if this is an mcp__acp__Edit request
-				if tool_name == "mcp__acp__Edit" then
-					local file_path = request.tool_call.rawInput and request.tool_call.rawInput.file_path
-					if file_path and not is_auto_approved_file(file_path) then
-						return original_show(chat, request)
-					end
-				end
-
-				-- Check if this is a Bash command with sensitive mise tasks
-				if tool_name == "Bash" then
-					local command = request.tool_call.rawInput and request.tool_call.rawInput.command
-					if command and is_sensitive_bash_command(command) then
-						return original_show(chat, request)
-					end
-				end
-
-				-- Auto-approve everything else
-				for _, opt in ipairs(request.options or {}) do
-					if opt.kind and opt.kind:find("allow", 1, true) then
-						return request.respond(opt.optionId, false)
-					end
-				end
-				-- Fallback: reject if no allow option found
-				return request.respond(nil, true)
-			end
-		end
-	end,
-})
-
 vim.keymap.set("n", "<C-a><C-r>", function()
 	require("git-helpers").branch_input(function(branch)
 		require("claude").review_changes(branch)
@@ -145,7 +21,7 @@ end, merge(global_keymap_opts, { desc = "Send diff of current branch to code com
 return {
 	"olimorris/codecompanion.nvim",
 	lazy = false,
-	commit = "558518f8d78a44198cd428f6bf8bf48bfa38d76d",
+	-- commit = "558518f8d78a44198cd428f6bf8bf48bfa38d76d",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-treesitter/nvim-treesitter",
