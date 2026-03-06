@@ -1,7 +1,11 @@
 -- Send Diff to CodeCompanion and have it review the changes.
 local anthropic_config = function()
 	local anthropicApiKey = os.getenv("ANTHROPIC_API_KEY")
-	return require("codecompanion.adapters").extend("claude_code", {
+	return require("codecompanion.adapters.acp").extend("claude_code", {
+		commands = {
+			default = { "/Users/harrisoncramer/.local/share/mise/installs/node/22.0.0/bin/claude-agent-acp" },
+			yolo = { "/Users/harrisoncramer/.local/share/mise/installs/node/22.0.0/bin/claude-agent-acp", "--yolo" },
+		},
 		env = {
 			ANTHROPIC_API_KEY = anthropicApiKey,
 		},
