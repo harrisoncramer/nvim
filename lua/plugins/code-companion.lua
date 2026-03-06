@@ -21,7 +21,6 @@ end, merge(global_keymap_opts, { desc = "Send diff of current branch to code com
 return {
 	"olimorris/codecompanion.nvim",
 	lazy = false,
-	-- commit = "558518f8d78a44198cd428f6bf8bf48bfa38d76d",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-treesitter/nvim-treesitter",
