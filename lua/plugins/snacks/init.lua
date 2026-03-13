@@ -97,6 +97,12 @@ return {
 			desc = "Search text",
 		},
 		{
+			"<C-g>",
+			snack_functions.find_text_all,
+			mode = { "n" },
+			desc = "Search text (all files)",
+		},
+		{
 			"<C-z>",
 			snack_functions.toggle_terminal,
 			mode = { "n", "t" },

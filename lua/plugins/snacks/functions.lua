@@ -188,6 +188,48 @@ M.find_text = function(opts)
 	})
 end
 
+M.find_text_all = function(opts)
+	opts = opts or {}
+	require("snacks").picker.grep({
+		search = opts.search or "",
+		cwd = opts.cwd,
+		title = "Search Text (All Files)",
+		live = true,
+		hidden = true,
+		ignored = true,
+		submodules = true,
+		actions = {
+			qflist = function(picker)
+				require("snacks").picker.actions.qflist(picker)
+				local search_query = get_search_query(picker) or "grep_results"
+				auto_save.auto_save_quickfix(search_query)
+			end,
+		},
+		formatters = {
+			file = {
+				filename_first = true,
+			},
+		},
+		opts = {
+			layout = {
+				width = 1,
+				height = 1,
+			},
+		},
+		win = {
+			preview = {
+				keys = M.preview_keys,
+			},
+			list = {
+				keys = M.list_keys,
+			},
+			input = {
+				keys = M.input_keys,
+			},
+		},
+	})
+end
+
 M.recent_files = function(opts)
 	opts = opts or {}
 	require("snacks").picker.recent({
