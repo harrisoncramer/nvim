@@ -195,14 +195,7 @@ M.save_quickfix_to_file = function()
 	end)
 end
 
-M.send_file_to_codecompanion = function()
-	local cc = require("codecompanion")
-	local last_chat = cc.last_chat()
-
-	if not last_chat then
-		require("notify")("No active CodeCompanion chat session. Please start a chat first.", vim.log.levels.WARN)
-		return
-	end
+M.send_file_to_claude = function()
 	local qflist = vim.fn.getqflist()
 	local current_line = vim.fn.line(".")
 
@@ -234,38 +227,7 @@ M.send_file_to_codecompanion = function()
 	end
 
 	filename = filename:gsub("^file://", "")
-
-	local Path = require("plenary.path")
-	local path = Path:new(filename)
-	local success, content = pcall(function()
-		return path:read()
-	end)
-
-	if not success then
-		require("notify")("Failed to read file: " .. filename, vim.log.levels.ERROR)
-		return
-	end
-
-	local relpath = path:make_relative()
-	local ft = vim.filetype.match({ filename = filename })
-	local description = string.format(
-		[[%s %s:
-```%s
-%s
-```]],
-		"Here is the content of the file",
-		"located at `" .. relpath .. "`",
-		ft or "",
-		content
-	)
-
-	local id = "<file>" .. relpath .. "</file>"
-	cc.last_chat():add_message({
-		role = require("codecompanion.config").config.constants.USER_ROLE,
-		content = description,
-	}, { reference = id, visible = false })
-
-	require("notify")("Sent file to CodeCompanion: " .. relpath, vim.log.levels.INFO)
+	vim.fn.system({ "send-to-claude", "@" .. filename })
 end
 
 M.toggle_qf = function()

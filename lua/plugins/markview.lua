@@ -3,6 +3,8 @@ vim.api.nvim_create_autocmd("FileType", {
 	command = "Markview attach",
 })
 
+vim.keymap.set("n", "<localleader>r", "<cmd>Markview toggle<cr>", { desc = "Toggle markview" })
+
 return {
 	"OXY2DEV/markview.nvim",
 	lazy = false,
@@ -10,7 +12,7 @@ return {
 		preview = {
 			icon_provider = "devicons",
 			filetypes = {
-				-- "markdown",
+				"markdown",
 			},
 		},
 	},

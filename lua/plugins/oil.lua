@@ -67,49 +67,16 @@ local M = {
 				["<C-t>"] = false,
 				["<C-l>"] = false,
 				["a"] = {
-					desc = "share file with code companion",
-					-- Send the file under cursor to the active CodeCompanion chat session
+					desc = "send file to claude",
 					callback = function()
-						local cc = require("codecompanion")
-						local last_chat = cc.last_chat()
-
-						if not last_chat then
-							require("notify")(
-								"No active CodeCompanion chat session. Please start a chat first.",
-								vim.log.levels.WARN
-							)
+						local oil = require("oil")
+						local entry = oil.get_cursor_entry()
+						if not entry then
 							return
 						end
-
-						local Path = require("plenary.path")
-						local oil = require("oil")
-						local fmt = string.format
-						local cur_dir = oil.get_current_dir()
-						local fullpath = cur_dir .. oil.get_cursor_entry().name
-						local path = Path:new(fullpath)
-						local _, content = pcall(function()
-							return Path.new(fullpath):read()
-						end)
-
-						local relpath = path:make_relative()
-						local ft = vim.filetype.match({ filename = fullpath })
-						local description = fmt(
-							[[%s %s:
-              ```%s
-              %s
-              ```]],
-							"Here is the content of the file",
-							"located at `" .. relpath .. "`",
-							ft,
-							content
-						)
-						local id = "<file>" .. relpath .. "</file>"
-						cc.last_chat():add_message({
-							role = require("codecompanion.config").config.constants.USER_ROLE,
-							content = description,
-						}, { reference = id, visible = false })
-
-						require("notify")("Sent file to code companion", vim.log.levels.INFO)
+						local filepath = oil.get_current_dir() .. entry.name
+						vim.print("Hey")
+						vim.fn.system({ "send-to-claude", "@" .. filepath })
 					end,
 				},
 			},
