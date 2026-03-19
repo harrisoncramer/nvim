@@ -70,5 +70,6 @@ vim.o.ch = 0
 
 vim.filetype.add({ extension = { mdx = "mdx" } })
 vim.opt.number = true
+vim.opt.autoread = true
 
 -- vim.cmd("set messagesopt=wait:0,history:500")
