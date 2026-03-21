@@ -11,7 +11,7 @@ return {
 	config = function()
 		require("octo").setup({
 			picker = "snacks",
-			use_local_fs = false,
+			use_local_fs = true,
 			enable_builtin = true, -- shows a list of builtin actions when no action is provided
 			default_remote = { "upstream", "origin" },
 			default_merge_method = "merge", -- default merge method which should be used for both `Octo pr merge` and merging from picker, could be `merge`, `rebase` or `squash`
