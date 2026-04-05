@@ -72,7 +72,7 @@ end
 M.debug_methods = function(root, bufnr, filename)
 	local q = queries.get()
 	local nodes = {}
-	for _, node, _, _ in q.method_query:iter_captures(root, bufnr) do
+	for _, node in q.method_query:iter_captures(root, bufnr) do
 		if node:type() == "block" then
 			local start_row, _, _, _ = node:range()
 			table.insert(nodes, { node = node, start_row = start_row })
@@ -91,7 +91,7 @@ end
 M.debug_functions = function(root, bufnr, filename)
 	local q = queries.get()
 	local nodes = {}
-	for _, node, _, _ in q.function_query:iter_captures(root, bufnr) do
+	for _, node in q.function_query:iter_captures(root, bufnr) do
 		if node:type() == "block" then
 			local start_row, _, _, _ = node:range()
 			table.insert(nodes, { node = node, start_row = start_row })
