@@ -1,6 +1,23 @@
 local M = {}
 local map_opts = { noremap = true, silent = true, nowait = true }
+
 local u = require("functions.utils")
+
+local exclusions = {
+	"':(exclude)*go.mod'",
+	"':(exclude)*go.sum'",
+	"':(exclude)**/db/models/**'",
+	"':(exclude)**/jet/**'",
+	"':(exclude)**/*_grpc.pb.go'",
+	"':(exclude)**/*_grpc.go'",
+	"':(exclude)**/*.sql.go'",
+	"':(exclude)**/*.pb.go'",
+	"':(exclude)**/*_test.go'", -- Should we exclude tests?
+	"':(exclude)**/*.connect.go'",
+	"':(exclude)*yarn.lock'",
+}
+
+M.ignore_paths = table.concat(exclusions, " ")
 
 local gitsigns_ok, gitsigns = pcall(require, "gitsigns")
 local diffview_ok, _ = pcall(require, "diffview")

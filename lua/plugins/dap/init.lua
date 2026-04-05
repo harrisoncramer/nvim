@@ -3,7 +3,11 @@ return {
 	dependencies = {
 		"leoluz/nvim-dap-go",
 		"nvim-neotest/nvim-nio",
-		"rcarriga/nvim-dap-ui",
+		{
+			"rcarriga/nvim-dap-ui",
+			version = "v2.6.0", -- Latest version has bug, see: https://github.com/rcarriga/nvim-dap-ui/issues/371
+			pin = true,
+		},
 	},
 	config = function(_, opts)
 		local dap = require("dap")

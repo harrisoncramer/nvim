@@ -1,4 +1,5 @@
 local u = require("functions.utils")
+local services = require("plugins.dap.services")
 
 local M = {}
 
@@ -9,18 +10,33 @@ vim.fn.sign_define("DapBreakpointRejected", { text = "🚫", texthl = "", linehl
 
 M.setup_ui = function(dap, ui)
 	vim.keymap.set("n", "<localleader>de", function()
-		dap.clear_breakpoints()
-		dap.terminate({}, { terminateDebuggee = true }, function()
+		if dap.session() then
+			dap.clear_breakpoints()
+			dap.continue()
+			vim.defer_fn(function()
+				dap.disconnect()
+				vim.cmd.bd()
+				u.resize_vertical_splits()
+				require("notify")("Disconnected from debugger", vim.log.levels.WARN)
+			end, 50)
+		else
 			vim.cmd.bd()
 			u.resize_vertical_splits()
-			require("notify")("Debug process killed", vim.log.levels.WARN)
-		end)
+		end
 	end, merge(global_keymap_opts, { desc = "Disconnects the debugger and ends debugging" }))
 
 	vim.keymap.set("n", "<localleader>dC", function()
 		dap.clear_breakpoints()
 		require("notify")("Breakpoints cleared", vim.log.levels.WARN)
 	end, merge(global_keymap_opts, { desc = "Clears all breakpoints" }))
+
+	vim.keymap.set("n", "<localleader>da", function()
+		services.attach_to_service(dap, ui)
+	end, merge(global_keymap_opts, { desc = "Attach to running service" }))
+
+	vim.keymap.set("n", "<localleader>du", function()
+		ui.toggle()
+	end, merge(global_keymap_opts, { desc = "Toggle DAP UI" }))
 
 	-- Other keybindings
 	vim.keymap.set("n", "<localleader>dl", require("dap.ui.widgets").hover)
@@ -76,7 +92,6 @@ M.setup_ui = function(dap, ui)
 			},
 			{
 				elements = {
-					"repl",
 					"breakpoints",
 				},
 				size = 0.3,

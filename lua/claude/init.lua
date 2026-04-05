@@ -1,36 +1,34 @@
 local M = {}
 
-local exclusions = {
-	"':(exclude)*go.mod'",
-	"':(exclude)*go.sum'",
-	"':(exclude)**/db/models/**'",
-	"':(exclude)**/jet/**'",
-	"':(exclude)**/*_grpc.pb.go'",
-	"':(exclude)**/*_grpc.go'",
-	"':(exclude)**/*.sql.go'",
-	"':(exclude)**/*.pb.go'",
-	"':(exclude)**/*_test.go'", -- Should we exclude tests?
-	"':(exclude)**/*.connect.go'",
-	"':(exclude)*yarn.lock'",
-}
-
-M.ignore_paths = table.concat(exclusions, " ")
-
 -- Get diff of current feature branch and create a diff file, then give that file to Code Companion.
 M.review_changes = function(branch)
 	local Path = require("plenary.path")
 	local cc = require("codecompanion")
 	local diff_file = vim.fn.tempname() .. ".diff"
 
+	local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null")
+	git_root = vim.fn.trim(git_root)
+	if vim.v.shell_error ~= 0 or git_root == "" then
+		vim.notify("Not in a git repository", vim.log.levels.ERROR)
+		return
+	end
+
+	local merge_base_cmd = string.format("cd '%s' && git merge-base origin/%s HEAD", git_root, branch)
+	local merge_base = vim.fn.trim(vim.fn.system(merge_base_cmd))
+	if vim.v.shell_error ~= 0 then
+		vim.notify("Error finding merge base with origin/" .. branch, vim.log.levels.ERROR)
+		return
+	end
+
 	local git_cmd = string.format(
 		-- The --diff-filter=ADM excludes renamed files
-		"git diff --diff-filter=ADM origin/%s..HEAD -- %s > %s",
-		branch,
-		M.ignore_paths,
+		"cd '%s' && git diff --diff-filter=ADM %s..HEAD -- %s > %s",
+		git_root,
+		merge_base,
+		require("git-helpers").ignore_paths,
 		diff_file
 	)
 
-	-- ...existing code...
 	local result = vim.fn.system(git_cmd)
 	local exit_code = vim.v.shell_error
 
@@ -74,17 +72,21 @@ M.review_changes = function(branch)
 		local lines = string.format(
 			[[You are a senior sofware engineer. You are giving feedback to another engineer on the following code changes. You are checking mostly for
 
-			  - Potential bugs or issues.
-        - Performance considerations.
-        - Maintainability and readability.
+         - Potential bugs or issues.
+	       - Performance considerations.
+	       - Maintainability and readability.
 
-        You do not have to stick to these specific sections, for instance if there are no performance considerations to consider just don't mention them in your chat.
+	       You do not have to stick to these specific sections, for instance if there are no performance considerations to consider just don't mention them in your chat.
 
-        Please be precise with your feedback, referencing specific line numbers in the code whenever you make a suggestion. Do not mention theoreticals or potential problems, but be grounded in actual problems.
-        Here is the diff:
-      %s
-      %s
-      ]],
+         CRITICAL: Do not give feedback for anything that already works or is well designed, your job is specifically to find errors and other code smells.
+
+	       Please be precise with your feedback, referencing specific line numbers in the code whenever you make a suggestion. Do not mention theoreticals or potential problems, but be grounded in actual problems.
+
+         At the top of your review please give a summary of the changes. It should be a short paragraph, for instnace: "The point of these changes is to refactor the payments service to do X Y and Z. This is achieved by refactoring the service X  to do Y. Most of the complexity..."
+	       Here is the diff:
+	     %s
+	     %s
+	     ]],
 			pr_info,
 			content
 		)
@@ -92,7 +94,7 @@ M.review_changes = function(branch)
 		local relpath = path:make_relative()
 		local id = "<file>" .. relpath .. "</file>"
 
-		vim.cmd("CodeCompanionChat Toggle")
+		vim.cmd("CodeCompanionChat<cmd>CodeCompanionChat adapter=claude_code Toggle")
 		cc.last_chat():add_message({
 			role = require("codecompanion.config").config.constants.USER_ROLE,
 			content = lines,

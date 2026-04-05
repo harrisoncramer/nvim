@@ -26,7 +26,7 @@ local servers = {
 	"gopls",
 	"golangci-lint-langserver",
 	-- "astro-language-server",
-	"typescript-language-server",
+	"tsgo",
 	"tailwindcss-language-server",
 	"vue-language-server",
 	"python-lsp-server",

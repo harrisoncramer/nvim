@@ -146,24 +146,32 @@ M.git_files = function(opts)
 	})
 end
 
-M.changed_files = function(opts)
+M.find_text = function(opts)
 	opts = opts or {}
-
-	require("snacks").picker.pick({
-		title = "Changed files",
-		items = changed_files:formatted(),
-		preview = "file",
-		format = "file",
+	require("snacks").picker.grep({
+		search = opts.search or "",
+		exclude = excludes,
+		cwd = opts.cwd,
+		title = opts.cwd and string.format("Search Text in %s", opts.cwd) or "Search Text",
+		live = true,
+		hidden = true,
+		submodules = true,
 		actions = {
 			qflist = function(picker)
 				require("snacks").picker.actions.qflist(picker)
-				local search_query = get_search_query(picker) or "changed_files"
+				local search_query = get_search_query(picker) or "grep_results"
 				auto_save.auto_save_quickfix(search_query)
 			end,
 		},
 		formatters = {
 			file = {
 				filename_first = true,
+			},
+		},
+		opts = {
+			layout = {
+				width = 1,
+				height = 1,
 			},
 		},
 		win = {
@@ -180,14 +188,15 @@ M.changed_files = function(opts)
 	})
 end
 
-M.find_text = function(opts)
+M.find_text_all = function(opts)
 	opts = opts or {}
 	require("snacks").picker.grep({
 		search = opts.search or "",
-		exclude = excludes,
 		cwd = opts.cwd,
-		title = opts.cwd and string.format("Search Text in %s", opts.cwd) or "Search Text",
+		title = "Search Text (All Files)",
 		live = true,
+		hidden = true,
+		ignored = true,
 		submodules = true,
 		actions = {
 			qflist = function(picker)

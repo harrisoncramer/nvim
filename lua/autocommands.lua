@@ -63,6 +63,27 @@ for group, commands in pairs(augroups) do
 	end
 end
 
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+	pattern = "*",
+	command = "checktime",
+	desc = "Reload files changed outside of neovim",
+})
+
+vim.api.nvim_create_autocmd("FocusGained", {
+	pattern = "*",
+	callback = function()
+		local sock = vim.v.servername
+		if sock and sock ~= "" then
+			local f = io.open("/tmp/nvim-active-sock", "w")
+			if f then
+				f:write(sock)
+				f:close()
+			end
+		end
+	end,
+	desc = "Track active neovim instance socket",
+})
+
 -- Basic session management!
 vim.api.nvim_create_autocmd("VimLeavePre", {
 	command = "mksession! /tmp/.nvim_session.vim",

@@ -46,6 +46,10 @@ vim.api.nvim_create_autocmd("FileType", {
 			buffer = true,
 			desc = "Remove quickfix item and update file",
 		})
+		vim.keymap.set("n", "a", qf.send_file_to_claude, {
+			buffer = true,
+			desc = "Send file to Claude",
+		})
 	end,
 })
 

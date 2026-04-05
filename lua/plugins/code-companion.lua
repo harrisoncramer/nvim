@@ -1,13 +1,11 @@
 -- Send Diff to CodeCompanion and have it review the changes.
-vim.keymap.set("n", "<C-a><C-r>", function()
-	require("git-helpers").branch_input(function(branch)
-		require("git-helpers.review").review_changes(branch)
-	end)
-end, merge(global_keymap_opts, { desc = "Send diff of current branch to code companion" }))
-
 local anthropic_config = function()
 	local anthropicApiKey = os.getenv("ANTHROPIC_API_KEY")
-	return require("codecompanion.adapters").extend("claude_code", {
+	return require("codecompanion.adapters.acp").extend("claude_code", {
+		commands = {
+			default = { "/Users/harrisoncramer/.local/share/mise/installs/node/22.0.0/bin/claude-agent-acp" },
+			yolo = { "/Users/harrisoncramer/.local/share/mise/installs/node/22.0.0/bin/claude-agent-acp", "--yolo" },
+		},
 		env = {
 			ANTHROPIC_API_KEY = anthropicApiKey,
 		},
@@ -37,9 +35,11 @@ return {
 		interactions = {
 			chat = {
 				adapter = "claude_code",
+				model = "opus",
 			},
 			inline = {
 				adapter = "anthropic",
+				model = "haiku",
 			},
 		},
 		rules = {
@@ -99,6 +99,12 @@ return {
 							provider = "snacks",
 						},
 					},
+					["image"] = {
+						opts = {
+							dirs = { "~/Desktop/screenshots" },
+							provider = "snacks",
+						},
+					},
 				},
 				roles = {
 					llm = "CodeCompanion",
@@ -126,24 +132,6 @@ return {
 		},
 	},
 	keys = {
-		{
-			-- Toggles the chat window
-			"<C-a><C-a>",
-			"<cmd>CodeCompanionChat adapter=claude_code Toggle<cr>",
-			mode = { "n", "v" },
-			noremap = true,
-			silent = true,
-			desc = "CodeCompanion chat",
-		},
-		{
-			-- Opens hisotry of previous chats
-			"<C-a><C-h>",
-			"<cmd>CodeCompanionHistory<cr>",
-			mode = { "n", "v" },
-			noremap = true,
-			silent = true,
-			desc = "CodeCompanion history",
-		},
 		-- Key mapping for visual mode: Prompts the user for input, then runs the CodeCompanion command on the visually selected lines with the given input
 		{
 			"<C-a>r",

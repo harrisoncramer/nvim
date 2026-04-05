@@ -1,3 +1,4 @@
+-- Enhanced macro recording with multiple slots and notifications
 return {
 	"chrisgrieser/nvim-recorder",
 	dependencies = "rcarriga/nvim-notify",

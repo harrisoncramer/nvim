@@ -1,3 +1,4 @@
+-- Smooth cursor animation with smear effect (currently disabled)
 local colors = require("colorscheme")
 return {
 	-- "sphamba/smear-cursor.nvim",
