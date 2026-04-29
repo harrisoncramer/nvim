@@ -56,15 +56,15 @@ return {
 			})
 
 			-- Incremental selection
-			vim.keymap.set("n", "v", function()
-				require("nvim-treesitter.incremental_selection").init()
-			end, { desc = "Start incremental selection" })
-			vim.keymap.set("x", "v", function()
-				require("nvim-treesitter.incremental_selection").increment()
-			end, { desc = "Increment selection" })
-			vim.keymap.set("x", "V", function()
-				require("nvim-treesitter.incremental_selection").decrement()
-			end, { desc = "Decrement selection" })
+			-- vim.keymap.set("n", "v", function()
+			-- 	require("nvim-treesitter.incremental_selection").init()
+			-- end, { desc = "Start incremental selection" })
+			-- vim.keymap.set("x", "v", function()
+			-- 	require("nvim-treesitter.incremental_selection").increment()
+			-- end, { desc = "Increment selection" })
+			-- vim.keymap.set("x", "V", function()
+			-- 	require("nvim-treesitter.incremental_selection").decrement()
+			-- end, { desc = "Decrement selection" })
 		end,
 	},
 	{
