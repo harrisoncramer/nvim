@@ -7,6 +7,7 @@ local changed_files = ChangedFiles.new("staging")
 local M = {}
 
 local excludes = {
+	"**/.worktrees/**",
 	"**/.qf/**",
 	"**/db/models/**",
 	"**/__evq/**",
@@ -110,6 +111,7 @@ M.git_files = function(opts)
 		hidden = true,
 		ignored = true,
 		exclude = {
+			"**/.worktrees/**",
 			"**/models/**",
 			"**/gen/**",
 			"**/node_modules/**",
