@@ -75,7 +75,6 @@ local M = {
 							return
 						end
 						local filepath = oil.get_current_dir() .. entry.name
-						vim.print("Hey")
 						vim.fn.system({ "send-to-claude", "@" .. filepath })
 					end,
 				},
