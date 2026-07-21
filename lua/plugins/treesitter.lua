@@ -33,6 +33,7 @@ return {
 			require("nvim-treesitter").install(parsers)
 
 			vim.treesitter.language.register("markdown", "mdx")
+			vim.treesitter.language.register("hcl", { "atlas-config", "atlas-schema-postgresql" })
 
 			vim.api.nvim_create_autocmd("FileType", {
 				callback = function(args)

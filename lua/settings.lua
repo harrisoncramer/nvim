@@ -69,6 +69,18 @@ vim.o.ls = 0
 vim.o.ch = 0
 
 vim.filetype.add({ extension = { mdx = "mdx" } })
+
+-- Atlas schema-as-code HCL. The Atlas LSP keys schema files by a dialect suffix,
+-- so map atlas.hcl to the config filetype and *.pg.hcl to the Postgres schema
+-- filetype. This also keeps terraform-ls off these .hcl files.
+vim.filetype.add({
+	filename = {
+		["atlas.hcl"] = "atlas-config",
+	},
+	pattern = {
+		[".*%.pg%.hcl"] = "atlas-schema-postgresql",
+	},
+})
 vim.opt.number = true
 vim.opt.autoread = true
 
