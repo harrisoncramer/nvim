@@ -8,6 +8,7 @@ local exclusions = {
 	"':(exclude)*go.sum'",
 	"':(exclude)**/db/models/**'",
 	"':(exclude)**/jet/**'",
+	"':(exclude)**/gen*/**'",
 	"':(exclude)**/*_grpc.pb.go'",
 	"':(exclude)**/*_grpc.go'",
 	"':(exclude)**/*.sql.go'",
