@@ -10,7 +10,6 @@ local function customGclFor(base)
 	if worktree then
 		return vim.fn.expand(base .. "/.worktrees/" .. worktree .. "/local/custom-gcl")
 	end
-	vim.print("H")
 	return vim.fn.expand(base .. "/local/custom-gcl")
 end
 
@@ -20,7 +19,6 @@ local function getCustomGclPath()
 	elseif isFoxhunt then
 		return customGclFor("~/Desktop/foxhunt-go")
 	elseif isClaudeManager then
-		vim.print("hey")
 		return customGclFor("~/tmux-claude-agents")
 	end
 
