@@ -1,7 +1,7 @@
 local cwd = vim.fn.getcwd()
 local isChariot = string.match(cwd, "/Users/harrisoncramer/chariot/chariot")
 local isFoxhunt = string.match(cwd, "/Users/harrisoncramer/Desktop/foxhunt%-go")
-local isClaudeManager = string.match(cwd, "/Users/harrisoncramer/tmux%-claude%-agents")
+local isWeave = string.match(cwd, "/Users/harrisoncramer/weave")
 
 -- Resolve the repo's custom golangci-lint binary, handling worktrees where the
 -- binary lives under .worktrees/<name>/local/custom-gcl.
@@ -18,8 +18,8 @@ local function getCustomGclPath()
 		return customGclFor("~/chariot/chariot")
 	elseif isFoxhunt then
 		return customGclFor("~/Desktop/foxhunt-go")
-	elseif isClaudeManager then
-		return customGclFor("~/tmux-claude-agents")
+	elseif isWeave then
+		return customGclFor("~/weave")
 	end
 
 	return "golangci-lint"
