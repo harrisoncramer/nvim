@@ -43,6 +43,7 @@ local servers = {
 -- Mason will not auto-install these
 local linters = {
 	"pylint",
+	"golangci-lint",
 }
 
 -- Mason will not auto-install these
@@ -57,6 +58,8 @@ local formatters = {
 	"stylua",
 	"sql-formatter", -- This does not support @ symbols, use https://github.com/nene/prettier-plugin-sql-cst instead
 	"shfmt",
+	"eslint_d",
+	"pgformatter",
 }
 
 local all = vim.iter({ servers, linters, debuggers, formatters }):flatten():totable()
