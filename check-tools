@@ -5,7 +5,7 @@ NVIM_MIN=0.12.0
 TREE_SITTER_MIN=0.26.1
 NODE_MIN=22.0.0
 
-REQUIRED="nvim git curl unzip tar gzip cc tree-sitter node npm go rg fd"
+REQUIRED="nvim git curl unzip tar gzip cc tree-sitter node npm go rg"
 OPTIONAL="jq trash nc gh zsh pandoc sqlc buf atlas zprint docker silicon claude-agent-acp failures send-to-claude open_filesystem"
 
 has() {
