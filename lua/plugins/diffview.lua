@@ -5,7 +5,6 @@ local M = {
 		vim.opt.fillchars:append({ diff = "╱" })
 		local actions = require("diffview.actions")
 		local diffview = require("diffview")
-		local git_helpers = require("git-helpers")
 
 		-- Diffview changes. Can be used to stage/unstage files.
 		vim.keymap.set("n", "<leader>gs", function()
@@ -30,6 +29,7 @@ local M = {
 
 		-- View entire changes versus a specific branch.
 		vim.keymap.set("n", "<leader>gdd", function()
+			local git_helpers = require("git-helpers")
 			git_helpers.branch_input(function(branch)
 				vim.cmd(string.format("DiffviewOpen origin/%s...HEAD -- %s", branch, git_helpers.ignore_paths))
 			end)
@@ -394,6 +394,7 @@ local M = {
 						"n",
 						"<leader>go",
 						function()
+							local git_helpers = require("git-helpers")
 							local hash = git_helpers.get_hash()
 							if hash == nil then
 								return

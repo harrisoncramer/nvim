@@ -58,8 +58,11 @@ return {
 	dependencies = {
 		{
 			"junegunn/fzf",
-			build = function()
-				vim.fn["fzf#install"]()
+			build = function(plugin)
+				local result = vim.system({ "./install", "--bin" }, { cwd = plugin.dir }):wait()
+				if result.code ~= 0 then
+					error(result.stdout .. result.stderr)
+				end
 			end,
 		},
 	},
