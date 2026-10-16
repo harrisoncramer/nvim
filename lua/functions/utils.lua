@@ -439,7 +439,6 @@ return {
 		local result = vim.fn.executable(executable)
 		return result == 1
 	end,
-	warn_missing = warn_missing,
 	ensure_executable = ensure_executable,
 	get_visually_selected_lines = function()
 		local start_line = vim.fn.line("v") - 1 -- Convert to 0-based index

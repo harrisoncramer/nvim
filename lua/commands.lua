@@ -38,10 +38,6 @@ vim.api.nvim_create_user_command("JQ", function()
 	vim.api.nvim_command(".!jq .")
 end, { nargs = 0 })
 
-vim.api.nvim_create_user_command("Filesystem", function()
-	require("functions").run_script("open_filesystem")
-end, { nargs = 0 })
-
 vim.api.nvim_create_user_command("BufOnly", function()
 	require("functions").buf_only()
 end, { nargs = 0 })

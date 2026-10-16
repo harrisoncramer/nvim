@@ -43,22 +43,6 @@ return {
 			end
 		end
 	end,
-	run_script = function(script_name, args)
-		local nvim_scripts_dir = vim.fn.stdpath("config") .. "/scripts"
-		if vim.fn.filereadable(nvim_scripts_dir .. "/" .. script_name) == 0 then
-			u.warn_missing(script_name)
-			return ""
-		end
-		local f = nil
-		if args == nil then
-			f = io.popen(string.format("/bin/bash %1s/%2s", nvim_scripts_dir, script_name))
-		else
-			f = io.popen(string.format("/bin/bash %1s/%2s %3s", nvim_scripts_dir, script_name, args))
-		end
-		local output = f:read("*a")
-		f:close()
-		return output
-	end,
 	stash = function(name)
 		vim.fn.system("git stash -u -m " .. name)
 	end,
