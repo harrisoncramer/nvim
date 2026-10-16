@@ -122,12 +122,7 @@ local copy_file_name = function(quiet)
 	return base
 end
 
-local get_os = function()
-	return vim.loop.os_uname().sysname
-end
-
 return {
-	get_os = get_os,
 	get_home = function()
 		return os.getenv("HOME")
 	end,
