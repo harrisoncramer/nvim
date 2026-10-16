@@ -31,6 +31,7 @@ min_version() {
 present() {
 	case "$1" in
 	open_filesystem) [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/scripts/open_filesystem" ] ;;
+	claude-agent-acp) [ -x "$HOME/.local/share/mise/installs/node/22.0.0/bin/claude-agent-acp" ] || has "$1" ;;
 	*) has "$1" ;;
 	esac
 }
