@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-check="$(cd "$(dirname "$0")" && pwd)/check-start.lua"
+hook="$(dirname "$0")/check-start.lua"
 
-nvim --headless --cmd "luafile $check" "+Lazy! restore"
-nvim --headless --cmd "luafile $check"
+nvim --headless --cmd "luafile $hook" "+Lazy! restore"
+nvim --headless --cmd "luafile $hook"
