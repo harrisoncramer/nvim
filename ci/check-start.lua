@@ -4,6 +4,28 @@ local failures = {}
 local treesitter_pending = 0
 local mason_done = false
 
+local function record(msg)
+	table.insert(failures, vim.trim(tostring(msg)))
+end
+
+for _, name in ipairs({ "nvim_err_write", "nvim_err_writeln" }) do
+	local original = vim.api[name]
+	vim.api[name] = function(msg)
+		record(msg)
+		return original(msg)
+	end
+end
+
+local echo = vim.api.nvim_echo
+vim.api.nvim_echo = function(chunks, history, opts)
+	if opts and opts.err then
+		record(table.concat(vim.tbl_map(function(chunk)
+			return chunk[1]
+		end, chunks)))
+	end
+	return echo(chunks, history, opts)
+end
+
 local function load_without_preload(name)
 	for i = 2, #package.loaders do
 		local loader = package.loaders[i](name)
