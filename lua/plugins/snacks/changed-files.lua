@@ -1,5 +1,3 @@
-local git_helpers = require("../../git-helpers")
-
 local ChangedFiles = {}
 ChangedFiles.__index = ChangedFiles
 
@@ -24,6 +22,7 @@ function ChangedFiles:formatted()
 end
 
 function ChangedFiles:get_all()
+	local git_helpers = require("../../git-helpers")
 	self.all_files = git_helpers.changed_files(self.branch)
 	return self.all_files
 end
