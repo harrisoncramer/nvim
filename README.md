@@ -25,6 +25,10 @@ Run `./check-tools` to see what is missing or too old. It never installs anythin
 
 A few commands shell out to optional programs that the editor can start without. When one is missing, the command that needs it shows a warning and does nothing.
 
+# Linux check
+
+Run `./check-linux` to prove a fresh install works on Ubuntu 24.04 ARM64. It needs Docker. It builds an image with Neovim and the required programs, restores the plugins from lazy-lock.json, and waits for the Mason and treesitter installs to finish. It fails if Neovim reports an error then or on a second start. The image leaves out the optional programs, so the check also proves the editor starts without them. CI runs the same check on every pull request.
+
 # Quickstart
 
 1. Clone this repository to your Neovim configuration path: `git clone https://github.com/harrisoncramer/nvim.git ~/.config/nvim`
