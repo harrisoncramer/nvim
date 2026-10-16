@@ -19,63 +19,16 @@ This repository contains my configurations, including key mappings, plugins, and
 
 # Dependencies
 
-There are a few dependencies for this editor configuration that cannot be installed within Neovim. I've detailed them below, installation instructions _assume an Ubuntu OS_, although installation on other operating systems should be straightforward. Most of them are required for LSPs or Debuggers to work.
+The configuration needs Neovim 0.12 or later, and won't load on anything older. It also needs a few programs that cannot be installed within Neovim, mostly for LSPs, Debuggers, and treesitter parsers.
 
-1. Git version 2.36 or greater
+Run `./check-tools` to see what is missing or too old. It never installs anything, so install what it lists with your own package manager.
 
-```bash
-sudo add-apt-repository ppa:git-core/ppa -y
-sudo apt-get update -y
-sudo apt install git -y
-```
-
-2. `npm` and `node`, which are used to install some of the LSPs and Debuggers. I recommend installing node via NVM (node version manager). You may need to resource your `.bashrc`/`.zshrc` after installing NVM for the command to be available in your path.
-
-```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-nvm install 20.5.0
-```
-
-3. The Treesitter CLI, which is required for syntax highlighting
-
-```bash
-npm install -g tree-sitter-cli
-```
-
-4. Go (required for Go Debugger + LSP). On Ubuntu:
-
-```bash
-sudo add-apt-repository ppa:longsleep/golang-backports -y
-sudo apt update -y
-sudo apt install golang-go -y
-```
-
-5. Zip/Unzip commands (required to unpack TypeScript Debugger)
-
-```bash
-sudo apt install zip -y
-```
-
-6. The compiler `gcc`
-
-```bash
-sudo apt update -y
-sudo apt install build-essential -y
-```
-
-7. ripgrep for fuzzy finding
-
-```bash
-curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
-sudo dpkg -i ripgrep_13.0.0_amd64.deb
-```
-
-9. gnu-sed (for the <a href="https://github.com/nvim-pack/nvim-spectre">spectre</a> plugin)
+A few commands shell out to optional programs that the editor can start without. When one is missing, the command that needs it shows a warning and does nothing.
 
 # Quickstart
 
-1. Install the required dependencies listed above.
-2. Clone this repository to your Neovim configuration path: `git clone https://github.com/harrisoncramer/nvim.git ~/.config/nvim`
+1. Clone this repository to your Neovim configuration path: `git clone https://github.com/harrisoncramer/nvim.git ~/.config/nvim`
+2. Run `~/.config/nvim/check-tools` and install anything it reports missing.
 3. Open Neovim. The plugin installation should start automatically; so should the LSP and Debugger installations.
 
 Please be patient when you first open up Neovim, it is installing many dependencies the first time it starts! I'd recommend going and getting a cup of coffee, the process can take ~5 minutes to install all the debuggers, LSPs, and treesitter language parsers.
