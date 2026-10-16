@@ -35,7 +35,7 @@ local servers = {
 	"yaml-language-server",
 	"prisma-language-server",
 	"protols",
-	"postgrestools",
+	"postgres-language-server",
 	"json-lsp",
 	"shellcheck",
 }

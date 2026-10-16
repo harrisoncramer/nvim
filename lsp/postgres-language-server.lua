@@ -11,13 +11,14 @@ end
 --- @class vim.lsp.Config
 return {
 	cmd = {
-		"postgrestools",
+		"postgres-language-server",
 		"lsp-proxy",
 	},
 	filetypes = {
 		"sql",
 	},
 	root_markers = {
+		"postgres-language-server.jsonc",
 		"postgrestools.jsonc",
 	},
 	on_init = function(client, _)
