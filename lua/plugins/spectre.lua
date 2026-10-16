@@ -5,9 +5,12 @@ return {
 		replace_engine = {
 			["sed"] = {
 				cmd = "sed",
-				args = {
+				args = vim.fn.has("mac") == 1 and {
 					"-i",
 					"",
+					"-E",
+				} or {
+					"-i",
 					"-E",
 				},
 			},

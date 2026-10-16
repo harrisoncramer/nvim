@@ -38,4 +38,4 @@ require("claude")
 require("plan")
 
 -- Miscenalleous vim commands
-vim.cmd.source("~/.config/nvim/_init.vim")
+vim.cmd.source(vim.fn.stdpath("config") .. "/_init.vim")

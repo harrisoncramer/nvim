@@ -77,11 +77,13 @@ vim.keymap.set(
 	lsp.send_failures_to_qf,
 	merge(global_keymap_opts, { desc = "Send failures to quickfix" })
 )
-vim.keymap.set(
-	"n",
-	"gx",
-	":silent! execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>",
-	merge(global_keymap_opts, { desc = "Open link under cursor" })
-)
+if vim.fn.has("mac") == 1 then
+	vim.keymap.set(
+		"n",
+		"gx",
+		":silent! execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>",
+		merge(global_keymap_opts, { desc = "Open link under cursor" })
+	)
+end
 
 return M

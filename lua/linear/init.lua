@@ -274,7 +274,11 @@ M.show_issue_picker = function(prompt, issues, on_select)
 			open_in_linear = function(picker)
 				local item = picker.list:current()
 				if item and item.url then
-					vim.fn.jobstart({ "open", "-a", "/Applications/Linear.app", item.url }, { detach = true })
+					if vim.fn.has("mac") == 1 then
+						vim.fn.jobstart({ "open", "-a", "/Applications/Linear.app", item.url }, { detach = true })
+					else
+						require("functions.utils").open_url(item.url)
+					end
 				end
 			end,
 			copy_branch = function(picker)

@@ -1,10 +1,14 @@
 -- Send Diff to CodeCompanion and have it review the changes.
 local anthropic_config = function()
 	local anthropicApiKey = os.getenv("ANTHROPIC_API_KEY")
+	local claudeAgentAcp = vim.env.HOME .. "/.local/share/mise/installs/node/22.0.0/bin/claude-agent-acp"
+	if vim.fn.executable(claudeAgentAcp) == 0 then
+		claudeAgentAcp = "claude-agent-acp"
+	end
 	return require("codecompanion.adapters.acp").extend("claude_code", {
 		commands = {
-			default = { "/Users/harrisoncramer/.local/share/mise/installs/node/22.0.0/bin/claude-agent-acp" },
-			yolo = { "/Users/harrisoncramer/.local/share/mise/installs/node/22.0.0/bin/claude-agent-acp", "--yolo" },
+			default = { claudeAgentAcp },
+			yolo = { claudeAgentAcp, "--yolo" },
 		},
 		env = {
 			ANTHROPIC_API_KEY = anthropicApiKey,
@@ -47,7 +51,7 @@ return {
 				enabled = true,
 				description = "Collection of common files for all projects",
 				files = {
-					"~/.config/nvim/.ai/rules",
+					vim.fn.stdpath("config") .. "/.ai/rules",
 				},
 			},
 			opts = {

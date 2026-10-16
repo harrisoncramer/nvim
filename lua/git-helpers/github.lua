@@ -14,7 +14,7 @@ M.open_pr_from_hash = function(hash)
 				vim.notify("No PR found for commit " .. hash, vim.log.levels.WARN)
 				return
 			end
-			vim.fn.jobstart({ "open", pr_url }, { detach = true })
+			require("functions.utils").open_url(pr_url)
 		end,
 	})
 end

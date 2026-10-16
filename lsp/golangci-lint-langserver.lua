@@ -1,8 +1,9 @@
 local cwd = vim.fn.getcwd()
-local isChariot = string.match(cwd, "/Users/harrisoncramer/chariot/chariot")
-local isFoxhunt = string.match(cwd, "/Users/harrisoncramer/Desktop/foxhunt%-go")
-local isWeave = string.match(cwd, "/Users/harrisoncramer/weave")
-local isClaudeManager = string.match(cwd, "/Users/harrisoncramer/tmux%-claude%-agents")
+local homePattern = vim.pesc(vim.env.HOME)
+local isChariot = string.match(cwd, homePattern .. "/chariot/chariot")
+local isFoxhunt = string.match(cwd, homePattern .. "/Desktop/foxhunt%-go")
+local isWeave = string.match(cwd, homePattern .. "/weave")
+local isClaudeManager = string.match(cwd, homePattern .. "/tmux%-claude%-agents")
 
 -- Resolve the repo's custom golangci-lint binary, handling worktrees where the
 -- binary lives under .worktrees/<name>/local/custom-gcl.

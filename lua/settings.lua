@@ -3,7 +3,7 @@ vim.cmd([[ nnoremap <Space> <NOP>]])
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
-vim.opt.shell = "/bin/zsh"
+vim.opt.shell = vim.fn.executable("/bin/zsh") == 1 and "/bin/zsh" or vim.env.SHELL or "/bin/sh"
 vim.api.nvim_set_option("shm", vim.o.shm .. "I")
 
 -- Open splits on the right
@@ -15,6 +15,17 @@ vim.g.wildignore = "**/node_modules/**"
 vim.opt.regexpengine = 1
 -- Turn on clipboard across panes for tmux
 vim.opt.clipboard = "unnamedplus"
+if vim.fn.has("linux") == 1 and vim.env.DISPLAY == nil and vim.env.WAYLAND_DISPLAY == nil and vim.env.TMUX == nil then
+	local osc52 = require("vim.ui.clipboard.osc52")
+	local paste = function()
+		return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
+	end
+	vim.g.clipboard = {
+		name = "OSC 52",
+		copy = { ["+"] = osc52.copy("+"), ["*"] = osc52.copy("*") },
+		paste = { ["+"] = paste, ["*"] = paste },
+	}
+end
 -- set substitute/replace command to automatically use global flag
 vim.opt.gdefault = true
 -- Do not allow line wrapping
