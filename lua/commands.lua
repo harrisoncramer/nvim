@@ -81,11 +81,16 @@ command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
 
 -- Pandoc
 vim.api.nvim_create_user_command("PDF", function()
-	local filename = u.copy_file_name(true)
-	local no_extension = u.strip_extension(filename)
+	local filename = vim.api.nvim_buf_get_name(0)
+	if filename == "" then
+		require("notify")("Buffer has no file.", vim.log.levels.ERROR)
+		return
+	end
+
+	local no_extension = u.strip_extension(filename) or filename
 	local pdf = no_extension .. ".pdf"
 	if u.file_exists(pdf) then
-		u.remove_file(pdf)
+		os.remove(pdf)
 	end
 
 	local plenary_ok, job = pcall(require, "plenary.job")
@@ -96,11 +101,12 @@ vim.api.nvim_create_user_command("PDF", function()
 
 	job:new({
 		command = "pandoc",
-		args = { "-V", "colorlinks=true", "-V", "linkcolor=blue", "-i", filename, "-o", pdf },
+		args = { "-V", "colorlinks=true", "-V", "linkcolor=blue", filename, "-o", pdf },
+		cwd = vim.fn.fnamemodify(filename, ":h"),
 		on_exit = vim.schedule_wrap(function(err, exit_code)
 			if exit_code ~= 0 then
-				vim.print(_)
-				require("notify")("Could not create " .. pdf .. "\n " .. err._stderr_results[1], vim.log.levels.ERROR)
+				local stderr = table.concat(err:stderr_result(), "\n")
+				require("notify")("Could not create " .. pdf .. "\n" .. stderr, vim.log.levels.ERROR)
 				return
 			else
 				vim.notify(pdf .. " created!", vim.log.levels.INFO)
