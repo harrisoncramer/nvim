@@ -15,6 +15,9 @@ vim.g.wildignore = "**/node_modules/**"
 vim.opt.regexpengine = 1
 -- Turn on clipboard across panes for tmux
 vim.opt.clipboard = "unnamedplus"
+if vim.fn.has("linux") == 1 and vim.env.DISPLAY == nil and vim.env.WAYLAND_DISPLAY == nil then
+	vim.g.clipboard = "osc52"
+end
 -- set substitute/replace command to automatically use global flag
 vim.opt.gdefault = true
 -- Do not allow line wrapping
