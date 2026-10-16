@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-cd "$(dirname "$0")"
-
-docker build --platform linux/arm64 -t nvim-linux-check ci
-docker run --rm --platform linux/arm64 -v "$PWD:/src:ro" nvim-linux-check \
-	bash -c 'mkdir -p ~/.config && cp -R /src ~/.config/nvim && cd ~/.config/nvim && ./check-tools && ci/check-start'
