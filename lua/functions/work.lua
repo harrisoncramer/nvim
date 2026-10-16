@@ -34,8 +34,8 @@ M.get_build_failures = function()
 	end
 
 	vim.fn.setqflist({}, "r")
-	vim.cmd(string.format("cd /Users/harrisoncramer/chariot/chariot/apps/%s", svc))
-	vim.api.nvim_set_current_dir(string.format("/Users/harrisoncramer/chariot/chariot/apps/%s", svc))
+	vim.cmd(string.format("cd %s/chariot/chariot/apps/%s", vim.env.HOME, svc))
+	vim.api.nvim_set_current_dir(string.format("%s/chariot/chariot/apps/%s", vim.env.HOME, svc))
 	local failures = vim.fn.systemlist(string.format("failures %s", svc))
 
 	local qf_list = {}
