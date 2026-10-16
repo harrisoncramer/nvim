@@ -1,3 +1,4 @@
+local u = require("functions.utils")
 local M = {}
 
 -- Track the currently loaded quickfix file
@@ -196,6 +197,9 @@ M.save_quickfix_to_file = function()
 end
 
 M.send_file_to_claude = function()
+	if not u.ensure_executable("send-to-claude") then
+		return
+	end
 	local qflist = vim.fn.getqflist()
 	local current_line = vim.fn.line(".")
 

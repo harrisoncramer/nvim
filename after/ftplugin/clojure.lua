@@ -1,6 +1,10 @@
 local job = require("plenary.job")
+local u = require("functions.utils")
 
 local format_file = function()
+	if not u.ensure_executable("zprint") then
+		return
+	end
 	vim.cmd("w")
 	local file = vim.fn.expand("%")
 	job:new({

@@ -1,4 +1,9 @@
+local u = require("functions.utils")
+
 local function start_test_db(cb)
+	if not u.ensure_executable("docker") then
+		return
+	end
 	local notify = require("notify")
 	local Job = require("plenary.job")
 	Job:new({
@@ -22,7 +27,6 @@ local function start_test_db(cb)
 	}):start()
 end
 
-local u = require("functions.utils")
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "neotest-summary",
 	callback = function()

@@ -1,3 +1,4 @@
+local u = require("functions.utils")
 local sqlc_namespace = vim.api.nvim_create_namespace("sqlc")
 
 ---Helper function to parse the output of sqlc vet and create diagnostics
@@ -48,6 +49,9 @@ end
 ---@return nil
 local function set_diagnostics()
 	clear_diagnostics()
+	if not u.ensure_executable("sqlc") then
+		return
+	end
 	local output = run_sqlc_against_current_file()
 	if output == "" then
 		return

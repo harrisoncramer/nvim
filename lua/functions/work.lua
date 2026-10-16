@@ -1,3 +1,4 @@
+local u = require("functions.utils")
 local M = {}
 
 -- the FOLLOW commands runs the watch script, which sets a service name into a temporary file
@@ -5,6 +6,9 @@ local M = {}
 -- can see them right away, and can be picked up by get_build_failures command below, which runs
 -- the failures script
 vim.api.nvim_create_user_command("FOLLOW", function(opts)
+	if not u.ensure_executable("watch-logs") then
+		return
+	end
 	local result = vim.fn.system(string.format("watch-logs %s", opts.args))
 	if vim.v.shell_error ~= 0 then
 		require("notify")(string.format("Could not follow '%s' container: ", opts.args) .. result, vim.log.levels.ERROR)
@@ -27,6 +31,9 @@ end
 -- formatted in a way like  ./main.go:160:2: undefined: appGET
 -- We then parse out the file name and line number, and set it in the quickfix list
 M.get_build_failures = function()
+	if not u.ensure_executable("failures") then
+		return
+	end
 	local svc = M.get_current_service()
 	if svc == nil then
 		require("notify")("No service being monitored", vim.log.levels.ERROR)

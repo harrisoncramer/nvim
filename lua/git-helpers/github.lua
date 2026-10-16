@@ -1,7 +1,11 @@
+local u = require("functions.utils")
 local M = {}
 
 -- Use GitHub CLI to search for PR containing this commit
 M.open_pr_from_hash = function(hash)
+	if not u.ensure_executable("gh") then
+		return
+	end
 	local cmd =
 		string.format('gh pr list --search "%s" --state all --limit 1 --json url --jq ".[0].url // empty"', hash)
 
@@ -14,7 +18,7 @@ M.open_pr_from_hash = function(hash)
 				vim.notify("No PR found for commit " .. hash, vim.log.levels.WARN)
 				return
 			end
-			require("functions.utils").open_url(pr_url)
+			u.open_url(pr_url)
 		end,
 	})
 end

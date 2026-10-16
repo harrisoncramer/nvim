@@ -69,6 +69,9 @@ local M = {
 				["a"] = {
 					desc = "send file to claude",
 					callback = function()
+						if not u.ensure_executable("send-to-claude") then
+							return
+						end
 						local oil = require("oil")
 						local entry = oil.get_cursor_entry()
 						if not entry then
