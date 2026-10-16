@@ -1,7 +1,6 @@
-local notify = require("notify")
-local Job = require("plenary.job")
-
 local function start_test_db(cb)
+	local notify = require("notify")
+	local Job = require("plenary.job")
 	Job:new({
 		command = "sh",
 		args = {
