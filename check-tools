@@ -6,7 +6,7 @@ TREE_SITTER_MIN=0.26.1
 NODE_MIN=22.0.0
 
 REQUIRED="nvim git curl unzip tar gzip cc tree-sitter node npm go golangci-lint rg"
-OPTIONAL="jq trash nc gh zsh pandoc sqlc buf atlas zprint docker silicon claude-agent-acp failures send-to-claude"
+OPTIONAL="jq trash nc gh zsh pandoc sqlc buf atlas zprint docker silicon claude-agent-acp send-to-claude"
 
 has() {
 	command -v "$1" >/dev/null 2>&1
