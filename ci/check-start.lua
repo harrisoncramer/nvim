@@ -88,9 +88,9 @@ local function errors()
 	end
 	local ok, snacks = pcall(require, "snacks")
 	if ok and snacks.notifier then
-		for _, n in ipairs(snacks.notifier.get_history()) do
-			if n.level == "error" then
-				table.insert(found, n.msg)
+		for _, notification in ipairs(snacks.notifier.get_history()) do
+			if notification.level == "error" then
+				table.insert(found, notification.msg)
 			end
 		end
 	end
