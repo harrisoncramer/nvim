@@ -29,7 +29,6 @@ local servers = {
 	"tsgo",
 	"tailwindcss-language-server",
 	"vue-language-server",
-	"python-lsp-server",
 	"terraform-ls",
 	"css-lsp",
 	"yaml-language-server",
@@ -42,7 +41,6 @@ local servers = {
 
 -- Mason will not auto-install these
 local linters = {
-	"pylint",
 	"golangci-lint",
 }
 
