@@ -1,20 +1,6 @@
 local u = require("functions.utils")
 local M = {}
 
--- the FOLLOW commands runs the watch script, which sets a service name into a temporary file
--- and then watches logs for any failures. These failures will update the tmux header so that we
--- can see them right away, and can be picked up by get_build_failures command below, which runs
--- the failures script
-vim.api.nvim_create_user_command("FOLLOW", function(opts)
-	if not u.ensure_executable("watch-logs") then
-		return
-	end
-	local result = vim.fn.system(string.format("watch-logs %s", opts.args))
-	if vim.v.shell_error ~= 0 then
-		require("notify")(string.format("Could not follow '%s' container: ", opts.args) .. result, vim.log.levels.ERROR)
-	end
-end, { nargs = 1 })
-
 M.get_current_service = function()
 	local file = io.open("/tmp/current_service", "r")
 	if file == nil then
