@@ -45,7 +45,7 @@ package.preload["nvim-treesitter"] = function(name)
 		task:await(function(err, ok)
 			treesitter_pending = treesitter_pending - 1
 			if err or not ok then
-				table.insert(failures, "treesitter install failed: " .. tostring(err or "see messages"))
+				record("treesitter install failed: " .. tostring(err or "see messages"))
 			end
 		end)
 		return task
