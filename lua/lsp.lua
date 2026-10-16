@@ -59,7 +59,7 @@ local formatters = {
 	"shfmt",
 }
 
-local all = merge(servers, linters, debuggers, formatters)
+local all = vim.iter({ servers, linters, debuggers, formatters }):flatten():totable()
 
 mason_tool_installer.setup({
 	ensure_installed = all,
