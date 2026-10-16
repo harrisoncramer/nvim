@@ -40,9 +40,7 @@ local servers = {
 }
 
 -- Mason will not auto-install these
-local linters = {
-	"golangci-lint",
-}
+local linters = {}
 
 -- Mason will not auto-install these
 local debuggers = {
