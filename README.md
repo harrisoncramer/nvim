@@ -27,7 +27,7 @@ A few commands shell out to optional programs that the editor can start without.
 
 # Linux check
 
-Run `./check-linux` to prove a fresh install works on Ubuntu 24.04 ARM64. It needs Docker. It builds an image with Neovim and the required programs, restores the plugins from lazy-lock.json, and waits for the Mason and treesitter installs to finish. It fails if Neovim reports an error then or on a second start. The image leaves out the optional programs, so the check also proves the editor starts without them. CI runs the same check on every pull request.
+Run `./check-linux` to check that a fresh install starts clean on Ubuntu 24.04 ARM64. It needs Docker. The image has only the required programs, so the check also proves the editor starts without the optional ones. CI runs it on every pull request.
 
 # Quickstart
 
