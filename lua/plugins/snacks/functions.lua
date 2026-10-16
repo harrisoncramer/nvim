@@ -264,7 +264,7 @@ M.recent_files = function(opts)
 end
 
 M.toggle_terminal = function()
-	require("snacks").terminal("zsh", {
+	require("snacks").terminal(vim.fn.executable("zsh") == 1 and "zsh" or vim.o.shell, {
 		keys = {
 			term_normal = {
 				"<esc><esc>",

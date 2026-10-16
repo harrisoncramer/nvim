@@ -104,7 +104,7 @@ vim.api.nvim_create_user_command("PDF", function()
 				return
 			else
 				vim.notify(pdf .. " created!", vim.log.levels.INFO)
-				vim.cmd("silent !open " .. pdf)
+				u.open_url(pdf)
 			end
 		end),
 	}):start()
@@ -122,16 +122,30 @@ vim.api.nvim_create_user_command("WRAP", function(opts)
 	end
 end, { nargs = 0 })
 
-vim.api.nvim_create_user_command("TODO", function(_)
-	vim.cmd("e /Users/harrisoncramer/Library/Mobile\\ Documents/iCloud\\~ee\\~xero\\~Paper/Documents/todo.md")
-end, { nargs = 0 })
+if vim.fn.has("mac") == 1 then
+	vim.api.nvim_create_user_command("TODO", function(_)
+		vim.cmd("e " .. vim.env.HOME .. "/Library/Mobile\\ Documents/iCloud\\~ee\\~xero\\~Paper/Documents/todo.md")
+	end, { nargs = 0 })
+end
+
+local function directory_exists(dir)
+	if vim.fn.isdirectory(vim.fn.expand(dir)) == 1 then
+		return true
+	end
+	vim.notify(dir .. " does not exist", vim.log.levels.WARN)
+	return false
+end
 
 vim.api.nvim_create_user_command("MONO", function(_)
-	vim.cmd("cd ~/chariot/chariot")
+	if directory_exists("~/chariot/chariot") then
+		vim.cmd("cd ~/chariot/chariot")
+	end
 end, { nargs = 0 })
 
 vim.api.nvim_create_user_command("DASH", function(_)
-	vim.cmd("cd ~/chariot/chariot/apps/dashboard")
+	if directory_exists("~/chariot/chariot/apps/dashboard") then
+		vim.cmd("cd ~/chariot/chariot/apps/dashboard")
+	end
 end, { nargs = 0 })
 
 vim.api.nvim_create_user_command("LSPLOG", function(_)
@@ -139,5 +153,7 @@ vim.api.nvim_create_user_command("LSPLOG", function(_)
 end, { nargs = 0 })
 
 vim.api.nvim_create_user_command("TIL", function(_)
-	vim.cmd("tabnew | e ~/today-i-learned/README.md | normal! G")
+	if directory_exists("~/today-i-learned") then
+		vim.cmd("tabnew | e ~/today-i-learned/README.md | normal! G")
+	end
 end, { nargs = 0 })

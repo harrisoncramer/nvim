@@ -44,7 +44,7 @@ return {
 		end
 	end,
 	run_script = function(script_name, args)
-		local nvim_scripts_dir = "~/.config/nvim/scripts"
+		local nvim_scripts_dir = vim.fn.stdpath("config") .. "/scripts"
 		local f = nil
 		if args == nil then
 			f = io.popen(string.format("/bin/bash %1s/%2s", nvim_scripts_dir, script_name))
