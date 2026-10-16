@@ -1,7 +1,11 @@
+local u = require("functions.utils")
 local M = {}
 
 -- Checks if port is available
 function M.is_port_available(port)
+	if not u.ensure_executable("nc") then
+		return false
+	end
 	local handle = io.popen("nc -z localhost " .. port .. " 2>/dev/null; echo $?")
 	if not handle then
 		return false

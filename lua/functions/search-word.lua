@@ -1,7 +1,11 @@
+local u = require("functions.utils")
 local M = {}
 
 -- Search for the word under the cursor
 M.go_to_word = function(opts)
+	if not u.ensure_executable("rg", "jq") then
+		return
+	end
 	opts = opts or {}
 	local filetype_option = opts.filetype and ("-t " .. opts.filetype) or ""
 	local cmd = string.format(

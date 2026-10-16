@@ -29,21 +29,18 @@ local servers = {
 	"tsgo",
 	"tailwindcss-language-server",
 	"vue-language-server",
-	"python-lsp-server",
 	"terraform-ls",
 	"css-lsp",
 	"yaml-language-server",
 	"prisma-language-server",
 	"protols",
-	"postgrestools",
+	"postgres-language-server",
 	"json-lsp",
 	"shellcheck",
 }
 
 -- Mason will not auto-install these
-local linters = {
-	"pylint",
-}
+local linters = {}
 
 -- Mason will not auto-install these
 local debuggers = {
@@ -57,9 +54,11 @@ local formatters = {
 	"stylua",
 	"sql-formatter", -- This does not support @ symbols, use https://github.com/nene/prettier-plugin-sql-cst instead
 	"shfmt",
+	"eslint_d",
+	"pgformatter",
 }
 
-local all = merge(servers, linters, debuggers, formatters)
+local all = vim.iter({ servers, linters, debuggers, formatters }):flatten():totable()
 
 mason_tool_installer.setup({
 	ensure_installed = all,

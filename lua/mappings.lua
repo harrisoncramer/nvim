@@ -1,6 +1,5 @@
 local M = {}
 
-local w = require("functions.work")
 local u = require("functions.utils")
 local lsp = require("functions.lsp")
 
@@ -70,7 +69,6 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", merge(global_keymap_opts, { desc = "Cent
 vim.keymap.set("n", "<C-d>", "<C-d>zz", merge(global_keymap_opts, { desc = "Center the view after jumping down" }))
 
 -- Failures
-vim.keymap.set("n", "<leader>fb", w.get_build_failures, merge(global_keymap_opts, { desc = "Get build failures" }))
 vim.keymap.set(
 	"n",
 	"<leader>fa",

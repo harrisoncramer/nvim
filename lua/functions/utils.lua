@@ -122,6 +122,26 @@ local copy_file_name = function(quiet)
 	return base
 end
 
+local warned_missing = {}
+
+local warn_missing = function(name)
+	if not warned_missing[name] then
+		warned_missing[name] = true
+		vim.notify(name .. " is not installed", vim.log.levels.WARN)
+	end
+end
+
+local ensure_executable = function(...)
+	local found = true
+	for _, name in ipairs({ ... }) do
+		if vim.fn.executable(name) == 0 then
+			found = false
+			warn_missing(name)
+		end
+	end
+	return found
+end
+
 return {
 	get_home = function()
 		return os.getenv("HOME")
@@ -419,6 +439,7 @@ return {
 		local result = vim.fn.executable(executable)
 		return result == 1
 	end,
+	ensure_executable = ensure_executable,
 	get_visually_selected_lines = function()
 		local start_line = vim.fn.line("v") - 1 -- Convert to 0-based index
 		local end_line = vim.fn.line(".") -- Keep as 1-based index

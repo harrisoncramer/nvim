@@ -32,11 +32,10 @@ vim.api.nvim_create_user_command("SQL", function(opts)
 end, { nargs = 1 })
 
 vim.api.nvim_create_user_command("JQ", function()
+	if not u.ensure_executable("jq") then
+		return
+	end
 	vim.api.nvim_command(".!jq .")
-end, { nargs = 0 })
-
-vim.api.nvim_create_user_command("Filesystem", function()
-	require("functions").run_script("open_filesystem")
 end, { nargs = 0 })
 
 vim.api.nvim_create_user_command("BufOnly", function()
@@ -81,6 +80,9 @@ command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
 
 -- Pandoc
 vim.api.nvim_create_user_command("PDF", function()
+	if not u.ensure_executable("pandoc") then
+		return
+	end
 	local filename = vim.api.nvim_buf_get_name(0)
 	if filename == "" then
 		require("notify")("Buffer has no file.", vim.log.levels.ERROR)

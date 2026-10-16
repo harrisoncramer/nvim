@@ -43,18 +43,6 @@ return {
 			end
 		end
 	end,
-	run_script = function(script_name, args)
-		local nvim_scripts_dir = vim.fn.stdpath("config") .. "/scripts"
-		local f = nil
-		if args == nil then
-			f = io.popen(string.format("/bin/bash %1s/%2s", nvim_scripts_dir, script_name))
-		else
-			f = io.popen(string.format("/bin/bash %1s/%2s %3s", nvim_scripts_dir, script_name, args))
-		end
-		local output = f:read("*a")
-		f:close()
-		return output
-	end,
 	stash = function(name)
 		vim.fn.system("git stash -u -m " .. name)
 	end,
@@ -82,6 +70,9 @@ return {
 		require("notify")("BufOnly: " .. deleted .. " deleted buffer(s), " .. modified .. " modified buffer(s)")
 	end,
 	screenshot = function()
+		if not u.ensure_executable("silicon") then
+			return
+		end
 		local async_job_ok, job = pcall(require, "plenary.job")
 		if not async_job_ok then
 			require("notify")("Plenary is not installed!", "error")

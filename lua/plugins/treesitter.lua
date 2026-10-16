@@ -11,7 +11,6 @@ local parsers = {
 	"sql",
 	"dockerfile",
 	"html",
-	"python",
 	"scss",
 	"rust",
 	"markdown",

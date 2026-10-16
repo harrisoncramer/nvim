@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+NVIM_MIN=0.12.0
+TREE_SITTER_MIN=0.26.1
+NODE_MIN=22.0.0
+
+REQUIRED="nvim git curl unzip tar gzip cc tree-sitter node npm go golangci-lint rg"
+OPTIONAL="jq trash nc gh zsh pandoc sqlc buf atlas zprint docker silicon claude-agent-acp send-to-claude"
+
+has() {
+	command -v "$1" >/dev/null 2>&1
+}
+
+version_of() {
+	"$@" 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -n1 || true
+}
+
+version_at_least() {
+	[ "$(printf '%s\n%s\n' "$1" "$2" | sort -V | head -n1)" = "$2" ]
+}
+
+min_version() {
+	case "$1" in
+	nvim) echo "$NVIM_MIN" ;;
+	tree-sitter) echo "$TREE_SITTER_MIN" ;;
+	node) echo "$NODE_MIN" ;;
+	esac
+}
+
+present() {
+	case "$1" in
+	claude-agent-acp) [ -x "$HOME/.local/share/mise/installs/node/22.0.0/bin/claude-agent-acp" ] || has "$1" ;;
+	*) has "$1" ;;
+	esac
+}
+
+status() {
+	local min version
+	if ! present "$1"; then
+		echo missing
+		return
+	fi
+	min=$(min_version "$1")
+	if [ -n "$min" ]; then
+		version=$(version_of "$1" --version)
+		if [ -z "$version" ] || ! version_at_least "$version" "$min"; then
+			echo "old ${version:-unknown}, need $min"
+			return
+		fi
+	fi
+	echo ok
+}
+
+report() {
+	local tool
+	echo "$1"
+	for tool in $2; do
+		printf '  %-18s %-8s %s\n' "$tool" "$(status "$tool")" "$(command -v "$tool" || true)"
+	done
+}
+
+report "Required" "$REQUIRED"
+report "Optional" "$OPTIONAL"
+
+missing=""
+for tool in $REQUIRED; do
+	if [ "$(status "$tool")" != ok ]; then
+		missing="$missing $tool"
+	fi
+done
+if [ -n "$missing" ]; then
+	echo "Missing required programs:$missing" >&2
+	exit 1
+fi

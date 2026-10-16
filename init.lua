@@ -19,9 +19,6 @@ require("mappings")
 -- Git helpers
 require("git-helpers")
 
--- Work helpers
-require("functions.work")
-
 -- Diagnostic signs
 require("diagnostics")
 

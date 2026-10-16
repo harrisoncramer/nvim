@@ -2,6 +2,7 @@ local M = {}
 
 local git_helpers = require("git-helpers")
 local system = require("functions.system")
+local u = require("functions.utils")
 
 -- Gets the port offset for the current worktree
 function M.get_port_offset()
@@ -32,6 +33,10 @@ end
 function M.get_service_ports()
 	local repo_root = git_helpers.get_root_git_dir()
 	if not repo_root then
+		return {}
+	end
+
+	if not u.ensure_executable("rg") then
 		return {}
 	end
 
