@@ -184,8 +184,10 @@ return {
 		return words
 	end,
 	open_url = function(url)
-		local opener = get_os() == "Linux" and "xdg-open" or "open"
-		vim.cmd('exec "!' .. opener .. " '" .. url .. "'\"")
+		local _, err = vim.ui.open(url)
+		if err then
+			vim.notify(err, vim.log.levels.ERROR)
+		end
 	end,
 	file_exists = function(name)
 		local f = io.open(name, "r")

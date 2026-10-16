@@ -104,7 +104,7 @@ vim.api.nvim_create_user_command("PDF", function()
 				return
 			else
 				vim.notify(pdf .. " created!", vim.log.levels.INFO)
-				vim.cmd("silent !open " .. pdf)
+				u.open_url(pdf)
 			end
 		end),
 	}):start()
