@@ -39,8 +39,27 @@ vim.api.nvim_create_autocmd("User", {
 	end,
 })
 
+local function lazy_failures()
+	local found = {}
+	local ok, config = pcall(require, "lazy.core.config")
+	if not ok then
+		return found
+	end
+	for name, plugin in pairs(config.plugins) do
+		if not plugin.virtual and not plugin._.installed then
+			table.insert(found, name .. " is not installed")
+		end
+		for _, task in ipairs(plugin._.tasks or {}) do
+			if task:has_errors() then
+				table.insert(found, name .. " " .. task.name .. " failed: " .. task:output(vim.log.levels.ERROR))
+			end
+		end
+	end
+	return found
+end
+
 local function errors()
-	local found = vim.list_extend({}, failures)
+	local found = vim.list_extend(lazy_failures(), failures)
 	local messages = vim.fn.execute("messages")
 	if messages:match("E%d+:") or messages:match("[Ee]rror") or messages:match("stack traceback") then
 		table.insert(found, vim.trim(messages))
